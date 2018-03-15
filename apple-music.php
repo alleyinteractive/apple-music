@@ -31,3 +31,4 @@ define( __NAMESPACE__ . '\PATH', __DIR__ );
 require_once PATH . '/php/autoload.php';
 
 add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Main', 'instance' ] );
+add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Settings', 'instance' ] );

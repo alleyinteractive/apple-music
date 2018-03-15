@@ -33,12 +33,19 @@ class Main {
 		$this->storefront = apply_filters( 'apple_music_storefront', 'us' );
 
 		$this->token = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldSWDQ2U1A5TjQifQ.eyJpc3MiOiJBSEtFSzNUMzZQIiwiaWF0IjoxNTE2NjYxOTY2LCJleHAiOjE1MzIzODMxNjZ9.9cCIFu1fq0wJV49HwbVdpreVQ2KQf14Yz0PRD3IjFGfayFXipsv8maSfAZLPuRNLFyhZWY8V2FB7uVBdYQOMNw';
+
+
+
+
 	}
+
+
 
 	/**
 	 * Search for a requested term.
 	 *
 	 * @param string $term
+	 *
 	 * @return object|null
 	 */
 	public function search( $term ) {
@@ -51,6 +58,7 @@ class Main {
 	 * @param string $method GET or POST
 	 * @param string $endpoint
 	 * @param array $params
+	 *
 	 * @return object|null
 	 */
 	protected function send_request( $method, $endpoint, $params = array() ) {
@@ -72,17 +80,18 @@ class Main {
 				$url_safe,
 				5, // request timeout in seconds
 				900, // cache timeout in seconds
-				array( 'http_api_args' => array(
-					'headers' => array(
-						'Authorization' => "Bearer: {$this->token}",
+				array(
+					'http_api_args' => array(
+						'headers' => array(
+							'Authorization' => "Bearer: {$this->token}",
+						)
 					)
-				)
-			) );
+				) );
 		} else {
 			$response = wp_safe_remote_request(
 				$url_safe,
 				array(
-					'method' => $method,
+					'method'  => $method,
 					'headers' => array(
 						'Authorization' => "Bearer: {$this->token}",
 					)
@@ -91,6 +100,7 @@ class Main {
 
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
 				$response = wp_remote_retrieve_body( $response );
+				return $response;
 			}
 		}
 
@@ -99,7 +109,9 @@ class Main {
 		}
 
 		// Return the results of the API request
+
 		$response = json_decode( $response );
+
 
 		if ( ! empty( $response->results ) ) {
 			return $response->results;
