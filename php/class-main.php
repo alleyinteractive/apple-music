@@ -74,7 +74,7 @@ class Main {
 				900, // cache timeout in seconds
 				array( 'http_api_args' => array(
 					'headers' => array(
-						'Authorization' => "Bearer: {$this->token}",
+						'Authorization' => "Bearer {$this->token}",
 					)
 				)
 			) );
@@ -84,7 +84,7 @@ class Main {
 				array(
 					'method' => $method,
 					'headers' => array(
-						'Authorization' => "Bearer: {$this->token}",
+						'Authorization' => "Bearer {$this->token}",
 					)
 				)
 			);
