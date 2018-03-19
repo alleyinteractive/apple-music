@@ -11,6 +11,7 @@ namespace Apple_Music;
 class Settings {
 	use Util\Singleton;
 
+
 	/**
 	 * @var string $base_url Base Apple Music API endpoint URL.
 	 */
@@ -86,7 +87,7 @@ class Settings {
 // the values are defined at the add_settings_section() function.
 	function section( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Follow the white rabbit.', 'apple-music' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( '', 'apple-music' ); ?></p>
 		<?php
 	}
 
@@ -96,30 +97,28 @@ class Settings {
 // the "label_for" key value is used for the "for" attribute of the <label>.
 // the "class" key value is used for the "class" attribute of the <tr> containing the field.
 // you can add custom key value pairs to be used inside your callbacks.
-	function add_token_field( $args ) {
-		// get the value of the setting we've registered with register_setting()
+
+	function get_token() {
 		$options = get_option( 'apple_music_options' );
+		$token   = ! empty( $options['token'] ) ? $options['token'] : '';
 
-		$token = ! empty( $options['token'] ) ? $options['token'] . '!' : 'v';
-		// output the field
+		return $token;
+	}
+	
+		function get_storefront() {
+		$options = get_option( 'apple_music_options' );
+		$storefront   = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
+
+		return $storefront;
+	}
+
+
+	function add_token_field( $args ) {
 		?>
-		<input type="text" name="apple_music_options[token]" value="<?php echo esc_html( $token ); ?>"/>
+		<input type="text" name="apple_music_options[token]" value="<?php echo esc_html( $this->get_token() ); ?>" class="large-text"/>
 
-
-		<!--
-		<select id="<?php echo esc_attr( $args['label_for'] ); ?>"
-		        data-custom="<?php echo esc_attr( $args['wporg_custom_data'] ); ?>"
-		        name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]"
-		>
-			<option value="red" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'red', false ) ) : ( '' ); ?>>
-				<?php //esc_html_e( 'red pill', 'wporg' ); ?>
-			</option>
-			<option value="blue" <?php echo isset( $options[ $args['label_for'] ] ) ? ( selected( $options[ $args['label_for'] ], 'blue', false ) ) : ( '' ); ?>>
-				<?php //esc_html_e( 'blue pill', 'wporg' ); ?>
-			</option>
-		</select>-->
 		<p class="description">
-			<?php esc_html_e( 'You take the blue pill and the story ends. You wake in your bed and you believe whatever you want to believe.', 'wporg' ); ?>
+			<?php esc_html_e( 'Description', 'apple-music' ); ?>
 		</p>
 
 		<?php
@@ -127,27 +126,21 @@ class Settings {
 
 
 	function add_storefront_field( $args ) {
-		// get the value of the setting we've registered with register_setting()
-		$options = get_option( 'apple_music_options' );
-
-		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
-
+		$options     = get_option( 'apple_music_options' );
+		$storefront  = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
+		$api         = new Main();
+		$storefronts = $api->get_storefronts();
 		?>
-
-
 		<select id="<?php echo esc_attr( $args['label_for'] ); ?>" name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
-
-			<?php foreach ( [ '1', '2', '3' ] as $sf ) : ?>
-				<option value="<?php echo $sf; ?>" <?php selected( $storefront, $sf ); ?>>
-					<?php esc_html_e( $sf, 'apple-music' ); ?>
+			<?php foreach ( $storefronts->data as $sf ) : ?>
+				<option value="<?php echo $sf->id; ?>" <?php selected( $storefront, $sf->id ); ?>>
+					<?php esc_html_e( $sf->attributes->name ); ?>
 				</option>
 			<?php endforeach; ?>
-
 		</select>
 		<p class="description">
-			<?php esc_html_e( '', 'apple-music' ); ?>
+			<?php esc_html_e( 'Description', 'apple-music' ); ?>
 		</p>
-
 		<?php
 	}
 
@@ -162,10 +155,7 @@ class Settings {
 		);
 	}
 
-	/**
-	 * top level menu:
-	 * callback functions
-	 */
+
 	function options_page_html() {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
