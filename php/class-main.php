@@ -30,7 +30,7 @@ class Main {
 	 * Set up the singleton.
 	 */
 	public function setup() {
-		$settings   = new Settings();
+		$settings         = new Settings();
 		$this->token      = $settings->get_token();
 		$this->storefront = $settings->get_storefront();
 	}
@@ -56,7 +56,7 @@ class Main {
 
 	/**
 	 * Fetch and cache storefronts.
-	 * 
+	 *
 	 * @return mixed|null
 	 */
 	public function get_storefronts() {
@@ -81,14 +81,14 @@ class Main {
 
 	/**
 	 * Make API request.
-	 * 
+	 *
 	 * @param $method
 	 * @param $url
 	 * @param array $params
 	 *
 	 * @return mixed|null
 	 */
-	protected function send_request( $method, $url, $params = array() ) {
+	protected function send_request( $method, $url, $params = [ ] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
 
@@ -97,22 +97,22 @@ class Main {
 				$url_safe,
 				5, // request timeout in seconds
 				900, // cache timeout in seconds
-				array(
-					'http_api_args' => array(
-						'headers' => array(
+				[
+					'http_api_args' => [
+						'headers' => [
 							'Authorization' => "Bearer {$this->token}",
-						)
-					)
-				) );
+						],
+					],
+				] );
 		} else {
 			$response = wp_safe_remote_request(
 				$url_safe,
-				array(
+				[
 					'method'  => $method,
-					'headers' => array(
+					'headers' => [
 						'Authorization' => "Bearer {$this->token}",
-					)
-				)
+					]
+				]
 			);
 
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
@@ -126,7 +126,7 @@ class Main {
 
 		// Return the results of the API request
 		$response = json_decode( $response ); // wont work for errors
-		
+
 		if ( ! empty( $response->results ) ) {
 			return $response->results;
 		}

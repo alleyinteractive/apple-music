@@ -100,7 +100,7 @@ class Settings {
 	 */
 	function add_token_field( $args ) {
 		?>
-		<input type="text" name="apple_music_options[token]" value="<?php echo esc_html( $this->get_token() ); ?>" class="large-text"/>
+		<input type="text" name="apple_music_options[token]" value="<?php echo esc_attr( $this->get_token() ); ?>" class="large-text"/>
 
 		<p class="description">
 			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
@@ -122,7 +122,7 @@ class Settings {
 		?>
 		<select id="<?php echo esc_attr( $args['label_for'] ); ?>" name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
 			<?php foreach ( $storefronts->data as $sf ) : ?>
-				<option value="<?php echo $sf->id; ?>" <?php selected( $storefront, $sf->id ); ?>>
+				<option value="<?php echo esc_attr( $sf->id ); ?>" <?php selected( $storefront, $sf->id ); ?>>
 					<?php esc_html_e( $sf->attributes->name ); ?>
 				</option>
 			<?php endforeach; ?>
