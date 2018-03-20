@@ -187,5 +187,8 @@ class Settings {
 		<?php
 	}
 
-
 }
+
+add_action( 'media_buttons', function ( $editor_id ) {
+	echo '<a href="#" class="button insert-media add_media">Add Apple Music</a>';
+} );
