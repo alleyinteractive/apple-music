@@ -1,21 +1,2 @@
-documentcloud/.gitignore
-.svnignore
-.sass-cache
-.DS_Store
-.thumbsdb
-.svn
-client/html/prototypes/*
-node_modules
-package-lock.json
-bower_components
-skin.html
-npm-debug.log
-static/js/nypost-recovery.min.js*
+
 .idea
-
-# Brightcove scripts are manually published
-brightcove-plugins.bundle.js
-client/js/brightcove-plugins/build
-
-# Composer
-vendor/*

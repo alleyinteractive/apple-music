@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Main handler for the Apple Music embed tool.
+ * Settings for the Apple Music embed tool.
  *
  * @package Apple_Music
  */
@@ -9,38 +9,22 @@
 namespace Apple_Music;
 
 class Settings {
+
 	use Util\Singleton;
-
-
-	/**
-	 * @var string $base_url Base Apple Music API endpoint URL.
-	 */
-	protected $base_url = 'https://api.music.apple.com/v1/catalog';
-
-	/**
-	 * @var string $storefront Apple Music Storefront to query.
-	 */
-	protected $storefront;
-
-	/**
-	 * @var string $token Pre-signed API Token.
-	 */
-	protected $token;
 
 	/**
 	 * Set up the singleton.
 	 */
 	public function setup() {
-		$this->storefront = apply_filters( 'apple_music_storefront', 'us' );
-
-		$this->token = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldSWDQ2U1A5TjQifQ.eyJpc3MiOiJBSEtFSzNUMzZQIiwiaWF0IjoxNTE2NjYxOTY2LCJleHAiOjE1MzIzODMxNjZ9.9cCIFu1fq0wJV49HwbVdpreVQ2KQf14Yz0PRD3IjFGfayFXipsv8maSfAZLPuRNLFyhZWY8V2FB7uVBdYQOMNw';
-
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
-		add_action( 'admin_init', [ $this, 'settings_init' ] );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
 
-	function settings_init() {
+	/**
+	 * Register our settings.
+	 */
+	function register_settings() {
 
 		register_setting( 'apple_music', 'apple_music_options' );
 
@@ -51,23 +35,19 @@ class Settings {
 			'apple_music'
 		);
 
-		// register a new field in the "wporg_section_developers" section, inside the "wporg" page
 		add_settings_field(
-			'wporg_field_pill', // as of WP 4.6 this value is used only internally
-			// use $args' label_for to populate the id inside the callback
+			'apple_music_token',
 			esc_html__( 'Apple Music Token', 'apple-music' ),
 			[ $this, 'add_token_field' ],
 			'apple_music',
 			'apple_music_settings',
 			[
-				'label_for' => 'wporg_field_pill',
-				'class'     => 'wporg_row',
+				'label_for' => 'token',
 			]
 		);
 
 		add_settings_field(
-			'wporg_field_pillg', // as of WP 4.6 this value is used only internally
-			// use $args' label_for to populate the id inside the callback
+			'apple_music_storefront',
 			esc_html__( 'Apple Music Storefront', 'apple-music' ),
 			[ $this, 'add_storefront_field' ],
 			'apple_music',
@@ -78,53 +58,62 @@ class Settings {
 		);
 	}
 
-
-
-// developers section cb
-
-// section callbacks can accept an $args parameter, which is an array.
-// $args have the following keys defined: title, id, callback.
-// the values are defined at the add_settings_section() function.
+	/**
+	 * Section description.
+	 *
+	 * @param $args
+	 */
 	function section( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( '', 'apple-music' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Section description placeholder', 'apple-music' ); ?></p>
 		<?php
 	}
 
-// field callbacks can accept an $args parameter, which is an array.
-// $args is defined at the add_settings_field() function.
-// wordpress has magic interaction with the following keys: label_for, class.
-// the "label_for" key value is used for the "for" attribute of the <label>.
-// the "class" key value is used for the "class" attribute of the <tr> containing the field.
-// you can add custom key value pairs to be used inside your callbacks.
-
+	/**
+	 * Helper to get token.
+	 *
+	 * @return string
+	 */
 	function get_token() {
 		$options = get_option( 'apple_music_options' );
 		$token   = ! empty( $options['token'] ) ? $options['token'] : '';
 
 		return $token;
 	}
-	
-		function get_storefront() {
-		$options = get_option( 'apple_music_options' );
-		$storefront   = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
+
+	/**
+	 * Helper to get storefront.
+	 *
+	 * @return string
+	 */
+	function get_storefront() {
+		$options    = get_option( 'apple_music_options' );
+		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
 
 		return $storefront;
 	}
 
-
+	/**
+	 * Token field.
+	 *
+	 * @param $args
+	 */
 	function add_token_field( $args ) {
 		?>
 		<input type="text" name="apple_music_options[token]" value="<?php echo esc_html( $this->get_token() ); ?>" class="large-text"/>
 
 		<p class="description">
-			<?php esc_html_e( 'Description', 'apple-music' ); ?>
+			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
 		</p>
 
 		<?php
 	}
 
-
+	/**
+	 * Storefront field.
+	 *
+	 * @param $args
+	 */
 	function add_storefront_field( $args ) {
 		$options     = get_option( 'apple_music_options' );
 		$storefront  = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
@@ -139,12 +128,14 @@ class Settings {
 			<?php endforeach; ?>
 		</select>
 		<p class="description">
-			<?php esc_html_e( 'Description', 'apple-music' ); ?>
+			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
 		</p>
 		<?php
 	}
 
-
+	/**
+	 * Add settings to admin menu.
+	 */
 	function options_page() {
 		add_options_page(
 			esc_html__( 'Apple Music', 'apple-music' ),
@@ -155,25 +146,16 @@ class Settings {
 		);
 	}
 
-
+	/**
+	 * Body of settings page.
+	 */
 	function options_page_html() {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
-
-		// add error/update messages
-
-		// check if the user have submitted the settings
-		// wordpress will add the "settings-updated" $_GET parameter to the url
-		if ( isset( $_GET['settings-updated'] ) ) {
-			// add settings saved message with the class of "updated"
-			add_settings_error( 'wporg_messages', 'wporg_message', __( 'Settings Saved', 'wporg' ), 'updated' );
-		}
-
-		// show error/update messages
-		settings_errors( 'wporg_messages' );
 		?>
+
 		<div class="wrap">
 			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 			<form action="options.php" method="post">
@@ -188,7 +170,3 @@ class Settings {
 	}
 
 }
-
-add_action( 'media_buttons', function ( $editor_id ) {
-	echo '<a href="#" class="button insert-media add_media">Add Apple Music</a>';
-} );
