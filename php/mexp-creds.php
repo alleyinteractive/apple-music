@@ -17,7 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 */
-
+die('sdsdsd');
 add_filter( 'mexp_twitter_credentials', 'mexp_twitter_credentials_callback' );
 
 function mexp_twitter_credentials_callback() {

@@ -50,7 +50,7 @@ class MEXP_Twitter_Service extends MEXP_Service {
 		);
 		wp_enqueue_script(
 			'mexp-service-twitter',
-			$mexp->plugin_url( 'services/twitter/js.js' ),
+			$mexp->plugin_url( 'apple-music/php/services/twitter/js.js' ),
 			array( 'jquery', 'mexp' ),
 			$mexp->plugin_ver( 'services/twitter/js.js' )
 		);

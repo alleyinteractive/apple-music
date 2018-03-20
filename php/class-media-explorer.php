@@ -148,7 +148,7 @@ class Media_Explorer extends MEXP_Plugin {
 			if ( class_exists( $class ) )
 				continue;
 
-			require_once sprintf( '%s/class.%s.php',
+			require_once sprintf( '%s/class-%s.php',
 				dirname( __FILE__ ),
 				$file
 			);

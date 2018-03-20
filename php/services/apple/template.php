@@ -1,4 +1,5 @@
 <?php
+
 /*
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -35,7 +36,7 @@ class MEXP_Apple_Template extends MEXP_Template {
 				</div>
 			</div>
 		</div>
-		<a href="#" id="mexp-check-{{ data.id }}" data-id="{{ data.id }}" class="check" title="<?php esc_attr_e( 'Deselect', 'mexp' ); ?>">
+		<a href="#" id="mexp-check-{{ data.id }}" data-id="{{ data.id }}" class="check" title="<?php esc_attr_e( 'Deselect', 'apple-music' ); ?>">
 			<div class="media-modal-icon"></div>
 		</a>
 		<?php
@@ -45,29 +46,10 @@ class MEXP_Apple_Template extends MEXP_Template {
 		?>
 		<?php
 	}
-
+	
 	public function search( $id, $tab ) {
 
 		switch ( $tab ) {
-
-			case 'artists':
-
-				?>
-				<form action="#" class="mexp-toolbar-container clearfix">
-					<input
-						type="text"
-						name="artists"
-						value="{{ data.params.hashtag }}"
-						class="mexp-input-text mexp-input-search"
-						size="40"
-						placeholder="<?php esc_attr_e( 'Enter an artist', 'mexp' ); ?>"
-					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
-					<div class="spinner"></div>
-				</form>
-				<?php
-
-				break;
 
 			case 'songs':
 
@@ -79,9 +61,9 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.by_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a song', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a song', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
@@ -98,16 +80,16 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter an album', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter an album', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-						case 'playlists':
+			case 'playlists':
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
@@ -117,16 +99,16 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a playlist', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a playlist', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-						case 'connect':
+			case 'connect':
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
@@ -136,16 +118,16 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a connection', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a connection', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-						case 'curators':
+			case 'curators':
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
@@ -155,16 +137,16 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a curator', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a curator', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-						case 'radio':
+			case 'radio':
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
@@ -174,16 +156,16 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a station', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a station', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-						case 'music-videos':
+			case 'music-videos':
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
@@ -193,29 +175,29 @@ class MEXP_Apple_Template extends MEXP_Template {
 						value="{{ data.params.to_user }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter a', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter a', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php
 
 				break;
 
-			case 'all':
+			case 'artists':
 			default:
 
 				?>
 				<form action="#" class="mexp-toolbar-container clearfix">
 					<input
 						type="text"
-						name="q"
-						value="{{ data.params.q }}"
+						name="artists"
+						value="{{ data.params.hashtag }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Search Twitter', 'mexp' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter an artist', 'apple-music' ); ?>"
 					>
-					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'mexp') ?>">
+					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>
 				</form>
 				<?php

@@ -59,17 +59,21 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 	public function request( array $request ) {
 
-		if ( is_wp_error( $connection = $this->get_connection() ) )
-			return $connection;
+
 
 		$params = $request['params'];
+
+		print_r($params);
+		die();
+
+
 
 		if ( isset( $params['location'] ) and empty( $params['coords'] ) ) {
 			if ( is_wp_error( $coords = $this->get_coords( $params['location'] ) ) ) {
 				return $coords;
 			} else {
 				$this->response_meta['coords'] = $coords;
-				$params['coords'] = sprintf( '%s,%s', $coords->lat, $coords->lng );
+				$params['coords']              = sprintf( '%s,%s', $coords->lat, $coords->lng );
 			}
 		}
 
@@ -78,24 +82,30 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 		$q = array();
 
-		if ( isset( $params['q'] ) )
+		if ( isset( $params['q'] ) ) {
 			$q[] = trim( $params['q'] );
+		}
 
-		if ( isset( $params['hashtag'] ) )
+		if ( isset( $params['hashtag'] ) ) {
 			$q[] = sprintf( '#%s', ltrim( $params['hashtag'], '#' ) );
+		}
 
-		if ( isset( $params['by_user'] ) )
+		if ( isset( $params['by_user'] ) ) {
 			$q[] = sprintf( 'from:%s', ltrim( $params['by_user'], '@' ) );
+		}
 
-		if ( isset( $params['to_user'] ) )
+		if ( isset( $params['to_user'] ) ) {
 			$q[] = sprintf( '@%s', ltrim( $params['to_user'], '@' ) );
+		}
 
-		if ( 'images' == $request['tab'] )
+		if ( 'images' == $request['tab'] ) {
 			$q[] = 'filter:images';
+		}
 
 		// Exclude retweets from certain searches
-		if ( ! isset( $params['by_user'] ) && ! isset( $params['to_user'] ) )
+		if ( ! isset( $params['by_user'] ) && ! isset( $params['to_user'] ) ) {
 			$q[] = '+exclude:retweets';
+		}
 
 		$args = array(
 			'q'           => implode( ' ', $q ),
@@ -104,15 +114,17 @@ class MEXP_Apple_Service extends MEXP_Service {
 		);
 
 		if ( isset( $params['coords'] ) and isset( $params['radius'] ) ) {
-			if ( is_array( $params['radius'] ) )
+			if ( is_array( $params['radius'] ) ) {
 				$params['radius'] = reset( $params['radius'] );
+			}
 			$args['geocode'] = sprintf( '%s,%dkm', $params['coords'], $params['radius'] );
 		}
 
-		if ( !empty( $request['min_id'] ) )
+		if ( ! empty( $request['min_id'] ) ) {
 			$args['since_id'] = $request['min_id'];
-		else if ( !empty( $request['max_id'] ) )
+		} else if ( ! empty( $request['max_id'] ) ) {
 			$args['max_id'] = $request['max_id'];
+		}
 
 		$response = $connection->get( sprintf( '%s/search/tweets.json', untrailingslashit( $connection->host ) ), $args );
 
@@ -134,8 +146,6 @@ class MEXP_Apple_Service extends MEXP_Service {
 	}
 
 
-
-
 	public function status_content( $status ) {
 
 		$text = $status->text;
@@ -152,25 +162,29 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 		parse_str( ltrim( $next, '?' ), $vars );
 
-		if ( isset( $vars['max_id'] ) )
+		if ( isset( $vars['max_id'] ) ) {
 			return $vars['max_id'];
-		else
+		} else {
 			return null;
+		}
 
 	}
 
 	public function response( $r ) {
 
-		if ( !isset( $r->statuses ) or empty( $r->statuses ) )
+		if ( ! isset( $r->statuses ) or empty( $r->statuses ) ) {
 			return false;
+		}
 
 		$response = new MEXP_Response;
 
-		if ( isset( $r->search_metadata->next_results ) )
+		if ( isset( $r->search_metadata->next_results ) ) {
 			$response->add_meta( 'max_id', self::get_max_id( $r->search_metadata->next_results ) );
+		}
 
-		if ( isset( $this->response_meta ) )
+		if ( isset( $this->response_meta ) ) {
 			$response->add_meta( $this->response_meta );
+		}
 
 		foreach ( $r->statuses as $status ) {
 
@@ -198,36 +212,30 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 	public function tabs( array $tabs ) {
 		$tabs['apple'] = array(
-			'all' => array(
-				'text'       => _x( 'All', 'Tab title', 'mexp'),
+			'artists'      => array(
+				'text'       => _x( 'Artists', 'Tab title', 'mexp' ),
 				'defaultTab' => true
 			),
-			'artists' => array(
-				'text' => _x( 'Artists', 'Tab title', 'mexp'),
+			'songs'        => array(
+				'text' => _x( 'Songs', 'Tab title', 'mexp' ),
 			),
-			#'images' => array(
-			#	'text' => _x( 'With Images', 'Tab title', 'mexp'),
-			#),
-			'songs' => array(
-				'text' => _x( 'Songs', 'Tab title', 'mexp'),
+			'albums'       => array(
+				'text' => _x( 'Albums', 'Tab title', 'mexp' ),
 			),
-			'albums' => array(
-				'text' => _x( 'Albums', 'Tab title', 'mexp'),
+			'playlists'    => array(
+				'text' => _x( 'Playlists', 'Tab title', 'mexp' ),
 			),
-			'playlists' => array(
-				'text' => _x( 'Playlists', 'Tab title', 'mexp'),
+			'connect'      => array(
+				'text' => _x( 'Connect', 'Tab title', 'mexp' ),
 			),
-						'connect' => array(
-				'text' => _x( 'Connect', 'Tab title', 'mexp'),
+			'curators'     => array(
+				'text' => _x( 'Curators', 'Tab title', 'mexp' ),
 			),
-						'curators' => array(
-				'text' => _x( 'Curators', 'Tab title', 'mexp'),
+			'radio'        => array(
+				'text' => _x( 'Radio', 'Tab title', 'mexp' ),
 			),
-						'radio' => array(
-				'text' => _x( 'Radio', 'Tab title', 'mexp'),
-			),
-						'music-videos' => array(
-				'text' => _x( 'Music Videos', 'Tab title', 'mexp'),
+			'music-videos' => array(
+				'text' => _x( 'Music Videos', 'Tab title', 'mexp' ),
 			),
 		);
 
@@ -272,7 +280,7 @@ class MEXP_Apple_Service extends MEXP_Service {
 		# https://dev.twitter.com/discussions/15744
 
 		foreach ( array( 'consumer_key', 'consumer_secret', 'oauth_token', 'oauth_token_secret' ) as $field ) {
-			if ( !isset( $credentials[$field] ) or empty( $credentials[$field] ) ) {
+			if ( ! isset( $credentials[ $field ] ) or empty( $credentials[ $field ] ) ) {
 				return new WP_Error(
 					'mexp_twitter_no_connection',
 					__( 'oAuth connection to Twitter not found.', 'mexp' )
@@ -280,8 +288,9 @@ class MEXP_Apple_Service extends MEXP_Service {
 			}
 		}
 
-		if ( !class_exists( 'WP_Twitter_OAuth' ) )
+		if ( ! class_exists( 'WP_Twitter_OAuth' ) ) {
 			require_once dirname( __FILE__ ) . '/class.wp-twitter-oauth.php';
+		}
 
 		$connection = new WP_Twitter_OAuth(
 			$credentials['consumer_key'],
@@ -298,8 +307,9 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 	private function get_credentials() {
 
-		if ( is_null( $this->credentials ) )
+		if ( is_null( $this->credentials ) ) {
 			$this->credentials = (array) apply_filters( 'mexp_twitter_credentials', array() );
+		}
 
 		return $this->credentials;
 
@@ -311,5 +321,6 @@ add_filter( 'mexp_services', 'mexp_service_apple' );
 
 function mexp_service_apple( array $services ) {
 	$services['apple'] = new MEXP_Apple_Service;
+
 	return $services;
 }
