@@ -30,11 +30,9 @@ class Main {
 	 * Set up the singleton.
 	 */
 	public function setup() {
-		$this->storefront = apply_filters( 'apple_music_storefront', 'us' );
-
-		$settings = new Settings();
-		$token    = $settings->get_token();
-
+		$settings   = new Settings();
+		$this->token      = $settings->get_token();
+		$this->storefront = $settings->get_storefront();
 	}
 
 	/**
@@ -116,7 +114,6 @@ class Main {
 					)
 				)
 			);
-
 
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
 				$response = wp_remote_retrieve_body( $response );
