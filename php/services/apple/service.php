@@ -63,22 +63,12 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 		$params = $request['params'];
 
-		print_r($params);
-		die();
+		
+		$s = new Apple_Music\API();
+		$results = $s->search( 'dylan' );
 
-
-
-		if ( isset( $params['location'] ) and empty( $params['coords'] ) ) {
-			if ( is_wp_error( $coords = $this->get_coords( $params['location'] ) ) ) {
-				return $coords;
-			} else {
-				$this->response_meta['coords'] = $coords;
-				$params['coords']              = sprintf( '%s,%s', $coords->lat, $coords->lng );
-			}
-		}
-
-		# operators: https://dev.twitter.com/docs/using-search
-		# @TODO +exclude:retweets
+		print_r($results);
+		die('hello');
 
 		$q = array();
 
@@ -146,17 +136,7 @@ class MEXP_Apple_Service extends MEXP_Service {
 	}
 
 
-	public function status_content( $status ) {
 
-		$text = $status->text;
-
-		# @TODO more processing (hashtags, @s etc)
-		$text = make_clickable( $text );
-		$text = str_replace( ' href="', ' target="_blank" href="', $text );
-
-		return $text;
-
-	}
 
 	public function get_max_id( $next ) {
 

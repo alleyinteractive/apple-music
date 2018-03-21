@@ -8,8 +8,9 @@
 
 namespace Apple_Music;
 
-class Main {
-	use Util\Singleton;
+class API {
+	//use Util\Singleton; // need this for instance
+
 
 	/**
 	 * @var string $base_url Base Apple Music API endpoint URL.
@@ -19,20 +20,26 @@ class Main {
 	/**
 	 * @var string $storefront Apple Music Storefront to query.
 	 */
-	protected $storefront;
+	protected $storefront = 'us';
 
 	/**
 	 * @var string $token Pre-signed API Token.
 	 */
 	protected $token;
 
+
+	public static function instance() {
+	new API();
+
+}
 	/**
 	 * Set up the singleton.
 	 */
-	public function setup() {
+	public function __construct() {
 		$settings         = new Settings();
 		$this->token      = $settings->get_token();
 		$this->storefront = $settings->get_storefront();
+
 	}
 
 	/**
@@ -43,7 +50,8 @@ class Main {
 	 * @return object|null
 	 */
 	public function search( $term ) {
-
+	//	$settings         = new Settings();
+//die($this->storefront . '!' . $settings->get_storefront());
 		$url = sprintf( '%s/%s/%s/%s',
 			$this->base_url,
 			'catalog',
@@ -134,3 +142,5 @@ class Main {
 		return $response;
 	}
 }
+
+

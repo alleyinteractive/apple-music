@@ -4,7 +4,7 @@
  * classes named as per the WordPress Coding Standards.
  *
  * Any class sharing this namespace can be automatically loaded when used, if it
- * resides in the `lib/` directory. If the class has any sub-namespaces, the
+ * resides in the `php/` directory. If the class has any sub-namespaces, the
  * class must be within subdirectories of the same names (swapping underscores
  * for dashes and downcasing).
  *

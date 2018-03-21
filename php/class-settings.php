@@ -117,7 +117,7 @@ class Settings {
 	function add_storefront_field( $args ) {
 		$options     = get_option( 'apple_music_options' );
 		$storefront  = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
-		$api         = new Main();
+		$api         = new API();
 		$storefronts = $api->get_storefronts();
 		?>
 		<select id="<?php echo esc_attr( $args['label_for'] ); ?>" name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
