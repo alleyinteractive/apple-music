@@ -9,10 +9,10 @@
 namespace Apple_Music;
 
 class Shortcode {
-	use Util\Singleton;
 
 
-	public function setup() {
+
+	public function __construct() {
 		add_shortcode( 'apple-music', [ $this, 'shortcode' ] );
 
 //add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );

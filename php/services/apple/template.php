@@ -23,16 +23,10 @@ class MEXP_Apple_Template extends MEXP_Template {
 					<img src="{{ data.thumbnail }}">
 				</div>
 				<div class="mexp-item-main">
-					<div class="mexp-item-author">
-						<span class="mexp-item-author-name">{{ data.meta.user.name }}</span>
-						<span class="mexp-item-author-screen-name"><span class="mexp-item-author-at">@</span>{{ data.meta.user.screen_name }}</span>
-					</div>
 					<div class="mexp-item-content">
 						{{{ data.content }}}
 					</div>
-					<div class="mexp-item-date">
-						{{ data.date }}
-					</div>
+
 				</div>
 			</div>
 		</div>
@@ -46,7 +40,7 @@ class MEXP_Apple_Template extends MEXP_Template {
 		?>
 		<?php
 	}
-	
+
 	public function search( $id, $tab ) {
 
 		switch ( $tab ) {

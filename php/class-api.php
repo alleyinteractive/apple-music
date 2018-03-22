@@ -49,7 +49,7 @@ class API {
 	 *
 	 * @return object|null
 	 */
-	public function search( $term ) {
+	public function search( $term, $types ) {
 	//	$settings         = new Settings();
 //die($this->storefront . '!' . $settings->get_storefront());
 		$url = sprintf( '%s/%s/%s/%s',
@@ -59,7 +59,7 @@ class API {
 			'search'
 		);
 
-		return $this->send_request( 'GET', $url, compact( 'term' ) );
+		return $this->send_request( 'GET', $url, compact( 'term', 'types' ) );
 	}
 
 	/**
@@ -96,10 +96,10 @@ class API {
 	 *
 	 * @return mixed|null
 	 */
-	protected function send_request( $method, $url, $params = [ ] ) {
+	protected function send_request( $method, $url, $params = [] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
-
+//die($url_safe);
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 			$response = wpcom_vip_file_get_contents(
 				$url_safe,
@@ -123,6 +123,7 @@ class API {
 				]
 			);
 
+
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
 				$response = wp_remote_retrieve_body( $response );
 			}
@@ -134,6 +135,8 @@ class API {
 
 		// Return the results of the API request
 		$response = json_decode( $response ); // wont work for errors
+
+		
 
 		if ( ! empty( $response->results ) ) {
 			return $response->results;

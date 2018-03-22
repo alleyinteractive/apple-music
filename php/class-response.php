@@ -116,7 +116,7 @@ final class MEXP_Response_Item {
 	 * @return null
 	 */
 	public function set_url( $url ) {
-		$this->url = esc_url_raw( $url );
+		$this->url = $url;
 	}
 
 	/**

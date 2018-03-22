@@ -162,6 +162,8 @@ class Media_Explorer extends MEXP_Plugin {
 			'max_id'  => null,
 			'page'    => 1,
 		) );
+
+
 		$request['page'] = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
 		$request = apply_filters( 'mexp_ajax_request_args', $request, $service );

@@ -298,6 +298,7 @@ media.view.MEXP = media.View.extend({
 			max_id  : this.model.get( 'max_id' )
 		};
 
+
 		media.ajax( 'mexp_request', {
 			context : this,
 			success : this.fetchedSuccess,
@@ -317,6 +318,7 @@ media.view.MEXP = media.View.extend({
 			}
 
 			this.model.set( 'min_id', response.meta.min_id );
+
 			this.model.set( 'items',  response.items );
 
 			this.collection.reset( response.items );

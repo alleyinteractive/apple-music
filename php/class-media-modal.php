@@ -9,12 +9,12 @@
 namespace Apple_Music;
 
 class Media_Modal {
-	use Util\Singleton;
+
 
 	/**
 	 * Set up the singleton.
 	 */
-	public function setup() {
+	public function __construct() {
 
 		require_once PATH . '/php/class-mexp-service.php';
 		require_once PATH . '/php/class-plugin.php';
