@@ -197,7 +197,7 @@ class MEXP_Apple_Template {
 						value="{{ data.params.hashtag }}"
 						class="mexp-input-text mexp-input-search"
 						size="40"
-						placeholder="<?php esc_attr_e( 'Enter an artist', 'apple-music' ); ?>"
+						placeholder="<?php esc_attr_e( 'Enter an artist' . $tab, 'apple-music' ); ?>"
 					>
 					<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 					<div class="spinner"></div>

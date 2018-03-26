@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d09f4ea2-3e08-4849-96a0-f077d4b6c5ee" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/apple-music.php" afterPath="$PROJECT_DIR$/apple-music.php" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/php/class-apple-music.php" afterPath="$PROJECT_DIR$/php/class-main.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/class-media-explorer.php" afterPath="$PROJECT_DIR$/php/class-media-explorer.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/services/apple/template.php" afterPath="$PROJECT_DIR$/php/services/apple/template.php" />
     </list>
     <ignored path="apple-music.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,7 +29,7 @@
       <file leaf-file-name="class-media-modal.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php/class-media-modal.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="196">
+            <state relative-caret-position="270">
               <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
               <folding>
                 <element signature="e#7#96#0#PHP" expanded="true" />
@@ -43,6 +43,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="345">
               <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="47" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="template.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/php/services/apple/template.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="805">
+              <caret line="197" column="60" selection-start-line="197" selection-start-column="60" selection-end-line="197" selection-end-column="60" />
               <folding />
             </state>
           </provider>
@@ -78,17 +88,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="class-media-explorer.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="class-media-explorer.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/php/class-media-explorer.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="31" column="18" selection-start-line="26" selection-start-column="0" selection-end-line="42" selection-end-column="5" />
-              <folding />
+            <state relative-caret-position="210">
+              <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="43" />
+              <folding>
+                <marker date="1522102946464" expanded="true" signature="4644:4660" ph="Insert into post... " />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="class-main.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="class-main.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/php/class-main.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="360">
@@ -141,8 +153,6 @@
         <option value="$PROJECT_DIR$/php/class-shortcode.php" />
         <option value="$PROJECT_DIR$/php/class-plugin.php" />
         <option value="$PROJECT_DIR$/php/class-template.php" />
-        <option value="$PROJECT_DIR$/php/class-media-explorer.php" />
-        <option value="$PROJECT_DIR$/php/services/apple/template.php" />
         <option value="$PROJECT_DIR$/php/class-mexp-service.php" />
         <option value="$PROJECT_DIR$/php/class-media-modal.php" />
         <option value="$PROJECT_DIR$/js/mexp.js" />
@@ -152,6 +162,8 @@
         <option value="$PROJECT_DIR$/apple-music.php" />
         <option value="$PROJECT_DIR$/php/class-apple-music.php" />
         <option value="$PROJECT_DIR$/php/class-main.php" />
+        <option value="$PROJECT_DIR$/php/services/apple/template.php" />
+        <option value="$PROJECT_DIR$/php/class-media-explorer.php" />
       </list>
     </option>
   </component>
@@ -196,7 +208,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -293,6 +304,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
@@ -379,17 +391,18 @@
       <workItem from="1521568344631" duration="4746000" />
       <workItem from="1521581381544" duration="47932000" />
       <workItem from="1522101240753" duration="114000" />
+      <workItem from="1522102788326" duration="147000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="119693000" />
+    <option name="totallyTimeSpent" value="119840000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="18" y="48" width="1262" height="681" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25163934" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2557377" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -510,7 +523,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
           <caret line="10" column="23" selection-start-line="10" selection-start-column="23" selection-end-line="10" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -518,7 +530,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="286">
           <caret line="15" column="31" selection-start-line="15" selection-start-column="31" selection-end-line="15" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -625,20 +636,11 @@
     <entry file="file://$PROJECT_DIR$/php/services/apple/template2.php" />
     <entry file="file://$PROJECT_DIR$/php/class-plugin.php" />
     <entry file="file://$PROJECT_DIR$/php/class-template.php" />
-    <entry file="file://$PROJECT_DIR$/php/services/apple/template.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="115">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php/class-mexp-service.php" />
     <entry file="file://$PROJECT_DIR$/../../www/wordpress/wp-includes/js/media-grid.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
           <caret line="833" column="8" selection-start-line="833" selection-start-column="8" selection-end-line="833" selection-end-column="79" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -703,25 +705,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/php/class-media-explorer.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="31" column="18" selection-start-line="26" selection-start-column="0" selection-end-line="42" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/apple-music.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="46" column="64" selection-start-line="46" selection-start-column="64" selection-end-line="46" selection-end-column="64" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/php/class-media-modal.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="196">
+        <state relative-caret-position="270">
           <caret line="18" column="10" selection-start-line="18" selection-start-column="10" selection-end-line="18" selection-end-column="10" />
           <folding>
             <element signature="e#7#96#0#PHP" expanded="true" />
@@ -734,6 +720,32 @@
         <state relative-caret-position="360">
           <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/services/apple/template.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="805">
+          <caret line="197" column="60" selection-start-line="197" selection-start-column="60" selection-end-line="197" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/apple-music.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="256">
+          <caret line="46" column="64" selection-start-line="46" selection-start-column="64" selection-end-line="46" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/php/class-media-explorer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="90" column="32" selection-start-line="90" selection-start-column="32" selection-end-line="90" selection-end-column="43" />
+          <folding>
+            <marker date="1522102946464" expanded="true" signature="4644:4660" ph="Insert into post... " />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -77,10 +77,10 @@ class Media_Explorer {
 	 */
 	public function action_print_media_templates() {
 
-		foreach ( $this->get_services() as $service_id => $service ) {
+		//foreach ( $this->get_services() as $service_id => $service ) {
 
-			if ( ! $template = $service->get_template() )
-				continue;
+		/*	if ( ! $template = $service->get_template() )
+				continue;*/
 
 			// apply filters for tabs
 			$tabs = apply_filters( 'mexp_tabs', array() );
@@ -106,7 +106,7 @@ class Media_Explorer {
 
 
 
-		}
+		//}
 
 	}
 
