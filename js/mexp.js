@@ -164,6 +164,7 @@ media.view.MEXP = media.View.extend({
 
 		jQuery( '#mexp-button' ).prop( 'disabled', !selection.length );
 
+
 		return this;
 
 	},

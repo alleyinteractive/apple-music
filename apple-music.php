@@ -28,6 +28,30 @@ namespace Apple_Music;
 
 define( __NAMESPACE__ . '\PATH', __DIR__ );
 
+define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Current version of Fieldmanager.
+ */
+define( 'APPLE_MUSIC_VERSION', '1.1.0-beta.1' );
+
+/**
+ * Filesystem path to Fieldmanager.
+ */
+//define( 'FM_BASE_DIR', dirname( __FILE__ ) );
+
+
+
 require_once PATH . '/php/autoload.php';
 
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Main', 'instance' ] );
+add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Apple_Music', 'instance' ] );
+
+add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
+/**
+ * Load plugin textdomain.
+ *
+ * @since 1.0.0
+ */
+function myplugin_load_textdomain() {
+  load_plugin_textdomain( 'apple-music', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}

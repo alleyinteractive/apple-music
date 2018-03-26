@@ -29,9 +29,10 @@ class API {
 
 
 	public static function instance() {
-	new API();
+		new API();
 
-}
+	}
+
 	/**
 	 * Set up the singleton.
 	 */
@@ -49,8 +50,8 @@ class API {
 	 *
 	 * @return object|null
 	 */
-	public function search( $term, $types ) {
-	//	$settings         = new Settings();
+	public function search( $term, $types, $page ) {
+		//	$settings         = new Settings();
 //die($this->storefront . '!' . $settings->get_storefront());
 		$url = sprintf( '%s/%s/%s/%s',
 			$this->base_url,
@@ -59,7 +60,9 @@ class API {
 			'search'
 		);
 
-		return $this->send_request( 'GET', $url, compact( 'term', 'types' ) );
+$offset = ( ( $page > 1 ? --$page : $page ) * 25 );
+
+		return $this->send_request( 'GET', $url, compact( 'term', 'types', 'offset' ) );
 	}
 
 	/**
@@ -97,6 +100,11 @@ class API {
 	 * @return mixed|null
 	 */
 	protected function send_request( $method, $url, $params = [] ) {
+//print_r($params);
+		//die();
+		$params = array_merge( $params, [ 'limit' => 25 ]);
+
+
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
 //die($url_safe);
@@ -119,26 +127,30 @@ class API {
 					'method'  => $method,
 					'headers' => [
 						'Authorization' => "Bearer {$this->token}",
-					]
+					],
 				]
 			);
 
-
+//print_r($response);
+					//die($url_safe);
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
+
 				$response = wp_remote_retrieve_body( $response );
+
 			}
 		}
 
 		if ( empty( $response ) || is_wp_error( $response ) ) {
+			die('null2');
 			return null;
 		}
-
+//die($url_safe . ' ' . $response);
 		// Return the results of the API request
 		$response = json_decode( $response ); // wont work for errors
 
-		
 
 		if ( ! empty( $response->results ) ) {
+
 			return $response->results;
 		}
 

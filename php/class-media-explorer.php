@@ -12,7 +12,7 @@ GNU General Public License for more details.
 
 */
 
-class Media_Explorer extends MEXP_Plugin {
+class Media_Explorer {
 
 	/**
 	 * Array of Service objects.
@@ -38,8 +38,7 @@ class Media_Explorer extends MEXP_Plugin {
 		# AJAX actions:
 		add_action( 'wp_ajax_mexp_request',   array( $this, 'ajax_request' ) );
 
-		# Parent setup:
-		parent::__construct( $file );
+
 
 	}
 
@@ -97,26 +96,15 @@ class Media_Explorer extends MEXP_Plugin {
 						esc_attr( $tab_id )
 					);
 
-					$template->before_template( $id, $tab_id );
+					//$template->before_template( $id, $tab_id );
 					call_user_func( array( $template, $t ), $id, $tab_id );
-					$template->after_template( $id, $tab_id );
+
 
 				}
 
 			}
 
-			foreach ( array( 'thumbnail' ) as $t ) {
 
-				$id = sprintf( 'mexp-%s-%s',
-					esc_attr( $service_id ),
-					esc_attr( $t )
-				);
-
-				$template->before_template( $id );
-				call_user_func( array( $template, $t ), $id );
-				$template->after_template( $id );
-
-			}
 
 		}
 
@@ -143,7 +131,7 @@ class Media_Explorer extends MEXP_Plugin {
 			) );
 		}
 
-		foreach ( $service->requires() as $file => $class ) {
+/*		foreach ( $service->requires() as $file => $class ) {
 
 			if ( class_exists( $class ) )
 				continue;
@@ -153,7 +141,7 @@ class Media_Explorer extends MEXP_Plugin {
 				$file
 			);
 
-		}
+		}*/
 
 		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
 			'params'  => array(),
@@ -203,7 +191,6 @@ class Media_Explorer extends MEXP_Plugin {
 				'insert'   => __( 'Insert into post', 'mexp' ),
 				'loadmore' => __( 'Load more', 'mexp' ),
 			),
-			'base_url'  => untrailingslashit( $this->plugin_url() ),
 			'admin_url' => untrailingslashit( admin_url() ),
 		);
 
@@ -225,9 +212,9 @@ class Media_Explorer extends MEXP_Plugin {
 
 		wp_enqueue_script(
 			'mexp',
-			$this->plugin_url( 'apple-music/js/mexp.js' ),
+		PLUGIN_DIR_URL . 'js/mexp.js',
 			array( 'jquery', 'media-views' ),
-			$this->plugin_ver( 'js/mexp.js' )
+			APPLE_MUSIC_VERSION
 		);
 
 		wp_localize_script(
@@ -238,9 +225,9 @@ class Media_Explorer extends MEXP_Plugin {
 
 		wp_enqueue_style(
 			'mexp',
-			$this->plugin_url( 'apple-music/css/mexp.css' ),
+			PLUGIN_DIR_URL .  'css/mexp.css',
 			array( /*'wp-admin'*/ ),
-			$this->plugin_ver( 'css/mexp.css' )
+			APPLE_MUSIC_VERSION
 		);
 
 	}
@@ -264,10 +251,10 @@ class Media_Explorer extends MEXP_Plugin {
 	 */
 	public function action_init() {
 
-		load_plugin_textdomain( 'mexp', false, dirname( $this->plugin_base() ) . '/languages/' );
+
 
 		foreach ( apply_filters( 'mexp_services', array() ) as $service_id => $service ) {
-			if ( is_a( $service, 'MEXP_Service' ) )
+			//if ( is_a( $service, 'MEXP_Service' ) )
 				$this->services[$service_id] = $service;
 		}
 

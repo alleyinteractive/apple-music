@@ -14,8 +14,8 @@ GNU General Public License for more details.
 
 defined( 'ABSPATH' ) or die();
 
-class MEXP_Apple_Service extends MEXP_Service {
-
+class MEXP_Apple_Service {
+public $template = null;
 	public $credentials = null;
 	public $response_meta = array();
 
@@ -24,7 +24,8 @@ class MEXP_Apple_Service extends MEXP_Service {
 		require_once dirname( __FILE__ ) . '/template.php';
 
 		# Go!
-		$this->set_template( new MEXP_Apple_Template );
+		//$this->set_template( new MEXP_Apple_Template );
+		$this->template = new MEXP_Apple_Template;
 
 	}
 
@@ -39,16 +40,22 @@ class MEXP_Apple_Service extends MEXP_Service {
 
 
 	public function request( array $request ) {
+
+		
 		$params = $request['params'];
 
 		$s        = new Apple_Music\API();
-		$response = $s->search( reset( $params ), key( $params ) );
+		$response = $s->search( reset( $params ), key( $params ), $request['page'] );
 
 		return $this->response( $response );
 
 	}
 
+	public function get_template() {
 
+		return $this->template;
+
+	}
 	public function get_max_id( $next ) {
 
 		parse_str( ltrim( $next, '?' ), $vars );
@@ -68,6 +75,7 @@ class MEXP_Apple_Service extends MEXP_Service {
 				}*/
 
 		$response = new MEXP_Response;
+
 		reset( $r );
 		$type = key( $r );
 
@@ -80,7 +88,10 @@ class MEXP_Apple_Service extends MEXP_Service {
 					$response->add_meta( $this->response_meta );
 				}*/
 
-
+		if ( ! empty( $r->$type->next ) ) {
+			$load_more = true;
+			$response->add_meta( 'load-more', true );
+		}
 
 		foreach ( $r->$type->data as $thing ) {
 
@@ -118,13 +129,7 @@ class MEXP_Apple_Service extends MEXP_Service {
 	}
 
 
-	public function thumbnail_html() {
-		/*							<div class="image album">
-						<img onerror="this.style.display='none';" src="https://is5-ssl.mzstatic.com/image/thumb/Features/v4/57/9a/d2/579ad2e5-e9eb-630a-dafd-1704e0fbe9cc/mza_1011095246346662165.jpg/236x236bb.jpg" alt="236x236bb" width="118" height="118">
-						</div>
-						  <div class="title"> <div class="name">Thriller</div>  </div>
-																				  <div class="artistName"> Michael Jackson </div>*/
-	}
+
 
 	public function tabs( array $tabs ) {
 		$tabs['apple'] = array(
@@ -165,8 +170,7 @@ class MEXP_Apple_Service extends MEXP_Service {
 			# @TODO the 'insert' button text gets reset when selecting items. find out why.
 			'insert'    => __( 'Insert Apple Music', 'mexp' ),
 			'noresults' => __( 'No  Apple Music matched your search query', 'mexp' ),
-			'gmaps_url' => set_url_scheme( 'https://maps.google.com/maps/api/js', 'https' ),
-			'loadmore'  => __( 'Load more muaic', 'mexp' ),
+			'loadmore'  => __( 'Load more music', 'mexp' ),
 		);
 
 		return $labels;

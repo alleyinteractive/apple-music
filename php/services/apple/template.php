@@ -13,10 +13,11 @@ GNU General Public License for more details.
 
 */
 
-class MEXP_Apple_Template extends MEXP_Template {
+class MEXP_Apple_Template {
 
 	public function item( $id, $tab ) {
 		?>
+		<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
 		<div id="mexp-item-twitter-<?php echo esc_attr( $tab ); ?>-{{ data.id }}" class="mexp-item-area" data-id="{{ data.id }}">
 			<div class="mexp-item-container clearfix">
 				<div class="mexp-item-thumb">
@@ -33,6 +34,7 @@ class MEXP_Apple_Template extends MEXP_Template {
 		<a href="#" id="mexp-check-{{ data.id }}" data-id="{{ data.id }}" class="check" title="<?php esc_attr_e( 'Deselect', 'apple-music' ); ?>">
 			<div class="media-modal-icon"></div>
 		</a>
+		</script>
 		<?php
 	}
 
@@ -40,8 +42,14 @@ class MEXP_Apple_Template extends MEXP_Template {
 		?>
 		<?php
 	}
+	
+
 
 	public function search( $id, $tab ) {
+	
+	?>
+	<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
+	<?php
 
 		switch ( $tab ) {
 
@@ -199,7 +207,9 @@ class MEXP_Apple_Template extends MEXP_Template {
 				break;
 
 		}
-
+?>
+		</script>
+<?php
 	}
 
 }

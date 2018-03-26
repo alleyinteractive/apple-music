@@ -16,16 +16,10 @@ class Media_Modal {
 	 */
 	public function __construct() {
 
-		require_once PATH . '/php/class-mexp-service.php';
-		require_once PATH . '/php/class-plugin.php';
-		require_once PATH . '/php/class-template.php';
+		//require_once PATH . '/php/class-mexp-service.php';
 		require_once PATH . '/php/class-response.php';
 		require_once PATH . '/php/class-media-explorer.php';
-
-		foreach ( glob( dirname( __FILE__ ) . '/services/*/service.php' ) as $service ) {
-			include $service;
-
-		}
+		require_once PATH . '/php/services/apple/service.php';
 
 		\Media_Explorer::init( __FILE__ );
 
@@ -36,5 +30,4 @@ class Media_Modal {
 	public function media_button( $editor_id ) {
 		echo '<a href="#" class="button insert-media add_media">Add Apple Music</a>';
 	}
-
 }

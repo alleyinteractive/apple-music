@@ -8,8 +8,8 @@
 
 namespace Apple_Music;
 
-class Main {
-	use Util\Singleton;
+class Apple_Music {
+	//use Util\Singleton;
 
 	/**
 	 * Set up the singleton.
@@ -22,5 +22,7 @@ class Main {
 		new \Apple_Music\Shortcode;
 
 	}
+	
+	
 
 }
