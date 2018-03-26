@@ -32,9 +32,9 @@ public $template = null;
 	public function load() {
 
 
-		add_filter( 'mexp_tabs', array( $this, 'tabs' ), 10, 1 );
 
-		add_filter( 'mexp_labels', array( $this, 'labels' ), 10, 1 );
+
+		//add_filter( 'mexp_labels', array( $this, 'labels' ), 10, 1 );
 
 	}
 
@@ -130,42 +130,8 @@ public $template = null;
 
 
 
-
-	public function tabs( array $tabs ) {
-		$tabs['apple'] = array(
-			'artists'      => array(
-				'text'       => _x( 'Artists', 'Tab title', 'mexp' ),
-				'defaultTab' => true
-			),
-			'songs'        => array(
-				'text' => _x( 'Songs', 'Tab title', 'mexp' ),
-			),
-			'albums'       => array(
-				'text' => _x( 'Albums', 'Tab title', 'mexp' ),
-			),
-			'playlists'    => array(
-				'text' => _x( 'Playlists', 'Tab title', 'mexp' ),
-			),
-			'connect'      => array(
-				'text' => _x( 'Connect', 'Tab title', 'mexp' ),
-			),
-			'curators'     => array(
-				'text' => _x( 'Curators', 'Tab title', 'mexp' ),
-			),
-			'radio'        => array(
-				'text' => _x( 'Radio', 'Tab title', 'mexp' ),
-			),
-			'music-videos' => array(
-				'text' => _x( 'Music Videos', 'Tab title', 'mexp' ),
-			),
-		);
-
-		return $tabs;
-	}
-
-
 	public function labels( array $labels ) {
-		$labels['apple'] = array(
+		$labels['apple-music'] = array(
 			'title'     => __( 'Insert Apple Music', 'mexp' ),
 			# @TODO the 'insert' button text gets reset when selecting items. find out why.
 			'insert'    => __( 'Insert Apple Music', 'mexp' ),
@@ -181,7 +147,7 @@ public $template = null;
 add_filter( 'mexp_services', 'mexp_service_apple' );
 
 function mexp_service_apple( array $services ) {
-	$services['apple'] = new MEXP_Apple_Service;
+	$services['apple-music'] = new MEXP_Apple_Service;
 
 	return $services;
 }

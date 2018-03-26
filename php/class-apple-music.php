@@ -1,83 +1,39 @@
 <?php
+/*
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 2 of the License, or
+(at your option) any later version.
 
-/**
- * Main handler for the Apple Music embed tool.
- *
- * @package Apple_Music
- */
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-namespace Apple_Music;
+*/
 
-class Apple_Music {
-	//use Util\Singleton;
+class Media_Explorer {
 
 	/**
-	 * Set up the singleton.
+	 * Array of Service objects.
 	 */
-	/*	public function setup() {
-	
-			new \Apple_Music\API;
-			//new \Apple_Music\Settings;
-			new \Apple_Music\Media_Modal;
-			new \Apple_Music\Shortcode;
-	
-		}*/
+	public $services = array();
+
+	/**
+	 * Class constructor. Set up some actions and filters.
+	 *
+	 * @return null
+	 */
+	protected function __construct( $file ) {
+
+		add_action( 'wp_enqueue_media',      array( $this, 'action_enqueue_media' ) );
+		add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );
 
 
-	public function __construct() {
+		add_action( 'wp_ajax_mexp_request',   array( $this, 'ajax_request' ) );
 
-		//add_action( 'init', [ $this, 'action_init' ] );
-		add_action( 'wp_enqueue_media', [ $this, 'action_enqueue_media' ] );
-		add_action( 'print_media_templates', [ $this, 'action_print_media_templates' ] );
-		add_action( 'wp_ajax_mexp_request', [ $this, 'ajax_request' ] );
-
-	}
-
-	public function action_enqueue_media() {
-
-		$mexp = array(
-			'_nonce'    => wp_create_nonce( 'mexp_request' ), // ??????????
-			'labels'    => array(
-				'insert'   => __( 'Insert into post', 'mexp' ),
-				'loadmore' => __( 'Load more', 'mexp' ),
-			),
-			'admin_url' => untrailingslashit( admin_url() ),
-		);
-
-		//foreach ( $this->get_services() as $service_id => $service ) {
-		//$service->load();
-
-		//$tabs   = apply_filters( 'mexp_tabs', array() );
-		//$labels = apply_filters( 'mexp_labels', array() );
-
-		$mexp['services']['apple-music'] = array( // ????????
-			'id'     => 'apple-music',
-			'labels' => $this->labels(),
-			'tabs'   => $this->tabs(),
-		);
-		//}
-
-
-		wp_enqueue_script(
-			'apple-music',
-			PLUGIN_DIR_URL . 'js/apple-music.js',
-			array( 'jquery', 'media-views' ),
-			APPLE_MUSIC_VERSION
-		);
-
-		wp_localize_script(
-			'apple-music',
-			'mexp',
-			$mexp
-		);
-
-		wp_enqueue_style(
-			'apple-music',
-			PLUGIN_DIR_URL . 'css/apple-music.css',
-			array( /*'wp-admin'*/ ),
-			APPLE_MUSIC_VERSION
-		);
-
+		$this->service  = new \MEXP_Apple_Service();
+		
 	}
 
 
@@ -91,87 +47,38 @@ class Apple_Music {
 
 		//foreach ( $this->get_services() as $service_id => $service ) {
 
-		/*		if ( ! $template = $service->get_template() ) {
-					continue;
-				}*/
+		$service  = $this->service;
 
-		$service  = new \MEXP_Apple_Service();
-		$template = $service->get_template();
-		$tabs     = $this->tabs();
 
-		foreach ( array( 'search', 'item' ) as $t ) {
 
-			foreach ( $tabs as $tab_id => $tab ) {
+			// apply filters for tabs
+			//$tabs = apply_filters( 'mexp_tabs', array() );
+			$tabs     = $this->tabs();
 
-				$id = sprintf( 'mexp-%s-%s-%s',
-					esc_attr( 'apple-music' ),
-					esc_attr( $t ),
-					esc_attr( $tab_id )
-				);
-//die($tab_id);
-				//$template->before_template( $id, $tab_id );
-				call_user_func( array( $template, $t ), $id, $tab_id );
+			# @TODO this list of templates should be somewhere else. where?
+			foreach ( array( 'search', 'item' ) as $t ) {
+
+				foreach ( $tabs as $tab_id => $tab ) {
+
+					$id = sprintf( 'mexp-%s-%s-%s',
+						esc_attr( 'apple-music' ),
+						esc_attr( $t ),
+						esc_attr( $tab_id )
+					);
+
+					//$template->before_template( $id, $tab_id );
+					call_user_func( array( $service->get_template(), $t ), $id, $tab_id );
+
+
+				}
 
 			}
-		}
-	}
-
-	/**
-	 * Process an AJAX request and output the resulting JSON.
-	 *
-	 * @action wp_ajax_mexp_request
-	 * @return null
-	 */
-	public function ajax_request() {
-
-		/*		if ( ! isset( $_POST['_nonce'] ) or ! wp_verify_nonce( $_POST['_nonce'], 'mexp_request' ) ) {
-					die( '-1' );
-				}*/
-
-		$service = new \MEXP_Apple_Service;
-
-		if ( is_wp_error( $service ) ) {
-			do_action( 'mexp_ajax_request_error', $service );
-			wp_send_json_error( array(
-				'error_code'    => $service->get_error_code(),
-				'error_message' => $service->get_error_message()
-			) );
-		}
-
-		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
-			'params' => array(),
-			'tab'    => null,
-			'min_id' => null,
-			'max_id' => null,
-			'page'   => 1,
-		) );
 
 
-		$request['page']    = absint( $request['page'] );
-		$request['user_id'] = absint( get_current_user_id() );
-		$request            = apply_filters( 'mexp_ajax_request_args', $request, $service );
 
-		$response = $service->request( $request );
-
-		if ( is_wp_error( $response ) ) {
-			do_action( 'mexp_ajax_request_error', $response );
-			wp_send_json_error( array(
-				'error_code'    => $response->get_error_code(),
-				'error_message' => $response->get_error_message()
-			) );
-
-		} else if ( is_a( $response, 'MEXP_Response' ) ) {
-			do_action( 'mexp_ajax_request_success', $response );
-			wp_send_json_success( $response->output() );
-
-		} else {
-			do_action( 'mexp_ajax_request_success', false );
-			wp_send_json_success( false );
-
-		}
+	//	}
 
 	}
-
 
 	public function tabs() {
 		$tabs = array(
@@ -205,7 +112,7 @@ class Apple_Music {
 		return $tabs;
 	}
 
-	public function labels() {
+		public function labels() {
 		$labels = array(
 			'title'     => __( 'Insert Apple Music', 'mexp' ),
 			# @TODO the 'insert' button text gets reset when selecting items. find out why.
@@ -217,5 +124,137 @@ class Apple_Music {
 		return $labels;
 	}
 
+	/**
+	 * Process an AJAX request and output the resulting JSON.
+	 *
+	 * @action wp_ajax_mexp_request
+	 * @return null
+	 */
+	public function ajax_request() {
+
+		if ( !isset( $_POST['_nonce'] ) or !wp_verify_nonce( $_POST['_nonce'], 'mexp_request' ) )
+			die( '-1' );
+
+		//$service = $this->get_service( stripslashes( $_POST['service'] ) );
+		$service = new \MEXP_Apple_Service;
+
+		if ( is_wp_error( $service ) ) {
+			do_action( 'mexp_ajax_request_error', $service );
+			wp_send_json_error( array(
+				'error_code'    => $service->get_error_code(),
+				'error_message' => $service->get_error_message()
+			) );
+		}
+
+		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
+			'params'  => array(),
+			'tab'     => null,
+			'min_id'  => null,
+			'max_id'  => null,
+			'page'    => 1,
+		) );
+
+
+		$request['page'] = absint( $request['page'] );
+		$request['user_id'] = absint( get_current_user_id() );
+		$request = apply_filters( 'mexp_ajax_request_args', $request, $service );
+
+		$response = $service->request( $request );
+
+		if ( is_wp_error( $response ) ) {
+			do_action( 'mexp_ajax_request_error', $response );
+			wp_send_json_error( array(
+				'error_code'    => $response->get_error_code(),
+				'error_message' => $response->get_error_message()
+			) );
+
+		} else if ( is_a( $response, 'MEXP_Response' ) ) {
+			do_action( 'mexp_ajax_request_success', $response );
+			wp_send_json_success( $response->output() );
+
+		} else {
+			do_action( 'mexp_ajax_request_success', false );
+			wp_send_json_success( false );
+
+		}
+
+	}
+
+	/**
+	 * Enqueue and localise the JS and CSS we need for the media manager.
+	 *
+	 * @action enqueue_media
+	 * @return null
+	 */
+	public function action_enqueue_media() {
+
+		$mexp = array(
+			'_nonce'    => wp_create_nonce( 'mexp_request' ),
+			'labels'    => array(
+				'insert'   => __( 'Insert into post', 'mexp' ),
+				'loadmore' => __( 'Load more', 'mexp' ),
+			),
+			'admin_url' => untrailingslashit( admin_url() ),
+		);
+
+		//foreach ( $this->get_services() as $service_id => $service ) {
+			//$service->load();
+$service  = $this->service;
+			//$tabs = apply_filters( 'mexp_tabs', array() );
+			$tabs = $this->tabs();
+			$labels = $this->labels();
+
+			$mexp['services']['apple-music'] = array(
+				'id'     => 'apple-music',
+				'labels' => $labels,
+				'tabs'   => $tabs,
+			);
+		//}
+
+		// this action enqueues all the statics for each service
+		do_action( 'mexp_enqueue' );
+
+		wp_enqueue_script(
+			'apple-music',
+			PLUGIN_DIR_URL . 'js/apple-music.js',
+			array( 'jquery', 'media-views' ),
+			APPLE_MUSIC_VERSION
+		);
+
+		wp_localize_script(
+			'apple-music',
+			'mexp',
+			$mexp
+		);
+
+		wp_enqueue_style(
+			'apple-music',
+			PLUGIN_DIR_URL . 'css/apple-music.css',
+			array( /*'wp-admin'*/ ),
+			APPLE_MUSIC_VERSION
+		);
+
+	}
+
+
+
+
+
+	/**
+	 * Singleton instantiator.
+	 *
+	 * @param string $file The plugin file (usually __FILE__) (optional)
+	 * @return Media_Explorer
+	 */
+	public static function init( $file = null ) {
+
+		static $instance = null;
+
+		if ( !$instance )
+			$instance = new Media_Explorer( $file );
+
+		return $instance;
+
+	}
 
 }
