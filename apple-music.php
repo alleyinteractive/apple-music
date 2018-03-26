@@ -44,7 +44,7 @@ define( 'APPLE_MUSIC_VERSION', '1.1.0-beta.1' );
 
 require_once PATH . '/php/autoload.php';
 
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Apple_Music', 'instance' ] );
+add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Main', 'instance' ] );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
 /**

@@ -8,8 +8,8 @@
 
 namespace Apple_Music;
 
-class Apple_Music {
-	//use Util\Singleton;
+class Main {
+	use Util\Singleton;
 
 	/**
 	 * Set up the singleton.
