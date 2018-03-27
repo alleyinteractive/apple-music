@@ -41,10 +41,21 @@ define( 'APPLE_MUSIC_VERSION', '1.1.0-beta.1' );
 //define( 'FM_BASE_DIR', dirname( __FILE__ ) );
 
 
+//require_once PATH . '/php/autoload.php';
 
-require_once PATH . '/php/autoload.php';
+require_once PATH . '/php/class-api.php';
+require_once PATH . '/php/class-shortcode.php';
+require_once PATH . '/php/class-settings.php';
+require_once PATH . '/php/class-media-modal.php';
 
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Main', 'instance' ] );
+
+//add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Apple_Music', 'instance' ] );
+
+add_action( 'after_setup_theme', function () {
+	new \Apple_Music;
+	new Shortcode;
+	new Settings;
+} );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
 /**
@@ -53,5 +64,5 @@ add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
  * @since 1.0.0
  */
 function myplugin_load_textdomain() {
-  load_plugin_textdomain( 'apple-music', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain( 'apple-music', false, basename( dirname( __FILE__ ) ) . '/languages' );
 }

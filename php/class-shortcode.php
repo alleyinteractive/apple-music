@@ -14,7 +14,7 @@ class Shortcode {
 	public function __construct() {
 		add_shortcode( 'apple-music', [ $this, 'shortcode' ] );
 
-//add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );
+
 	}
 
 

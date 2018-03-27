@@ -60,9 +60,10 @@ class API {
 			'search'
 		);
 
+		$limit = 25;
 $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 
-		return $this->send_request( 'GET', $url, compact( 'term', 'types', 'offset' ) );
+		return $this->send_request( 'GET', $url, compact( 'term', 'types', 'limit', 'offset' ) );
 	}
 
 	/**
@@ -73,7 +74,7 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 	public function get_storefronts() {
 		$transient   = 'apple-music-storefronts';
 		$storefronts = get_transient( $transient );
-		if ( false === $storefronts ) {
+		//if ( false === $storefronts ) {
 
 			$url = sprintf( '%s/%s',
 				$this->base_url,
@@ -85,7 +86,7 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 			if ( ! empty( $storefronts ) ) {
 				set_transient( $transient, $storefronts, DAY_IN_SECONDS );
 			}
-		}
+		//}
 
 		return $storefronts;
 	}
@@ -102,7 +103,7 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 	protected function send_request( $method, $url, $params = [] ) {
 //print_r($params);
 		//die();
-		$params = array_merge( $params, [ 'limit' => 25 ]);
+		//$params = array_merge( $params, [ 'limit' => 25 ]);
 
 
 
