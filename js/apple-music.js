@@ -22,7 +22,7 @@ media.view.MEXPItem = wp.Backbone.View.extend({
 
     render: function() {
 
-    	this.template = media.template( 'mexp-' + this.options.service.id + '-item-' + this.options.tab );
+    	this.template = media.template( 'mexp-apple-music-item-' + this.options.tab );
        	this.$el.html( this.template( this.model.toJSON() ) );
 
         return this;
@@ -56,12 +56,12 @@ media.view.Toolbar.MEXP = media.view.Toolbar.extend({
 
 		media.view.Toolbar.prototype.initialize.apply( this, arguments );
 
-		var serviceName = this.controller.state().id.replace( /mexp-service-/g, '');
+		//var serviceName = this.controller.state().id.replace( /mexp-service-/g, '');
 
 		this.set( 'pagination', new media.view.Button({
 			tagName: 'button',
 			classes: 'mexp-pagination button button-secondary',
-			id: serviceName + '-loadmore',
+			id: 'apple-music-loadmore',
 			text: mexp.labels.loadmore,
 			priority: -20,
 		}) );
@@ -100,6 +100,7 @@ media.view.MEXP = media.View.extend({
 		this.service    = this.options.service;
 		this.tab        = this.options.tab;
 
+
 		this.createToolbar();
 		this.clearItems();
 
@@ -108,14 +109,10 @@ media.view.MEXP = media.View.extend({
 			this.collection = new Backbone.Collection();
 			this.collection.reset( this.model.get( 'items' ) );
 
-			jQuery( '#' + this.service.id + '-loadmore' ).attr( 'disabled', false ).show();
+			jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
 		} else {
-			jQuery( '#' + this.service.id + '-loadmore' ).hide();
+			jQuery( '#apple-music-loadmore' ).hide();
 		}
-
-		// @TODO do this somewhere else:
-		// @TODO this gets reverted anyway when the button model's disabled state changes. look into it.
-		//jQuery( '#mexp-button' ).text( this.service.labels.insert );
 
 		this.collection.on( 'reset', this.render, this );
 
@@ -158,7 +155,7 @@ media.view.MEXP = media.View.extend({
 		}
 
 		selection.each( function( model ) {
-			var id = '#mexp-item-' + this.service.id + '-' + this.tab + '-' + model.get( 'id' );
+			var id = '#mexp-item-apple-music-' + this.tab + '-' + model.get( 'id' );
 			this.$el.find( id ).closest( '.mexp-item' ).addClass( 'selected details' );
 		}, this );
 
@@ -196,7 +193,7 @@ media.view.MEXP = media.View.extend({
 		this.$el.append( html );
 
 		// @TODO this could be a separate view:
-		var toolbar_template = media.template( 'mexp-' + this.service.id + '-search-' + this.tab );
+		var toolbar_template = media.template( 'mexp-apple-music-search-' + this.tab );
 		html = '<div class="mexp-toolbar media-toolbar clearfix">' + toolbar_template( this.model.toJSON() ) + '</div>';
 		this.$el.prepend( html );
 
@@ -276,7 +273,7 @@ media.view.MEXP = media.View.extend({
 		this.$el.find( '.mexp-empty' ).hide().text('');
 
 		// disable 'load more' button
-		jQuery( '#' + this.service.id + '-loadmore' ).attr( 'disabled', true );
+		jQuery( '#apple-music-loadmore' ).attr( 'disabled', true );
 	},
 
 	loaded: function( response ) {
@@ -346,7 +343,7 @@ media.view.MEXP = media.View.extend({
 
 		}
 
-		jQuery( '#' + this.service.id + '-loadmore' ).attr( 'disabled', false ).show();
+		jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
 		this.model.set( 'max_id', response.meta.max_id );
 
 		this.trigger( 'loaded loaded:success', response );
@@ -356,6 +353,7 @@ media.view.MEXP = media.View.extend({
 	fetchedEmpty: function( response ) {
 
 		this.$el.find( '.mexp-empty' ).text( this.service.labels.noresults ).show();
+
 		this.$el.find( '.mexp-pagination' ).hide();
 
 		this.trigger( 'loaded loaded:noresults', response );
@@ -437,26 +435,26 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 		post_frame.prototype.initialize.apply( this, arguments );
 
-		_.each( mexp.services, function( service, service_id ) {
+		//_.each( mexp.services, function( service ) { // this may be it
 
-			var id = 'mexp-service-' + service.id;
+			var id = 'mexp-service-apple-music';
 			var controller = {
 				id      : id,
 				router  : id + '-router',
 				toolbar : id + '-toolbar',
 				menu    : 'default',
-				title   : service.labels.title,
-				tabs    : service.tabs,
+				title   : mexp.labels.title,
+				tabs    : mexp.tabs,
 				priority: 100 // places it above Insert From URL
 			};
 
-			for ( var tab in service.tabs ) {
+			for ( var tab in mexp.tabs ) {
 
 				// Content
-				this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.mexpContentRender, this, service, tab ) );
+				this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.mexpContentRender, this, mexp, tab ) );
 
 				// Set the default tab
-				if ( service.tabs[tab].defaultTab )
+				if ( mexp.tabs[tab].defaultTab )
 					controller.content = id + '-content-' + tab;
 
 			}
@@ -467,19 +465,19 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 			// Tabs
 			this.on( 'router:create:' + id + '-router', this.createRouter, this );
-			this.on( 'router:render:' + id + '-router', _.bind( this.mexpRouterRender, this, service ) );
+			this.on( 'router:render:' + id + '-router', _.bind( this.mexpRouterRender, this, mexp ) );
 
 			// Toolbar
 			this.on( 'toolbar:create:' + id + '-toolbar', this.mexpToolbarCreate, this );
-			//this.on( 'toolbar:render:' + id + '-toolbar', _.bind( this.mexpToolbarRender, this, service ) );
+			//this.on( 'toolbar:render:' + id + '-toolbar', _.bind( this.mexpToolbarRender, this, mexp ) );
 
-		}, this );
+		//}, this );
 
 	},
 
 	mexpRouterRender : function( service, view ) {
 
-		var id   = 'mexp-service-' + service.id;
+		var id   = 'mexp-service-apple-music';
 		var tabs = {};
 
 		for ( var tab in service.tabs ) {
@@ -513,7 +511,7 @@ media.view.MediaFrame.Post = post_frame.extend({
 			controller : this,
 			model      : this.state().props.get( tab ),
 			tab        : tab,
-			className  : 'clearfix attachments-browser mexp-content mexp-content-' + service.id + ' mexp-content-' + service.id + '-' + tab
+			className  : 'clearfix attachments-browser mexp-content mexp-content-apple-music mexp-content-apple-music-' + tab
 		} ) );
 
 	},

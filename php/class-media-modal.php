@@ -1,24 +1,6 @@
 <?php
 
-/*
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-*/
-
-class Apple_music {
-
-	/**
-	 * Array of Service objects.
-	 */
-	public $services = array();
+class Apple_Music {
 
 	public $items = array();
 	public $meta = array(
@@ -27,28 +9,18 @@ class Apple_music {
 		'min_id' => null,
 	);
 
-		public $id          = null;
-	public $url         = null;
-	public $thumbnail   = null;
-	public $content     = null;
+	public $id = null;
+	public $url = null;
+	public $thumbnail = null;
+	public $content = null;
 
-	//public $meta        = array();
 
-	/**
-	 * Class constructor. Set up some actions and filters.
-	 *
-	 * @return null
-	 */
 	public function __construct() {
 
 		add_action( 'wp_enqueue_media', array( $this, 'action_enqueue_media' ) );
 		add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );
-
-
 		add_action( 'wp_ajax_mexp_request', array( $this, 'ajax_request' ) );
 
-		//$this->service  = new \MEXP_Apple_Service();
-		//$this->template = new MEXP_Apple_Template;
 
 	}
 
@@ -98,46 +70,36 @@ class Apple_music {
 	public function tabs() {
 		$tabs = array(
 			'artists'      => array(
-				'text'       => _x( 'Artists', 'Tab title', 'mexp' ),
+				'text'       => _x( 'Artists', 'Tab title', 'apple-music' ),
 				'defaultTab' => true,
 			),
 			'songs'        => array(
-				'text' => _x( 'Songs', 'Tab title', 'mexp' ),
+				'text' => _x( 'Songs', 'Tab title', 'apple-music' ),
 			),
 			'albums'       => array(
-				'text' => _x( 'Albums', 'Tab title', 'mexp' ),
+				'text' => _x( 'Albums', 'Tab title', 'apple-music' ),
 			),
 			'playlists'    => array(
-				'text' => _x( 'Playlists', 'Tab title', 'mexp' ),
+				'text' => _x( 'Playlists', 'Tab title', 'apple-music' ),
 			),
 			'connect'      => array(
-				'text' => _x( 'Connect', 'Tab title', 'mexp' ),
+				'text' => _x( 'Connect', 'Tab title', 'apple-music' ),
 			),
 			'curators'     => array(
-				'text' => _x( 'Curators', 'Tab title', 'mexp' ),
+				'text' => _x( 'Curators', 'Tab title', 'apple-music' ),
 			),
 			'radio'        => array(
-				'text' => _x( 'Radio', 'Tab title', 'mexp' ),
+				'text' => _x( 'Radio', 'Tab title', 'apple-music' ),
 			),
 			'music-videos' => array(
-				'text' => _x( 'Music Videos', 'Tab title', 'mexp' ),
+				'text' => _x( 'Music Videos', 'Tab title', 'apple-music' ),
 			),
 		);
 
 		return $tabs;
 	}
 
-	public function labels() {
-		$labels = array(
-			'title'     => __( 'Insert Apple Music', 'mexp' ),
-			# @TODO the 'insert' button text gets reset when selecting items. find out why.
-			'insert'    => __( 'Insert Apple Music', 'mexp' ),
-			'noresults' => __( 'No  Apple Music matched your search query', 'mexp' ),
-			'loadmore'  => __( 'Load more music', 'mexp' ),
-		);
 
-		return $labels;
-	}
 
 	/**
 	 * Process an AJAX request and output the resulting JSON.
@@ -151,16 +113,6 @@ class Apple_music {
 			die( '-1' );
 		}
 
-		//$service = $this->get_service( stripslashes( $_POST['service'] ) );
-		/*		$service = new \MEXP_Apple_Service;
-
-				if ( is_wp_error( $service ) ) {
-					do_action( 'mexp_ajax_request_error', $service );
-					wp_send_json_error( array(
-						'error_code'    => $service->get_error_code(),
-						'error_message' => $service->get_error_message()
-					) );
-				}*/
 
 		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
 			'params' => array(),
@@ -205,6 +157,18 @@ class Apple_music {
 
 	}
 
+		public function labels() {
+		$labels = array(
+			'title'     => __( 'Insert Apple Musica', 'mexp' ),
+			# @TODO the 'insert' button text gets reset when selecting items. find out why.
+			'insert'    => __( 'Insert Apple Musicb', 'mexp' ),
+			'noresults' => __( 'No matched your search query', 'mexp' ),
+			'loadmore'  => __( 'Load more music', 'mexp' ),
+		);
+
+		return $labels;
+	}
+
 	/**
 	 * Enqueue and localise the JS and CSS we need for the media manager.
 	 *
@@ -215,11 +179,8 @@ class Apple_music {
 
 		$mexp = array(
 			'_nonce'    => wp_create_nonce( 'mexp_request' ),
-			'labels'    => array(
-				'insert'   => __( 'Insert into post', 'mexp' ),
-				'loadmore' => __( 'Load more', 'mexp' ),
-			),
-			'admin_url' => untrailingslashit( admin_url() ),
+			'labels'    => $this->labels(),
+			'tabs'    => $this->tabs(),
 		);
 
 		//foreach ( $this->get_services() as $service_id => $service ) {
@@ -227,17 +188,15 @@ class Apple_music {
 //$service  = $this->service;
 		//$tabs = apply_filters( 'mexp_tabs', array() );
 		$tabs   = $this->tabs();
-		$labels = $this->labels();
+		//$labels = $this->labels();
 
-		$mexp['services']['apple-music'] = array(
+/*		$mexp['services']['apple-music'] = array(
 			'id'     => 'apple-music',
-			'labels' => $labels,
+			//'labels' => $labels,
 			'tabs'   => $tabs,
-		);
+		);*/
 		//}
 
-		// this action enqueues all the statics for each service
-		do_action( 'mexp_enqueue' );
 
 		wp_enqueue_script(
 			'apple-music',
@@ -263,56 +222,45 @@ class Apple_music {
 
 	public function response( $r ) {
 
-	
-
-
 		reset( $r );
 		$type = key( $r );
-
-
-		/*		
-
-				if ( isset( $this->response_meta ) ) {
-					$response->add_meta( $this->response_meta );
-				}*/
 
 		if ( ! empty( $r->$type->next ) ) {
 			$load_more = true;
 			$this->add_meta( 'load-more', true );
 		}
+if ( ! empty($r->$type->data)) {
+	foreach ( $r->$type->data as $thing ) {
 
-		foreach ( $r->$type->data as $thing ) {
+		$item = [ ];
 
-			//$item = new MEXP_Response_Item;
-			$item = [];
+		$shortcode = '[apple-music format=' . rtrim( $type, 's' ) . ' id=' . $thing->id . ']';
 
-			$shortcode = '[apple-music format=' . rtrim( $type, 's' ) . ' id=' . $thing->id . ']';
+		$item['id']  = $thing->id;
+		$item['url'] = $shortcode;
 
-			$item['id'] =  $thing->id;
-			$item['url'] = $shortcode;
+		$attributes = $thing->attributes;
 
-			$attributes = $thing->attributes;
+		switch ( $type ) {
 
-			switch ( $type ) {
+			case 'artists':
+				$item['content'] = $attributes->name;
+				break;
 
-				case 'artists':
-					$item['content'] =  $attributes->name;
-					break;
-
-				case 'songs':
-				case 'albums':
-					$item['content'] =  $attributes->artistName . ' ' . $attributes->name ;
-					$thumbnail = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
-					$item['thumbnail'] = esc_url_raw( $thumbnail );
-					break;
-
-			}
-
-			//$response->add_item( $item );
-			$this->items[] = $item;
+			case 'songs':
+			case 'albums':
+				$item['content']   = $attributes->artistName . ' ' . $attributes->name;
+				$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
+				$item['thumbnail'] = esc_url_raw( $thumbnail );
+				break;
 
 		}
 
+		//$response->add_item( $item );
+		$this->items[] = $item;
+
+	}
+}
 
 		//return $response;
 
@@ -413,45 +361,5 @@ class Apple_music {
 		return $output;
 
 	}
-
-
-		/**
-	 * Retrieve the response item output.
-	 *
-	 * @return array The response item output.
-	 */
-	public function item_output() {
-
-		if ( is_null( $this->date_format ) )
-			$this->date_format = get_option( 'date_format' );
-
-		return array(
-			'id'        => $this->id,
-			'url'       => $this->url,
-			'thumbnail' => $this->thumbnail,
-			'content'   => $this->content,
-			'date'      => date( $this->date_format, $this->date ),
-			'meta'      => $this->meta,
-		);
-
-	}
-
-	/**
-	 * Singleton instantiator.
-	 *
-	 * @param string $file The plugin file (usually __FILE__) (optional)
-	 *
-	 * @return Media_Explorer
-	 */
-	/*	public static function init( $file = null ) {
-
-			static $instance = null;
-
-			if ( !$instance )
-				$instance = new Media_Explorer( $file );
-
-			return $instance;
-
-		}*/
 
 }

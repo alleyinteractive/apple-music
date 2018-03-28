@@ -28,7 +28,7 @@ namespace Apple_Music;
 
 define( __NAMESPACE__ . '\PATH', __DIR__ );
 
-define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) ); // works?
 
 /**
  * Current version of Fieldmanager.
