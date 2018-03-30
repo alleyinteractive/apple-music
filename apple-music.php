@@ -28,8 +28,22 @@ namespace Apple_Music;
 
 define( __NAMESPACE__ . '\PATH', __DIR__ );
 
+define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'APPLE_MUSIC_VERSION', '0.1.0' );
+
 require_once PATH . '/php/autoload.php';
 
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Main', 'instance' ] );
-add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Settings', 'instance' ] );
+add_action( 'after_setup_theme', function () {
+	new Shortcode;
+	new Settings;
+} );
 
+add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
+/**
+ * Load plugin textdomain.
+ *
+ * @since 1.0.0
+ */
+function myplugin_load_textdomain() {
+	load_plugin_textdomain( 'apple-music', false, basename( dirname( __FILE__ ) ) . '/languages' );
+}
