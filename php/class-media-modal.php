@@ -34,16 +34,12 @@ class Media_Modal {
 		$tabs = $this->tabs();
 
 		foreach ( array( 'search', 'item' ) as $t ) {
-
 			foreach ( $tabs as $tab_id => $tab ) {
-
 				$id = sprintf( 'apple-music-%s-%s',
 					esc_attr( $t ),
 					esc_attr( $tab_id )
 				);
-
 				call_user_func( array( $this, $t ), $id, $tab_id );
-
 			}
 		}
 	}
@@ -77,6 +73,7 @@ class Media_Modal {
 		$params             = $request['params'];
 
 		// Temporary hack!
+		// Need to fix hyphens in js.
 		$types = key( $params );
 		if ( 'videos' === key( $params ) ) {
 			$types = 'music-videos';
@@ -85,8 +82,8 @@ class Media_Modal {
 			$types = 'apple-curators';
 		}
 
-		$s        = new API();
-		$response = $s->search( reset( $params ), $types, $request['page'] );
+		$api        = new API();
+		$response = $api->search( reset( $params ), $types, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( array(
@@ -104,7 +101,6 @@ class Media_Modal {
 	public function labels() {
 		$labels = array(
 			'title'     => __( 'Insert Apple Music', 'apple-music' ),
-			# @TODO the 'insert' button text gets reset when selecting items. find out why.
 			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
 			'noresults' => __( 'No match for your search query', 'apple-music' ),
 			'loadmore'  => __( 'Load more music', 'apple-music' ),
@@ -146,20 +142,20 @@ class Media_Modal {
 		);
 
 	}
-	
-	public function response( $r ) {
 
-		reset( $r );
-		$type = key( $r );
-		
-		if ( ! empty( $r->$type->next ) ) {
+	public function response( $response ) {
+
+		reset( $response );
+		$type = key( $response );
+
+		if ( ! empty( $response->$type->next ) ) {
 			$load_more = true;
 			$this->add_meta( 'load-more', true );
 		}
-		if ( ! empty( $r->$type->data ) ) {
-			foreach ( $r->$type->data as $thing ) {
+		if ( ! empty( $response->$type->data ) ) {
+			foreach ( $response->$type->data as $thing ) {
 
-				$item = [];
+				$item      = [];
 				$shortcode = '[apple-music format=' . $type . ' id=' . $thing->id . ']';
 
 				$item['id']  = $thing->id;
@@ -184,7 +180,7 @@ class Media_Modal {
 						break;
 
 					case 'stations':
-						$item['content'] = $attributes->name;
+						$item['content']   = $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						break;
@@ -215,7 +211,6 @@ class Media_Modal {
 	}
 
 	public function search( $id, $tab ) {
-
 		?>
 		<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
 
@@ -283,5 +278,4 @@ class Media_Modal {
 
 		return $output;
 	}
-
 }
