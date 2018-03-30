@@ -101,7 +101,7 @@ class API {
 	protected function send_request( $method, $url, $params = [ ] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
-//die($url_safe);
+
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
 			$response = wpcom_vip_file_get_contents(

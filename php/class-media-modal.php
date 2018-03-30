@@ -146,12 +146,12 @@ class Media_Modal {
 		);
 
 	}
-
+	
 	public function response( $r ) {
 
 		reset( $r );
 		$type = key( $r );
-
+		
 		if ( ! empty( $r->$type->next ) ) {
 			$load_more = true;
 			$this->add_meta( 'load-more', true );
@@ -159,9 +159,8 @@ class Media_Modal {
 		if ( ! empty( $r->$type->data ) ) {
 			foreach ( $r->$type->data as $thing ) {
 
-				$item = [ ];
-
-				$shortcode = '[apple-music format=' . rtrim( $type, 's' ) . ' id=' . $thing->id . ']';
+				$item = [];
+				$shortcode = '[apple-music format=' . $type . ' id=' . $thing->id . ']';
 
 				$item['id']  = $thing->id;
 				$item['url'] = $shortcode;
@@ -213,7 +212,6 @@ class Media_Modal {
 		} else {
 			$this->meta[ $key ] = $value;
 		}
-
 	}
 
 	public function search( $id, $tab ) {
@@ -284,7 +282,6 @@ class Media_Modal {
 		}
 
 		return $output;
-
 	}
 
 }

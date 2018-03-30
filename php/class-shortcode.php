@@ -22,15 +22,23 @@ class Shortcode {
 		], $atts, $tag );
 
 		$embeddable_formats = [
-			'song'     => [
+			'songs'     => [
+				'format' => 'song',
 				'default_height' => '110px',
 				'default_width'  => '100%',
 			],
-			'album'    => [
+			'albums'    => [
+				'format' => 'album',
 				'default_height' => '500px',
 				'default_width'  => '100%',
 			],
-			'playlist' => [
+			'playlists' => [
+				'format' => 'playlist',
+				'default_height' => '500px',
+				'default_width'  => '100%',
+			],
+			'activities' => [
+				'format'         => 'playlist',
 				'default_height' => '500px',
 				'default_width'  => '100%',
 			],
@@ -70,7 +78,7 @@ class Shortcode {
 
 			$url = sprintf( '%1$s/%2$s/%3$s?country=%4$s',
 				'https://tools.applemusic.com/embed/v1',
-				$shortcode_atts['format'],
+				$embeddable_formats[ $shortcode_atts['format'] ]['format'],
 				$shortcode_atts['id'],
 				$storefront
 			);
