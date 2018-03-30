@@ -186,7 +186,6 @@ class Media_Modal {
 
 					case 'stations':
 						$item['content'] = $attributes->name;
-						// Unclear what cc is here?
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						break;
