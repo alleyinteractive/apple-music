@@ -166,5 +166,4 @@ class Settings {
 		</div>
 		<?php
 	}
-
 }

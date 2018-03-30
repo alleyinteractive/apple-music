@@ -11,11 +11,11 @@ GNU General Public License for more details.
 
 */
 
-.media-frame .mexp-content {
+.media-frame .apple-music-content {
 	background: #fff;
 }
 
-.media-frame .mexp-content .mexp-error {
+.media-frame .apple-music-content .apple-music-error {
 	background: #fdd;
 	padding: 12px 16px;
 	margin: 0 0 10px 0;
@@ -23,7 +23,7 @@ GNU General Public License for more details.
 	display: none;
 }
 
-.media-frame .mexp-content .mexp-empty {
+.media-frame .apple-music-content .apple-music-empty {
 	background: #ffd;
 	padding: 12px 16px;
 	margin: 0 0 10px 0;
@@ -31,59 +31,59 @@ GNU General Public License for more details.
 	display: none;
 }
 
-.media-frame .mexp-content .mexp-toolbar {
+.media-frame .apple-music-content .apple-music-toolbar {
 	background: #f5f5f5;
 	padding: 0;
 	right: 0;
 }
-body.mp6 .media-frame .mexp-content .mexp-toolbar {
+body.mp6 .media-frame .apple-music-content .apple-music-toolbar {
 	background: #fff;
 	border-bottom: 1px solid #ddd;
 }
 
-.media-frame .mexp-content .mexp-toolbar-container {
+.media-frame .apple-music-content .apple-music-toolbar-container {
 	padding: 10px 9px;
 }
 
-.media-frame .mexp-content .attachments {
+.media-frame .apple-music-content .attachments {
 	right: 0;
 }
 
-.media-frame .mexp-content .mexp-toolbar label,
-.media-frame .mexp-content .mexp-toolbar select,
-.media-frame .mexp-content .mexp-toolbar input {
+.media-frame .apple-music-content .apple-music-toolbar label,
+.media-frame .apple-music-content .apple-music-toolbar select,
+.media-frame .apple-music-content .apple-music-toolbar input {
 	float: left;
 }
 
-.media-frame .mexp-content .media-toolbar .mexp-input-search {
+.media-frame .apple-music-content .media-toolbar .apple-music-input-search {
 	margin-left: 10px;
 }
 
 /* WP media manager style tweaks: */
-.media-frame .mexp-content .mexp-toolbar label{
+.media-frame .apple-music-content .apple-music-toolbar label{
 	margin: 7px;
 	color: #555;
 }
-.media-frame .mexp-content .mexp-toolbar select {
+.media-frame .apple-music-content .apple-music-toolbar select {
 	margin: 1px;
 	padding: 6px 6px 5px;
 	height: 2.5em;
 }
-.media-frame .mexp-content .mexp-toolbar .button {
+.media-frame .apple-music-content .apple-music-toolbar .button {
 	margin: 1px;
 }
 
-.media-frame .mexp-content .mexp-toolbar .spinner {
+.media-frame .apple-music-content .apple-music-toolbar .spinner {
 	float: left;
 	margin: 7px 10px;
 }
 
-.media-frame .mexp-content .mexp-pagination .spinner {
+.media-frame .apple-music-content .apple-music-pagination .spinner {
 	float: left;
 	margin: 3px 10px;
 }
 
-.media-frame .mexp-content .clearfix:after {
+.media-frame .apple-music-content .clearfix:after {
 	clear: both;
 	content: ".";
 	display: block;
@@ -91,7 +91,7 @@ body.mp6 .media-frame .mexp-content .mexp-toolbar {
 	visibility: hidden;
 }
 
-.button.mexp-pagination {
+.button.apple-music-pagination {
 	margin-top: 15px;
 }
 
@@ -99,24 +99,24 @@ body.mp6 .media-frame .mexp-content .mexp-toolbar {
 /* Generic media item styles: */
 /* ************************** */
 
-.media-frame .mexp-content .mexp-items {
+.media-frame .apple-music-content .apple-music-items {
 	padding-top: 10px;
 }
 
-.media-frame .mexp-content .mexp-item {
+.media-frame .apple-music-content .apple-music-item {
 	cursor: pointer;
 	border: 1px solid #fff;
 }
 
-.media-frame .mexp-content .mexp-item:hover {
+.media-frame .apple-music-content .apple-music-item:hover {
 	border-color: #999;
 }
 
-.media-frame .mexp-content .mexp-item.selected {
+.media-frame .apple-music-content .apple-music-item.selected {
 	border-color: transparent;
 }
 
-html.ie8 .media-frame .mexp-content .mexp-item.selected {
+html.ie8 .media-frame .apple-music-content .apple-music-item.selected {
 	border-color: #999;
 }
 

@@ -28,31 +28,14 @@ namespace Apple_Music;
 
 define( __NAMESPACE__ . '\PATH', __DIR__ );
 
-define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) ); // works?
+define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'APPLE_MUSIC_VERSION', '0.1.0' );
 
-/**
- * Current version of Fieldmanager.
- */
-define( 'APPLE_MUSIC_VERSION', '1.1.0-beta.1' );
-
-/**
- * Filesystem path to Fieldmanager.
- */
-//define( 'FM_BASE_DIR', dirname( __FILE__ ) );
-
-
-//require_once PATH . '/php/autoload.php';
-
-require_once PATH . '/php/class-api.php';
-require_once PATH . '/php/class-shortcode.php';
-require_once PATH . '/php/class-settings.php';
-require_once PATH . '/php/class-media-modal.php';
-
-
-//add_action( 'after_setup_theme', [ __NAMESPACE__ . '\Apple_Music', 'instance' ] );
+require_once PATH . '/php/autoload.php';
+require_once PATH . '/php/includes/tabs.php';
 
 add_action( 'after_setup_theme', function () {
-	new \Apple_Music;
+	new Media_Modal;
 	new Shortcode;
 	new Settings;
 } );

@@ -9,8 +9,6 @@
 namespace Apple_Music;
 
 class API {
-	//use Util\Singleton; // need this for instance
-
 
 	/**
 	 * @var string $base_url Base Apple Music API endpoint URL.
@@ -51,8 +49,7 @@ class API {
 	 * @return object|null
 	 */
 	public function search( $term, $types, $page ) {
-		//	$settings         = new Settings();
-//die($this->storefront . '!' . $settings->get_storefront());
+
 		$url = sprintf( '%s/%s/%s/%s',
 			$this->base_url,
 			'catalog',
@@ -60,8 +57,8 @@ class API {
 			'search'
 		);
 
-		$limit = 25;
-$offset = ( ( $page > 1 ? --$page : $page ) * 25 );
+		$limit  = 25;
+		$offset = ( ( $page > 1 ? -- $page : $page ) * 25 );
 
 		return $this->send_request( 'GET', $url, compact( 'term', 'types', 'limit', 'offset' ) );
 	}
@@ -76,16 +73,17 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 		$storefronts = get_transient( $transient );
 		//if ( false === $storefronts ) {
 
-			$url = sprintf( '%s/%s',
-				$this->base_url,
-				'storefronts'
-			);
+		$url = sprintf( '%s/%s',
+			$this->base_url,
+			'storefronts'
+		);
 
-			$storefronts = $this->send_request( 'GET', $url );
+		$storefronts = $this->send_request( 'GET', $url );
 
-			if ( ! empty( $storefronts ) ) {
-				set_transient( $transient, $storefronts, DAY_IN_SECONDS );
-			}
+		if ( ! empty( $storefronts ) ) {
+			set_transient( $transient, $storefronts, DAY_IN_SECONDS );
+		}
+
 		//}
 
 		return $storefronts;
@@ -100,19 +98,15 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 	 *
 	 * @return mixed|null
 	 */
-	protected function send_request( $method, $url, $params = [] ) {
-//print_r($params);
-		//die();
-		//$params = array_merge( $params, [ 'limit' => 25 ]);
-
-
+	protected function send_request( $method, $url, $params = [ ] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
-//die($url_safe);
+
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
+
 			$response = wpcom_vip_file_get_contents(
 				$url_safe,
-				5, // request timeout in seconds
+				8, // request timeout in seconds
 				900, // cache timeout in seconds
 				[
 					'http_api_args' => [
@@ -126,37 +120,28 @@ $offset = ( ( $page > 1 ? --$page : $page ) * 25 );
 				$url_safe,
 				[
 					'method'  => $method,
+					'timeout' => 8,
 					'headers' => [
 						'Authorization' => "Bearer {$this->token}",
 					],
 				]
 			);
 
-//print_r($response);
-					//die($url_safe);
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
-
 				$response = wp_remote_retrieve_body( $response );
-
 			}
 		}
 
 		if ( empty( $response ) || is_wp_error( $response ) ) {
-			die('null2');
-			return null;
+			return $response;
 		}
-//die($url_safe . ' ' . $response);
-		// Return the results of the API request
-		$response = json_decode( $response ); // wont work for errors
 
+		$response = json_decode( $response );
 
 		if ( ! empty( $response->results ) ) {
-
 			return $response->results;
 		}
 
 		return $response;
 	}
 }
-
-

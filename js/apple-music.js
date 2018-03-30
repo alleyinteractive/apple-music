@@ -15,14 +15,14 @@ var media = wp.media;
 
 // VIEW: MEDIA ITEM:
 
-media.view.MEXPItem = wp.Backbone.View.extend({
+media.view.AppleMusicItem = wp.Backbone.View.extend({
 
     tagName   : 'li',
-    className : 'mexp-item attachment',
+    className : 'apple-music-item attachment',
 
     render: function() {
 
-    	this.template = media.template( 'mexp-apple-music-item-' + this.options.tab );
+    	this.template = media.template( 'apple-music-item-' + this.options.tab );
        	this.$el.html( this.template( this.model.toJSON() ) );
 
         return this;
@@ -33,7 +33,7 @@ media.view.MEXPItem = wp.Backbone.View.extend({
 
 // VIEW - BOTTOM TOOLBAR
 
-media.view.Toolbar.MEXP = media.view.Toolbar.extend({
+media.view.Toolbar.AppleMusic = media.view.Toolbar.extend({
 
 	initialize: function() {
 
@@ -43,12 +43,12 @@ media.view.Toolbar.MEXP = media.view.Toolbar.extend({
 			items : {
 			    // See wp.media.view.Button
 			    inserter     : {
-			        id       : 'mexp-button',
+			        id       : 'apple-music-button',
 			        style    : 'primary',
-			        text     : mexp.labels.insert,
+			        text     : appleMusic.labels.insert,
 			        priority : 80,
 			        click    : function() {
-					    this.controller.state().mexpInsert();
+					    this.controller.state().appleMusicInsert();
 					}
 			    }
 			}
@@ -56,13 +56,13 @@ media.view.Toolbar.MEXP = media.view.Toolbar.extend({
 
 		media.view.Toolbar.prototype.initialize.apply( this, arguments );
 
-		//var serviceName = this.controller.state().id.replace( /mexp-service-/g, '');
+		//var serviceName = this.controller.state().id.replace( /apple-music-service-/g, '');
 
 		this.set( 'pagination', new media.view.Button({
 			tagName: 'button',
-			classes: 'mexp-pagination button button-secondary',
+			classes: 'apple-music-pagination button button-secondary',
 			id: 'apple-music-loadmore',
-			text: mexp.labels.loadmore,
+			text: appleMusic.labels.loadmore,
 			priority: -20,
 		}) );
 	},
@@ -82,12 +82,12 @@ media.view.Toolbar.MEXP = media.view.Toolbar.extend({
 
 // VIEW - MEDIA CONTENT AREA
 
-media.view.MEXP = media.View.extend({
+media.view.AppleMusic = media.View.extend({
 
 	events: {
-		'click .mexp-item-area'     : 'toggleSelectionHandler',
-		'click .mexp-item .check'   : 'removeSelectionHandler',
-		'submit .mexp-toolbar form' : 'updateInput'
+		'click .apple-music-item-area'     : 'toggleSelectionHandler',
+		'click .apple-music-item .check'   : 'removeSelectionHandler',
+		'submit .apple-music-toolbar form' : 'updateInput'
 	},
 
 	initialize: function() {
@@ -123,7 +123,7 @@ media.view.MEXP = media.View.extend({
 		this.on( 'change:params', this.changedParams, this );
 		this.on( 'change:page',   this.changedPage, this );
 
-		jQuery( '.mexp-pagination' ).click( function( event ) {
+		jQuery( '.apple-music-pagination' ).click( function( event ) {
 			_this.paginate( event );
 		} );
 		
@@ -150,16 +150,16 @@ media.view.MEXP = media.View.extend({
 				container.appendChild( this.renderItem( model ) );
 			}, this );
 
-			this.$el.find( '.mexp-items' ).append( container );
+			this.$el.find( '.apple-music-items' ).append( container );
 
 		}
 
 		selection.each( function( model ) {
-			var id = '#mexp-item-apple-music-' + this.tab + '-' + model.get( 'id' );
-			this.$el.find( id ).closest( '.mexp-item' ).addClass( 'selected details' );
+			var id = '#apple-music-item-apple-music-' + this.tab + '-' + model.get( 'id' );
+			this.$el.find( id ).closest( '.apple-music-item' ).addClass( 'selected details' );
 		}, this );
 
-		jQuery( '#mexp-button' ).prop( 'disabled', !selection.length );
+		jQuery( '#apple-music-button' ).prop( 'disabled', !selection.length );
 
 
 		return this;
@@ -168,7 +168,7 @@ media.view.MEXP = media.View.extend({
 
 	renderItem : function( model ) {
 
-		var view = new media.view.MEXPItem({
+		var view = new media.view.AppleMusicItem({
 			model   : model,
 			service : this.service,
 			tab     : this.tab
@@ -181,20 +181,20 @@ media.view.MEXP = media.View.extend({
 	createToolbar: function() {
 
 		// @TODO this could be a separate view:
-		html = '<div class="mexp-error attachments"></div>';
+		html = '<div class="apple-music-error attachments"></div>';
 		this.$el.prepend( html );
 
 		// @TODO this could be a separate view:
-		html = '<div class="mexp-empty attachments"></div>';
+		html = '<div class="apple-music-empty attachments"></div>';
 		this.$el.prepend( html );
 
 		// @TODO this could be a separate view:
-		html = '<ul class="mexp-items attachments clearfix"></ul>';
+		html = '<ul class="apple-music-items attachments clearfix"></ul>';
 		this.$el.append( html );
 
 		// @TODO this could be a separate view:
-		var toolbar_template = media.template( 'mexp-apple-music-search-' + this.tab );
-		html = '<div class="mexp-toolbar media-toolbar clearfix">' + toolbar_template( this.model.toJSON() ) + '</div>';
+		var toolbar_template = media.template( 'apple-music-search-' + this.tab );
+		html = '<div class="apple-music-toolbar media-toolbar clearfix">' + toolbar_template( this.model.toJSON() ) + '</div>';
 		this.$el.prepend( html );
 
 	},
@@ -227,7 +227,7 @@ media.view.MEXP = media.View.extend({
 
 	addToSelection: function( target, id ) {
 
-		target.closest( '.mexp-item' ).addClass( 'selected details' );
+		target.closest( '.apple-music-item' ).addClass( 'selected details' );
 
 		this.getSelection().add( this.collection._byId[id] );
 
@@ -238,7 +238,7 @@ media.view.MEXP = media.View.extend({
 
 	removeFromSelection: function( target, id ) {
 
-		target.closest( '.mexp-item' ).removeClass( 'selected details' );
+		target.closest( '.apple-music-item' ).removeClass( 'selected details' );
 
 		this.getSelection().remove( this.collection._byId[id] );
 
@@ -257,9 +257,9 @@ media.view.MEXP = media.View.extend({
 
 	clearItems: function() {
 
-		this.$el.find( '.mexp-item' ).removeClass( 'selected details' );
-		this.$el.find( '.mexp-items' ).empty();
-		this.$el.find( '.mexp-pagination' ).hide();
+		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
+		this.$el.find( '.apple-music-items' ).empty();
+		this.$el.find( '.apple-music-pagination' ).hide();
 
 	},
 
@@ -269,8 +269,8 @@ media.view.MEXP = media.View.extend({
 		this.$el.find( '.spinner' ).addClass( 'is-active' );
 
 		// hide messages
-		this.$el.find( '.mexp-error' ).hide().text('');
-		this.$el.find( '.mexp-empty' ).hide().text('');
+		this.$el.find( '.apple-music-error' ).hide().text('');
+		this.$el.find( '.apple-music-empty' ).hide().text('');
 
 		// disable 'load more' button
 		jQuery( '#apple-music-loadmore' ).attr( 'disabled', true );
@@ -288,7 +288,7 @@ media.view.MEXP = media.View.extend({
 		this.trigger( 'loading' );
 
 		var data = {
-			_nonce  : mexp._nonce,
+			_nonce  : appleMusic._nonce,
 			service : this.service.id,
 			tab     : this.tab,
 			params  : this.model.get( 'params' ),
@@ -297,7 +297,7 @@ media.view.MEXP = media.View.extend({
 		};
 
 
-		media.ajax( 'mexp_request', {
+		media.ajax( 'apple_music_request', {
 			context : this,
 			success : this.fetchedSuccess,
 			error   : this.fetchedError,
@@ -339,7 +339,7 @@ media.view.MEXP = media.View.extend({
 				container.appendChild( this.renderItem( model ) );
 			}, this );
 
-			this.$el.find( '.mexp-items' ).append( container );
+			this.$el.find( '.apple-music-items' ).append( container );
 
 		}
 
@@ -352,9 +352,9 @@ media.view.MEXP = media.View.extend({
 
 	fetchedEmpty: function( response ) {
 
-		this.$el.find( '.mexp-empty' ).text( this.service.labels.noresults ).show();
+		this.$el.find( '.apple-music-empty' ).text( this.service.labels.noresults ).show();
 
-		this.$el.find( '.mexp-pagination' ).hide();
+		this.$el.find( '.apple-music-pagination' ).hide();
 
 		this.trigger( 'loaded loaded:noresults', response );
 
@@ -362,7 +362,7 @@ media.view.MEXP = media.View.extend({
 
 	fetchedError: function( response ) {
 
-		this.$el.find( '.mexp-error' ).text( response.error_message ).show();
+		this.$el.find( '.apple-music-error' ).text( response.error_message ).show();
 		jQuery( '#' + this.service.id + '-loadmore' ).attr( 'disabled', false ).show();
 		this.trigger( 'loaded loaded:error', response );
 
@@ -373,14 +373,14 @@ media.view.MEXP = media.View.extend({
 		// triggered when a search is submitted
 
 		var params = this.model.get( 'params' );
-		var els = this.$el.find( '.mexp-toolbar' ).find( ':input' ).each( function( k, el ) {
+		var els = this.$el.find( '.apple-music-toolbar' ).find( ':input' ).each( function( k, el ) {
 			var n = jQuery(this).attr('name');
 			if ( n )
 				params[n] = jQuery(this).val();
 		} );
 		
 		this.clearSelection();
-		jQuery( '#mexp-button' ).attr( 'disabled', 'disabled' );
+		jQuery( '#apple-music-button' ).attr( 'disabled', 'disabled' );
 		this.model.set( 'params', params );
 		this.trigger( 'change:params' ); // why isn't this triggering automatically? might be because params is an object
 
@@ -435,49 +435,48 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 		post_frame.prototype.initialize.apply( this, arguments );
 
-		//_.each( mexp.services, function( service ) { // this may be it
 
-			var id = 'mexp-service-apple-music';
+			var id = 'apple-music-service-apple-music';
 			var controller = {
 				id      : id,
 				router  : id + '-router',
 				toolbar : id + '-toolbar',
 				menu    : 'default',
-				title   : mexp.labels.title,
-				tabs    : mexp.tabs,
+				title   : appleMusic.labels.title,
+				tabs    : appleMusic.tabs,
 				priority: 100 // places it above Insert From URL
 			};
 
-			for ( var tab in mexp.tabs ) {
+			for ( var tab in appleMusic.tabs ) {
 
 				// Content
-				this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.mexpContentRender, this, mexp, tab ) );
+				this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.appleMusicContentRender, this, appleMusic, tab ) );
 
 				// Set the default tab
-				if ( mexp.tabs[tab].defaultTab )
+				if ( appleMusic.tabs[tab].defaultTab )
 					controller.content = id + '-content-' + tab;
 
 			}
 
 			this.states.add([
-				new media.controller.MEXP( controller )
+				new media.controller.AppleMusic( controller )
 			]);
 
 			// Tabs
 			this.on( 'router:create:' + id + '-router', this.createRouter, this );
-			this.on( 'router:render:' + id + '-router', _.bind( this.mexpRouterRender, this, mexp ) );
+			this.on( 'router:render:' + id + '-router', _.bind( this.appleMusicRouterRender, this, appleMusic ) );
 
 			// Toolbar
-			this.on( 'toolbar:create:' + id + '-toolbar', this.mexpToolbarCreate, this );
-			//this.on( 'toolbar:render:' + id + '-toolbar', _.bind( this.mexpToolbarRender, this, mexp ) );
+			this.on( 'toolbar:create:' + id + '-toolbar', this.appleMusicToolbarCreate, this );
+			//this.on( 'toolbar:render:' + id + '-toolbar', _.bind( this.appleMusicToolbarRender, this, appleMusic ) );
 
-		//}, this );
+
 
 	},
 
-	mexpRouterRender : function( service, view ) {
+	appleMusicRouterRender : function( service, view ) {
 
-		var id   = 'mexp-service-apple-music';
+		var id   = 'apple-music-service-apple-music';
 		var tabs = {};
 
 		for ( var tab in service.tabs ) {
@@ -491,9 +490,9 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 	},
 
-	mexpToolbarRender : function( service, view ) {
+	appleMusicToolbarRender : function( service, view ) {
 
-		view.set( 'selection', new media.view.Selection.MEXP({
+		view.set( 'selection', new media.view.Selection.AppleMusic({
 			service    : service,
 			controller : this,
 			collection : this.state().props.get('_all').get('selection'),
@@ -502,23 +501,23 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 	},
 
-	mexpContentRender : function( service, tab ) {
+	appleMusicContentRender : function( service, tab ) {
 
 		/* called when a tab becomes active */
 
-		this.content.set( new media.view.MEXP( {
+		this.content.set( new media.view.AppleMusic( {
 			service    : service,
 			controller : this,
 			model      : this.state().props.get( tab ),
 			tab        : tab,
-			className  : 'clearfix attachments-browser mexp-content mexp-content-apple-music mexp-content-apple-music-' + tab
+			className  : 'clearfix attachments-browser apple-music-content apple-music-content-apple-music apple-music-content-apple-music-' + tab
 		} ) );
 
 	},
 
-	mexpToolbarCreate : function( toolbar ) {
+	appleMusicToolbarCreate : function( toolbar ) {
 
-		toolbar.view = new media.view.Toolbar.MEXP( {
+		toolbar.view = new media.view.Toolbar.AppleMusic( {
 			controller : this
 		} );
 
@@ -528,7 +527,7 @@ media.view.MediaFrame.Post = post_frame.extend({
 
 // CONTROLLER:
 
-media.controller.MEXP = media.controller.State.extend({
+media.controller.AppleMusic = media.controller.State.extend({
 
 	initialize: function( options ) {
 
@@ -560,7 +559,7 @@ media.controller.MEXP = media.controller.State.extend({
 		this.frame.toolbar.get().refresh();
 	},
 
-	mexpInsert: function() {
+	appleMusicInsert: function() {
 
 		var selection = this.frame.content.get().getSelection(),
 		urls          = [];

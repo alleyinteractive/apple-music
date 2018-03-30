@@ -1,44 +1,25 @@
 <?php
 
-/**
- * Main handler for the Apple Music embed tool.
- *
- * @package Apple_Music
- */
-
 namespace Apple_Music;
 
 class Shortcode {
 
-
 	public function __construct() {
 		add_shortcode( 'apple-music', [ $this, 'shortcode' ] );
 
-
 	}
-
 
 	public static function shortcode( $atts = [ ], $content = null, $tag = '' ) {
 
-		// normalize attribute keys, lowercase
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
-		//<iframe src="https://tools.applemusic.com/embed/v1/album/1147170341?country=us" height="500px" width="100%" frameborder="0"></iframe>
-		// override default attributes with user attributes
 		$shortcode_atts = shortcode_atts( [
-			'format' => '', // naming?
-			'name'   => '', // naming?
+			'format' => '',
+			'name'   => '',
 			'id'     => false,
 			'height' => 0,
 			'width'  => 0,
 		], $atts, $tag );
-
-
-		/*		$embeddable_formats = [
-					'song',
-					'album',
-					'playlist',
-				];*/
 
 		$embeddable_formats = [
 			'song'     => [
@@ -56,14 +37,10 @@ class Shortcode {
 		];
 
 		$linkable_formats = [
-			'artist'      => [
-			],
-			'station'     => [
-			],
-			'music-video' => [
-			],
+			'artist'      => [],
+			'station'     => [],
+			'music-video' => [],
 		];
-
 
 		$link_attributes = [
 			'badge'       => [

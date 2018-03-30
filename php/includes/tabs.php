@@ -1,31 +1,32 @@
 <?php
 
-function tabs() {
+add_filter( 'apple_music_media_modal_tabs', 'apple_music_media_modal_tabs' );
+function apple_music_media_modal_tabs() {
 	$tabs = array(
 		'artists'      => array(
-			'text'       => _x( 'Artists', 'Tab title', 'mexp' ),
+			'text'       => __( 'Artists', 'apple-music' ),
 			'defaultTab' => true,
 		),
 		'songs'        => array(
-			'text' => _x( 'Songs', 'Tab title', 'mexp' ),
+			'text' => __( 'Songs', 'apple-music' ),
 		),
 		'albums'       => array(
-			'text' => _x( 'Albums', 'Tab title', 'mexp' ),
+			'text' => __( 'Albums', 'apple-music' ),
 		),
 		'playlists'    => array(
-			'text' => _x( 'Playlists', 'Tab title', 'mexp' ),
+			'text' => __( 'Playlists', 'apple-music' ),
 		),
 		'connect'      => array(
-			'text' => _x( 'Connect', 'Tab title', 'mexp' ),
+			'text' => __( 'Connect', 'apple-music' ),
 		),
 		'curators'     => array(
-			'text' => _x( 'Curators', 'Tab title', 'mexp' ),
+			'text' => __( 'Curators', 'apple-music' ),
 		),
 		'radio'        => array(
-			'text' => _x( 'Radio', 'Tab title', 'mexp' ),
+			'text' => __( 'Radio', 'apple-music' ),
 		),
 		'music-videos' => array(
-			'text' => _x( 'Music Videos', 'Tab title', 'mexp' ),
+			'text' => __( 'Music Videos', 'apple-music' ),
 		),
 	);
 
