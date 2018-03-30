@@ -17,7 +17,7 @@ function apple_music_media_modal_tabs() {
 			'text' => __( 'Playlists', 'apple-music' ),
 		),
 		'activities'      => array(
-			'text' => __( 'Connect', 'apple-music' ),
+			'text' => __( 'Activities', 'apple-music' ),
 		),
 		'curators'     => array(
 			'text' => __( 'Curators', 'apple-music' ),

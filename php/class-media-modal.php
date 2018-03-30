@@ -16,14 +16,12 @@ class Media_Modal {
 	public $thumbnail = null;
 	public $content = null;
 
-
 	public function __construct() {
 		add_action( 'wp_enqueue_media', array( $this, 'action_enqueue_media' ) );
 		add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );
 		add_action( 'wp_ajax_apple_music_request', array( $this, 'ajax_request' ) );
 
 	}
-
 
 	/**
 	 * Load the Backbone templates for each of our registered services.
@@ -53,7 +51,7 @@ class Media_Modal {
 	public function tabs() {
 		return apply_filters( 'apple_music_media_modal_tabs', [] );
 	}
-	
+
 	/**
 	 * Process an AJAX request and output the resulting JSON.
 	 *
@@ -76,9 +74,9 @@ class Media_Modal {
 
 		$request['page']    = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
-		$params = $request['params'];
+		$params             = $request['params'];
 
-		// Temporary hack
+		// Temporary hack!
 		$types = key( $params );
 		if ( 'videos' === key( $params ) ) {
 			$types = 'music-videos';
@@ -150,7 +148,7 @@ class Media_Modal {
 	}
 
 	public function response( $r ) {
-		
+
 		reset( $r );
 		$type = key( $r );
 
@@ -161,7 +159,7 @@ class Media_Modal {
 		if ( ! empty( $r->$type->data ) ) {
 			foreach ( $r->$type->data as $thing ) {
 
-				$item = [];
+				$item = [ ];
 
 				$shortcode = '[apple-music format=' . rtrim( $type, 's' ) . ' id=' . $thing->id . ']';
 
@@ -179,6 +177,7 @@ class Media_Modal {
 					case 'songs':
 					case 'albums':
 					case 'playlists':
+					case 'activities':
 					case 'music-videos':
 						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
@@ -186,7 +185,7 @@ class Media_Modal {
 						break;
 
 					case 'stations':
-						$item['content']   = $attributes->name;
+						$item['content'] = $attributes->name;
 						// Unclear what cc is here?
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
