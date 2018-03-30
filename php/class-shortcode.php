@@ -98,12 +98,9 @@ class Shortcode {
 				esc_url( $url ), // 1
 				esc_url( $link_attributes['app-icon']['background'] ), // 2
 				esc_attr( $link_attributes['app-icon']['dimensions'] ) // 3
-
 			);
 		}
 
 		return $output;
 	}
-
 }
-
