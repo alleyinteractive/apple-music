@@ -16,16 +16,16 @@ function apple_music_media_modal_tabs() {
 		'playlists'    => array(
 			'text' => __( 'Playlists', 'apple-music' ),
 		),
-		'connect'      => array(
+		'activities'      => array(
 			'text' => __( 'Connect', 'apple-music' ),
 		),
 		'curators'     => array(
 			'text' => __( 'Curators', 'apple-music' ),
 		),
-		'radio'        => array(
+		'stations'        => array(
 			'text' => __( 'Radio', 'apple-music' ),
 		),
-		'music-videos' => array(
+		'videos' => array(
 			'text' => __( 'Music Videos', 'apple-music' ),
 		),
 	);

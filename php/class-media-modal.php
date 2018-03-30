@@ -53,8 +53,7 @@ class Media_Modal {
 	public function tabs() {
 		return apply_filters( 'apple_music_media_modal_tabs', [] );
 	}
-
-
+	
 	/**
 	 * Process an AJAX request and output the resulting JSON.
 	 *
@@ -67,7 +66,6 @@ class Media_Modal {
 			die( '-1' );
 		}
 
-
 		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
 			'params' => array(),
 			'tab'    => null,
@@ -76,28 +74,32 @@ class Media_Modal {
 			'page'   => 1,
 		) );
 
-
 		$request['page']    = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
 		$params = $request['params'];
 
+		// Temporary hack
+		$types = key( $params );
+		if ( 'videos' === key( $params ) ) {
+			$types = 'music-videos';
+		}
+		if ( 'curators' === key( $params ) ) {
+			$types = 'apple-curators';
+		}
+
 		$s        = new API();
-		$response = $s->search( reset( $params ), key( $params ), $request['page'] );
+		$response = $s->search( reset( $params ), $types, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( array(
 				'error_code'    => $response->get_error_code(),
-				'error_message' => $response->get_error_message()
+				'error_message' => $response->get_error_message(),
 			) );
 
 		} else {
-			$response = $this->response( $response );
+			$this->response( $response );
 			wp_send_json_success( $this->output() );
-
-		} /*else {
-			wp_send_json_success( false );
-
-		}*/
+		}
 
 	}
 
@@ -106,7 +108,7 @@ class Media_Modal {
 			'title'     => __( 'Insert Apple Music', 'apple-music' ),
 			# @TODO the 'insert' button text gets reset when selecting items. find out why.
 			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
-			'noresults' => __( 'No matched your search query', 'apple-music' ),
+			'noresults' => __( 'No match for your search query', 'apple-music' ),
 			'loadmore'  => __( 'Load more music', 'apple-music' ),
 		);
 
@@ -148,8 +150,7 @@ class Media_Modal {
 	}
 
 	public function response( $r ) {
-
-
+		
 		reset( $r );
 		$type = key( $r );
 
@@ -160,7 +161,7 @@ class Media_Modal {
 		if ( ! empty( $r->$type->data ) ) {
 			foreach ( $r->$type->data as $thing ) {
 
-				$item = [ ];
+				$item = [];
 
 				$shortcode = '[apple-music format=' . rtrim( $type, 's' ) . ' id=' . $thing->id . ']';
 
@@ -177,21 +178,24 @@ class Media_Modal {
 
 					case 'songs':
 					case 'albums':
+					case 'playlists':
+					case 'music-videos':
 						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						break;
 
+					case 'stations':
+						$item['content']   = $attributes->name;
+						// Unclear what cc is here?
+						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
+						$item['thumbnail'] = esc_url_raw( $thumbnail );
+						break;
+
 				}
-
-				//$response->add_item( $item );
 				$this->items[] = $item;
-
 			}
 		}
-
-		//return $response;
-
 	}
 
 	/**
@@ -205,15 +209,11 @@ class Media_Modal {
 	public function add_meta( $key, $value = null ) {
 
 		if ( is_array( $key ) ) {
-
 			foreach ( $key as $k => $v ) {
 				$this->meta[ $k ] = $v;
 			}
-
 		} else {
-
 			$this->meta[ $key ] = $value;
-
 		}
 
 	}
@@ -278,7 +278,7 @@ class Media_Modal {
 
 		$output = array(
 			'meta'  => $this->meta,
-			'items' => array()
+			'items' => array(),
 		);
 
 		foreach ( $this->items as $item ) {

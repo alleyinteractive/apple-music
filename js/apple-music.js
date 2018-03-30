@@ -215,7 +215,7 @@ media.view.AppleMusic = media.View.extend({
 		if ( event.target.href )
 			return;
 
-		var target = jQuery( '#' + event.currentTarget.id );
+		var target = jQuery( '#' + event.currentTarget.id.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" ));
 		var id     = target.attr( 'data-id' );
 
 		if ( this.getSelection().get( id ) )
