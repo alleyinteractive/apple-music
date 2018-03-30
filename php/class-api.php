@@ -25,10 +25,8 @@ class API {
 	 */
 	protected $token;
 
-
 	public static function instance() {
 		new API();
-
 	}
 
 	/**
@@ -38,15 +36,16 @@ class API {
 		$settings         = new Settings();
 		$this->token      = $settings->get_token();
 		$this->storefront = $settings->get_storefront();
-
 	}
 
 	/**
 	 * Search for a requested term.
 	 *
-	 * @param string $term
+	 * @param $term
+	 * @param $types
+	 * @param $page
 	 *
-	 * @return object|null
+	 * @return mixed|null
 	 */
 	public function search( $term, $types, $page ) {
 
@@ -60,7 +59,7 @@ class API {
 		$limit  = 25;
 		$offset = ( ( $page > 1 ? -- $page : $page ) * 25 );
 
-		return $this->send_request( 'GET', $url, compact( 'term', 'types', 'limit', 'offset' ) );
+		return $this->send_request( 'GET', esc_url( $url ), compact( 'term', 'types', 'limit', 'offset' ) );
 	}
 
 	/**
@@ -78,7 +77,7 @@ class API {
 			'storefronts'
 		);
 
-		$storefronts = $this->send_request( 'GET', $url );
+		$storefronts = $this->send_request( 'GET', esc_url( $url ) );
 
 		if ( ! empty( $storefronts ) ) {
 			set_transient( $transient, $storefronts, DAY_IN_SECONDS );
