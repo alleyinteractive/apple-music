@@ -60,15 +60,17 @@ body.mp6 .media-frame .apple-music-content .apple-music-toolbar {
 }
 
 /* WP media manager style tweaks: */
-.media-frame .apple-music-content .apple-music-toolbar label{
+.media-frame .apple-music-content .apple-music-toolbar label {
 	margin: 7px;
 	color: #555;
 }
+
 .media-frame .apple-music-content .apple-music-toolbar select {
 	margin: 1px;
 	padding: 6px 6px 5px;
 	height: 2.5em;
 }
+
 .media-frame .apple-music-content .apple-music-toolbar .button {
 	margin: 1px;
 }

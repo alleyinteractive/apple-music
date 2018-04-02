@@ -36,8 +36,8 @@ class Media_Modal {
 		foreach ( array( 'search', 'item' ) as $t ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
-					esc_attr( $t ),
-					esc_attr( $tab_id )
+					sanitize_html_class( $t ),
+					sanitize_html_class( $tab_id )
 				);
 				call_user_func( array( $this, $t ), $id, $tab_id );
 			}
@@ -52,12 +52,11 @@ class Media_Modal {
 	 * Process an AJAX request and output the resulting JSON.
 	 *
 	 * @action wp_ajax_apple_music_request
-	 * @return null
 	 */
 	public function ajax_request() {
 
-		if ( ! isset( $_POST['_nonce'] ) or ! wp_verify_nonce( $_POST['_nonce'], 'apple_music_request' ) ) {
-			die( '-1' );
+		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( $_POST['_nonce'], 'apple_music_request' ) ) {
+			wp_die( '-1' );
 		}
 
 		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
@@ -82,7 +81,7 @@ class Media_Modal {
 			$types = 'apple-curators';
 		}
 
-		$api        = new API();
+		$api      = new API();
 		$response = $api->search( reset( $params ), $types, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
@@ -137,7 +136,7 @@ class Media_Modal {
 		wp_enqueue_style(
 			'apple-music',
 			PLUGIN_DIR_URL . 'css/apple-music.css',
-			array( /*'wp-admin'*/ ),
+			array(),
 			APPLE_MUSIC_VERSION
 		);
 
@@ -215,13 +214,18 @@ class Media_Modal {
 		<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
 
 			<form action="#" class="apple-music-toolbar-container clearfix">
+				<label for="apple-music-search"><?php esc_html_e( 'Search', 'apple-music' ); ?></label>
 				<input
 					type="text"
 					name="<?php echo esc_attr( $tab ); ?>"
 					value="{{ data.params.<?php echo esc_attr( $tab ); ?> }}"
 					class="apple-music-input-text apple-music-input-search"
 					size="40"
-					placeholder="<?php esc_attr_e( 'Enter a ' . $tab, 'apple-music' ); ?>"
+					id="apple-music-search"
+				    placeholder="<?php printf( esc_attr__( 'Enter a %s', 'apple-music' ), $tab ); ?>"
+				);
+
+
 				>
 				<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 				<div class="spinner"></div>
@@ -237,7 +241,7 @@ class Media_Modal {
 			<div id="apple-music-item-<?php echo esc_attr( $tab ); ?>-{{ data.id }}" class="apple-music-item-area" data-id="{{ data.id }}">
 				<div class="apple-music-item-container clearfix">
 					<div class="apple-music-thumb">
-						<img src="{{ data.thumbnail }}">
+						<img src="{{ data.thumbnail }}" alt="">
 					</div>
 					<div class="apple-music-item-main">
 						<div class="apple-music-item-content">
