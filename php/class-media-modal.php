@@ -222,10 +222,7 @@ class Media_Modal {
 					class="apple-music-input-text apple-music-input-search"
 					size="40"
 					id="apple-music-search"
-				    placeholder="<?php sprintf( esc_attr_e( 'Enter a %s', 'apple-music' ), $tab ); ?>"
-				);
-
-
+				    placeholder="<?php printf( esc_attr__( 'Enter a %s', 'apple-music' ), $tab ); ?>"
 				>
 				<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ) ?>">
 				<div class="spinner"></div>
