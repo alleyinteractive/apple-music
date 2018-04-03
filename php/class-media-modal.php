@@ -12,8 +12,6 @@ class Media_Modal {
 	);
 
 	public $id = null;
-	public $url = null;
-	public $thumbnail = null;
 	public $content = null;
 
 	public function __construct() {
@@ -76,9 +74,6 @@ class Media_Modal {
 		$types = key( $params );
 		if ( 'videos' === key( $params ) ) {
 			$types = 'music-videos';
-		}
-		if ( 'curators' === key( $params ) ) {
-			$types = 'apple-curators';
 		}
 
 		$api      = new API();
@@ -155,12 +150,10 @@ class Media_Modal {
 			foreach ( $response->$type->data as $thing ) {
 
 				$item      = [];
-				$shortcode = '[apple-music format=' . $type . ' id=' . $thing->id . ']';
-
 				$item['id']  = $thing->id;
-				$item['url'] = $shortcode;
-
 				$attributes = $thing->attributes;
+				$shortcode = '[apple-music type=' . $type . ' id=' . $thing->id . ' name="' . $attributes->name . '" format=""]';
+				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
 
@@ -179,6 +172,7 @@ class Media_Modal {
 						break;
 
 					case 'stations':
+						case 'curators':
 						$item['content']   = $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
