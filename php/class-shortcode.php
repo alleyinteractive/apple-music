@@ -9,95 +9,132 @@ class Shortcode {
 
 	}
 
-	public static function shortcode( $atts = [ ], $content = null, $tag = '' ) {
+	public static function shortcode( $atts = [], $content = null, $tag = '' ) {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
 		$shortcode_atts = shortcode_atts( [
-			'format' => '',
+			'type'   => '',
 			'name'   => '',
 			'id'     => false,
 			'height' => 0,
 			'width'  => 0,
+			'format' => '',
 		], $atts, $tag );
 
-		$embeddable_formats = [
-			'song'     => [
+
+		$embeddable_types = [
+			'songs'     => [
+				'singular'       => 'song',
 				'default_height' => '110px',
 				'default_width'  => '100%',
 			],
-			'album'    => [
+			'albums'    => [
+				'singular'       => 'album',
 				'default_height' => '500px',
 				'default_width'  => '100%',
 			],
-			'playlist' => [
+			'playlists' => [
+				'singular'       => 'playlist',
 				'default_height' => '500px',
 				'default_width'  => '100%',
 			],
 		];
 
-		$linkable_formats = [
-			'artist'      => [],
-			'station'     => [],
-			'music-video' => [],
+		$linkable_types = [
+			'artists'      => [
+				'singular' => 'artist',
+			],
+			'stations'     => [
+				'singular' => 'station',
+			],
+			'music-videos' => [
+				'singular' => 'music-video',
+			],
+			'activities'   => [
+				'singular' => 'activity',
+			],
+			'curators'  => [
+				'singular' => 'apple-curator',
+			],
 		];
 
-		$link_attributes = [
+		$all_types = array_merge( $embeddable_types, $linkable_types );
+
+		$formats = [
+			'player'      => [],
+			'link'        => [],
 			'badge'       => [
 				'background' => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
+				'color'      => '',
 				'dimensions' => 'width:157px;height:45px;',
 			],
 			'text-lockup' => [
-				'background' => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/standard-black.svg', // varies
+				'background' => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
+				'color'      => 'standard-black.svg',
 				'dimensions' => 'width:140px;height:30px;',
 			],
 			'app-icon'    => [
-				'background' => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=000000', // varies
+				'background' => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
+				'color'      => '000000',
 				'dimensions' => 'width:40px;height:40px;',
 			],
 		];
 
-		if ( empty( $shortcode_atts['id'] ) || empty( $shortcode_atts['format'] ) || ! array_key_exists( $shortcode_atts['format'], array_merge( $embeddable_formats, $linkable_formats ) ) ) {
+		// Do we have everything we need?
+		if ( empty( $shortcode_atts['id'] )
+		     || empty( $shortcode_atts['type'] )
+		     || ! array_key_exists( $shortcode_atts['type'], $all_types )
+		     || ! array_key_exists( $shortcode_atts['format'], $formats )
+			|| ( array_key_exists( $shortcode_atts['type'], $linkable_types ) && 'player' === $shortcode_atts['format'] )
+		) {
 			return;
 		}
 
-
+		// Get storefront.
 		$settings   = new Settings();
 		$storefront = $settings->get_storefront();
 
-		// Embeds only (album, song, playlist)
-		if ( array_key_exists( $shortcode_atts['format'], $embeddable_formats ) ) {
+		// Embeds only (album, song, playlist).
+		if ( array_key_exists( $shortcode_atts['type'], $embeddable_types ) && 'player' === $shortcode_atts['format'] ) {
 
 			$url = sprintf( '%1$s/%2$s/%3$s?country=%4$s',
 				'https://tools.applemusic.com/embed/v1',
-				$shortcode_atts['format'],
+				$embeddable_types[ $shortcode_atts['type'] ]['singular'],
 				$shortcode_atts['id'],
 				$storefront
 			);
 
 			$output = sprintf( '<iframe src="%1$s" height="%2$s" width="%3$s" frameborder="0"></iframe>',
 				esc_url( $url ), // 1
-				$embeddable_formats[ $shortcode_atts['format'] ]['default_height'], // 2 also check incoming atts
-				$embeddable_formats[ $shortcode_atts['format'] ]['default_width'] // 3
+				$embeddable_types[ $shortcode_atts['type'] ]['default_height'], // 2
+				$embeddable_types[ $shortcode_atts['type'] ]['default_width'] // 3
 			);
 
-		}
+		} else {
 
-		if ( array_key_exists( $shortcode_atts['format'], $linkable_formats ) ) {
-
-			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s?%6$s',
+			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s',
 				'https://geo.itunes.apple.com', // 1
 				$storefront, // 2
-				sanitize_text_field( $shortcode_atts['format'] ), // 3
-				sanitize_text_field( $shortcode_atts['name'] ), // 4
-				sanitize_text_field( $shortcode_atts['id'] ), // 5
-				'mt=5&app=music' // 6 ??
+				sanitize_text_field( $all_types[ $shortcode_atts['type'] ]['singular'] ), // 3
+				sanitize_title( $shortcode_atts['name'] ), // 4
+				sanitize_text_field( $shortcode_atts['id'] ) // 5
 			);
 
-			$output = sprintf( '<a href="%1$s" style="display:inline-block;overflow:hidden;background:url(%2$s) no-repeat;%3$s"></a>',
+			if ( 'link' === $shortcode_atts['format'] ) {
+				$output = sprintf( '<a href="%1$s"">%1$s</a>',
+					esc_url( $url ) // 1
+
+				);
+
+				return $output;
+			}
+
+			$output = sprintf( '<a href="%1$s" style="display:inline-block;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
 				esc_url( $url ), // 1
-				esc_url( $link_attributes['app-icon']['background'] ), // 2
-				esc_attr( $link_attributes['app-icon']['dimensions'] ) // 3
+				esc_url( $formats[ $shortcode_atts['format'] ]['background'] ), // 2
+				esc_attr( $formats[ $shortcode_atts['format'] ]['color'] ), // 3
+				esc_attr( $formats[ $shortcode_atts['format'] ]['dimensions'] ) // 4
 			);
 		}
 

@@ -125,7 +125,6 @@ class API {
 					],
 				]
 			);
-
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
 				$response = wp_remote_retrieve_body( $response );
 			}
