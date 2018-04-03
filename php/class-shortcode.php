@@ -9,7 +9,7 @@ class Shortcode {
 
 	}
 
-	public static function shortcode( $atts = [ ], $content = null, $tag = '' ) {
+	public static function shortcode( $atts = [], $content = null, $tag = '' ) {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
@@ -62,8 +62,8 @@ class Shortcode {
 		$all_types = array_merge( $embeddable_types, $linkable_types );
 
 		$formats = [
-			'player'      => [ ],
-			'link'        => [ ],
+			'player'      => [],
+			'link'        => [],
 			'badge'       => [
 				'background' => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
 				'color'      => '',
