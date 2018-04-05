@@ -31,7 +31,7 @@ class Media_Modal {
 
 		$tabs = $this->tabs();
 
-		foreach ( array( 'search', 'item' ) as $t ) {
+		foreach ( array( 'search', 'item', 'sidebar' ) as $t ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
 					sanitize_html_class( $t ),
@@ -40,6 +40,7 @@ class Media_Modal {
 				call_user_func( array( $this, $t ), $id, $tab_id );
 			}
 		}
+
 	}
 
 	public function tabs() {
@@ -152,13 +153,14 @@ class Media_Modal {
 				$item      = [];
 				$item['id']  = $thing->id;
 				$attributes = $thing->attributes;
-				$shortcode = '[apple-music type=' . $type . ' id=' . $thing->id . ' name="' . $attributes->name . '" format=""]';
+				$shortcode = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . $attributes->name . '" ]';
 				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
 
 					case 'artists':
 						$item['content'] = $attributes->name;
+						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'images/apple.png' );
 						break;
 
 					case 'songs':
@@ -245,6 +247,14 @@ class Media_Modal {
 			<a href="#" id="apple-music-check-{{ data.id }}" data-id="{{ data.id }}" class="check" title="<?php esc_attr_e( 'Deselect', 'apple-music' ); ?>">
 				<div class="media-modal-icon"></div>
 			</a>
+		</script>
+		<?php
+	}
+
+	public function sidebar( $id, $tab ) {
+		?>
+		<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
+			<h3><?php _e( 'Test' ); ?></h3>
 		</script>
 		<?php
 	}
