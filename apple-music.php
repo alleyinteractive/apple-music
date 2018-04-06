@@ -33,12 +33,12 @@ define( 'APPLE_MUSIC_VERSION', '0.1.0' );
 
 require_once PATH . '/php/autoload.php';
 require_once PATH . '/php/includes/includes.php';
-require_once PATH . '/php/class-block.php';
 
 add_action( 'after_setup_theme', function () {
 	new Media_Modal;
 	new Shortcode;
 	new Settings;
+	new Block;
 } );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
