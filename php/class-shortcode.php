@@ -75,19 +75,19 @@ class Shortcode {
 			'player'      => [],
 			'link'        => [],
 			'badge'       => [
-				'background' => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
-				'default_color'      => '', // Not used
-				'dimensions' => 'width:157px;height:45px;',
+				'background'    => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
+				'default_color' => '', // Not used
+				'dimensions'    => 'width:157px;height:45px;',
 			],
 			'text-lockup' => [
-				'background' => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color'      => 'standard-black.svg',
-				'dimensions' => 'width:140px;height:30px;',
+				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
+				'default_color' => 'standard-black.svg',
+				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'app-icon'    => [
-				'background' => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
-				'default_color'      => '000000',
-				'dimensions' => 'width:40px;height:40px;',
+				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
+				'default_color' => '000000',
+				'dimensions'    => 'width:40px;height:40px;',
 			],
 		];
 
@@ -104,7 +104,7 @@ class Shortcode {
 		$settings   = new Settings();
 		$storefront = $settings->get_storefront();
 
-		// In necessary, set a default format.
+		// If necessary, set a default format.
 		$format = array_key_exists( $shortcode_atts['format'], $formats ) ? $shortcode_atts['format'] : $all_types[ $shortcode_atts['type'] ]['default_format'];
 
 		// Embeds only (album, song, playlist).
