@@ -154,6 +154,7 @@ class Media_Modal {
 				$item['id']  = $thing->id;
 				$attributes = $thing->attributes;
 				$shortcode = '<!-- wp:shortcode -->[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . $attributes->name . '" ]<!-- /wp:shortcode -->';
+
 				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
