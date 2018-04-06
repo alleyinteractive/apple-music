@@ -32,7 +32,8 @@ define( 'PLUGIN_DIR_URL', plugin_dir_url( __FILE__ ) );
 define( 'APPLE_MUSIC_VERSION', '0.1.0' );
 
 require_once PATH . '/php/autoload.php';
-require_once PATH . '/php/includes/tabs.php';
+require_once PATH . '/php/includes/includes.php';
+require_once PATH . '/php/class-block.php';
 
 add_action( 'after_setup_theme', function () {
 	new Media_Modal;
