@@ -98,7 +98,7 @@ media.view.AppleMusic = media.View.extend({
 		this.service    = this.options.service;
 		this.tab        = this.options.tab;
 
-
+		this.createSidebar();
 		this.createToolbar();
 		this.clearItems();
 
@@ -195,6 +195,14 @@ media.view.AppleMusic = media.View.extend({
 		html = '<div class="apple-music-toolbar media-toolbar clearfix">' + toolbar_template( this.model.toJSON() ) + '</div>';
 		this.$el.prepend( html );
 
+	},
+
+	createSidebar: function() {
+		var sidebar = this.sidebar = new wp.media.view.Sidebar({
+				controller: this.controller
+			});
+
+		this.views.add( sidebar );
 	},
 
 	removeSelectionHandler: function( event ) {
