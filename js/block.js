@@ -1,7 +1,7 @@
 ( function( blocks, components, i18n, element, _ ) {
 	var el = element.createElement;
 
-	blocks.registerBlockType( 'apple-music', {
+	blocks.registerBlockType( 'gutenberg-examples/example-05-recipe-card', {
 		title: i18n.__( 'Apple Music' ),
 		icon: 'block-default',
 		category: 'layout',
