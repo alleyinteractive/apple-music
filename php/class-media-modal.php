@@ -31,7 +31,7 @@ class Media_Modal {
 
 		$tabs = $this->tabs();
 
-		foreach ( array( 'search', 'item', 'sidebar' ) as $t ) {
+		foreach ( array( 'search', 'item' ) as $t ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
 					sanitize_html_class( $t ),
@@ -40,6 +40,7 @@ class Media_Modal {
 				call_user_func( 'Apple_Music\\' . $t, $id, $tab_id );
 			}
 		}
+		sidebar();
 
 	}
 
@@ -153,14 +154,14 @@ class Media_Modal {
 				$item      = [];
 				$item['id']  = $thing->id;
 				$attributes = $thing->attributes;
-				$shortcode = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . $attributes->name . '" ]';
+				$shortcode = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
 				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
 
 					case 'artists':
 						$item['content'] = $attributes->name;
-						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'images/apple.png' );
+						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'assets/apple.png' );
 						break;
 
 					case 'songs':
@@ -171,6 +172,7 @@ class Media_Modal {
 						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
+						$item['description'] = $attributes->editorialNotes->short;
 						break;
 
 					case 'stations':
