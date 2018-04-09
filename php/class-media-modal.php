@@ -71,13 +71,6 @@ class Media_Modal {
 		$request['user_id'] = absint( get_current_user_id() );
 		$params             = $request['params'];
 
-		// Temporary hack!
-		// Need to fix hyphens in js.
-		$types = key( $params );
-		if ( 'videos' === key( $params ) ) {
-			$types = 'music-videos';
-		}
-
 		$api      = new API();
 		$response = $api->search( reset( $params ), $types, $request['page'] );
 
