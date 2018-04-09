@@ -38,6 +38,7 @@ add_action( 'after_setup_theme', function () {
 	new Media_Modal;
 	new Shortcode;
 	new Settings;
+	new Block;
 } );
 
 add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );

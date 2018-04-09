@@ -614,7 +614,6 @@ AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend( {
 	 * @returns {wp.media.view.Settings.AttachmentDisplay} Returns itself to allow chaining
 	 */
 	render: function () {
-		alert(this.options.model.attributes.description);
 		_.extend( this.options, {
 			description: this.options.model.attributes.description,
 			content: this.options.model.attributes.content,
