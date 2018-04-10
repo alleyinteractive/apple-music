@@ -48,10 +48,20 @@ function item( $id, $tab ) {
 	<?php
 }
 
-function sidebar( $id, $tab ) {
+function sidebar() {
 	?>
-	<script type="text/html" id="tmpl-<?php echo esc_attr( $id ); ?>">
-		<h3><?php _e( 'Test' ); ?></h3>
+	<script type="text/html" id="tmpl-apple-music-sidebar">
+		<h3>{{ data.content }}</h3>
+		<p>{{ data.description }}</p>
+
+		<form action="#" class="clearfix">
+			<p><input type="radio" name="format" value="player" id="player"><label for="player"><?php esc_html_e( 'Player', 'apple-music' ); ?></label></p>
+			<p><input type="radio" name="format" value="badge" id="badge"><label for="badge"><img src="<?php echo PLUGIN_DIR_URL . 'assets/badge.svg'; ?>" alt=""/></label></p>
+			<p><input type="radio" name="format" value="text-lockup" id="text-lockup"><label for="text-lockup"><img src="<?php echo PLUGIN_DIR_URL . 'assets/text-lockup.svg'; ?>" alt=""/></label></p>
+			<p><input type="radio" name="format" value="app-icon" id="app-icon"><label for="app-icon"><img src="<?php echo PLUGIN_DIR_URL . 'assets/app-icon.svg'; ?>" alt=""/></label></p>
+			<p><input type="radio" name="format" value="link" id="link"><label for="link"><?php esc_html_e( 'Link', 'apple-music' ); ?></label></p>
+		</form>
+
 	</script>
 	<?php
 }

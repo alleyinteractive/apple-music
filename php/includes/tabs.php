@@ -26,7 +26,7 @@ function apple_music_media_modal_tabs() {
 		'stations'   => array(
 			'text' => __( 'Radio', 'apple-music' ),
 		),
-		'videos'     => array(
+		'music-videos'     => array(
 			'text' => __( 'Music Videos', 'apple-music' ),
 		),
 	);
