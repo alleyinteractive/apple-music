@@ -603,7 +603,7 @@ media.controller.AppleMusic = media.controller.State.extend( {
 } );
 
 AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend( {
-	
+
 	template: wp.template( 'apple-music-sidebar' ),
 
 	initialize: function () {
