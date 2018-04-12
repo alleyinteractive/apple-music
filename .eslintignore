@@ -1,2 +1,3 @@
 # Ignore apple-music.js and lint everything else.
 /assets/js/apple-music.js
+/blocks/index.js
