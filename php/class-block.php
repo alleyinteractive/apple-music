@@ -1,9 +1,13 @@
 <?php
 
 namespace Apple_Music;
-
+/**
+ * Apple music Gutenburg block class.
+ */
 class Block {
-
+	/**
+	 * Block Construct
+	 */
 	public function __construct() {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
 		add_action( 'enqueue_block_assets', [ $this, 'enqueue_block_assets' ] );
