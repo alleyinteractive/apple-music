@@ -1,6 +1,6 @@
 // Webpack dependencies
-const path = require( 'path' );
-const webpack = require( 'webpack' );
+const path = require('path');
+const webpack = require('webpack');
 
 module.exports = (env) => ({
   entry: {
@@ -11,7 +11,7 @@ module.exports = (env) => ({
     filename: env.production ?
       'js/[name].bundle.min.js' :
       'js/[name].bundle.js',
-    path: path.resolve(__dirname, 'assets')
+    path: path.resolve(__dirname, 'assets'),
   },
 
   resolve: {
