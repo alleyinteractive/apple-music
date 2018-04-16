@@ -1,5 +1,6 @@
 import React from 'react';
 import musicTypes from './musicTypes';
+import fetch from './fetch';
 
 const { __ } = window.wp.i18n;
 const { registerBlockType, InspectorControls } = window.wp.blocks;
@@ -24,8 +25,6 @@ export default registerBlockType(
     icon: 'format-audio',
     keywords: [
       __('Apple Music', 'apple-music'),
-      __('Apple', 'apple-music'),
-      __('Music', 'apple-music'),
     ],
     supports: {
       html: false,
@@ -60,8 +59,11 @@ export default registerBlockType(
         type.value === attributes.musicType
       ));
 
+      const data = fetch('?term=james+brown&limit=2&types=artists');
+
       return (
         <div>
+          {data}
           { isSelected &&
             <InspectorControls key="inspector">
               <PanelBody title={__('Apple Music Settings', 'apple-music')}>

@@ -576,6 +576,8 @@ setLocaleData({ '': {} }, 'apple-music');
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(9);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__musicTypes__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fetch__ = __webpack_require__(15);
+
 
 
 
@@ -600,7 +602,7 @@ var _window$wp$components = window.wp.components,
   description: __('Embed the apple music player into a post.', 'apple-music'),
   category: 'widgets',
   icon: 'format-audio',
-  keywords: [__('Apple Music', 'apple-music'), __('Apple', 'apple-music'), __('Music', 'apple-music')],
+  keywords: [__('Apple Music', 'apple-music')],
   supports: {
     html: false
   },
@@ -608,7 +610,7 @@ var _window$wp$components = window.wp.components,
     music: {
       type: 'array',
       source: 'children',
-      selector: '.message-body'
+      selector: '.display-music'
     },
     musicType: {
       type: 'string',
@@ -624,21 +626,22 @@ var _window$wp$components = window.wp.components,
     var onChangeMessage = function onChangeMessage(music) {
       setAttributes({ music: music });
     };
-
+    // on Select assign the musicType attribute.
     var onSelect = function onSelect(musicType) {
       setAttributes({ musicType: musicType });
     };
 
-    var placeholder = __WEBPACK_IMPORTED_MODULE_1__musicTypes__["a" /* default */].find(function (type) {
-      if (type.value === attributes.musicType) {
-        return type.label;
-      }
-      return null;
+    // Get the current selected musicType object
+    var typeObject = __WEBPACK_IMPORTED_MODULE_1__musicTypes__["a" /* default */].find(function (type) {
+      return type.value === attributes.musicType;
     });
+
+    var data = Object(__WEBPACK_IMPORTED_MODULE_2__fetch__["a" /* default */])('?term=james+brown&limit=2&types=artists');
 
     return wp.element.createElement(
       'div',
       null,
+      data,
       isSelected && wp.element.createElement(
         InspectorControls,
         { key: 'inspector' },
@@ -646,7 +649,7 @@ var _window$wp$components = window.wp.components,
           PanelBody,
           { title: __('Apple Music Settings', 'apple-music') },
           wp.element.createElement(TextControl, {
-            label: '' + __('Search', 'apple-music') + placeholder,
+            label: 'Search ' + typeObject.label,
             value: attributes.music,
             onChange: onChangeMessage
           }),
@@ -679,7 +682,7 @@ var _window$wp$components = window.wp.components,
       { className: props.className },
       wp.element.createElement(
         'div',
-        { className: 'message-body' },
+        { className: 'display-music' },
         props.attributes.music
       )
     );
@@ -2266,6 +2269,48 @@ var musicTypes = [{
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (musicTypes);
+
+/***/ }),
+/* 15 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = request;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__token__ = __webpack_require__(16);
+
+
+/**
+ * Performs a generic request against the specified endpoint of the Apple Music API.
+ * @param {string} endpoint - The endpoint to query.
+ * @param {object} options - Options for the request, including method.
+ * @returns {Promise} - A promise that will resolve with the JSON response.
+ */
+function request(endpoint) {
+  return fetch('https://api.music.apple.com/v1/catalog/us/search' + endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      Host: 'api.music.apple.com',
+      Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0__token__["a" /* default */],
+      'Cache-Control': 'no-transform, max-age=900'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).catch(function (error) {
+    return error;
+  });
+}
+
+/***/ }),
+/* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export token */
+/* eslint-disable */
+var token = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldSWDQ2U1A5TjQifQ.eyJpc3MiOiJBSEtFSzNUMzZQIiwiaWF0IjoxNTE2NjYxOTY2LCJleHAiOjE1MzIzODMxNjZ9.9cCIFu1fq0wJV49HwbVdpreVQ2KQf14Yz0PRD3IjFGfayFXipsv8maSfAZLPuRNLFyhZWY8V2FB7uVBdYQOMNw';
+
+/* harmony default export */ __webpack_exports__["a"] = (token);
 
 /***/ })
 /******/ ]);
