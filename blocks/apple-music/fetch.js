@@ -6,8 +6,8 @@ import token from './token';
  * @param {object} options - Options for the request, including method.
  * @returns {Promise} - A promise that will resolve with the JSON response.
  */
-export default function request(endpoint) {
-  return fetch(`https://api.music.apple.com/v1/catalog/us/search${endpoint}`, {
+export function request(endpoint) {
+  return fetch(endpoint, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
@@ -17,5 +17,13 @@ export default function request(endpoint) {
     },
   })
     .then((res) => res.json())
+    .then((data) => data)
     .catch((error) => error);
+}
+
+export default function search(term, types, limit = 25) {
+  const baseURL = 'https://api.music.apple.com/v1/catalog/us/search';
+  const query = `term=${term}&limit=${limit}&types=${types}`;
+
+  return request(`${baseURL}?${query}`);
 }
