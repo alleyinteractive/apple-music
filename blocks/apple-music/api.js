@@ -34,7 +34,7 @@ export function request(endpoint) {
  */
 export function searchCatalog(term, types, limit = 25) {
   if (! term) {
-    return null;
+    return new Promise((resolve) => setTimeout(resolve, 100, 'foo'));
   }
   const catalogURL = `${baseURL}/catalog/${storefront}/search`;
   const query = `term=${term}&limit=${limit}&types=${types}`;

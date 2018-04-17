@@ -5,6 +5,11 @@ import {
   getItems,
 } from '../api';
 
+const {
+  Button,
+  Spinner,
+} = window.wp.components;
+
 const { Component } = window.wp.element;
 
 /**
@@ -19,6 +24,7 @@ class DisplayResults extends Component {
     super(props);
     this.state = {
       data: [],
+      selected: '',
     };
     this.getResponse = this.getResponse.bind(this);
   }
@@ -51,6 +57,13 @@ class DisplayResults extends Component {
       });
   }
 
+  selectItem(item) {
+    this.setState({
+      data: [],
+      selected: item,
+    });
+  }
+
   // Component Render method.
   render() {
     const {
@@ -58,14 +71,45 @@ class DisplayResults extends Component {
     } = this.props;
 
     const items = getItems(this.state.data);
+    console.log(items);
 
-    const results = items.map((x) => (
-      x.attributes.name ? <h3>{x.attributes.name}</h3> : null
-    ));
+    const results = items.map((x) => {
+      // Title
+      const name = x.attributes.name ? (
+        <div className="title">
+          <div className="name">{x.attributes.name}</div>
+        </div>) : null;
+
+      // Artwork
+      let artwork = null;
+      if (x.attributes.artwork && x.attributes.artwork.url) {
+        const imageSrc = x.attributes.artwork.url
+          .replace('{w}', '118').replace('{h}', '118');
+
+        artwork = imageSrc ? (
+          <div className="apple-music-item-artwork">
+            <Spinner />
+            <img src={imageSrc} alt="meaningful text" />
+          </div>) :
+          null;
+      }
+
+      return (
+        <Button
+          onClick={() => this.selectItem(x.attributes.name)}
+        >
+          <div className="apple-music-item">
+            {artwork}
+            {name}
+          </div>
+        </Button>
+      );
+    });
 
     return (
       <div className={className}>
         {results}
+        {this.state.selected}
       </div>
     );
   }
