@@ -1,6 +1,6 @@
 import React from 'react';
 import musicTypes from '../musicTypes';
-import DisplayResults from './displayResults';
+import ResultsWrapper from './resultsWrapper';
 
 // Internationalization
 const { __ } = window.wp.i18n;
@@ -25,6 +25,7 @@ class AppleMusicBlock extends Component {
     super(props);
     this.setMusicType = this.setMusicType.bind(this);
     this.searchTerm = this.searchTerm.bind(this);
+    this.updateSelected = this.updateSelected.bind(this);
   }
 
   /**
@@ -43,6 +44,15 @@ class AppleMusicBlock extends Component {
   searchTerm(query) {
     const { setAttributes } = this.props;
     setAttributes({ query });
+  }
+
+  /**
+   * Update the selected item to embed.
+   * @param {object} item The selected item.
+   */
+  updateSelected(item) {
+    const { setAttributes } = this.props;
+    setAttributes({ selected: item });
   }
 
   // Component Render method.
@@ -89,10 +99,11 @@ class AppleMusicBlock extends Component {
                 value={attributes.query}
                 onChange={this.searchTerm}
               />
-              <DisplayResults
+              <ResultsWrapper
                 className={className}
                 type={attributes.musicType}
                 term={attributes.query}
+                onSelect={this.updateSelected}
               />
             </div>
         }

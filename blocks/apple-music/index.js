@@ -31,12 +31,15 @@ export default registerBlockType(
         type: 'string',
         default: 'artists',
       },
+      selected: {
+        type: 'object',
+      },
     },
     edit: AppleMusicBlock,
     save: (props) => (
       <div className={props.className}>
         <div className="display-music">
-          {props.attributes.music}
+          {props.attributes.query}
         </div>
       </div>
     ),

@@ -1,21 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import AppleMusicItem from './item';
 import {
   searchCatalog,
   getResponseData,
   getItems,
 } from '../api';
 
-const {
-  Button,
-  Spinner,
-} = window.wp.components;
-
 const { Component } = window.wp.element;
 
 /**
  * Component for displaying search results in Apple Music block.
  */
-class DisplayResults extends Component {
+class ResultsWrapper extends Component {
   /**
    * Component constructor
    * @param {object} props This component's props.
@@ -24,7 +21,7 @@ class DisplayResults extends Component {
     super(props);
     this.state = {
       data: [],
-      selected: '',
+      selected: {},
     };
     this.getResponse = this.getResponse.bind(this);
   }
@@ -57,11 +54,17 @@ class DisplayResults extends Component {
       });
   }
 
+  /**
+   * Update the selected item.
+   * @param {object} item The item attributes object.
+   */
   selectItem(item) {
+    const { onSelect } = this.props;
     this.setState({
       data: [],
       selected: item,
     });
+    onSelect(item);
   }
 
   // Component Render method.
@@ -70,49 +73,33 @@ class DisplayResults extends Component {
       className,
     } = this.props;
 
-    const items = getItems(this.state.data);
-    console.log(items);
+    const results = getItems(this.state.data)
+      .map((item) => (
+        <AppleMusicItem
+          item={item}
+          onClick={() => this.selectItem(item)}
+        />
+      ));
 
-    const results = items.map((x) => {
-      // Title
-      const name = x.attributes.name ? (
-        <div className="title">
-          <div className="name">{x.attributes.name}</div>
-        </div>) : null;
-
-      // Artwork
-      let artwork = null;
-      if (x.attributes.artwork && x.attributes.artwork.url) {
-        const imageSrc = x.attributes.artwork.url
-          .replace('{w}', '118').replace('{h}', '118');
-
-        artwork = imageSrc ? (
-          <div className="apple-music-item-artwork">
-            <Spinner />
-            <img src={imageSrc} alt="meaningful text" />
-          </div>) :
-          null;
-      }
-
-      return (
-        <Button
-          onClick={() => this.selectItem(x.attributes.name)}
-        >
-          <div className="apple-music-item">
-            {artwork}
-            {name}
-          </div>
-        </Button>
-      );
-    });
+    console.log(this.state.selected);
 
     return (
       <div className={className}>
         {results}
-        {this.state.selected}
       </div>
     );
   }
 }
 
-export default DisplayResults;
+ResultsWrapper.defaultProps = {
+  className: '',
+};
+
+ResultsWrapper.propTypes = {
+  className: PropTypes.string,
+  term: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
+
+export default ResultsWrapper;
