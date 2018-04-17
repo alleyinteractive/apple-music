@@ -1,9 +1,12 @@
 import token from './token';
+import { storefront } from './settings';
+
+// Base URL for the apple music API
+const baseURL = 'https://api.music.apple.com/v1';
 
 /**
  * Performs a generic request against the specified endpoint of the Apple Music API.
  * @param {string} endpoint - The endpoint to query.
- * @param {object} options - Options for the request, including method.
  * @returns {Promise} - A promise that will resolve with the JSON response.
  */
 export function request(endpoint) {
@@ -17,13 +20,12 @@ export function request(endpoint) {
     },
   })
     .then((res) => res.json())
-    .then((data) => data)
-    .catch((error) => error);
+    .catch((error) => error.status);
 }
 
-export default function search(term, types, limit = 25) {
-  const baseURL = 'https://api.music.apple.com/v1/catalog/us/search';
+export default function getRequest(term, types, limit = 25) {
+  const catalogURL = `${baseURL}/catalog/${storefront}/search`;
   const query = `term=${term}&limit=${limit}&types=${types}`;
 
-  return request(`${baseURL}?${query}`);
+  return request(`${catalogURL}?${query}`);
 }

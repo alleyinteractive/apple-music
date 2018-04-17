@@ -1,6 +1,7 @@
 import React from 'react';
 import musicTypes from './musicTypes';
-import fetch from './fetch';
+import getRequest from './fetch';
+import DisplayResults from './displayResults';
 
 // Internationalization
 const { __ } = window.wp.i18n;
@@ -16,6 +17,15 @@ const {
   SelectControl,
 } = window.wp.components;
 
+function validateResponse(data, type) {
+  if (data.results) {
+    const result = Object.prototype
+      .hasOwnProperty.call(data.results, type);
+    return result ? data.results[type] : {};
+  }
+  return {};
+}
+
 class AppleMusicBlock extends Component {
   /**
    * Component constructor
@@ -23,8 +33,20 @@ class AppleMusicBlock extends Component {
    */
   constructor(props) {
     super(props);
+    this.state = {
+      catalog: {},
+    };
     this.setMusicType = this.setMusicType.bind(this);
     this.searchTerm = this.searchTerm.bind(this);
+  }
+
+  componentDidUpdate() {
+    const { attributes } = this.props;
+    getRequest(attributes.query, attributes.musicType)
+      .then((data) => {
+        const newData = validateResponse(data, attributes.musicType);
+        console.log(newData.data);
+      });
   }
 
   /**
@@ -41,12 +63,8 @@ class AppleMusicBlock extends Component {
    * @param  {string} query The query from the search field.
    */
   searchTerm(query) {
-    const { attributes, setAttributes } = this.props;
+    const { setAttributes } = this.props;
     setAttributes({ query });
-    fetch(attributes.query, attributes.musicType)
-      .then((data) => {
-        console.log(data.results);
-      });
   }
 
   render() {
@@ -94,11 +112,10 @@ class AppleMusicBlock extends Component {
               />
             </div>
         }
-        <div className={className}>
-          <div className="display-music">
-            {`Display: ${attributes.query}`}
-          </div>
-        </div>
+        <DisplayResults
+          className={className}
+          catalog={this.state.catalog}
+        />
       </div>
     );
   }

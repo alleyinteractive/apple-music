@@ -23,6 +23,15 @@ class Block {
 			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
 			APPLE_MUSIC_VERSION
 		);
+		// get the Apple Music settings to pass to the blocks script.
+		$settings = get_option( 'apple_music_options' );
+		wp_localize_script(
+			'apple-music-block',
+			'appleMusicBlock',
+			[
+				'storefront' => sanitize_text_field( $settings['storefront'] ?? 'us' ),
+			]
+		);
 	}
 
 	/**
