@@ -1,6 +1,5 @@
 import React from 'react';
-import musicTypes from './musicTypes';
-import getRequest from './fetch';
+import musicTypes from '../musicTypes';
 import DisplayResults from './displayResults';
 
 // Internationalization
@@ -17,36 +16,15 @@ const {
   SelectControl,
 } = window.wp.components;
 
-function validateResponse(data, type) {
-  if (data.results) {
-    const result = Object.prototype
-      .hasOwnProperty.call(data.results, type);
-    return result ? data.results[type] : {};
-  }
-  return {};
-}
-
 class AppleMusicBlock extends Component {
   /**
    * Component constructor
-   * @param  {object} props This component's props.
+   * @param {object} props This component's props.
    */
   constructor(props) {
     super(props);
-    this.state = {
-      catalog: {},
-    };
     this.setMusicType = this.setMusicType.bind(this);
     this.searchTerm = this.searchTerm.bind(this);
-  }
-
-  componentDidUpdate() {
-    const { attributes } = this.props;
-    getRequest(attributes.query, attributes.musicType)
-      .then((data) => {
-        const newData = validateResponse(data, attributes.musicType);
-        console.log(newData.data);
-      });
   }
 
   /**
@@ -67,6 +45,7 @@ class AppleMusicBlock extends Component {
     setAttributes({ query });
   }
 
+  // Component Render method.
   render() {
     const {
       attributes,
@@ -110,15 +89,19 @@ class AppleMusicBlock extends Component {
                 value={attributes.query}
                 onChange={this.searchTerm}
               />
+              <DisplayResults
+                className={className}
+                type={attributes.musicType}
+                term={attributes.query}
+              />
             </div>
         }
-        <DisplayResults
-          className={className}
-          catalog={this.state.catalog}
-        />
+        <div>
+          {'Apple Music Front End Placeholder'}
+        </div>
       </div>
     );
-  }
+  } // end render method.
 }
 
 export default AppleMusicBlock;

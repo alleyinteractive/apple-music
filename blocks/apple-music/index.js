@@ -1,5 +1,5 @@
 import React from 'react';
-import AppleMusicBlock from './block';
+import AppleMusicBlock from './components/edit';
 
 const { __ } = window.wp.i18n;
 const { registerBlockType } = window.wp.blocks;

@@ -1275,7 +1275,7 @@ setLocaleData({ '': {} }, 'apple-music');
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__block__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_edit__ = __webpack_require__(107);
 
 
 
@@ -1306,7 +1306,7 @@ var registerBlockType = window.wp.blocks.registerBlockType;
       default: 'artists'
     }
   },
-  edit: __WEBPACK_IMPORTED_MODULE_1__block__["a" /* default */],
+  edit: __WEBPACK_IMPORTED_MODULE_1__components_edit__["a" /* default */],
   save: function save(props) {
     return wp.element.createElement(
       'div',
@@ -2853,188 +2853,7 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 55 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(92);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__musicTypes__ = __webpack_require__(100);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__fetch__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__displayResults__ = __webpack_require__(104);
-
-
-
-
-
-
-
-
-
-
-// Internationalization
-var __ = window.wp.i18n.__;
-// Extend component
-
-var Component = window.wp.element.Component;
-var InspectorControls = window.wp.blocks.InspectorControls;
-var _window$wp$components = window.wp.components,
-    PanelBody = _window$wp$components.PanelBody,
-    PanelRow = _window$wp$components.PanelRow,
-    TextControl = _window$wp$components.TextControl,
-    SelectControl = _window$wp$components.SelectControl;
-
-
-function validateResponse(data, type) {
-  if (null || undefined !== data) {
-    if (data.results) {
-      var result = Object.prototype.hasOwnProperty.call(data.results, type);
-      return result ? data.results[type] : {};
-    }
-  }
-  return {};
-}
-
-var AppleMusicBlock = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(AppleMusicBlock, _Component);
-
-  /**
-   * Component constructor
-   * @param  {object} props This component's props.
-   */
-  function AppleMusicBlock(props) {
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, AppleMusicBlock);
-
-    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (AppleMusicBlock.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(AppleMusicBlock)).call(this, props));
-
-    _this.state = {
-      catalog: {}
-    };
-    _this.setMusicType = _this.setMusicType.bind(_this);
-    _this.searchTerm = _this.searchTerm.bind(_this);
-    return _this;
-  }
-
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AppleMusicBlock, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate() {
-      var _this2 = this;
-
-      var attributes = this.props.attributes;
-
-      Object(__WEBPACK_IMPORTED_MODULE_7__fetch__["a" /* default */])(attributes.query, attributes.musicType).then(function (data) {
-        setTimeout(function () {
-          var newData = validateResponse(data);
-          console.log(newData);
-          _this2.setState({
-            catalog: data.results
-          });
-        }, 1000);
-      });
-    }
-
-    /**
-     * On Select assign the musicType attribute.
-     * @param {string} musicType The music type.
-     */
-
-  }, {
-    key: 'setMusicType',
-    value: function setMusicType(musicType) {
-      var setAttributes = this.props.setAttributes;
-
-      setAttributes({ musicType: musicType });
-    }
-
-    /**
-     * Get the search query and update the block.
-     * @param  {string} query The query from the search field.
-     */
-
-  }, {
-    key: 'searchTerm',
-    value: function searchTerm(query) {
-      var setAttributes = this.props.setAttributes;
-
-      setAttributes({ query: query });
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          attributes = _props.attributes,
-          isSelected = _props.isSelected,
-          className = _props.className;
-
-      // Get the current selected musicType object
-
-      var typeObject = __WEBPACK_IMPORTED_MODULE_6__musicTypes__["a" /* default */].find(function (type) {
-        return type.value === attributes.musicType;
-      });
-
-      return wp.element.createElement(
-        'div',
-        null,
-        isSelected && wp.element.createElement(
-          InspectorControls,
-          { key: 'inspector' },
-          wp.element.createElement(
-            PanelBody,
-            { title: __('Apple Music Settings', 'apple-music') },
-            wp.element.createElement(TextControl, {
-              label: 'Search ' + typeObject.label,
-              value: attributes.query,
-              onChange: this.searchTerm
-            }),
-            wp.element.createElement(
-              PanelRow,
-              null,
-              wp.element.createElement(SelectControl, {
-                label: __('Music Type', 'apple-music'),
-                value: attributes.musicType,
-                options: __WEBPACK_IMPORTED_MODULE_6__musicTypes__["a" /* default */].map(function (_ref) {
-                  var value = _ref.value,
-                      label = _ref.label;
-                  return { value: value, label: label };
-                }),
-                onChange: this.setMusicType
-              })
-            )
-          )
-        ),
-        isSelected && wp.element.createElement(
-          'div',
-          { className: 'edit-apple-music' },
-          wp.element.createElement(TextControl, {
-            label: 'Search ' + typeObject.label,
-            value: attributes.query,
-            onChange: this.searchTerm
-          })
-        ),
-        wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__displayResults__["a" /* default */], {
-          className: className,
-          catalog: this.state.catalog
-        })
-      );
-    }
-  }]);
-
-  return AppleMusicBlock;
-}(Component);
-
-/* harmony default export */ __webpack_exports__["a"] = (AppleMusicBlock);
-
-/***/ }),
+/* 55 */,
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3983,7 +3802,9 @@ var musicTypes = [{
 }, {
   value: 'curators', label: __('Curators', 'apple-music')
 }, {
-  value: 'radio', label: __('Radio', 'apple-music')
+  value: 'apple-curators', label: __('Apple Curators', 'apple-music')
+}, {
+  value: 'stations', label: __('Stations', 'apple-music')
 }, {
   value: 'music-videos', label: __('Music Videos', 'apple-music')
 }];
@@ -3991,51 +3812,7 @@ var musicTypes = [{
 /* harmony default export */ __webpack_exports__["a"] = (musicTypes);
 
 /***/ }),
-/* 101 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export request */
-/* harmony export (immutable) */ __webpack_exports__["a"] = getRequest;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__token__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__settings__ = __webpack_require__(103);
-
-
-
-// Base URL for the apple music API
-var baseURL = 'https://api.music.apple.com/v1';
-
-/**
- * Performs a generic request against the specified endpoint of the Apple Music API.
- * @param {string} endpoint - The endpoint to query.
- * @returns {Promise} - A promise that will resolve with the JSON response.
- */
-function request(endpoint) {
-  return fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      Host: 'api.music.apple.com',
-      Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0__token__["a" /* default */],
-      'Cache-Control': 'no-transform, max-age=900'
-    }
-  }).then(function (res) {
-    return res.json();
-  }).catch(function (error) {
-    return error.status;
-  });
-}
-
-function getRequest(term, types) {
-  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 25;
-
-  var catalogURL = baseURL + '/catalog/' + __WEBPACK_IMPORTED_MODULE_1__settings__["a" /* storefront */] + '/search';
-  var query = 'term=' + term + '&limit=' + limit + '&types=' + types;
-
-  return request(catalogURL + '?' + query);
-}
-
-/***/ }),
+/* 101 */,
 /* 102 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -4059,24 +3836,367 @@ var settings = window.appleMusicBlock;
 var storefront = undefined !== settings ? settings.storefront : 'us';
 
 /***/ }),
-/* 104 */
+/* 104 */,
+/* 105 */,
+/* 106 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__api__ = __webpack_require__(108);
 
 
-var DisplayResults = function DisplayResults(_ref) {
-  var className = _ref.className;
-  return wp.element.createElement(
-    'div',
-    { className: className },
-    'hello fair people'
-  );
-};
+
+
+
+
+
+
+var Component = window.wp.element.Component;
+
+/**
+ * Component for displaying search results in Apple Music block.
+ */
+
+var DisplayResults = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(DisplayResults, _Component);
+
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function DisplayResults(props) {
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, DisplayResults);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (DisplayResults.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(DisplayResults)).call(this, props));
+
+    _this.state = {
+      data: []
+    };
+    _this.getResponse = _this.getResponse.bind(_this);
+    return _this;
+  }
+
+  /**
+   * Call the API when the component updates.
+   *
+   * @param {object} prevProps The previous prop state.
+   * @param {object} prevState The previous State.
+   */
+
+
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(DisplayResults, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _props = this.props,
+          term = _props.term,
+          type = _props.type;
+
+      if (prevState.data === this.state.data) {
+        this.getResponse(type, term);
+      }
+    }
+
+    /**
+     * Get response from API.
+     */
+
+  }, {
+    key: 'getResponse',
+    value: function getResponse(type, term) {
+      var _this2 = this;
+
+      Object(__WEBPACK_IMPORTED_MODULE_6__api__["c" /* searchCatalog */])(term, type).then(function (data) {
+        var result = Object(__WEBPACK_IMPORTED_MODULE_6__api__["b" /* getResponseData */])(data, type);
+        if (result) {
+          _this2.setState({
+            data: result
+          });
+        }
+      });
+    }
+
+    // Component Render method.
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var className = this.props.className;
+
+
+      var items = Object(__WEBPACK_IMPORTED_MODULE_6__api__["a" /* getItems */])(this.state.data);
+
+      var results = items.map(function (x) {
+        return x.attributes.name ? wp.element.createElement(
+          'h3',
+          null,
+          x.attributes.name
+        ) : null;
+      });
+
+      return wp.element.createElement(
+        'div',
+        { className: className },
+        results
+      );
+    }
+  }]);
+
+  return DisplayResults;
+}(Component);
 
 /* harmony default export */ __webpack_exports__["a"] = (DisplayResults);
+
+/***/ }),
+/* 107 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__musicTypes__ = __webpack_require__(100);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__displayResults__ = __webpack_require__(106);
+
+
+
+
+
+
+
+
+
+// Internationalization
+var __ = window.wp.i18n.__;
+// Extend component
+
+var Component = window.wp.element.Component;
+var InspectorControls = window.wp.blocks.InspectorControls;
+var _window$wp$components = window.wp.components,
+    PanelBody = _window$wp$components.PanelBody,
+    PanelRow = _window$wp$components.PanelRow,
+    TextControl = _window$wp$components.TextControl,
+    SelectControl = _window$wp$components.SelectControl;
+
+var AppleMusicBlock = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(AppleMusicBlock, _Component);
+
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function AppleMusicBlock(props) {
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, AppleMusicBlock);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (AppleMusicBlock.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(AppleMusicBlock)).call(this, props));
+
+    _this.setMusicType = _this.setMusicType.bind(_this);
+    _this.searchTerm = _this.searchTerm.bind(_this);
+    return _this;
+  }
+
+  /**
+   * On Select assign the musicType attribute.
+   * @param {string} musicType The music type.
+   */
+
+
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AppleMusicBlock, [{
+    key: 'setMusicType',
+    value: function setMusicType(musicType) {
+      var setAttributes = this.props.setAttributes;
+
+      setAttributes({ musicType: musicType });
+    }
+
+    /**
+     * Get the search query and update the block.
+     * @param  {string} query The query from the search field.
+     */
+
+  }, {
+    key: 'searchTerm',
+    value: function searchTerm(query) {
+      var setAttributes = this.props.setAttributes;
+
+      setAttributes({ query: query });
+    }
+
+    // Component Render method.
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _props = this.props,
+          attributes = _props.attributes,
+          isSelected = _props.isSelected,
+          className = _props.className;
+
+      // Get the current selected musicType object
+
+      var typeObject = __WEBPACK_IMPORTED_MODULE_6__musicTypes__["a" /* default */].find(function (type) {
+        return type.value === attributes.musicType;
+      });
+
+      return wp.element.createElement(
+        'div',
+        null,
+        isSelected && wp.element.createElement(
+          InspectorControls,
+          { key: 'inspector' },
+          wp.element.createElement(
+            PanelBody,
+            { title: __('Apple Music Settings', 'apple-music') },
+            wp.element.createElement(TextControl, {
+              label: 'Search ' + typeObject.label,
+              value: attributes.query,
+              onChange: this.searchTerm
+            }),
+            wp.element.createElement(
+              PanelRow,
+              null,
+              wp.element.createElement(SelectControl, {
+                label: __('Music Type', 'apple-music'),
+                value: attributes.musicType,
+                options: __WEBPACK_IMPORTED_MODULE_6__musicTypes__["a" /* default */].map(function (_ref) {
+                  var value = _ref.value,
+                      label = _ref.label;
+                  return { value: value, label: label };
+                }),
+                onChange: this.setMusicType
+              })
+            )
+          )
+        ),
+        isSelected && wp.element.createElement(
+          'div',
+          { className: 'edit-apple-music' },
+          wp.element.createElement(TextControl, {
+            label: 'Search ' + typeObject.label,
+            value: attributes.query,
+            onChange: this.searchTerm
+          }),
+          wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__displayResults__["a" /* default */], {
+            className: className,
+            type: attributes.musicType,
+            term: attributes.query
+          })
+        ),
+        wp.element.createElement(
+          'div',
+          null,
+          'Apple Music Front End Placeholder'
+        )
+      );
+    } // end render method.
+
+  }]);
+
+  return AppleMusicBlock;
+}(Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AppleMusicBlock);
+
+/***/ }),
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export request */
+/* harmony export (immutable) */ __webpack_exports__["c"] = searchCatalog;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getResponseData;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getItems;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__token__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__settings__ = __webpack_require__(103);
+
+
+
+// Base URL for the apple music API
+var baseURL = 'https://api.music.apple.com/v1';
+
+/**
+ * Performs a generic request against the specified endpoint of the Apple Music API.
+ *
+ * @param {string} endpoint - The endpoint to query.
+ * @returns {Promise} - A promise that will resolve with the JSON response.
+ */
+function request(endpoint) {
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      Host: 'api.music.apple.com',
+      Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_0__token__["a" /* default */],
+      'Cache-Control': 'no-transform, max-age=900'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).catch(function (error) {
+    return error.status;
+  });
+}
+
+/**
+ * Search the Apple Music using the requested term and music type catalog.
+ * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html
+ *
+ * @param {string} term The entered text to search the API with.
+ * @param {string} types The types query parameter.
+ * @param {int} limit The limit on the number of objects that are returned.
+ */
+function searchCatalog(term, types) {
+  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 25;
+
+  if (!term) {
+    return null;
+  }
+  var catalogURL = baseURL + '/catalog/' + __WEBPACK_IMPORTED_MODULE_1__settings__["a" /* storefront */] + '/search';
+  var query = 'term=' + term + '&limit=' + limit + '&types=' + types;
+
+  return request(catalogURL + '?' + query);
+}
+
+/**
+ * Check the data response according to search type and return data.
+ *
+ * @param {object} data The fetched data to check for.
+ * @param {string} type The music type to check for.
+ * @returns {array} empty array or an array of objects.
+ */
+function getResponseData(data, type) {
+  if (data.results) {
+    var result = Object.prototype.hasOwnProperty.call(data.results, type);
+    return result ? data.results[type] : [];
+  }
+  return [];
+}
+
+function getItems(response) {
+  if (!response.data) {
+    return [];
+  }
+  return response.data;
+}
 
 /***/ })
 /******/ ]);

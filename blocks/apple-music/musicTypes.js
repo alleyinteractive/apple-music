@@ -26,7 +26,10 @@ const musicTypes = [
     value: 'curators', label: __('Curators', 'apple-music'),
   },
   {
-    value: 'radio', label: __('Radio', 'apple-music'),
+    value: 'apple-curators', label: __('Apple Curators', 'apple-music'),
+  },
+  {
+    value: 'stations', label: __('Stations', 'apple-music'),
   },
   {
     value: 'music-videos', label: __('Music Videos', 'apple-music'),
