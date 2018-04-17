@@ -4232,7 +4232,9 @@ var musicTypes = [{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(62);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__item__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__displayTools__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__api__ = __webpack_require__(112);
+
 
 
 
@@ -4263,7 +4265,8 @@ var ResultsWrapper = function (_Component) {
 
     _this.state = {
       data: [],
-      selected: {}
+      selected: {},
+      showDisplay: false
     };
     _this.getResponse = _this.getResponse.bind(_this);
     return _this;
@@ -4298,8 +4301,8 @@ var ResultsWrapper = function (_Component) {
     value: function getResponse(type, term) {
       var _this2 = this;
 
-      Object(__WEBPACK_IMPORTED_MODULE_8__api__["c" /* searchCatalog */])(term, type).then(function (data) {
-        var result = Object(__WEBPACK_IMPORTED_MODULE_8__api__["b" /* getResponseData */])(data, type);
+      Object(__WEBPACK_IMPORTED_MODULE_9__api__["c" /* searchCatalog */])(term, type).then(function (data) {
+        var result = Object(__WEBPACK_IMPORTED_MODULE_9__api__["b" /* getResponseData */])(data, type);
         if (result) {
           _this2.setState({
             data: result
@@ -4320,8 +4323,10 @@ var ResultsWrapper = function (_Component) {
 
       this.setState({
         data: [],
-        selected: item
+        selected: item,
+        showDisplay: true
       });
+      // Pass the item to the parent.
       onSelect(item);
     }
 
@@ -4335,7 +4340,7 @@ var ResultsWrapper = function (_Component) {
       var className = this.props.className;
 
 
-      var results = Object(__WEBPACK_IMPORTED_MODULE_8__api__["a" /* getItems */])(this.state.data).map(function (item) {
+      var results = Object(__WEBPACK_IMPORTED_MODULE_9__api__["a" /* getItems */])(this.state.data).map(function (item) {
         return wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__item__["a" /* default */], {
           item: item,
           onClick: function onClick() {
@@ -4344,12 +4349,13 @@ var ResultsWrapper = function (_Component) {
         });
       });
 
-      console.log(this.state.selected);
-
       return wp.element.createElement(
         'div',
         { className: className },
-        results
+        results,
+        this.state.showDisplay && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__displayTools__["a" /* default */], {
+          item: this.state.selected
+        })
       );
     }
   }]);
@@ -5757,6 +5763,103 @@ var settings = window.appleMusicBlock;
 
 // Use the storefront settings but default to US store.
 var storefront = undefined !== settings ? settings.storefront : 'us';
+
+/***/ }),
+/* 130 */,
+/* 131 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(17);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__settings__ = __webpack_require__(129);
+
+
+
+
+
+
+
+
+
+var Component = window.wp.element.Component;
+
+/**
+ * Component for displaying search results in Apple Music block.
+ */
+
+var DisplayTools = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(DisplayTools, _Component);
+
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function DisplayTools(props) {
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, DisplayTools);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (DisplayTools.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(DisplayTools)).call(this, props));
+
+    _this.state = {
+      height: '500px',
+      width: '100%'
+    };
+    return _this;
+  }
+
+  // Component Render method.
+
+
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(DisplayTools, [{
+    key: 'render',
+    value: function render() {
+      var item = this.props.item;
+      var _state = this.state,
+          height = _state.height,
+          width = _state.width;
+      // TODO USE EMBED.
+
+      var iframe = wp.element.createElement('iframe', {
+        src: 'https://tools.applemusic.com/embed/v1/' + item.type + '/' + item.id + '?country=' + __WEBPACK_IMPORTED_MODULE_7__settings__["a" /* storefront */],
+        height: height,
+        width: width,
+        frameBorder: '0',
+        title: 'Unique Title Prop'
+      });
+
+      return wp.element.createElement(
+        'div',
+        null,
+        iframe,
+        'Display Tools Here'
+      );
+    }
+  }]);
+
+  return DisplayTools;
+}(Component);
+
+DisplayTools.propTypes = {
+  item: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
+    attributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.any,
+    id: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+    type: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+  }).isRequired
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (DisplayTools);
 
 /***/ })
 /******/ ]);

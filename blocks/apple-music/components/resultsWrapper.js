@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import AppleMusicItem from './item';
+import DisplayTools from './displayTools';
 import {
   searchCatalog,
   getResponseData,
@@ -22,6 +23,7 @@ class ResultsWrapper extends Component {
     this.state = {
       data: [],
       selected: {},
+      showDisplay: false,
     };
     this.getResponse = this.getResponse.bind(this);
   }
@@ -63,7 +65,9 @@ class ResultsWrapper extends Component {
     this.setState({
       data: [],
       selected: item,
+      showDisplay: true,
     });
+    // Pass the item to the parent.
     onSelect(item);
   }
 
@@ -81,11 +85,15 @@ class ResultsWrapper extends Component {
         />
       ));
 
-    console.log(this.state.selected);
-
     return (
       <div className={className}>
         {results}
+        {
+          this.state.showDisplay &&
+          <DisplayTools
+            item={this.state.selected}
+          />
+        }
       </div>
     );
   }
