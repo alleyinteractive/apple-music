@@ -16,6 +16,7 @@ class Settings {
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
+		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 	}
 
 
@@ -165,5 +166,20 @@ class Settings {
 			</form>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Register the rest route for the Apple Music settings.
+	 */
+	public function rest_api_init() {
+		register_rest_route( 'apple_music/v1', 'settings', [
+			'methods' => 'GET',
+			'callback' => function() {
+				$settings = get_option( 'apple_music_options' );
+				return [
+					'storefront' => $settings['storefront'] ?? 'us',
+				];
+			},
+		] );
 	}
 }
