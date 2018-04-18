@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import embedTypes from '../config/embedTypes';
-// import { getTypeObject } from '../utils';
+import { showEmbed } from '../utils';
 
 const {
   TextControl,
@@ -19,6 +19,7 @@ const DisplayTools = ({
   attributes: {
     iframeSrc,
     height,
+    musicType,
     width,
   },
   inPanel,
@@ -31,6 +32,18 @@ const DisplayTools = ({
     height="${height}"
     width="${width}"
     frameborder="0"></iframe>`;
+
+  const embed = showEmbed(musicType) ? (
+    <div>
+      <SandBox html={iframeHTML} />
+    </div>
+  ) : null;
+
+  const artwork = ! showEmbed(musicType) ? (
+    <div>
+      {'show artwork'}
+    </div>
+  ) : null;
 
   return (
     <div>
@@ -57,12 +70,8 @@ const DisplayTools = ({
         onChange={(value) => onChange(value, 'width')}
         placeholder={width}
       />
-      {
-        ! inPanel && iframeSrc &&
-        <div>
-          <SandBox html={iframeHTML} />
-        </div>
-      }
+      {! inPanel && embed}
+      {! inPanel && artwork}
       {
         embedTypes.map(({ value, label }) => (
           <Button

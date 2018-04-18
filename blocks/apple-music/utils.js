@@ -22,7 +22,17 @@ export function getTypeObject(type) {
   ));
 }
 
+/**
+ * Check to see if this music type has an embeddable iframe.
+ * @param {string} type The music type to check for.
+ */
+export function showEmbed(type) {
+  const musicType = getTypeObject(type);
+  return getObjKeyValue(musicType, 'embed');
+}
+
 export default {
   getObjKeyValue,
   getTypeObject,
+  showEmbed,
 };

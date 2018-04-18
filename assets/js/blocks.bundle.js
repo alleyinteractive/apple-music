@@ -5083,10 +5083,11 @@ AppleMusicItem.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils__ = __webpack_require__(131);
 
 
 
-// import { getTypeObject } from '../utils';
+
 
 var _window$wp$components = window.wp.components,
     TextControl = _window$wp$components.TextControl,
@@ -5105,6 +5106,7 @@ var DisplayTools = function DisplayTools(_ref) {
   var _ref$attributes = _ref.attributes,
       iframeSrc = _ref$attributes.iframeSrc,
       height = _ref$attributes.height,
+      musicType = _ref$attributes.musicType,
       width = _ref$attributes.width,
       inPanel = _ref.inPanel,
       item = _ref.item,
@@ -5112,6 +5114,18 @@ var DisplayTools = function DisplayTools(_ref) {
 
   // Setup the iframe for display
   var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    frameborder="0"></iframe>';
+
+  var embed = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* showEmbed */])(musicType) ? wp.element.createElement(
+    'div',
+    null,
+    wp.element.createElement(SandBox, { html: iframeHTML })
+  ) : null;
+
+  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* showEmbed */])(musicType) ? wp.element.createElement(
+    'div',
+    null,
+    'show artwork'
+  ) : null;
 
   return wp.element.createElement(
     'div',
@@ -5146,11 +5160,8 @@ var DisplayTools = function DisplayTools(_ref) {
       },
       placeholder: width
     }),
-    !inPanel && iframeSrc && wp.element.createElement(
-      'div',
-      null,
-      wp.element.createElement(SandBox, { html: iframeHTML })
-    ),
+    !inPanel && embed,
+    !inPanel && artwork,
     __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__["a" /* default */].map(function (_ref2) {
       var value = _ref2.value,
           label = _ref2.label;
@@ -5924,6 +5935,7 @@ var storefront = undefined !== settings ? settings.storefront : 'us';
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = getObjKeyValue;
 /* harmony export (immutable) */ __webpack_exports__["b"] = getTypeObject;
+/* harmony export (immutable) */ __webpack_exports__["c"] = showEmbed;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__ = __webpack_require__(133);
 
 
@@ -5949,9 +5961,19 @@ function getTypeObject(type) {
   });
 }
 
+/**
+ * Check to see if this music type has an embeddable iframe.
+ * @param {string} type The music type to check for.
+ */
+function showEmbed(type) {
+  var musicType = getTypeObject(type);
+  return getObjKeyValue(musicType, 'embed');
+}
+
 /* unused harmony default export */ var _unused_webpack_default_export = ({
   getObjKeyValue: getObjKeyValue,
-  getTypeObject: getTypeObject
+  getTypeObject: getTypeObject,
+  showEmbed: showEmbed
 });
 
 /***/ }),
