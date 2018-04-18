@@ -26,7 +26,7 @@ class API {
 	protected $token;
 
 	public static function instance() {
-		new API();
+		return new API();
 	}
 
 	/**
@@ -97,7 +97,7 @@ class API {
 	 *
 	 * @return mixed|null
 	 */
-	protected function send_request( $method, $url, $params = [ ] ) {
+	protected function send_request( $method, $url, $params = [] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
 

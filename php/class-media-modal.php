@@ -70,9 +70,8 @@ class Media_Modal {
 		$request['page']    = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
 		$params             = $request['params'];
-
 		$api      = new API();
-		$response = $api->search( reset( $params ), $types, $request['page'] );
+		$response = $api->search( reset( $params ), key( $params ), $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( array(
