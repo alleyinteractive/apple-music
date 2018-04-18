@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import embedTypes from '../config/embedTypes';
+// import { getTypeObject } from '../utils';
 
 const {
   TextControl,
@@ -15,20 +16,21 @@ const { __ } = window.wp.i18n;
  * Component for displaying search results in Apple Music block.
  */
 const DisplayTools = ({
-  iframeURL,
+  attributes: {
+    iframeSrc,
+    height,
+    width,
+  },
   inPanel,
   item,
-  height,
-  width,
   onChange,
 }) => {
   // Setup the iframe for display
   const iframeHTML = `<iframe
-    src="${iframeURL}"
+    src="${iframeSrc}"
     height="${height}"
     width="${width}"
     frameborder="0"></iframe>`;
-  console.log(item);
 
   return (
     <div>
@@ -56,7 +58,7 @@ const DisplayTools = ({
         placeholder={width}
       />
       {
-        ! inPanel && iframeURL &&
+        ! inPanel && iframeSrc &&
         <div>
           <SandBox html={iframeHTML} />
         </div>
@@ -79,16 +81,18 @@ DisplayTools.defaultProps = {
 };
 
 DisplayTools.propTypes = {
+  attributes: PropTypes.shape({
+    width: PropTypes.string,
+    height: PropTypes.string,
+    iframeSrc: PropTypes.string,
+  }).isRequired,
   item: PropTypes.shape({
     attributes: PropTypes.any,
     id: PropTypes.string,
     type: PropTypes.string,
   }).isRequired,
-  width: PropTypes.string.isRequired,
-  height: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   inPanel: PropTypes.bool,
-  iframeURL: PropTypes.string.isRequired,
 };
 
 export default DisplayTools;

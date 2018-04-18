@@ -14,10 +14,11 @@ const { __ } = window.wp.i18n;
  * Component for displaying search results in Apple Music block.
  */
 const SearchTools = ({
-  query,
-  musicType,
-  updateSearchTerm,
-  setMusicType,
+  attributes: {
+    query,
+    musicType,
+  },
+  updateSearch,
 }) => {
   // Get the current selected musicType object
   const typeObject = musicTypes.find((type) => (
@@ -29,7 +30,7 @@ const SearchTools = ({
       <TextControl
         label={`Search ${typeObject.label}`}
         value={query}
-        onChange={updateSearchTerm}
+        onChange={(term) => updateSearch(term, 'query')}
       />
       <SelectControl
         label={__('Music Type', 'apple-music')}
@@ -37,17 +38,18 @@ const SearchTools = ({
         options={musicTypes.map(({ value, label }) => (
           { value, label }
         ))}
-        onChange={setMusicType}
+        onChange={(type) => updateSearch(type, 'musicType')}
       />
     </div>
   );
 };
 
 SearchTools.propTypes = {
-  query: PropTypes.string.isRequired,
-  musicType: PropTypes.string.isRequired,
-  updateSearchTerm: PropTypes.func.isRequired,
-  setMusicType: PropTypes.func.isRequired,
+  attributes: PropTypes.shape({
+    query: PropTypes.string,
+    musicType: PropTypes.string,
+  }).isRequired,
+  updateSearch: PropTypes.func.isRequired,
 };
 
 export default SearchTools;

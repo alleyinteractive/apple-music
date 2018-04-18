@@ -28,9 +28,7 @@ class AppleMusicBlock extends Component {
       musicItem: {},
       isMusicSet: false,
     };
-    this.setMusicType = this.setMusicType.bind(this);
-    this.searchTerm = this.searchTerm.bind(this);
-    this.setMusicID = this.setMusicID.bind(this);
+    this.setMusicSelection = this.setMusicSelection.bind(this);
     this.updateAttributes = this.updateAttributes.bind(this);
   }
 
@@ -38,7 +36,7 @@ class AppleMusicBlock extends Component {
    * Update the musicID attribute and add the musicItem object to state.
    * @param {object} item The selected item.
    */
-  setMusicID(item) {
+  setMusicSelection(item) {
     const {
       attributes: {
         musicType,
@@ -63,35 +61,19 @@ class AppleMusicBlock extends Component {
   }
 
   /**
-   * On Select assign the musicType attribute.
-   * @param {string} musicType The music type.
-   */
-  setMusicType(musicType) {
-    const { setAttributes } = this.props;
-    setAttributes({ musicType });
-  }
-
-  /**
-   * Get the search query and update the block.
-   * @param  {string} query The query from the search field.
-   */
-  searchTerm(query) {
-    const { setAttributes } = this.props;
-    setAttributes({ query });
-  }
-
-  /**
    * Update the attributes callback.
    * @param {string} value the value to set the attribute.
    * @param {string} key the key of the attribute, which attribute to set.
    */
   updateAttributes(value, key) {
     const { attributes, setAttributes } = this.props;
-
+    // TODO: this could be less repetitive.
     setAttributes({
       width: 'width' === key ? value : attributes.width,
       height: 'height' === key ? value : attributes.height,
       embedType: 'embedType' === key ? value : attributes.embedType,
+      query: 'query' === key ? value : attributes.query,
+      musicType: 'musicType' === key ? value : attributes.musicType,
     });
   }
 
@@ -108,13 +90,7 @@ class AppleMusicBlock extends Component {
   // Component Render method.
   render() {
     const {
-      attributes: {
-        height,
-        iframeSrc,
-        musicType,
-        query,
-        width,
-      },
+      attributes,
       isSelected,
       className,
     } = this.props;
@@ -125,19 +101,15 @@ class AppleMusicBlock extends Component {
           <InspectorControls key="inspector">
             <PanelBody title={__('Apple Music Settings', 'apple-music')}>
               <SearchTools
-                query={query}
-                musicType={musicType}
-                updateSearchTerm={this.searchTerm}
-                setMusicType={this.setMusicType}
+                attributes={attributes}
+                updateSearch={this.updateAttributes}
               />
               {
                 this.state.isMusicSet &&
                 <DisplayTools
+                  attributes={attributes}
                   item={this.state.musicItem}
-                  width={width}
-                  height={height}
                   onChange={this.updateAttributes}
-                  iframeURL={iframeSrc}
                 />
               }
             </PanelBody>
@@ -149,10 +121,8 @@ class AppleMusicBlock extends Component {
               {
                 ! this.state.isMusicSet &&
                 <SearchTools
-                  query={query}
-                  musicType={musicType}
-                  updateSearchTerm={this.searchTerm}
-                  setMusicType={this.setMusicType}
+                  attributes={attributes}
+                  updateSearch={this.updateAttributes}
                 />
               }
               {
@@ -165,12 +135,10 @@ class AppleMusicBlock extends Component {
                     {__('Back to Seach', 'apple-music')}
                   </Button>
                   <DisplayTools
+                    attributes={attributes}
                     item={this.state.musicItem}
-                    width={width}
-                    height={height}
                     onChange={this.updateAttributes}
                     inPanel={false}
-                    iframeURL={iframeSrc}
                   />
                 </div>
               }
@@ -178,9 +146,8 @@ class AppleMusicBlock extends Component {
                 ! this.state.isMusicSet &&
                 <ResultsWrapper
                   className={className}
-                  type={musicType}
-                  term={query}
-                  onSelect={this.setMusicID}
+                  attributes={attributes}
+                  onSelect={this.setMusicSelection}
                 />
               }
             </div>

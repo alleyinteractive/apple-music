@@ -3354,9 +3354,7 @@ var AppleMusicBlock = function (_Component) {
       musicItem: {},
       isMusicSet: false
     };
-    _this.setMusicType = _this.setMusicType.bind(_this);
-    _this.searchTerm = _this.searchTerm.bind(_this);
-    _this.setMusicID = _this.setMusicID.bind(_this);
+    _this.setMusicSelection = _this.setMusicSelection.bind(_this);
     _this.updateAttributes = _this.updateAttributes.bind(_this);
     return _this;
   }
@@ -3368,8 +3366,8 @@ var AppleMusicBlock = function (_Component) {
 
 
   __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AppleMusicBlock, [{
-    key: 'setMusicID',
-    value: function setMusicID(item) {
+    key: 'setMusicSelection',
+    value: function setMusicSelection(item) {
       var _props = this.props,
           musicType = _props.attributes.musicType,
           setAttributes = _props.setAttributes;
@@ -3392,32 +3390,6 @@ var AppleMusicBlock = function (_Component) {
     }
 
     /**
-     * On Select assign the musicType attribute.
-     * @param {string} musicType The music type.
-     */
-
-  }, {
-    key: 'setMusicType',
-    value: function setMusicType(musicType) {
-      var setAttributes = this.props.setAttributes;
-
-      setAttributes({ musicType: musicType });
-    }
-
-    /**
-     * Get the search query and update the block.
-     * @param  {string} query The query from the search field.
-     */
-
-  }, {
-    key: 'searchTerm',
-    value: function searchTerm(query) {
-      var setAttributes = this.props.setAttributes;
-
-      setAttributes({ query: query });
-    }
-
-    /**
      * Update the attributes callback.
      * @param {string} value the value to set the attribute.
      * @param {string} key the key of the attribute, which attribute to set.
@@ -3429,12 +3401,14 @@ var AppleMusicBlock = function (_Component) {
       var _props2 = this.props,
           attributes = _props2.attributes,
           setAttributes = _props2.setAttributes;
-
+      // TODO: this could be less repetitive.
 
       setAttributes({
         width: 'width' === key ? value : attributes.width,
         height: 'height' === key ? value : attributes.height,
-        embedType: 'embedType' === key ? value : attributes.embedType
+        embedType: 'embedType' === key ? value : attributes.embedType,
+        query: 'query' === key ? value : attributes.query,
+        musicType: 'musicType' === key ? value : attributes.musicType
       });
     }
 
@@ -3459,12 +3433,7 @@ var AppleMusicBlock = function (_Component) {
       var _this2 = this;
 
       var _props3 = this.props,
-          _props3$attributes = _props3.attributes,
-          height = _props3$attributes.height,
-          iframeSrc = _props3$attributes.iframeSrc,
-          musicType = _props3$attributes.musicType,
-          query = _props3$attributes.query,
-          width = _props3$attributes.width,
+          attributes = _props3.attributes,
           isSelected = _props3.isSelected,
           className = _props3.className;
 
@@ -3479,17 +3448,13 @@ var AppleMusicBlock = function (_Component) {
             PanelBody,
             { title: __('Apple Music Settings', 'apple-music') },
             wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
-              query: query,
-              musicType: musicType,
-              updateSearchTerm: this.searchTerm,
-              setMusicType: this.setMusicType
+              attributes: attributes,
+              updateSearch: this.updateAttributes
             }),
             this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
+              attributes: attributes,
               item: this.state.musicItem,
-              width: width,
-              height: height,
-              onChange: this.updateAttributes,
-              iframeURL: iframeSrc
+              onChange: this.updateAttributes
             })
           )
         ),
@@ -3497,10 +3462,8 @@ var AppleMusicBlock = function (_Component) {
           'div',
           { className: 'edit-apple-music' },
           !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
-            query: query,
-            musicType: musicType,
-            updateSearchTerm: this.searchTerm,
-            setMusicType: this.setMusicType
+            attributes: attributes,
+            updateSearch: this.updateAttributes
           }),
           this.state.isMusicSet && wp.element.createElement(
             'div',
@@ -3516,19 +3479,16 @@ var AppleMusicBlock = function (_Component) {
               __('Back to Seach', 'apple-music')
             ),
             wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
+              attributes: attributes,
               item: this.state.musicItem,
-              width: width,
-              height: height,
               onChange: this.updateAttributes,
-              inPanel: false,
-              iframeURL: iframeSrc
+              inPanel: false
             })
           ),
           !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__resultsWrapper__["a" /* default */], {
             className: className,
-            type: musicType,
-            term: query,
-            onSelect: this.setMusicID
+            attributes: attributes,
+            onSelect: this.setMusicSelection
           })
         ),
         !isSelected && wp.element.createElement(
@@ -4335,12 +4295,12 @@ var ResultsWrapper = function (_Component) {
   __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(ResultsWrapper, [{
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
-      var _props = this.props,
-          term = _props.term,
-          type = _props.type;
+      var _props$attributes = this.props.attributes,
+          query = _props$attributes.query,
+          musicType = _props$attributes.musicType;
 
       if (prevState.data === this.state.data) {
-        this.getResponse(type, term);
+        this.getResponse(musicType, query);
       }
     }
 
@@ -4415,9 +4375,11 @@ ResultsWrapper.defaultProps = {
 };
 
 ResultsWrapper.propTypes = {
+  attributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
+    query: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+    musicType: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+  }).isRequired,
   className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  term: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string.isRequired,
-  type: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string.isRequired,
   onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
 };
 
@@ -5124,6 +5086,7 @@ AppleMusicItem.propTypes = {
 
 
 
+// import { getTypeObject } from '../utils';
 
 var _window$wp$components = window.wp.components,
     TextControl = _window$wp$components.TextControl,
@@ -5139,16 +5102,16 @@ var __ = window.wp.i18n.__;
  */
 
 var DisplayTools = function DisplayTools(_ref) {
-  var iframeURL = _ref.iframeURL,
+  var _ref$attributes = _ref.attributes,
+      iframeSrc = _ref$attributes.iframeSrc,
+      height = _ref$attributes.height,
+      width = _ref$attributes.width,
       inPanel = _ref.inPanel,
       item = _ref.item,
-      height = _ref.height,
-      width = _ref.width,
       _onChange = _ref.onChange;
 
   // Setup the iframe for display
-  var iframeHTML = '<iframe\n    src="' + iframeURL + '"\n    height="' + height + '"\n    width="' + width + '"\n    frameborder="0"></iframe>';
-  console.log(item);
+  var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    frameborder="0"></iframe>';
 
   return wp.element.createElement(
     'div',
@@ -5183,7 +5146,7 @@ var DisplayTools = function DisplayTools(_ref) {
       },
       placeholder: width
     }),
-    !inPanel && iframeURL && wp.element.createElement(
+    !inPanel && iframeSrc && wp.element.createElement(
       'div',
       null,
       wp.element.createElement(SandBox, { html: iframeHTML })
@@ -5209,16 +5172,18 @@ DisplayTools.defaultProps = {
 };
 
 DisplayTools.propTypes = {
+  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+    width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+  }).isRequired,
   item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
     id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
     type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
   }).isRequired,
-  width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
   onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
-  iframeURL: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired
+  inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (DisplayTools);
@@ -6016,10 +5981,10 @@ var __ = window.wp.i18n.__;
  */
 
 var SearchTools = function SearchTools(_ref) {
-  var query = _ref.query,
-      musicType = _ref.musicType,
-      updateSearchTerm = _ref.updateSearchTerm,
-      setMusicType = _ref.setMusicType;
+  var _ref$attributes = _ref.attributes,
+      query = _ref$attributes.query,
+      musicType = _ref$attributes.musicType,
+      updateSearch = _ref.updateSearch;
 
   // Get the current selected musicType object
   var typeObject = __WEBPACK_IMPORTED_MODULE_2__config_musicTypes__["a" /* default */].find(function (type) {
@@ -6032,7 +5997,9 @@ var SearchTools = function SearchTools(_ref) {
     wp.element.createElement(TextControl, {
       label: 'Search ' + typeObject.label,
       value: query,
-      onChange: updateSearchTerm
+      onChange: function onChange(term) {
+        return updateSearch(term, 'query');
+      }
     }),
     wp.element.createElement(SelectControl, {
       label: __('Music Type', 'apple-music'),
@@ -6042,16 +6009,19 @@ var SearchTools = function SearchTools(_ref) {
             label = _ref2.label;
         return { value: value, label: label };
       }),
-      onChange: setMusicType
+      onChange: function onChange(type) {
+        return updateSearch(type, 'musicType');
+      }
     })
   );
 };
 
 SearchTools.propTypes = {
-  query: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  musicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  updateSearchTerm: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  setMusicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+    query: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    musicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+  }).isRequired,
+  updateSearch: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (SearchTools);

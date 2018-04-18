@@ -32,9 +32,9 @@ class ResultsWrapper extends Component {
    * @param {object} prevState The previous State.
    */
   componentDidUpdate(prevProps, prevState) {
-    const { term, type } = this.props;
+    const { attributes: { query, musicType } } = this.props;
     if (prevState.data === this.state.data) {
-      this.getResponse(type, term);
+      this.getResponse(musicType, query);
     }
   }
 
@@ -93,9 +93,11 @@ ResultsWrapper.defaultProps = {
 };
 
 ResultsWrapper.propTypes = {
+  attributes: PropTypes.shape({
+    query: PropTypes.string,
+    musicType: PropTypes.string,
+  }).isRequired,
   className: PropTypes.string,
-  term: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
   onSelect: PropTypes.func.isRequired,
 };
 
