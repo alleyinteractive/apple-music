@@ -5,6 +5,9 @@ const {
   Button,
 } = window.wp.components;
 
+// Internationalization
+const { __ } = window.wp.i18n;
+
 const AppleMusicItem = ({
   item,
   onClick,
@@ -27,7 +30,7 @@ const AppleMusicItem = ({
 
     artwork = imageSrc ? (
       <div className="apple-music-item-artwork">
-        <img src={imageSrc} alt="meaningful text" />
+        <img src={imageSrc} alt={__('Meaningful Text', 'apple-music')} />
       </div>) :
       null;
   }

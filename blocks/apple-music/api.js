@@ -1,4 +1,8 @@
 import token from './token';
+import {
+  getObjKeyValue,
+  getTypeObject,
+} from './utils';
 import { storefront } from './settings';
 
 // Base URL for the apple music API
@@ -58,9 +62,31 @@ export function getResponseData(data, type) {
   return [];
 }
 
+/**
+ * Get the music item object.
+ *
+ * @param {object} response the music item object
+ */
 export function getItems(response) {
   if (! response.data) {
     return [];
   }
   return response.data;
+}
+
+/**
+ * Get the API iframe URL for embedding.
+ * @param {string} type the music type to embed.
+ * @param {string} id the Apple Music ID.
+ */
+export function iframeURL(type, id) {
+  const baseUrl = 'https://tools.applemusic.com/embed/v1/';
+  const typeObject = getTypeObject(type);
+
+  const embedType = getObjKeyValue(typeObject, 'embedType');
+
+  if (null !== embedType) {
+    return `${baseUrl}${embedType}/${id}?country=${storefront}`;
+  }
+  return '';
 }

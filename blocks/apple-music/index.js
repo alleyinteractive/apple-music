@@ -31,8 +31,22 @@ export default registerBlockType(
         type: 'string',
         default: 'artists',
       },
-      selected: {
-        type: 'object',
+      musicID: {
+        type: 'integer',
+      },
+      height: {
+        type: 'string',
+      },
+      width: {
+        type: 'string',
+        default: '100%',
+      },
+      embedType: {
+        type: 'string',
+        default: 'preview-player',
+      },
+      iframeSrc: {
+        type: 'string',
       },
     },
     edit: AppleMusicBlock,
