@@ -97,23 +97,19 @@ class API {
 	 *
 	 * @return mixed|null
 	 */
-	protected function send_request( $method, $url, $params = [ ] ) {
+	protected function send_request( $method, $url, $params = [] ) {
 
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
 
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
-			$response = wpcom_vip_file_get_contents(
-				$url_safe,
-				8, // request timeout in seconds
-				900, // cache timeout in seconds
-				[
-					'http_api_args' => [
-						'headers' => [
-							'Authorization' => "Bearer {$this->token}",
-						],
+			$response = wpcom_vip_file_get_contents( $url_safe, 8, 900, [
+				'http_api_args' => [
+					'headers' => [
+						'Authorization' => "Bearer {$this->token}",
 					],
-				] );
+				],
+			] );
 		} else {
 			$response = wp_safe_remote_request(
 				$url_safe,
