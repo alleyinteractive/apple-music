@@ -3,6 +3,7 @@
 	<!-- Set a description for this ruleset. -->
 	<description>Code standard rules to check against this plugin.</description>
 
+	<exclude-pattern>tests/*</exclude-pattern>
 
 	<!-- Include the WordPress ruleset, with exclusions. -->
 	<rule ref="WordPress-VIP">
