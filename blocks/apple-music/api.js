@@ -35,6 +35,7 @@ export function request(endpoint) {
  * @param {string} term The entered text to search the API with.
  * @param {string} types The types query parameter.
  * @param {int} limit The limit on the number of objects that are returned.
+ * @returns Promise
  */
 export function searchCatalog(term, types, limit = 25) {
   if (! term) {
