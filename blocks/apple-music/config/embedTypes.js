@@ -7,16 +7,20 @@ const { __ } = window.wp.i18n;
  */
 const embedTypes = [
   {
-    value: 'preview-player', label: __('Preview Player', 'apple-music'),
+    value: 'preview-player',
+    label: __('Preview Player', 'apple-music'),
   },
   {
-    value: 'badge', label: __('Badge', 'apple-music'),
+    value: 'badge',
+    label: __('Badge', 'apple-music'),
   },
   {
-    value: 'text-lockup', label: __('Text Lockup', 'apple-music'),
+    value: 'text-lockup',
+    label: __('Text Lockup', 'apple-music'),
   },
   {
-    value: 'app-icon', label: __('App Icon', 'apple-music'),
+    value: 'app-icon',
+    label: __('App Icon', 'apple-music'),
   },
 ];
 
