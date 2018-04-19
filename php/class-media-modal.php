@@ -161,9 +161,11 @@ class Media_Modal {
 					case 'playlists':
 					case 'activities':
 					case 'music-videos':
+						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['content']     = $attributes->artistName . ' ' . $attributes->name;
 						$thumbnail           = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
 						$item['thumbnail']   = esc_url_raw( $thumbnail );
+						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['description'] = $attributes->editorialNotes->short;
 						break;
 
