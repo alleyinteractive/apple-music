@@ -67,12 +67,10 @@ export function getResponseData(data, type) {
  * Get the music item object.
  *
  * @param {object} response the music item object
+ * @returns {array} The music item from the API response.
  */
 export function getItems(response) {
-  if (! response.data) {
-    return [];
-  }
-  return response.data;
+  return response.data || [];
 }
 
 /**
