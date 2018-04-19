@@ -17,9 +17,7 @@ export function getObjKeyValue(obj, key) {
  * @param {type} type the musicType object
  */
 export function getTypeObject(type) {
-  return musicTypes.find((x) => (
-    x.value === type
-  ));
+  return musicTypes.find((x) => x.value === type);
 }
 
 /**
