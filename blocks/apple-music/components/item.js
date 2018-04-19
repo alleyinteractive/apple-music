@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getItemArtworkURL } from '../utils';
+import {
+  getItemArtworkURL,
+  getNestedObject,
+} from '../utils';
 
 const {
   Button,
@@ -17,30 +20,27 @@ const AppleMusicItem = ({
   if (! item) {
     return null;
   }
-  // Title
-  const name = item.attributes.name ? (
-    <div className="title">
-      <div className="name">{item.attributes.name}</div>
-    </div>) : null;
 
-  // Artwork
-  let artwork = null;
+  const name = getNestedObject(item, ['attributes', 'name']);
   const imageSrc = getItemArtworkURL(item);
-  if (imageSrc) {
-    artwork = imageSrc ? (
-      <div className="apple-music-item-artwork">
-        <img src={imageSrc} alt={__('Meaningful Text', 'apple-music')} />
-      </div>) :
-      null;
-  }
 
   return (
     <Button
       onClick={() => onClick(item)}
     >
       <div className="apple-music-item">
-        {artwork}
-        {name}
+        {
+          imageSrc &&
+          <div className="apple-music-item-artwork">
+            <img src={imageSrc} alt={__('Meaningful Text', 'apple-music')} />
+          </div>
+        }
+        { // the name of the music item.
+          name &&
+          <div className="title">
+            <div className="name">{name}</div>
+          </div>
+        }
       </div>
     </Button>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import embedTypes from '../config/embedTypes';
+import PreviewPlayer from './previewPlayer';
 import {
   showEmbed,
   getItemArtworkURL,
@@ -10,7 +11,6 @@ import {
 const {
   TextControl,
   Button,
-  SandBox,
   ExternalLink,
 } = window.wp.components;
 
@@ -31,19 +31,6 @@ const DisplayTools = ({
   inPanel,
   onChange,
 }) => {
-  // Setup the iframe for display
-  const iframeHTML = `<iframe
-    src="${iframeSrc}"
-    height="${height}"
-    width="${width}"
-    frameborder="0"></iframe>`;
-
-  const embed = showEmbed(musicType) ? (
-    <div>
-      <SandBox html={iframeHTML} />
-    </div>
-  ) : null;
-
   const directLink = getNestedObject(item, ['attributes', 'url']);
   const imageSrc = getItemArtworkURL(item, '200', '200');
   const name = getNestedObject(item, ['attributes', 'name']);
@@ -95,7 +82,14 @@ const DisplayTools = ({
           />
         </div>
       }
-      {! inPanel && embed}
+      { // Show the Preview player in the main content area.
+        (! inPanel && showEmbed(musicType)) &&
+        <PreviewPlayer
+          height={height}
+          iframeSrc={iframeSrc}
+          width={width}
+        />
+      }
       {! inPanel && artwork}
       {
         embedTypes.map(({ value, label }) => {

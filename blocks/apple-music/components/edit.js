@@ -2,6 +2,7 @@ import React from 'react';
 import DisplayTools from './displayTools';
 import ResultsWrapper from './resultsWrapper';
 import SearchTools from './searchTools';
+import AppleMusicDisplay from './save';
 import { iframeURL } from '../api';
 import {
   getObjKeyValue,
@@ -170,9 +171,7 @@ class AppleMusicBlock extends Component {
         }
         {
           ! isSelected &&
-          <div>
-            {'Apple Music Front End Placeholder'}
-          </div>
+          <AppleMusicDisplay attributes={attributes} />
         }
       </div>
     );

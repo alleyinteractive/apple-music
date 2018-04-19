@@ -1,5 +1,5 @@
-import React from 'react';
 import AppleMusicBlock from './components/edit';
+import AppleMusicDisplay from './components/save';
 
 const { __ } = window.wp.i18n;
 const { registerBlockType } = window.wp.blocks;
@@ -53,12 +53,6 @@ export default registerBlockType(
       },
     },
     edit: AppleMusicBlock,
-    save: (props) => (
-      <div className={props.className}>
-        <div className="display-music">
-          {props.attributes.query}
-        </div>
-      </div>
-    ),
+    save: AppleMusicDisplay,
   },
 );
