@@ -18,7 +18,6 @@ class Settings {
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
-
 	/**
 	 * Register our settings.
 	 */
