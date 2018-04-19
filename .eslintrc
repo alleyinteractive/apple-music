@@ -64,6 +64,6 @@
     "no-confusing-arrow": ["error", {"allowParens": true}], // See eslint config for reasons
     "no-constant-condition": ["error"],
     "arrow-parens": ["error", "always"],
-    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }]
   }
 }
