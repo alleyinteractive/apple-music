@@ -20,9 +20,8 @@ class Shortcode {
 			'height' => null,
 			'width'  => null,
 			'format' => null,
-			'color' => null,
+			'color'  => null,
 		], $atts, $tag );
-
 
 		$embeddable_types = [
 			'songs'     => [
@@ -47,23 +46,23 @@ class Shortcode {
 
 		$linkable_types = [
 			'artists'      => [
-				'singular' => 'artist',
+				'singular'       => 'artist',
 				'default_format' => 'badge',
 			],
 			'stations'     => [
-				'singular' => 'station',
+				'singular'       => 'station',
 				'default_format' => 'badge',
 			],
 			'music-videos' => [
-				'singular' => 'music-video',
+				'singular'       => 'music-video',
 				'default_format' => 'badge',
 			],
 			'activities'   => [
-				'singular' => 'activity',
+				'singular'       => 'activity',
 				'default_format' => 'badge',
 			],
-			'curators'  => [
-				'singular' => 'curator',
+			'curators'     => [
+				'singular'       => 'curator',
 				'default_format' => 'badge',
 			],
 		];
@@ -95,9 +94,9 @@ class Shortcode {
 		if ( empty( $shortcode_atts['id'] )
 		     || empty( $shortcode_atts['type'] )
 		     || ! array_key_exists( $shortcode_atts['type'], $all_types )
-			|| ( array_key_exists( $shortcode_atts['type'], $linkable_types ) && 'player' === $shortcode_atts['format'] )
+		     || ( array_key_exists( $shortcode_atts['type'], $linkable_types ) && 'player' === $shortcode_atts['format'] )
 		) {
-			return;
+			return false;
 		}
 
 		// Get storefront.
@@ -137,7 +136,6 @@ class Shortcode {
 			if ( 'link' === $format ) {
 				$output = sprintf( '<a href="%1$s">%1$s</a>',
 					esc_url( $url ) // 1
-
 				);
 
 				return $output;
@@ -147,7 +145,7 @@ class Shortcode {
 			$output = sprintf( '<a href="%1$s" style="display:inline-block;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
 				esc_url( $url ), // 1
 				esc_url( $formats[ $format ]['background'] ), // 2
-				esc_attr( empty( $shortcode_atts['color'] ) ?  $formats[ $format ]['default_color'] : $shortcode_atts['color'] ), // 3
+				esc_attr( empty( $shortcode_atts['color'] ) ? $formats[ $format ]['default_color'] : $shortcode_atts['color'] ), // 3
 				esc_attr( $formats[ $format ]['dimensions'] ) // 4
 			);
 		}

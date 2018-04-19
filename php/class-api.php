@@ -103,17 +103,13 @@ class API {
 
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
-			$response = wpcom_vip_file_get_contents(
-				$url_safe,
-				8, // request timeout in seconds
-				900, // cache timeout in seconds
-				[
-					'http_api_args' => [
-						'headers' => [
-							'Authorization' => "Bearer {$this->token}",
-						],
+			$response = wpcom_vip_file_get_contents( $url_safe, 8, 900, [
+				'http_api_args' => [
+					'headers' => [
+						'Authorization' => "Bearer {$this->token}",
 					],
-				] );
+				],
+			] );
 		} else {
 			$response = wp_safe_remote_request(
 				$url_safe,

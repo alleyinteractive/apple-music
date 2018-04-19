@@ -4,20 +4,20 @@ namespace Apple_Music;
 
 class Media_Modal {
 
-	public $items = array();
-	public $meta = array(
+	public $items = [];
+	public $meta = [
 		'count'  => null,
 		'max_id' => null,
 		'min_id' => null,
-	);
+	];
 
 	public $id = null;
 	public $content = null;
 
 	public function __construct() {
-		add_action( 'wp_enqueue_media', array( $this, 'action_enqueue_media' ) );
-		add_action( 'print_media_templates', array( $this, 'action_print_media_templates' ) );
-		add_action( 'wp_ajax_apple_music_request', array( $this, 'ajax_request' ) );
+		add_action( 'wp_enqueue_media', [ $this, 'action_enqueue_media' ] );
+		add_action( 'print_media_templates', [ $this, 'action_print_media_templates' ] );
+		add_action( 'wp_ajax_apple_music_request', [ $this, 'ajax_request' ] );
 
 	}
 
@@ -31,7 +31,7 @@ class Media_Modal {
 
 		$tabs = $this->tabs();
 
-		foreach ( array( 'search', 'item' ) as $t ) {
+		foreach ( [ 'search', 'item' ] as $t ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
 					sanitize_html_class( $t ),
@@ -59,13 +59,13 @@ class Media_Modal {
 			wp_die( '-1' );
 		}
 
-		$request = wp_parse_args( stripslashes_deep( $_POST ), array(
-			'params' => array(),
+		$request = wp_parse_args( stripslashes_deep( $_POST ), [
+			'params' => [],
 			'tab'    => null,
 			'min_id' => null,
 			'max_id' => null,
 			'page'   => 1,
-		) );
+		] );
 
 		$request['page']    = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
@@ -74,10 +74,10 @@ class Media_Modal {
 		$response = $api->search( reset( $params ), key( $params ), $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
-			wp_send_json_error( array(
+			wp_send_json_error( [
 				'error_code'    => $response->get_error_code(),
 				'error_message' => $response->get_error_message(),
-			) );
+			] );
 
 		} else {
 			$this->response( $response );
@@ -87,12 +87,12 @@ class Media_Modal {
 	}
 
 	public function labels() {
-		$labels = array(
+		$labels = [
 			'title'     => __( 'Insert Apple Music', 'apple-music' ),
 			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
 			'noresults' => __( 'No match for your search query', 'apple-music' ),
 			'loadmore'  => __( 'Load more music', 'apple-music' ),
-		);
+		];
 
 		return $labels;
 	}
@@ -108,24 +108,24 @@ class Media_Modal {
 		wp_enqueue_script(
 			'apple-music',
 			PLUGIN_DIR_URL . 'assets/js/apple-music.js',
-			array( 'jquery', 'media-views' ),
+			[ 'jquery', 'media-views' ],
 			APPLE_MUSIC_VERSION
 		);
 
 		wp_localize_script(
 			'apple-music',
 			'appleMusic',
-			array(
+			[
 				'_nonce' => wp_create_nonce( 'apple_music_request' ),
 				'labels' => $this->labels(),
 				'tabs'   => $this->tabs(),
-			)
+			]
 		);
 
 		wp_enqueue_style(
 			'apple-music',
 			PLUGIN_DIR_URL . 'assets/css/apple-music.css',
-			array(),
+			[],
 			APPLE_MUSIC_VERSION
 		);
 
@@ -143,16 +143,16 @@ class Media_Modal {
 		if ( ! empty( $response->$type->data ) ) {
 			foreach ( $response->$type->data as $thing ) {
 
-				$item      = [];
-				$item['id']  = $thing->id;
-				$attributes = $thing->attributes;
-				$shortcode = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
+				$item              = [];
+				$item['id']        = $thing->id;
+				$attributes        = $thing->attributes;
+				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
 				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
 
 					case 'artists':
-						$item['content'] = $attributes->name;
+						$item['content']   = $attributes->name;
 						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'assets/images/apple.png' );
 						break;
 
@@ -161,14 +161,14 @@ class Media_Modal {
 					case 'playlists':
 					case 'activities':
 					case 'music-videos':
-						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
-						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
-						$item['thumbnail'] = esc_url_raw( $thumbnail );
+						$item['content']     = $attributes->artistName . ' ' . $attributes->name;
+						$thumbnail           = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
+						$item['thumbnail']   = esc_url_raw( $thumbnail );
 						$item['description'] = $attributes->editorialNotes->short;
 						break;
 
 					case 'stations':
-						case 'curators':
+					case 'curators':
 						$item['content']   = $attributes->name;
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
@@ -200,7 +200,6 @@ class Media_Modal {
 	}
 
 
-
 	public function output() {
 
 		if ( empty( $this->items ) ) {
@@ -214,10 +213,10 @@ class Media_Modal {
 			$this->meta['min_id'] = reset( $this->items )->id;
 		}
 
-		$output = array(
+		$output = [
 			'meta'  => $this->meta,
-			'items' => array(),
-		);
+			'items' => [],
+		];
 
 		foreach ( $this->items as $item ) {
 			$output['items'][] = $item;
