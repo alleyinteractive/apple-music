@@ -20,6 +20,24 @@ const AppleMusicDisplay = ({
         width={width}
       />
     }
+    {
+      'badge' === embedType &&
+      <div>
+        {'THIS IS WHERE THE BADGE WILL GO'}
+      </div>
+    }
+    {
+      'text-lockup' === embedType &&
+      <div>
+        {'THIS IS WHERE THE TEXT LOCKUP WILL GO'}
+      </div>
+    }
+    {
+      'app-icon' === embedType &&
+      <div>
+        {'THIS IS WHERE THE APP ICON WILL GO'}
+      </div>
+    }
   </div>
 );
 

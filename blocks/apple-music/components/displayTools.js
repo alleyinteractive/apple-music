@@ -61,13 +61,16 @@ const DisplayTools = ({
       {
         showEmbed(musicType) &&
         <div>
-          <h1>{name}</h1>
-          <div>
-            {
-              artistName &&
-                <div className="secondary">{artistName}</div>
-            }
-          </div>
+          {
+            ! inPanel &&
+            <div>
+              <h1>{name}</h1>
+              {
+                artistName &&
+                  <div className="secondary">{artistName}</div>
+              }
+            </div>
+          }
           <TextControl
             label={__('Height', 'apple-music')}
             value={height}

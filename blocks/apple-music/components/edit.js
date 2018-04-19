@@ -91,6 +91,9 @@ class AppleMusicBlock extends Component {
     });
   }
 
+  /**
+   * Check if an item has been selected.
+   */
   isMusicSet() {
     const { attributes } = this.props;
     if (attributes.musicID) {

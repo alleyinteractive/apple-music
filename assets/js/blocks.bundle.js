@@ -3422,6 +3422,11 @@ var AppleMusicBlock = function (_Component) {
         item: {}
       });
     }
+
+    /**
+     * Check if an item has been selected.
+     */
+
   }, {
     key: 'isMusicSet',
     value: function isMusicSet() {
@@ -5149,14 +5154,14 @@ var DisplayTools = function DisplayTools(_ref) {
     Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(
       'div',
       null,
-      wp.element.createElement(
-        'h1',
-        null,
-        name
-      ),
-      wp.element.createElement(
+      !inPanel && wp.element.createElement(
         'div',
         null,
+        wp.element.createElement(
+          'h1',
+          null,
+          name
+        ),
         artistName && wp.element.createElement(
           'div',
           { className: 'secondary' },
@@ -6302,7 +6307,22 @@ var AppleMusicDisplay = function AppleMusicDisplay(_ref) {
       height: height,
       iframeSrc: iframeSrc,
       width: width
-    })
+    }),
+    'badge' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE BADGE WILL GO'
+    ),
+    'text-lockup' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE TEXT LOCKUP WILL GO'
+    ),
+    'app-icon' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE APP ICON WILL GO'
+    )
   );
 };
 
