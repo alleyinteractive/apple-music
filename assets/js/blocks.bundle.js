@@ -5303,7 +5303,7 @@ function searchCatalog(term, types) {
 
   if (!term) {
     return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve) {
-      return setTimeout(resolve, 100, 'foo');
+      return setTimeout(resolve, 100, 'No Search Term');
     });
   }
   var catalogURL = baseURL + '/catalog/' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */] + '/search';
