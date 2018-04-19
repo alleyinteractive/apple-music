@@ -1,4 +1,4 @@
-// Import internationalization function.
+// Internationalization function.
 const { __ } = window.wp.i18n;
 /**
  * The list of the embed types to use for embedding Apple Music.

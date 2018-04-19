@@ -63,10 +63,9 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 68);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports) {
+/******/ ({
 
+<<<<<<< HEAD
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self
@@ -6343,7 +6342,65 @@ AppleMusicDisplay.propTypes = {
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (AppleMusicDisplay);
+=======
+/***/ 68:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var __ = window.wp.i18n.__;
+var registerBlockType = window.wp.blocks.registerBlockType;
+
+/**
+ * Register Apple Music block
+ */
+
+/* harmony default export */ __webpack_exports__["default"] = (registerBlockType('apple-music/widget', {
+  title: __('Apple Music', 'apple-music'),
+  description: __('Embed the apple music player into a post.', 'apple-music'),
+  category: 'widgets',
+  icon: 'format-audio',
+  keywords: [__('Apple Music', 'apple-music')],
+  supports: {
+    html: false
+  },
+  attributes: {
+    query: {
+      type: 'array',
+      source: 'children',
+      selector: '.display-music'
+    },
+    musicType: {
+      type: 'string',
+      default: 'artists'
+    },
+    musicID: {
+      type: 'integer'
+    },
+    item: {
+      type: 'object'
+    },
+    height: {
+      type: 'string'
+    },
+    width: {
+      type: 'string',
+      default: '100%'
+    },
+    embedType: {
+      type: 'string',
+      default: 'preview-player'
+    },
+    iframeSrc: {
+      type: 'string'
+    }
+  },
+  edit: '',
+  save: ''
+}));
+>>>>>>> MUSIC-11-pull-1
 
 /***/ })
-/******/ ]);
+
+/******/ });
 //# sourceMappingURL=blocks.bundle.js.map

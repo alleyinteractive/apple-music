@@ -1,7 +1,15 @@
 // Import internationalization function.
 const { __ } = window.wp.i18n;
 /**
- * The list of the types of resources to include in the results. The possible values are activities, artists, apple-curators, albums, curators, songs, playlists, music-videos, and stations.
+ * The list of the types of resources to include in the results.
+ * The possible values are activities, artists, apple-curators,
+ * albums, curators, songs, playlists, music-videos, and stations.
+ *
+ * "value" - the slugified name of the music type.
+ * "label" - The front end label for each music type.
+ * "embedHeight" - used to determine the initial height of the iframe.
+ * "embedType" - refers to the singlular name used in the API call.
+ * "embed" - a boolean value indicating whether this type has an available embed.
  *
  * @see  https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html#//apple_ref/doc/uid/TP40017625-CH58-SW1
  * @type {Array} music type values and labels
@@ -35,7 +43,10 @@ const musicTypes = [
     embed: true,
   },
   {
-    value: 'activities', label: __('Activities', 'apple-music'),
+    value: 'activities',
+    label: __('Activities', 'apple-music'),
+    embedType: 'curator',
+    embed: false,
   },
   {
     value: 'curators',
@@ -44,7 +55,9 @@ const musicTypes = [
     embed: false,
   },
   {
-    value: 'apple-curators', label: __('Apple Curators', 'apple-music'),
+    value: 'apple-curators',
+    label: __('Apple Curators', 'apple-music'),
+    embed: false,
   },
   {
     value: 'stations',

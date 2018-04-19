@@ -5,10 +5,10 @@ const { __ } = window.wp.i18n;
 const { registerBlockType } = window.wp.blocks;
 
 /**
- * Register block
+ * Register Apple Music block
  */
 export default registerBlockType(
-  'apple-music/demo',
+  'apple-music/widget',
   {
     title: __('Apple Music', 'apple-music'),
     description:
