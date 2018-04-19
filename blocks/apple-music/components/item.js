@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { getItemArtworkURL } from '../utils';
 
 const {
   Button,
@@ -24,10 +25,8 @@ const AppleMusicItem = ({
 
   // Artwork
   let artwork = null;
-  if (item.attributes.artwork && item.attributes.artwork.url) {
-    const imageSrc = item.attributes.artwork.url
-      .replace('{w}', '118').replace('{h}', '118');
-
+  const imageSrc = getItemArtworkURL(item);
+  if (imageSrc) {
     artwork = imageSrc ? (
       <div className="apple-music-item-artwork">
         <img src={imageSrc} alt={__('Meaningful Text', 'apple-music')} />

@@ -12,7 +12,7 @@ import {
 const { __ } = window.wp.i18n;
 // Extend component
 const { Component } = window.wp.element;
-const { Button } = window.wp.components;
+const { IconButton } = window.wp.components;
 
 const { InspectorControls } = window.wp.blocks;
 const { PanelBody } = window.wp.components;
@@ -25,11 +25,11 @@ class AppleMusicBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      musicItem: {},
-      isMusicSet: false,
+      isMusicSet: this.isMusicSet(),
     };
     this.setMusicSelection = this.setMusicSelection.bind(this);
     this.updateAttributes = this.updateAttributes.bind(this);
+    this.isMusicSet = this.isMusicSet.bind(this);
   }
 
   /**
@@ -49,11 +49,11 @@ class AppleMusicBlock extends Component {
     const initialHeight = getObjKeyValue(type, 'embedHeight');
 
     this.setState({
-      musicItem: item,
       isMusicSet: true,
     });
 
     setAttributes({
+      item,
       musicID,
       iframeSrc: iframeURL(musicType, musicID),
       height: initialHeight,
@@ -81,10 +81,21 @@ class AppleMusicBlock extends Component {
    * Reset the search and clear selection.
    */
   resetSearch() {
+    const { setAttributes } = this.props;
     this.setState({
-      musicItem: {},
       isMusicSet: false,
     });
+    setAttributes({
+      item: {},
+    });
+  }
+
+  isMusicSet() {
+    const { attributes } = this.props;
+    if (attributes.musicID) {
+      return true;
+    }
+    return false;
   }
 
   // Component Render method.
@@ -108,7 +119,6 @@ class AppleMusicBlock extends Component {
                 this.state.isMusicSet &&
                 <DisplayTools
                   attributes={attributes}
-                  item={this.state.musicItem}
                   onChange={this.updateAttributes}
                 />
               }
@@ -120,23 +130,29 @@ class AppleMusicBlock extends Component {
             <div className="edit-apple-music">
               {
                 ! this.state.isMusicSet &&
-                <SearchTools
-                  attributes={attributes}
-                  updateSearch={this.updateAttributes}
-                />
+                <div>
+                  {__(
+                    'Get badges, links, and widgets for Apple Music.',
+                    'apple-music'
+                  )}
+                  <SearchTools
+                    attributes={attributes}
+                    updateSearch={this.updateAttributes}
+                  />
+                </div>
               }
               {
                 this.state.isMusicSet &&
                 <div>
-                  <Button
+                  <IconButton
+                    icon="arrow-left-alt2"
                     className="back-to-search"
                     onClick={() => this.resetSearch()}
                   >
                     {__('Back to Seach', 'apple-music')}
-                  </Button>
+                  </IconButton>
                   <DisplayTools
                     attributes={attributes}
-                    item={this.state.musicItem}
                     onChange={this.updateAttributes}
                     inPanel={false}
                   />

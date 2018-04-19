@@ -34,6 +34,9 @@ export default registerBlockType(
       musicID: {
         type: 'integer',
       },
+      item: {
+        type: 'object',
+      },
       height: {
         type: 'string',
       },

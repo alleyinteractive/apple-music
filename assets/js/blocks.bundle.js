@@ -1820,6 +1820,9 @@ var registerBlockType = window.wp.blocks.registerBlockType;
     musicID: {
       type: 'integer'
     },
+    item: {
+      type: 'object'
+    },
     height: {
       type: 'string'
     },
@@ -3334,7 +3337,7 @@ var __ = window.wp.i18n.__;
 // Extend component
 
 var Component = window.wp.element.Component;
-var Button = window.wp.components.Button;
+var IconButton = window.wp.components.IconButton;
 var InspectorControls = window.wp.blocks.InspectorControls;
 var PanelBody = window.wp.components.PanelBody;
 
@@ -3351,11 +3354,11 @@ var AppleMusicBlock = function (_Component) {
     var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (AppleMusicBlock.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(AppleMusicBlock)).call(this, props));
 
     _this.state = {
-      musicItem: {},
-      isMusicSet: false
+      isMusicSet: _this.isMusicSet()
     };
     _this.setMusicSelection = _this.setMusicSelection.bind(_this);
     _this.updateAttributes = _this.updateAttributes.bind(_this);
+    _this.isMusicSet = _this.isMusicSet.bind(_this);
     return _this;
   }
 
@@ -3372,17 +3375,17 @@ var AppleMusicBlock = function (_Component) {
           musicType = _props.attributes.musicType,
           setAttributes = _props.setAttributes;
 
-      var musicID = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["a" /* getObjKeyValue */])(item, 'id'); // get the music ID.
+      var musicID = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["c" /* getObjKeyValue */])(item, 'id'); // get the music ID.
 
-      var type = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["b" /* getTypeObject */])(musicType);
-      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["a" /* getObjKeyValue */])(type, 'embedHeight');
+      var type = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["d" /* getTypeObject */])(musicType);
+      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_10__utils__["c" /* getObjKeyValue */])(type, 'embedHeight');
 
       this.setState({
-        musicItem: item,
         isMusicSet: true
       });
 
       setAttributes({
+        item: item,
         musicID: musicID,
         iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_9__api__["c" /* iframeURL */])(musicType, musicID),
         height: initialHeight
@@ -3419,10 +3422,24 @@ var AppleMusicBlock = function (_Component) {
   }, {
     key: 'resetSearch',
     value: function resetSearch() {
+      var setAttributes = this.props.setAttributes;
+
       this.setState({
-        musicItem: {},
         isMusicSet: false
       });
+      setAttributes({
+        item: {}
+      });
+    }
+  }, {
+    key: 'isMusicSet',
+    value: function isMusicSet() {
+      var attributes = this.props.attributes;
+
+      if (attributes.musicID) {
+        return true;
+      }
+      return false;
     }
 
     // Component Render method.
@@ -3453,7 +3470,6 @@ var AppleMusicBlock = function (_Component) {
             }),
             this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
               attributes: attributes,
-              item: this.state.musicItem,
               onChange: this.updateAttributes
             })
           )
@@ -3461,16 +3477,22 @@ var AppleMusicBlock = function (_Component) {
         isSelected && wp.element.createElement(
           'div',
           { className: 'edit-apple-music' },
-          !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
-            attributes: attributes,
-            updateSearch: this.updateAttributes
-          }),
+          !this.state.isMusicSet && wp.element.createElement(
+            'div',
+            null,
+            __('Get badges, links, and widgets for Apple Music.', 'apple-music'),
+            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
+              attributes: attributes,
+              updateSearch: this.updateAttributes
+            })
+          ),
           this.state.isMusicSet && wp.element.createElement(
             'div',
             null,
             wp.element.createElement(
-              Button,
+              IconButton,
               {
+                icon: 'arrow-left-alt2',
                 className: 'back-to-search',
                 onClick: function onClick() {
                   return _this2.resetSearch();
@@ -3480,7 +3502,6 @@ var AppleMusicBlock = function (_Component) {
             ),
             wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
               attributes: attributes,
-              item: this.state.musicItem,
               onChange: this.updateAttributes,
               inPanel: false
             })
@@ -5009,6 +5030,8 @@ module.exports = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(131);
+
 
 
 
@@ -5040,9 +5063,8 @@ var AppleMusicItem = function AppleMusicItem(_ref) {
 
   // Artwork
   var artwork = null;
-  if (item.attributes.artwork && item.attributes.artwork.url) {
-    var imageSrc = item.attributes.artwork.url.replace('{w}', '118').replace('{h}', '118');
-
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* getItemArtworkURL */])(item);
+  if (imageSrc) {
     artwork = imageSrc ? wp.element.createElement(
       'div',
       { className: 'apple-music-item-artwork' },
@@ -5092,7 +5114,8 @@ AppleMusicItem.propTypes = {
 var _window$wp$components = window.wp.components,
     TextControl = _window$wp$components.TextControl,
     Button = _window$wp$components.Button,
-    SandBox = _window$wp$components.SandBox;
+    SandBox = _window$wp$components.SandBox,
+    ExternalLink = _window$wp$components.ExternalLink;
 
 // Internationalization
 
@@ -5105,76 +5128,115 @@ var __ = window.wp.i18n.__;
 var DisplayTools = function DisplayTools(_ref) {
   var _ref$attributes = _ref.attributes,
       iframeSrc = _ref$attributes.iframeSrc,
+      item = _ref$attributes.item,
       height = _ref$attributes.height,
       musicType = _ref$attributes.musicType,
       width = _ref$attributes.width,
       inPanel = _ref.inPanel,
-      item = _ref.item,
       _onChange = _ref.onChange;
 
   // Setup the iframe for display
   var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    frameborder="0"></iframe>';
 
-  var embed = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* showEmbed */])(musicType) ? wp.element.createElement(
+  var embed = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* showEmbed */])(musicType) ? wp.element.createElement(
     'div',
     null,
     wp.element.createElement(SandBox, { html: iframeHTML })
   ) : null;
 
-  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_3__utils__["c" /* showEmbed */])(musicType) ? wp.element.createElement(
+  var directLink = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* getNestedObject */])(item, ['attributes', 'url']);
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["a" /* getItemArtworkURL */])(item, '200', '200');
+  var name = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* getNestedObject */])(item, ['attributes', 'name']);
+
+  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* showEmbed */])(musicType) ? wp.element.createElement(
     'div',
     null,
-    'show artwork'
+    imageSrc && wp.element.createElement(
+      'div',
+      { className: 'image' },
+      wp.element.createElement('img', { src: imageSrc, alt: __(name, 'apple-music') })
+    ),
+    name && wp.element.createElement(
+      'div',
+      { className: 'right-side' },
+      wp.element.createElement(
+        'div',
+        { className: 'name' },
+        Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* getNestedObject */])(item, ['attributes', 'name'])
+      )
+    )
   ) : null;
+
+  var artistName = Object(__WEBPACK_IMPORTED_MODULE_3__utils__["b" /* getNestedObject */])(item, ['attributes', 'artistName']);
 
   return wp.element.createElement(
     'div',
     null,
-    !inPanel && wp.element.createElement(
+    Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(
       'div',
       null,
       wp.element.createElement(
         'h1',
         null,
-        item.attributes.name
+        name
       ),
-      Object.prototype.hasOwnProperty.call(item.attributes, 'artistName') && wp.element.createElement(
+      wp.element.createElement(
         'div',
-        { className: 'secondary' },
-        item.attributes.artistName
-      )
+        null,
+        artistName && wp.element.createElement(
+          'div',
+          { className: 'secondary' },
+          artistName
+        )
+      ),
+      wp.element.createElement(TextControl, {
+        label: __('Height', 'apple-music'),
+        value: height,
+        onChange: function onChange(value) {
+          return _onChange(value, 'height');
+        },
+        placeholder: height
+      }),
+      wp.element.createElement(TextControl, {
+        label: __('Width', 'apple-music'),
+        value: width,
+        onChange: function onChange(value) {
+          return _onChange(value, 'width');
+        },
+        placeholder: width
+      })
     ),
-    wp.element.createElement(TextControl, {
-      label: __('Height', 'apple-music'),
-      value: height,
-      onChange: function onChange(value) {
-        return _onChange(value, 'height');
-      },
-      placeholder: height
-    }),
-    wp.element.createElement(TextControl, {
-      label: __('Width', 'apple-music'),
-      value: width,
-      onChange: function onChange(value) {
-        return _onChange(value, 'width');
-      },
-      placeholder: width
-    }),
     !inPanel && embed,
     !inPanel && artwork,
     __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__["a" /* default */].map(function (_ref2) {
       var value = _ref2.value,
           label = _ref2.label;
+
+      // If the musicType doesn't support embeds don't show preview player.
+      if ('preview-player' === value && !Object(__WEBPACK_IMPORTED_MODULE_3__utils__["e" /* showEmbed */])(musicType)) {
+        return null;
+      }
       return wp.element.createElement(
         Button,
         {
+          key: value,
           onClick: function onClick() {
             return _onChange(value, 'embedType');
           }
         },
         __(label, 'apple-music')
       );
-    })
+    }),
+    !inPanel && wp.element.createElement(
+      'div',
+      null,
+      __('Direct Link: ', 'apple-music'),
+      wp.element.createElement(
+        ExternalLink,
+        { href: directLink },
+        directLink
+      )
+    )
   );
 };
 
@@ -5186,12 +5248,12 @@ DisplayTools.propTypes = {
   attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
     width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
     height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
-  }).isRequired,
-  item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
-    attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
-    id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+      attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
+      id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+      type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+    })
   }).isRequired,
   onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
   inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool
@@ -5300,9 +5362,9 @@ function getItems(response) {
  */
 function iframeURL(type, id) {
   var baseUrl = 'https://tools.applemusic.com/embed/v1/';
-  var typeObject = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getTypeObject */])(type);
+  var typeObject = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* getTypeObject */])(type);
 
-  var embedType = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* getObjKeyValue */])(typeObject, 'embedType');
+  var embedType = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getObjKeyValue */])(typeObject, 'embedType');
 
   if (null !== embedType) {
     return '' + baseUrl + embedType + '/' + id + '?country=' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */];
@@ -5933,9 +5995,11 @@ var storefront = undefined !== settings ? settings.storefront : 'us';
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = getObjKeyValue;
-/* harmony export (immutable) */ __webpack_exports__["b"] = getTypeObject;
-/* harmony export (immutable) */ __webpack_exports__["c"] = showEmbed;
+/* harmony export (immutable) */ __webpack_exports__["c"] = getObjKeyValue;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getTypeObject;
+/* harmony export (immutable) */ __webpack_exports__["e"] = showEmbed;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getNestedObject;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getItemArtworkURL;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__ = __webpack_require__(133);
 
 
@@ -5970,10 +6034,40 @@ function showEmbed(type) {
   return getObjKeyValue(musicType, 'embed');
 }
 
+/**
+ * Pass in your object structure as array elements.
+ *
+ * getNestedObject(obj, [level-1-key, level-2-key]);
+ * @param {object} nestedObj the object to retrieve the key value.
+ * @param {array} pathArr the array of nested keys to search.
+ * @return mixed
+ */
+function getNestedObject(nestedObj, pathArr) {
+  return pathArr.reduce(function (obj, key) {
+    return obj && 'undefined' !== obj[key] ? obj[key] : undefined;
+  }, nestedObj);
+}
+
+/**
+ * Get the artwork URL for a music item.
+ * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Artwork.html#//apple_ref/doc/uid/TP40017625-CH26-SW1
+ * @param {object} item the music item object.
+ * @param {string} width the width of the image.
+ * @param {string} height the height of the image
+ */
+function getItemArtworkURL(item) {
+  var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '118';
+  var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '118';
+
+  var imageSrc = getNestedObject(item, ['attributes', 'artwork', 'url']);
+  return imageSrc ? imageSrc.replace('{w}', width).replace('{h}', height).replace('{c}', 'sr') : null;
+}
+
 /* unused harmony default export */ var _unused_webpack_default_export = ({
   getObjKeyValue: getObjKeyValue,
   getTypeObject: getTypeObject,
-  showEmbed: showEmbed
+  showEmbed: showEmbed,
+  getNestedObject: getNestedObject
 });
 
 /***/ }),
