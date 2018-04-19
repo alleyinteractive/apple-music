@@ -55,10 +55,10 @@ class Media_Modal {
 	 */
 	public function ajax_request() {
 
-		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( $_POST['_nonce'], 'apple_music_request' ) ) {
+		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_nonce'] ) ), 'apple_music_request' ) ) {
 			wp_die( '-1' );
 		}
-
+		
 		$request = wp_parse_args( stripslashes_deep( $_POST ), [
 			'params' => [],
 			'tab'    => null,
