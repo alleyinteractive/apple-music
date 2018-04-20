@@ -91,11 +91,7 @@ class Shortcode {
 		];
 
 		// Do we have everything we need?
-		if ( empty( $shortcode_atts['id'] )
-		     || empty( $shortcode_atts['type'] )
-		     || ! array_key_exists( $shortcode_atts['type'], $all_types )
-		     || ( array_key_exists( $shortcode_atts['type'], $linkable_types ) && 'player' === $shortcode_atts['format'] )
-		) {
+		if ( empty( $shortcode_atts['id'] ) || empty( $shortcode_atts['type'] ) || ! array_key_exists( $shortcode_atts['type'], $all_types ) || ( array_key_exists( $shortcode_atts['type'], $linkable_types ) && 'player' === $shortcode_atts['format'] ) ) {
 			return false;
 		}
 

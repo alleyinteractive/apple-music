@@ -55,7 +55,7 @@ class Media_Modal {
 	 */
 	public function ajax_request() {
 
-		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( $_POST['_nonce'], 'apple_music_request' ) ) {
+		if ( ! isset( $_POST['_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_nonce'] ) ), 'apple_music_request' ) ) {
 			wp_die( '-1' );
 		}
 
@@ -70,9 +70,8 @@ class Media_Modal {
 		$request['page']    = absint( $request['page'] );
 		$request['user_id'] = absint( get_current_user_id() );
 		$params             = $request['params'];
-
 		$api      = new API();
-		$response = $api->search( reset( $params ), $types, $request['page'] );
+		$response = $api->search( reset( $params ), key( $params ), $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( [
@@ -162,9 +161,11 @@ class Media_Modal {
 					case 'playlists':
 					case 'activities':
 					case 'music-videos':
+						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['content']     = $attributes->artistName . ' ' . $attributes->name;
 						$thumbnail           = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
 						$item['thumbnail']   = esc_url_raw( $thumbnail );
+						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['description'] = $attributes->editorialNotes->short;
 						break;
 
