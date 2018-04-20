@@ -48,22 +48,6 @@ export function searchCatalog(term, types, limit = 25) {
 }
 
 /**
- * Check the data response according to search type and return data.
- *
- * @param {object} data The fetched data to check for.
- * @param {string} type The music type to check for.
- * @returns {array} empty array or an array of objects.
- */
-export function getResponseData(data, type) {
-  if (data.results) {
-    const result = Object.prototype
-      .hasOwnProperty.call(data.results, type);
-    return result ? data.results[type] : [];
-  }
-  return [];
-}
-
-/**
  * Get the music item object.
  *
  * @param {object} response the music item object
