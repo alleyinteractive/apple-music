@@ -34,6 +34,7 @@ const DisplayTools = ({
   const directLink = getNestedObject(item, ['attributes', 'url']);
   const imageSrc = getItemArtworkURL(item, '200', '200');
   const name = getNestedObject(item, ['attributes', 'name']);
+  const artistName = getNestedObject(item, ['attributes', 'artistName']);
 
   const artwork = ! showEmbed(musicType) ? (
     <div>
@@ -53,8 +54,6 @@ const DisplayTools = ({
       }
     </div>
   ) : null;
-
-  const artistName = getNestedObject(item, ['attributes', 'artistName']);
 
   return (
     <div>
