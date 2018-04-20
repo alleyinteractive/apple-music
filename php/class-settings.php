@@ -133,7 +133,7 @@ class Settings {
 	/**
 	 * Add settings to admin menu.
 	 */
-	public function options_page() {
+	function options_page() {
 		add_options_page(
 			esc_html__( 'Apple Music', 'apple-music' ),
 			esc_html__( 'Apple Music', 'apple-music' ),
@@ -146,7 +146,7 @@ class Settings {
 	/**
 	 * Body of settings page.
 	 */
-	public function options_page_html() {
+	function options_page_html() {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
