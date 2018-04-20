@@ -11,12 +11,13 @@ const baseURL = 'https://api.music.apple.com/v1';
 /**
  * Performs a generic request against the specified endpoint of the Apple Music API.
  *
- * @param {string} endpoint - The endpoint to query.
- * @returns {Promise} - A promise that will resolve with the JSON response.
+ * @param {string} endpoint The endpoint to query.
+ * @param {string} method The request method.
+ * @returns {Promise} A promise that will resolve with the JSON response.
  */
-export function request(endpoint) {
+export function request(endpoint, method) {
   return fetch(endpoint, {
-    method: 'GET',
+    method,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       Host: 'api.music.apple.com',
@@ -29,39 +30,48 @@ export function request(endpoint) {
 }
 
 /**
+ * Make an endpoint request using the GET method.
+ * @param {string} endpoint the endpoint to GET.
+ * @returns Promise
+ */
+export function get(endpoint) {
+  return request(endpoint, 'GET');
+}
+
+/**
  * Search the Apple Music using the requested term and music type catalog.
  * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html
  *
  * @param {string} term The entered text to search the API with.
  * @param {string} types The types query parameter.
  * @param {int} limit The limit on the number of objects that are returned.
+ * @returns Promise
  */
 export function searchCatalog(term, types, limit = 25) {
   if (! term) {
-    return new Promise((resolve) => setTimeout(resolve, 100, 'No Search Term'));
+    return Promise.resolve('No Search Term');
   }
   const catalogURL = `${baseURL}/catalog/${storefront}/search`;
   const query = `term=${term}&limit=${limit}&types=${types}`;
 
-  return request(`${catalogURL}?${query}`);
+  return get(`${catalogURL}?${query}`);
 }
 
 /**
  * Get the music item object.
  *
  * @param {object} response the music item object
+ * @returns {array} The music item from the API response.
  */
 export function getItems(response) {
-  if (! response.data) {
-    return [];
-  }
-  return response.data;
+  return response.data || [];
 }
 
 /**
  * Get the API iframe URL for embedding.
  * @param {string} type the music type to embed.
  * @param {string} id the Apple Music ID.
+ * @returns {string} the iframe URL.
  */
 export function iframeURL(type, id) {
   const baseUrl = 'https://tools.applemusic.com/embed/v1/';
