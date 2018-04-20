@@ -17,9 +17,7 @@ export function getObjKeyValue(obj, key) {
  * @param {type} type the musicType object
  */
 export function getTypeObject(type) {
-  return musicTypes.find((x) => (
-    x.value === type
-  ));
+  return musicTypes.find((x) => x.value === type);
 }
 
 /**
@@ -49,7 +47,8 @@ export function getNestedObject(nestedObj, pathArr) {
  * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Artwork.html#//apple_ref/doc/uid/TP40017625-CH26-SW1
  * @param {object} item the music item object.
  * @param {string} width the width of the image.
- * @param {string} height the height of the image
+ * @param {string} height the height of the image.
+ * @returns {string} the URL path to the artwork image.
  */
 export function getItemArtworkURL(item, width = '118', height = '118') {
   const imageSrc = getNestedObject(item, ['attributes', 'artwork', 'url']);

@@ -120,7 +120,7 @@ class Settings {
 		<select id="<?php echo esc_attr( $args['label_for'] ); ?>" name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
 			<?php foreach ( $storefronts->data as $sf ) : ?>
 				<option value="<?php echo esc_attr( $sf->id ); ?>" <?php selected( $storefront, $sf->id ); ?>>
-					<?php esc_html_e( $sf->attributes->name ); ?>
+					<?php esc_html( $sf->attributes->name ); ?>
 				</option>
 			<?php endforeach; ?>
 		</select>

@@ -1,14 +1,7 @@
 <?xml version="1.0"?>
-<ruleset name="Apple Music">
-	<description>PHP_CodeSniffer standard for Apple Music.</description>
-
-	<!--
-	Pass some flags to PHPCS:
-	 p flag: Show progress of the run.
-	 s flag: Show sniff codes in all reports.
-	 n flag: Do not print warnings.
-	-->
-	<arg value="psn" />
+<ruleset name="Apple Music Coding Standards Configuration">
+	<!-- Set a description for this ruleset. -->
+	<description>Code standard rules to check against this plugin.</description>
 
 	<!--
 	Only check the PHP files.
@@ -18,43 +11,14 @@
 	<arg name="extensions" value="php" />
 	<file>.</file>
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>tests/</exclude-pattern>
+	<exclude-pattern>tests/*</exclude-pattern>
 
-	<rule ref="WordPress" />
-	<!-- The version set here matches the minimum version tested in .travis.yml.  -->
-	<config name="minimum_supported_wp_version" value="4.9" />
-
-	<rule ref="Squiz.Commenting.FileComment.SpacingAfterComment">
-		<!--
-		Downgrade while so many PHP files are empty to start with.
-		The empty file makes it difficult to comply with this rule
-		and the trailing newline rule at the same time.
-		-->
-		<type>warning</type>
+	<!-- Include the WordPress ruleset, with exclusions. -->
+	<rule ref="WordPress-VIP">
+		<!-- These may need to be excluded if they throw too many false positives -->
+		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" /> -->
+		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" /> -->
+		<exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
 	</rule>
 
-	<rule ref="Generic.Files.OneObjectStructurePerFile">
-		<!--
-		Increase severity. If it becomes a problem for this sniff to trigger an
-		error, then we might want to provide feedback to the WPCS maintainers.
-		See https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/pull/1111.
-		-->
-		<type>error</type>
-	</rule>
-
-	<rule ref="WordPress.WP.I18n">
-		<properties>
-			<!--
-			Verify that the text_domain is set to the desired text-domain.
-			Multiple valid text domains can be provided as a comma-delimited list.
-			 -->
-			<property name="text_domain" type="array" value="apple-music" />
-		</properties>
-	</rule>
-
-	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
-		<properties>
-			<property name="prefixes" type="array" value="apple_music" />
-		</properties>
-	</rule>
 </ruleset>

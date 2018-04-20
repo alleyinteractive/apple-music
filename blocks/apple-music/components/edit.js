@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import DisplayTools from './displayTools';
 import ResultsWrapper from './resultsWrapper';
 import SearchTools from './searchTools';
@@ -180,5 +181,21 @@ class AppleMusicBlock extends Component {
     );
   } // end render method.
 }
+
+AppleMusicBlock.propTypes = {
+  attributes: PropTypes.shape({
+    width: PropTypes.string,
+    height: PropTypes.string,
+    iframeSrc: PropTypes.string,
+    item: PropTypes.shape({
+      attributes: PropTypes.any,
+      id: PropTypes.string,
+      type: PropTypes.string,
+    }),
+  }).isRequired,
+  setAttributes: PropTypes.func.isRequired,
+  isSelected: PropTypes.func.isRequired,
+  className: PropTypes.string.isRequired,
+};
 
 export default AppleMusicBlock;

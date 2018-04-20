@@ -55,6 +55,7 @@ AppleMusicDisplay.propTypes = {
     musicType: PropTypes.string,
     width: PropTypes.string,
   }).isRequired,
+  className: PropTypes.string.isRequired,
 };
 
 export default AppleMusicDisplay;

@@ -26,7 +26,7 @@ class API {
 	protected $token;
 
 	public static function instance() {
-		new API();
+		return new API();
 	}
 
 	/**
