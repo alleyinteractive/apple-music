@@ -46,11 +46,9 @@ class ResultsWrapper extends Component {
     searchCatalog(term, type)
       .then((data) => {
         const result = getNestedObject(data, ['results', type]);
-        if (result) {
-          this.setState({
-            data: result,
-          });
-        }
+        this.setState({
+          data: result || [],
+        });
       });
   }
 
