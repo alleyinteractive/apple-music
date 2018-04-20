@@ -60,16 +60,43 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 68);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 68:
+/***/ 73:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__i18n__ = __webpack_require__(74);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__i18n___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__i18n__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__apple_music___ = __webpack_require__(75);
+// Entry point for Apple Music Gutenberg block.
+
+// Import internationalization
+
+// import blocks
+
+
+/***/ }),
+
+/***/ 74:
+/***/ (function(module, exports) {
+
+// set the localization for Gutenberg.
+var setLocaleData = window.wp.i18n.setLocaleData;
+
+
+setLocaleData({ '': {} }, 'apple-music');
+
+/***/ }),
+
+/***/ 75:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 var __ = window.wp.i18n.__;
 var registerBlockType = window.wp.blocks.registerBlockType;
 
@@ -77,7 +104,7 @@ var registerBlockType = window.wp.blocks.registerBlockType;
  * Register Apple Music block
  */
 
-/* harmony default export */ __webpack_exports__["default"] = (registerBlockType('apple-music/widget', {
+/* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('apple-music/widget', {
   title: __('Apple Music', 'apple-music'),
   description: __('Embed the apple music player into a post.', 'apple-music'),
   category: 'widgets',
