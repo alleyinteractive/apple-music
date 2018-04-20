@@ -1,3 +1,6 @@
+import AppleMusicBlock from './components/edit';
+import AppleMusicDisplay from './components/save';
+
 const { __ } = window.wp.i18n;
 const { registerBlockType } = window.wp.blocks;
 
@@ -49,7 +52,7 @@ export default registerBlockType(
         type: 'string',
       },
     },
-    edit: '',
-    save: '',
+    edit: AppleMusicBlock,
+    save: AppleMusicDisplay,
   },
 );
