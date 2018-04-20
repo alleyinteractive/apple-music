@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import AppleMusicItem from './item';
 import {
   searchCatalog,
-  getResponseData,
   getItems,
 } from '../api';
+import { getNestedObject } from '../utils';
 
 const { Component } = window.wp.element;
 
@@ -39,12 +39,13 @@ class ResultsWrapper extends Component {
   }
 
   /**
-   * Get response from API.
+   * Get the music items response from the API.
+   * @returns {promise} resolves to set the state with an array items.
    */
   getResponse(type, term) {
     searchCatalog(term, type)
       .then((data) => {
-        const result = getResponseData(data, type);
+        const result = getNestedObject(data, ['results', type]);
         if (result) {
           this.setState({
             data: result,

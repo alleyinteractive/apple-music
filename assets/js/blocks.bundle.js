@@ -60,12 +60,13 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 68);
+/******/ 	return __webpack_require__(__webpack_require__.s = 73);
 /******/ })
 /************************************************************************/
-/******/ ({
+/******/ ([
+/* 0 */
+/***/ (function(module, exports) {
 
-<<<<<<< HEAD
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
 var global = module.exports = typeof window != 'undefined' && window.Math == Math
   ? window : typeof self != 'undefined' && self.Math == Math ? self
@@ -86,8 +87,8 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var store = __webpack_require__(30)('wks');
-var uid = __webpack_require__(19);
+var store = __webpack_require__(28)('wks');
+var uid = __webpack_require__(20);
 var Symbol = __webpack_require__(0).Symbol;
 var USE_SYMBOL = typeof Symbol == 'function';
 
@@ -171,7 +172,7 @@ module.exports = $export;
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var isObject = __webpack_require__(7);
+var isObject = __webpack_require__(6);
 module.exports = function (it) {
   if (!isObject(it)) throw TypeError(it + ' is not an object!');
   return it;
@@ -180,6 +181,47 @@ module.exports = function (it) {
 
 /***/ }),
 /* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var anObject = __webpack_require__(4);
+var IE8_DOM_DEFINE = __webpack_require__(45);
+var toPrimitive = __webpack_require__(30);
+var dP = Object.defineProperty;
+
+exports.f = __webpack_require__(7) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
+  anObject(O);
+  P = toPrimitive(P, true);
+  anObject(Attributes);
+  if (IE8_DOM_DEFINE) try {
+    return dP(O, P, Attributes);
+  } catch (e) { /* empty */ }
+  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
+  if ('value' in Attributes) O[P] = Attributes.value;
+  return O;
+};
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  return typeof it === 'object' ? it !== null : typeof it === 'function';
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Thank's IE8 for his funny defineProperty
+module.exports = !__webpack_require__(15)(function () {
+  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 8 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -369,47 +411,6 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var anObject = __webpack_require__(4);
-var IE8_DOM_DEFINE = __webpack_require__(50);
-var toPrimitive = __webpack_require__(32);
-var dP = Object.defineProperty;
-
-exports.f = __webpack_require__(8) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
-  anObject(O);
-  P = toPrimitive(P, true);
-  anObject(Attributes);
-  if (IE8_DOM_DEFINE) try {
-    return dP(O, P, Attributes);
-  } catch (e) { /* empty */ }
-  if ('get' in Attributes || 'set' in Attributes) throw TypeError('Accessors not supported!');
-  if ('value' in Attributes) O[P] = Attributes.value;
-  return O;
-};
-
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  return typeof it === 'object' ? it !== null : typeof it === 'function';
-};
-
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(15)(function () {
-  return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
 /* 9 */
 /***/ (function(module, exports) {
 
@@ -423,9 +424,9 @@ module.exports = function (it, key) {
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var dP = __webpack_require__(6);
-var createDesc = __webpack_require__(21);
-module.exports = __webpack_require__(8) ? function (object, key, value) {
+var dP = __webpack_require__(5);
+var createDesc = __webpack_require__(22);
+module.exports = __webpack_require__(7) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
   object[key] = value;
@@ -437,77 +438,70 @@ module.exports = __webpack_require__(8) ? function (object, key, value) {
 /* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {
+
+if (process.env.NODE_ENV === 'production') {
+  module.exports = __webpack_require__(110);
+} else {
+  module.exports = __webpack_require__(111);
+}
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
 // to indexed object, toObject with fallback for non-array-like ES3 strings
-var IObject = __webpack_require__(85);
-var defined = __webpack_require__(28);
+var IObject = __webpack_require__(88);
+var defined = __webpack_require__(26);
 module.exports = function (it) {
   return IObject(defined(it));
 };
 
 
 /***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {
-
-if (process.env.NODE_ENV === 'production') {
-  module.exports = __webpack_require__(71);
-} else {
-  module.exports = __webpack_require__(72);
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
 /* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-/**
+/* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright (c) 2013-present, Facebook, Inc.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- *
- * 
  */
 
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
+if (process.env.NODE_ENV !== 'production') {
+  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
+    Symbol.for &&
+    Symbol.for('react.element')) ||
+    0xeac7;
+
+  var isValidElement = function(object) {
+    return typeof object === 'object' &&
+      object !== null &&
+      object.$$typeof === REACT_ELEMENT_TYPE;
   };
+
+  // By explicitly using `prop-types` you are opting into new development behavior.
+  // http://fb.me/prop-types-in-prod
+  var throwOnDirectAccess = true;
+  module.exports = __webpack_require__(113)(isValidElement, throwOnDirectAccess);
+} else {
+  // By explicitly using `prop-types` you are opting into new production behavior.
+  // http://fb.me/prop-types-in-prod
+  module.exports = __webpack_require__(114)();
 }
 
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(20);
+var aFunction = __webpack_require__(21);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -617,10 +611,52 @@ function invariant(condition, format, a, b, c, d, e, f) {
 }
 
 module.exports = invariant;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
 /* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ * 
+ */
+
+function makeEmptyFunction(arg) {
+  return function () {
+    return arg;
+  };
+}
+
+/**
+ * This function accepts and discards inputs; it has no side effects. This is
+ * primarily useful idiomatically for overridable function endpoints which
+ * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
+ */
+var emptyFunction = function emptyFunction() {};
+
+emptyFunction.thatReturns = makeEmptyFunction;
+emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
+emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
+emptyFunction.thatReturnsNull = makeEmptyFunction(null);
+emptyFunction.thatReturnsThis = function () {
+  return this;
+};
+emptyFunction.thatReturnsArgument = function (arg) {
+  return arg;
+};
+
+module.exports = emptyFunction;
+
+/***/ }),
+/* 20 */
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -631,7 +667,7 @@ module.exports = function (key) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -641,7 +677,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -655,17 +691,17 @@ module.exports = function (bitmap, value) {
 
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, exports) {
 
 module.exports = true;
 
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var def = __webpack_require__(6).f;
+var def = __webpack_require__(5).f;
 var has = __webpack_require__(9);
 var TAG = __webpack_require__(2)('toStringTag');
 
@@ -675,7 +711,263 @@ module.exports = function (it, tag, stat) {
 
 
 /***/ }),
-/* 24 */
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["c"] = getObjKeyValue;
+/* harmony export (immutable) */ __webpack_exports__["d"] = getTypeObject;
+/* harmony export (immutable) */ __webpack_exports__["e"] = showEmbed;
+/* harmony export (immutable) */ __webpack_exports__["b"] = getNestedObject;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getItemArtworkURL;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__ = __webpack_require__(65);
+
+
+/**
+ * Get an objects key value.
+ * @param {object} obj The Object to look for.
+ * @param {object} key The key to return the associated value.
+ */
+function getObjKeyValue(obj, key) {
+  if (obj && Object.prototype.hasOwnProperty.call(obj, key)) {
+    return obj[key];
+  }
+  return null;
+}
+
+/**
+ * Get the music Type object from the Music Type object.
+ * @param {type} type the musicType object
+ */
+function getTypeObject(type) {
+  return __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__["a" /* default */].find(function (x) {
+    return x.value === type;
+  });
+}
+
+/**
+ * Check to see if this music type has an embeddable iframe.
+ * @param {string} type The music type to check for.
+ */
+function showEmbed(type) {
+  var musicType = getTypeObject(type);
+  return getObjKeyValue(musicType, 'embed');
+}
+
+/**
+ * Pass in your object structure as array elements.
+ *
+ * getNestedObject(obj, [level-1-key, level-2-key]);
+ * @param {object} nestedObj the object to retrieve the key value.
+ * @param {array} pathArr the array of nested keys to search.
+ * @return mixed
+ */
+function getNestedObject(nestedObj, pathArr) {
+  return pathArr.reduce(function (obj, key) {
+    return obj && 'undefined' !== obj[key] ? obj[key] : undefined;
+  }, nestedObj);
+}
+
+/**
+ * Get the artwork URL for a music item.
+ * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Artwork.html#//apple_ref/doc/uid/TP40017625-CH26-SW1
+ * @param {object} item the music item object.
+ * @param {string} width the width of the image.
+ * @param {string} height the height of the image
+ */
+function getItemArtworkURL(item) {
+  var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '118';
+  var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '118';
+
+  var imageSrc = getNestedObject(item, ['attributes', 'artwork', 'url']);
+  return imageSrc ? imageSrc.replace('{w}', width).replace('{h}', height).replace('{c}', 'sr') : null;
+}
+
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+  getObjKeyValue: getObjKeyValue,
+  getTypeObject: getTypeObject,
+  showEmbed: showEmbed,
+  getNestedObject: getNestedObject
+});
+
+/***/ }),
+/* 26 */
+/***/ (function(module, exports) {
+
+// 7.2.1 RequireObjectCoercible(argument)
+module.exports = function (it) {
+  if (it == undefined) throw TypeError("Can't call method on  " + it);
+  return it;
+};
+
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var shared = __webpack_require__(28)('keys');
+var uid = __webpack_require__(20);
+module.exports = function (key) {
+  return shared[key] || (shared[key] = uid(key));
+};
+
+
+/***/ }),
+/* 28 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var SHARED = '__core-js_shared__';
+var store = global[SHARED] || (global[SHARED] = {});
+module.exports = function (key) {
+  return store[key] || (store[key] = {});
+};
+
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(6);
+var document = __webpack_require__(0).document;
+// typeof document.createElement is 'object' in old IE
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+/* 30 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(6);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+// 7.1.4 ToInteger
+var ceil = Math.ceil;
+var floor = Math.floor;
+module.exports = function (it) {
+  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
+};
+
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+var anObject = __webpack_require__(4);
+var dPs = __webpack_require__(87);
+var enumBugKeys = __webpack_require__(34);
+var IE_PROTO = __webpack_require__(27)('IE_PROTO');
+var Empty = function () { /* empty */ };
+var PROTOTYPE = 'prototype';
+
+// Create object with fake `null` prototype: use iframe Object with cleared prototype
+var createDict = function () {
+  // Thrash, waste and sodomy: IE GC bug
+  var iframe = __webpack_require__(29)('iframe');
+  var i = enumBugKeys.length;
+  var lt = '<';
+  var gt = '>';
+  var iframeDocument;
+  iframe.style.display = 'none';
+  __webpack_require__(55).appendChild(iframe);
+  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
+  // createDict = iframe.contentWindow.Object;
+  // html.removeChild(iframe);
+  iframeDocument = iframe.contentWindow.document;
+  iframeDocument.open();
+  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
+  iframeDocument.close();
+  createDict = iframeDocument.F;
+  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
+  return createDict();
+};
+
+module.exports = Object.create || function create(O, Properties) {
+  var result;
+  if (O !== null) {
+    Empty[PROTOTYPE] = anObject(O);
+    result = new Empty();
+    Empty[PROTOTYPE] = null;
+    // add "__proto__" for Object.getPrototypeOf polyfill
+    result[IE_PROTO] = O;
+  } else result = createDict();
+  return Properties === undefined ? result : dPs(result, Properties);
+};
+
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.14 / 15.2.3.14 Object.keys(O)
+var $keys = __webpack_require__(53);
+var enumBugKeys = __webpack_require__(34);
+
+module.exports = Object.keys || function keys(O) {
+  return $keys(O, enumBugKeys);
+};
+
+
+/***/ }),
+/* 34 */
+/***/ (function(module, exports) {
+
+// IE 8- don't enum bug keys
+module.exports = (
+  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
+).split(',');
+
+
+/***/ }),
+/* 35 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports.f = __webpack_require__(2);
+
+
+/***/ }),
+/* 36 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(0);
+var core = __webpack_require__(1);
+var LIBRARY = __webpack_require__(23);
+var wksExt = __webpack_require__(35);
+var defineProperty = __webpack_require__(5).f;
+module.exports = function (name) {
+  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
+  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
+};
+
+
+/***/ }),
+/* 37 */
+/***/ (function(module, exports) {
+
+exports.f = {}.propertyIsEnumerable;
+
+
+/***/ }),
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -772,7 +1064,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 25 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -786,7 +1078,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(19);
 
 /**
  * Similar to invariant but only logs a warning if the condition is not met.
@@ -838,10 +1130,10 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 module.exports = warning;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 26 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -860,78 +1152,77 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 27 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(74), __esModule: true };
+"use strict";
+
+// 25.4.1.5 NewPromiseCapability(C)
+var aFunction = __webpack_require__(21);
+
+function PromiseCapability(C) {
+  var resolve, reject;
+  this.promise = new C(function ($$resolve, $$reject) {
+    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
+    resolve = $$resolve;
+    reject = $$reject;
+  });
+  this.resolve = aFunction(resolve);
+  this.reject = aFunction(reject);
+}
+
+module.exports.f = function (C) {
+  return new PromiseCapability(C);
+};
+
 
 /***/ }),
-/* 28 */
-/***/ (function(module, exports) {
+/* 42 */
+/***/ (function(module, exports, __webpack_require__) {
 
-// 7.2.1 RequireObjectCoercible(argument)
+module.exports = { "default": __webpack_require__(77), __esModule: true };
+
+/***/ }),
+/* 43 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.13 ToObject(argument)
+var defined = __webpack_require__(26);
 module.exports = function (it) {
-  if (it == undefined) throw TypeError("Can't call method on  " + it);
-  return it;
+  return Object(defined(it));
 };
 
 
 /***/ }),
-/* 29 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var shared = __webpack_require__(30)('keys');
-var uid = __webpack_require__(19);
-module.exports = function (key) {
-  return shared[key] || (shared[key] = uid(key));
+// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
+var has = __webpack_require__(9);
+var toObject = __webpack_require__(43);
+var IE_PROTO = __webpack_require__(27)('IE_PROTO');
+var ObjectProto = Object.prototype;
+
+module.exports = Object.getPrototypeOf || function (O) {
+  O = toObject(O);
+  if (has(O, IE_PROTO)) return O[IE_PROTO];
+  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
+    return O.constructor.prototype;
+  } return O instanceof Object ? ObjectProto : null;
 };
 
 
 /***/ }),
-/* 30 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var global = __webpack_require__(0);
-var SHARED = '__core-js_shared__';
-var store = global[SHARED] || (global[SHARED] = {});
-module.exports = function (key) {
-  return store[key] || (store[key] = {});
-};
+module.exports = !__webpack_require__(7) && !__webpack_require__(15)(function () {
+  return Object.defineProperty(__webpack_require__(29)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
 
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(7);
-var document = __webpack_require__(0).document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 32 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(7);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 33 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -946,7 +1237,7 @@ exports.default = function (instance, Constructor) {
 };
 
 /***/ }),
-/* 34 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -954,7 +1245,7 @@ exports.default = function (instance, Constructor) {
 
 exports.__esModule = true;
 
-var _defineProperty = __webpack_require__(77);
+var _defineProperty = __webpack_require__(80);
 
 var _defineProperty2 = _interopRequireDefault(_defineProperty);
 
@@ -979,7 +1270,7 @@ exports.default = function () {
 }();
 
 /***/ }),
-/* 35 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -987,7 +1278,7 @@ exports.default = function () {
 
 exports.__esModule = true;
 
-var _typeof2 = __webpack_require__(51);
+var _typeof2 = __webpack_require__(49);
 
 var _typeof3 = _interopRequireDefault(_typeof2);
 
@@ -1002,359 +1293,19 @@ exports.default = function (self, call) {
 };
 
 /***/ }),
-/* 36 */
-/***/ (function(module, exports) {
-
-// 7.1.4 ToInteger
-var ceil = Math.ceil;
-var floor = Math.floor;
-module.exports = function (it) {
-  return isNaN(it = +it) ? 0 : (it > 0 ? floor : ceil)(it);
-};
-
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-var anObject = __webpack_require__(4);
-var dPs = __webpack_require__(84);
-var enumBugKeys = __webpack_require__(39);
-var IE_PROTO = __webpack_require__(29)('IE_PROTO');
-var Empty = function () { /* empty */ };
-var PROTOTYPE = 'prototype';
-
-// Create object with fake `null` prototype: use iframe Object with cleared prototype
-var createDict = function () {
-  // Thrash, waste and sodomy: IE GC bug
-  var iframe = __webpack_require__(31)('iframe');
-  var i = enumBugKeys.length;
-  var lt = '<';
-  var gt = '>';
-  var iframeDocument;
-  iframe.style.display = 'none';
-  __webpack_require__(57).appendChild(iframe);
-  iframe.src = 'javascript:'; // eslint-disable-line no-script-url
-  // createDict = iframe.contentWindow.Object;
-  // html.removeChild(iframe);
-  iframeDocument = iframe.contentWindow.document;
-  iframeDocument.open();
-  iframeDocument.write(lt + 'script' + gt + 'document.F=Object' + lt + '/script' + gt);
-  iframeDocument.close();
-  createDict = iframeDocument.F;
-  while (i--) delete createDict[PROTOTYPE][enumBugKeys[i]];
-  return createDict();
-};
-
-module.exports = Object.create || function create(O, Properties) {
-  var result;
-  if (O !== null) {
-    Empty[PROTOTYPE] = anObject(O);
-    result = new Empty();
-    Empty[PROTOTYPE] = null;
-    // add "__proto__" for Object.getPrototypeOf polyfill
-    result[IE_PROTO] = O;
-  } else result = createDict();
-  return Properties === undefined ? result : dPs(result, Properties);
-};
-
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.14 / 15.2.3.14 Object.keys(O)
-var $keys = __webpack_require__(55);
-var enumBugKeys = __webpack_require__(39);
-
-module.exports = Object.keys || function keys(O) {
-  return $keys(O, enumBugKeys);
-};
-
-
-/***/ }),
-/* 39 */
-/***/ (function(module, exports) {
-
-// IE 8- don't enum bug keys
-module.exports = (
-  'constructor,hasOwnProperty,isPrototypeOf,propertyIsEnumerable,toLocaleString,toString,valueOf'
-).split(',');
-
-
-/***/ }),
-/* 40 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports.f = __webpack_require__(2);
-
-
-/***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(0);
-var core = __webpack_require__(1);
-var LIBRARY = __webpack_require__(22);
-var wksExt = __webpack_require__(40);
-var defineProperty = __webpack_require__(6).f;
-module.exports = function (name) {
-  var $Symbol = core.Symbol || (core.Symbol = LIBRARY ? {} : global.Symbol || {});
-  if (name.charAt(0) != '_' && !(name in $Symbol)) defineProperty($Symbol, name, { value: wksExt.f(name) });
-};
-
-
-/***/ }),
-/* 42 */
-/***/ (function(module, exports) {
-
-exports.f = {}.propertyIsEnumerable;
-
-
-/***/ }),
-/* 43 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _setPrototypeOf = __webpack_require__(100);
-
-var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
-
-var _create = __webpack_require__(104);
-
-var _create2 = _interopRequireDefault(_create);
-
-var _typeof2 = __webpack_require__(51);
-
-var _typeof3 = _interopRequireDefault(_typeof2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
-  }
-
-  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-/***/ }),
-/* 44 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-if (process.env.NODE_ENV !== 'production') {
-  var REACT_ELEMENT_TYPE = (typeof Symbol === 'function' &&
-    Symbol.for &&
-    Symbol.for('react.element')) ||
-    0xeac7;
-
-  var isValidElement = function(object) {
-    return typeof object === 'object' &&
-      object !== null &&
-      object.$$typeof === REACT_ELEMENT_TYPE;
-  };
-
-  // By explicitly using `prop-types` you are opting into new development behavior.
-  // http://fb.me/prop-types-in-prod
-  var throwOnDirectAccess = true;
-  module.exports = __webpack_require__(109)(isValidElement, throwOnDirectAccess);
-} else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__(110)();
-}
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 45 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// 25.4.1.5 NewPromiseCapability(C)
-var aFunction = __webpack_require__(20);
-
-function PromiseCapability(C) {
-  var resolve, reject;
-  this.promise = new C(function ($$resolve, $$reject) {
-    if (resolve !== undefined || reject !== undefined) throw TypeError('Bad Promise constructor');
-    resolve = $$resolve;
-    reject = $$reject;
-  });
-  this.resolve = aFunction(resolve);
-  this.reject = aFunction(reject);
-}
-
-module.exports.f = function (C) {
-  return new PromiseCapability(C);
-};
-
-
-/***/ }),
-/* 46 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-
-
-var emptyObject = {};
-
-if (process.env.NODE_ENV !== 'production') {
-  Object.freeze(emptyObject);
-}
-
-module.exports = emptyObject;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 47 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-if (process.env.NODE_ENV !== 'production') {
-  var invariant = __webpack_require__(18);
-  var warning = __webpack_require__(25);
-  var ReactPropTypesSecret = __webpack_require__(26);
-  var loggedTypeFailures = {};
-}
-
-/**
- * Assert that the values match with the type specs.
- * Error messages are memorized and will only be shown once.
- *
- * @param {object} typeSpecs Map of name to a ReactPropType
- * @param {object} values Runtime values that need to be type-checked
- * @param {string} location e.g. "prop", "context", "child context"
- * @param {string} componentName Name of the component for error messages.
- * @param {?Function} getStack Returns the component stack.
- * @private
- */
-function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
-  if (process.env.NODE_ENV !== 'production') {
-    for (var typeSpecName in typeSpecs) {
-      if (typeSpecs.hasOwnProperty(typeSpecName)) {
-        var error;
-        // Prop type validation may throw. In case they do, we don't want to
-        // fail the render phase where it didn't fail before. So we log it.
-        // After these have been cleaned up, we'll let them throw.
-        try {
-          // This is intentionally an invariant that gets caught. It's the same
-          // behavior as without this statement except with a better message.
-          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
-          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
-        } catch (ex) {
-          error = ex;
-        }
-        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
-        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
-          // Only monitor this failure once because there tends to be a lot of the
-          // same error.
-          loggedTypeFailures[error.message] = true;
-
-          var stack = getStack ? getStack() : '';
-
-          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
-        }
-      }
-    }
-  }
-}
-
-module.exports = checkPropTypes;
-
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
-
-/***/ }),
-/* 48 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.13 ToObject(argument)
-var defined = __webpack_require__(28);
-module.exports = function (it) {
-  return Object(defined(it));
-};
-
-
-/***/ }),
 /* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
-// 19.1.2.9 / 15.2.3.2 Object.getPrototypeOf(O)
-var has = __webpack_require__(9);
-var toObject = __webpack_require__(48);
-var IE_PROTO = __webpack_require__(29)('IE_PROTO');
-var ObjectProto = Object.prototype;
-
-module.exports = Object.getPrototypeOf || function (O) {
-  O = toObject(O);
-  if (has(O, IE_PROTO)) return O[IE_PROTO];
-  if (typeof O.constructor == 'function' && O instanceof O.constructor) {
-    return O.constructor.prototype;
-  } return O instanceof Object ? ObjectProto : null;
-};
-
-
-/***/ }),
-/* 50 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(8) && !__webpack_require__(15)(function () {
-  return Object.defineProperty(__webpack_require__(31)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 51 */
-/***/ (function(module, exports, __webpack_require__) {
-
 "use strict";
 
 
 exports.__esModule = true;
 
-var _iterator = __webpack_require__(80);
+var _iterator = __webpack_require__(83);
 
 var _iterator2 = _interopRequireDefault(_iterator);
 
-var _symbol = __webpack_require__(91);
+var _symbol = __webpack_require__(94);
 
 var _symbol2 = _interopRequireDefault(_symbol);
 
@@ -1369,15 +1320,15 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 };
 
 /***/ }),
-/* 52 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var $at = __webpack_require__(82)(true);
+var $at = __webpack_require__(85)(true);
 
 // 21.1.3.27 String.prototype[@@iterator]()
-__webpack_require__(53)(String, 'String', function (iterated) {
+__webpack_require__(51)(String, 'String', function (iterated) {
   this._t = String(iterated); // target
   this._i = 0;                // next index
 // 21.1.5.2.1 %StringIteratorPrototype%.next()
@@ -1393,19 +1344,19 @@ __webpack_require__(53)(String, 'String', function (iterated) {
 
 
 /***/ }),
-/* 53 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(22);
+var LIBRARY = __webpack_require__(23);
 var $export = __webpack_require__(3);
-var redefine = __webpack_require__(54);
+var redefine = __webpack_require__(52);
 var hide = __webpack_require__(10);
 var Iterators = __webpack_require__(16);
-var $iterCreate = __webpack_require__(83);
-var setToStringTag = __webpack_require__(23);
-var getPrototypeOf = __webpack_require__(49);
+var $iterCreate = __webpack_require__(86);
+var setToStringTag = __webpack_require__(24);
+var getPrototypeOf = __webpack_require__(44);
 var ITERATOR = __webpack_require__(2)('iterator');
 var BUGGY = !([].keys && 'next' in [].keys()); // Safari has buggy iterators w/o `next`
 var FF_ITERATOR = '@@iterator';
@@ -1469,20 +1420,20 @@ module.exports = function (Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE
 
 
 /***/ }),
-/* 54 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(10);
 
 
 /***/ }),
-/* 55 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var has = __webpack_require__(9);
-var toIObject = __webpack_require__(11);
-var arrayIndexOf = __webpack_require__(86)(false);
-var IE_PROTO = __webpack_require__(29)('IE_PROTO');
+var toIObject = __webpack_require__(12);
+var arrayIndexOf = __webpack_require__(89)(false);
+var IE_PROTO = __webpack_require__(27)('IE_PROTO');
 
 module.exports = function (object, names) {
   var O = toIObject(object);
@@ -1499,11 +1450,11 @@ module.exports = function (object, names) {
 
 
 /***/ }),
-/* 56 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(36);
+var toInteger = __webpack_require__(31);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -1511,7 +1462,7 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 57 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var document = __webpack_require__(0).document;
@@ -1519,10 +1470,10 @@ module.exports = document && document.documentElement;
 
 
 /***/ }),
-/* 58 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(88);
+__webpack_require__(91);
 var global = __webpack_require__(0);
 var hide = __webpack_require__(10);
 var Iterators = __webpack_require__(16);
@@ -1544,19 +1495,19 @@ for (var i = 0; i < DOMIterables.length; i++) {
 
 
 /***/ }),
-/* 59 */
+/* 57 */
 /***/ (function(module, exports) {
 
 exports.f = Object.getOwnPropertySymbols;
 
 
 /***/ }),
-/* 60 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.7 / 15.2.3.4 Object.getOwnPropertyNames(O)
-var $keys = __webpack_require__(55);
-var hiddenKeys = __webpack_require__(39).concat('length', 'prototype');
+var $keys = __webpack_require__(53);
+var hiddenKeys = __webpack_require__(34).concat('length', 'prototype');
 
 exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
   return $keys(O, hiddenKeys);
@@ -1564,18 +1515,18 @@ exports.f = Object.getOwnPropertyNames || function getOwnPropertyNames(O) {
 
 
 /***/ }),
-/* 61 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var pIE = __webpack_require__(42);
-var createDesc = __webpack_require__(21);
-var toIObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(32);
+var pIE = __webpack_require__(37);
+var createDesc = __webpack_require__(22);
+var toIObject = __webpack_require__(12);
+var toPrimitive = __webpack_require__(30);
 var has = __webpack_require__(9);
-var IE8_DOM_DEFINE = __webpack_require__(50);
+var IE8_DOM_DEFINE = __webpack_require__(45);
 var gOPD = Object.getOwnPropertyDescriptor;
 
-exports.f = __webpack_require__(8) ? gOPD : function getOwnPropertyDescriptor(O, P) {
+exports.f = __webpack_require__(7) ? gOPD : function getOwnPropertyDescriptor(O, P) {
   O = toIObject(O);
   P = toPrimitive(P, true);
   if (IE8_DOM_DEFINE) try {
@@ -1586,13 +1537,372 @@ exports.f = __webpack_require__(8) ? gOPD : function getOwnPropertyDescriptor(O,
 
 
 /***/ }),
-/* 62 */
+/* 60 */
 /***/ (function(module, exports) {
 
 
 
 /***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _setPrototypeOf = __webpack_require__(103);
+
+var _setPrototypeOf2 = _interopRequireDefault(_setPrototypeOf);
+
+var _create = __webpack_require__(107);
+
+var _create2 = _interopRequireDefault(_create);
+
+var _typeof2 = __webpack_require__(49);
+
+var _typeof3 = _interopRequireDefault(_typeof2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + (typeof superClass === "undefined" ? "undefined" : (0, _typeof3.default)(superClass)));
+  }
+
+  subClass.prototype = (0, _create2.default)(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) _setPrototypeOf2.default ? (0, _setPrototypeOf2.default)(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
+ */
+
+
+
+var emptyObject = {};
+
+if (process.env.NODE_ENV !== 'production') {
+  Object.freeze(emptyObject);
+}
+
+module.exports = emptyObject;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
 /* 63 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(process) {/**
+ * Copyright (c) 2013-present, Facebook, Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+
+
+if (process.env.NODE_ENV !== 'production') {
+  var invariant = __webpack_require__(18);
+  var warning = __webpack_require__(39);
+  var ReactPropTypesSecret = __webpack_require__(40);
+  var loggedTypeFailures = {};
+}
+
+/**
+ * Assert that the values match with the type specs.
+ * Error messages are memorized and will only be shown once.
+ *
+ * @param {object} typeSpecs Map of name to a ReactPropType
+ * @param {object} values Runtime values that need to be type-checked
+ * @param {string} location e.g. "prop", "context", "child context"
+ * @param {string} componentName Name of the component for error messages.
+ * @param {?Function} getStack Returns the component stack.
+ * @private
+ */
+function checkPropTypes(typeSpecs, values, location, componentName, getStack) {
+  if (process.env.NODE_ENV !== 'production') {
+    for (var typeSpecName in typeSpecs) {
+      if (typeSpecs.hasOwnProperty(typeSpecName)) {
+        var error;
+        // Prop type validation may throw. In case they do, we don't want to
+        // fail the render phase where it didn't fail before. So we log it.
+        // After these have been cleaned up, we'll let them throw.
+        try {
+          // This is intentionally an invariant that gets caught. It's the same
+          // behavior as without this statement except with a better message.
+          invariant(typeof typeSpecs[typeSpecName] === 'function', '%s: %s type `%s` is invalid; it must be a function, usually from ' + 'the `prop-types` package, but received `%s`.', componentName || 'React class', location, typeSpecName, typeof typeSpecs[typeSpecName]);
+          error = typeSpecs[typeSpecName](values, typeSpecName, componentName, location, null, ReactPropTypesSecret);
+        } catch (ex) {
+          error = ex;
+        }
+        warning(!error || error instanceof Error, '%s: type specification of %s `%s` is invalid; the type checker ' + 'function must return `null` or an `Error` but returned a %s. ' + 'You may have forgotten to pass an argument to the type checker ' + 'creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and ' + 'shape all require an argument).', componentName || 'React class', location, typeSpecName, typeof error);
+        if (error instanceof Error && !(error.message in loggedTypeFailures)) {
+          // Only monitor this failure once because there tends to be a lot of the
+          // same error.
+          loggedTypeFailures[error.message] = true;
+
+          var stack = getStack ? getStack() : '';
+
+          warning(false, 'Failed %s type: %s%s', location, error.message, stack != null ? stack : '');
+        }
+      }
+    }
+  }
+}
+
+module.exports = checkPropTypes;
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
+
+/***/ }),
+/* 64 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+
+
+
+var RawHTML = window.wp.element.RawHTML;
+
+// Internationalization
+
+var __ = window.wp.i18n.__;
+
+/**
+ * The Preview Player component displays the iframe for embedding on
+ * the front end and in the edit view.
+ * Uses the Gutenberg Sandbox component.
+ */
+
+var PreviewPlayer = function PreviewPlayer(_ref) {
+  var height = _ref.height,
+      iframeSrc = _ref.iframeSrc,
+      title = _ref.title,
+      width = _ref.width;
+
+  // if there is no iframeSrc return null.
+  if (!iframeSrc) {
+    return null;
+  }
+  // Setup the iframe for display
+  var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    title="' + title + '"\n    frameborder="0"></iframe>';
+
+  return wp.element.createElement(
+    'div',
+    { className: 'apple-music-embed-wrapper' },
+    wp.element.createElement(
+      RawHTML,
+      null,
+      iframeHTML
+    )
+  );
+};
+
+PreviewPlayer.defaultProps = {
+  title: __('Apple Music Preview Player', 'apple-music')
+};
+
+PreviewPlayer.propTypes = {
+  height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
+  iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
+  title: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+  width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (PreviewPlayer);
+
+/***/ }),
+/* 65 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+// Import internationalization function.
+var __ = window.wp.i18n.__;
+/**
+ * The list of the types of resources to include in the results.
+ * The possible values are activities, artists, apple-curators,
+ * albums, curators, songs, playlists, music-videos, and stations.
+ *
+ * "value" - the slugified name of the music type.
+ * "label" - The front end label for each music type.
+ * "embedHeight" - used to determine the initial height of the iframe.
+ * "embedType" - refers to the singlular name used in the API call.
+ * "embed" - a boolean value indicating whether this type has an available embed.
+ *
+ * @see  https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html#//apple_ref/doc/uid/TP40017625-CH58-SW1
+ * @type {Array} music type values and labels
+ */
+
+var musicTypes = [{
+  value: 'artists',
+  label: __('Artists', 'apple-music'),
+  embedType: 'artist',
+  embed: false
+}, {
+  value: 'songs',
+  label: __('Songs', 'apple-music'),
+  embedHeight: '110px',
+  embedType: 'song',
+  embed: true
+}, {
+  value: 'albums',
+  label: __('Albums', 'apple-music'),
+  embedHeight: '500px',
+  embedType: 'album',
+  embed: true
+}, {
+  value: 'playlists',
+  label: __('Playlists', 'apple-music'),
+  embedHeight: '500px',
+  embedType: 'playlist',
+  embed: true
+}, {
+  value: 'activities',
+  label: __('Activities', 'apple-music'),
+  embedType: 'curator',
+  embed: false
+}, {
+  value: 'curators',
+  label: __('Curators', 'apple-music'),
+  embedType: 'curator',
+  embed: false
+}, {
+  value: 'apple-curators',
+  label: __('Apple Curators', 'apple-music'),
+  embed: false
+}, {
+  value: 'stations',
+  label: __('Stations', 'apple-music'),
+  embedType: 'station',
+  embed: false
+}, {
+  value: 'music-videos',
+  label: __('Music Videos', 'apple-music'),
+  embedType: 'music-video',
+  embed: false
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (musicTypes);
+
+/***/ }),
+/* 66 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export request */
+/* harmony export (immutable) */ __webpack_exports__["c"] = searchCatalog;
+/* harmony export (immutable) */ __webpack_exports__["a"] = getItems;
+/* harmony export (immutable) */ __webpack_exports__["b"] = iframeURL;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__ = __webpack_require__(118);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__token__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__settings__ = __webpack_require__(134);
+
+
+
+
+
+// Base URL for the apple music API
+var baseURL = 'https://api.music.apple.com/v1';
+
+/**
+ * Performs a generic request against the specified endpoint of the Apple Music API.
+ *
+ * @param {string} endpoint - The endpoint to query.
+ * @returns {Promise} - A promise that will resolve with the JSON response.
+ */
+function request(endpoint) {
+  return fetch(endpoint, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+      Host: 'api.music.apple.com',
+      Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__token__["a" /* default */],
+      'Cache-Control': 'no-transform, max-age=900'
+    }
+  }).then(function (res) {
+    return res.json();
+  }).catch(function (error) {
+    return error.status;
+  });
+}
+
+/**
+ * Search the Apple Music using the requested term and music type catalog.
+ * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html
+ *
+ * @param {string} term The entered text to search the API with.
+ * @param {string} types The types query parameter.
+ * @param {int} limit The limit on the number of objects that are returned.
+ */
+function searchCatalog(term, types) {
+  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 25;
+
+  if (!term) {
+    return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve) {
+      return setTimeout(resolve, 100, 'No Search Term');
+    });
+  }
+  var catalogURL = baseURL + '/catalog/' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */] + '/search';
+  var query = 'term=' + term + '&limit=' + limit + '&types=' + types;
+
+  return request(catalogURL + '?' + query);
+}
+
+/**
+ * Get the music item object.
+ *
+ * @param {object} response the music item object
+ */
+function getItems(response) {
+  if (!response.data) {
+    return [];
+  }
+  return response.data;
+}
+
+/**
+ * Get the API iframe URL for embedding.
+ * @param {string} type the music type to embed.
+ * @param {string} id the Apple Music ID.
+ */
+function iframeURL(type, id) {
+  var baseUrl = 'https://tools.applemusic.com/embed/v1/';
+  var typeObject = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* getTypeObject */])(type);
+
+  var embedType = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getObjKeyValue */])(typeObject, 'embedType');
+
+  if (null !== embedType) {
+    return '' + baseUrl + embedType + '/' + id + '?country=' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */];
+  }
+  return '';
+}
+
+/***/ }),
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // getting tag from 19.1.3.6 Object.prototype.toString()
@@ -1621,12 +1931,12 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 64 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.3.20 SpeciesConstructor(O, defaultConstructor)
 var anObject = __webpack_require__(4);
-var aFunction = __webpack_require__(20);
+var aFunction = __webpack_require__(21);
 var SPECIES = __webpack_require__(2)('species');
 module.exports = function (O, D) {
   var C = anObject(O).constructor;
@@ -1636,13 +1946,13 @@ module.exports = function (O, D) {
 
 
 /***/ }),
-/* 65 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(14);
-var invoke = __webpack_require__(122);
-var html = __webpack_require__(57);
-var cel = __webpack_require__(31);
+var invoke = __webpack_require__(126);
+var html = __webpack_require__(55);
+var cel = __webpack_require__(29);
 var global = __webpack_require__(0);
 var process = global.process;
 var setTask = global.setImmediate;
@@ -1726,7 +2036,7 @@ module.exports = {
 
 
 /***/ }),
-/* 66 */
+/* 70 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -1739,12 +2049,12 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 67 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var anObject = __webpack_require__(4);
-var isObject = __webpack_require__(7);
-var newPromiseCapability = __webpack_require__(45);
+var isObject = __webpack_require__(6);
+var newPromiseCapability = __webpack_require__(41);
 
 module.exports = function (C, x) {
   anObject(C);
@@ -1757,35 +2067,103 @@ module.exports = function (C, x) {
 
 
 /***/ }),
-/* 68 */
+/* 72 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__previewPlayer__ = __webpack_require__(64);
+
+
+
+
+var AppleMusicDisplay = function AppleMusicDisplay(_ref) {
+  var _ref$attributes = _ref.attributes,
+      embedType = _ref$attributes.embedType,
+      height = _ref$attributes.height,
+      iframeSrc = _ref$attributes.iframeSrc,
+      width = _ref$attributes.width,
+      className = _ref.className;
+  return wp.element.createElement(
+    'div',
+    { className: className },
+    'preview-player' === embedType && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_2__previewPlayer__["a" /* default */], {
+      height: height,
+      iframeSrc: iframeSrc,
+      width: width
+    }),
+    'badge' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE BADGE WILL GO'
+    ),
+    'text-lockup' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE TEXT LOCKUP WILL GO'
+    ),
+    'app-icon' === embedType && wp.element.createElement(
+      'div',
+      null,
+      'THIS IS WHERE THE APP ICON WILL GO'
+    )
+  );
+};
+
+AppleMusicDisplay.propTypes = {
+  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+    embedType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+      attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
+      id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+      type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+    }),
+    musicID: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    musicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+  }).isRequired
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (AppleMusicDisplay);
+
+/***/ }),
+/* 73 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__i18n__ = __webpack_require__(69);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__i18n__ = __webpack_require__(74);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__i18n___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__i18n__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__apple_music___ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__apple_music___ = __webpack_require__(75);
+// Entry point for Apple Music Gutenberg block.
+
 // Import internationalization
 
 // import blocks
 
 
 /***/ }),
-/* 69 */
+/* 74 */
 /***/ (function(module, exports) {
 
+// set the localization for Gutenberg.
 var setLocaleData = window.wp.i18n.setLocaleData;
 
 
 setLocaleData({ '': {} }, 'apple-music');
 
 /***/ }),
-/* 70 */
+/* 75 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_edit__ = __webpack_require__(73);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_save__ = __webpack_require__(143);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_edit__ = __webpack_require__(76);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_save__ = __webpack_require__(72);
 
 
 
@@ -1793,10 +2171,10 @@ var __ = window.wp.i18n.__;
 var registerBlockType = window.wp.blocks.registerBlockType;
 
 /**
- * Register block
+ * Register Apple Music block
  */
 
-/* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('apple-music/demo', {
+/* unused harmony default export */ var _unused_webpack_default_export = (registerBlockType('apple-music/widget', {
   title: __('Apple Music', 'apple-music'),
   description: __('Embed the apple music player into a post.', 'apple-music'),
   category: 'widgets',
@@ -1841,11 +2219,964 @@ var registerBlockType = window.wp.blocks.registerBlockType;
 }));
 
 /***/ }),
-/* 71 */
+/* 76 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools__ = __webpack_require__(112);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__resultsWrapper__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__searchTools__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__save__ = __webpack_require__(72);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__api__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils__ = __webpack_require__(25);
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Internationalization
+var __ = window.wp.i18n.__;
+// Extend component
+
+var Component = window.wp.element.Component;
+var IconButton = window.wp.components.IconButton;
+var InspectorControls = window.wp.blocks.InspectorControls;
+var PanelBody = window.wp.components.PanelBody;
+
+var AppleMusicBlock = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(AppleMusicBlock, _Component);
+
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function AppleMusicBlock(props) {
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, AppleMusicBlock);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (AppleMusicBlock.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(AppleMusicBlock)).call(this, props));
+
+    _this.state = {
+      isMusicSet: _this.isMusicSet()
+    };
+    _this.setMusicSelection = _this.setMusicSelection.bind(_this);
+    _this.updateAttributes = _this.updateAttributes.bind(_this);
+    _this.isMusicSet = _this.isMusicSet.bind(_this);
+    return _this;
+  }
+
+  /**
+   * Update the musicID attribute and add the musicItem object to state.
+   * @param {object} item The selected item.
+   */
+
+
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AppleMusicBlock, [{
+    key: 'setMusicSelection',
+    value: function setMusicSelection(item) {
+      var _props = this.props,
+          musicType = _props.attributes.musicType,
+          setAttributes = _props.setAttributes;
+
+      var musicID = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* getObjKeyValue */])(item, 'id'); // get the music ID.
+
+      var type = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["d" /* getTypeObject */])(musicType);
+      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* getObjKeyValue */])(type, 'embedHeight');
+
+      this.setState({
+        isMusicSet: true
+      });
+
+      setAttributes({
+        item: item,
+        musicID: musicID,
+        iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_10__api__["b" /* iframeURL */])(musicType, musicID),
+        height: initialHeight
+      });
+    }
+
+    /**
+     * Update the attributes callback.
+     * @param {string} value the value to set the attribute.
+     * @param {string} key the key of the attribute, which attribute to set.
+     */
+
+  }, {
+    key: 'updateAttributes',
+    value: function updateAttributes(value, key) {
+      var _props2 = this.props,
+          attributes = _props2.attributes,
+          setAttributes = _props2.setAttributes;
+      // TODO: this could be less repetitive.
+
+      setAttributes({
+        width: 'width' === key ? value : attributes.width,
+        height: 'height' === key ? value : attributes.height,
+        embedType: 'embedType' === key ? value : attributes.embedType,
+        query: 'query' === key ? value : attributes.query,
+        musicType: 'musicType' === key ? value : attributes.musicType
+      });
+    }
+
+    /**
+     * Reset the search and clear selection.
+     */
+
+  }, {
+    key: 'resetSearch',
+    value: function resetSearch() {
+      var setAttributes = this.props.setAttributes;
+
+      this.setState({
+        isMusicSet: false
+      });
+      setAttributes({
+        item: {}
+      });
+    }
+
+    /**
+     * Check if an item has been selected.
+     */
+
+  }, {
+    key: 'isMusicSet',
+    value: function isMusicSet() {
+      var attributes = this.props.attributes;
+
+      if (attributes.musicID) {
+        return true;
+      }
+      return false;
+    }
+
+    // Component Render method.
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props3 = this.props,
+          attributes = _props3.attributes,
+          isSelected = _props3.isSelected,
+          className = _props3.className;
+
+
+      return wp.element.createElement(
+        'div',
+        null,
+        isSelected && wp.element.createElement(
+          InspectorControls,
+          { key: 'inspector' },
+          wp.element.createElement(
+            PanelBody,
+            { title: __('Apple Music Settings', 'apple-music') },
+            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
+              attributes: attributes,
+              updateSearch: this.updateAttributes
+            }),
+            this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
+              attributes: attributes,
+              onChange: this.updateAttributes
+            })
+          )
+        ),
+        isSelected && wp.element.createElement(
+          'div',
+          { className: 'edit-apple-music' },
+          !this.state.isMusicSet && wp.element.createElement(
+            'div',
+            null,
+            __('Get badges, links, and widgets for Apple Music.', 'apple-music'),
+            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
+              attributes: attributes,
+              updateSearch: this.updateAttributes
+            })
+          ),
+          this.state.isMusicSet && wp.element.createElement(
+            'div',
+            null,
+            wp.element.createElement(
+              IconButton,
+              {
+                icon: 'arrow-left-alt2',
+                className: 'back-to-search',
+                onClick: function onClick() {
+                  return _this2.resetSearch();
+                }
+              },
+              __('Back to Seach', 'apple-music')
+            ),
+            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
+              attributes: attributes,
+              onChange: this.updateAttributes,
+              inPanel: false
+            })
+          ),
+          !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__resultsWrapper__["a" /* default */], {
+            className: className,
+            attributes: attributes,
+            onSelect: this.setMusicSelection
+          })
+        ),
+        !isSelected && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_9__save__["a" /* default */], { attributes: attributes })
+      );
+    } // end render method.
+
+  }]);
+
+  return AppleMusicBlock;
+}(Component);
+
+/* harmony default export */ __webpack_exports__["a"] = (AppleMusicBlock);
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(78);
+module.exports = __webpack_require__(1).Object.getPrototypeOf;
+
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.2.9 Object.getPrototypeOf(O)
+var toObject = __webpack_require__(43);
+var $getPrototypeOf = __webpack_require__(44);
+
+__webpack_require__(79)('getPrototypeOf', function () {
+  return function getPrototypeOf(it) {
+    return $getPrototypeOf(toObject(it));
+  };
+});
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// most Object methods by ES6 should accept primitives
+var $export = __webpack_require__(3);
+var core = __webpack_require__(1);
+var fails = __webpack_require__(15);
+module.exports = function (KEY, exec) {
+  var fn = (core.Object || {})[KEY] || Object[KEY];
+  var exp = {};
+  exp[KEY] = exec(fn);
+  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
+};
+
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(81), __esModule: true };
+
+/***/ }),
+/* 81 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(82);
+var $Object = __webpack_require__(1).Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+
+/***/ }),
+/* 82 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(3);
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__(7), 'Object', { defineProperty: __webpack_require__(5).f });
+
+
+/***/ }),
+/* 83 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(84), __esModule: true };
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(50);
+__webpack_require__(56);
+module.exports = __webpack_require__(35).f('iterator');
+
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(31);
+var defined = __webpack_require__(26);
+// true  -> String#at
+// false -> String#codePointAt
+module.exports = function (TO_STRING) {
+  return function (that, pos) {
+    var s = String(defined(that));
+    var i = toInteger(pos);
+    var l = s.length;
+    var a, b;
+    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
+    a = s.charCodeAt(i);
+    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
+      ? TO_STRING ? s.charAt(i) : a
+      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
+  };
+};
+
+
+/***/ }),
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.3.1
+
+var create = __webpack_require__(32);
+var descriptor = __webpack_require__(22);
+var setToStringTag = __webpack_require__(24);
+var IteratorPrototype = {};
+
+// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
+__webpack_require__(10)(IteratorPrototype, __webpack_require__(2)('iterator'), function () { return this; });
+
+module.exports = function (Constructor, NAME, next) {
+  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
+  setToStringTag(Constructor, NAME + ' Iterator');
+};
+
+
+/***/ }),
+/* 87 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(5);
+var anObject = __webpack_require__(4);
+var getKeys = __webpack_require__(33);
+
+module.exports = __webpack_require__(7) ? Object.defineProperties : function defineProperties(O, Properties) {
+  anObject(O);
+  var keys = getKeys(Properties);
+  var length = keys.length;
+  var i = 0;
+  var P;
+  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
+  return O;
+};
+
+
+/***/ }),
+/* 88 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// fallback for non-array-like ES3 and non-enumerable old V8 strings
+var cof = __webpack_require__(17);
+// eslint-disable-next-line no-prototype-builtins
+module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
+  return cof(it) == 'String' ? it.split('') : Object(it);
+};
+
+
+/***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// false -> Array#indexOf
+// true  -> Array#includes
+var toIObject = __webpack_require__(12);
+var toLength = __webpack_require__(54);
+var toAbsoluteIndex = __webpack_require__(90);
+module.exports = function (IS_INCLUDES) {
+  return function ($this, el, fromIndex) {
+    var O = toIObject($this);
+    var length = toLength(O.length);
+    var index = toAbsoluteIndex(fromIndex, length);
+    var value;
+    // Array#includes uses SameValueZero equality algorithm
+    // eslint-disable-next-line no-self-compare
+    if (IS_INCLUDES && el != el) while (length > index) {
+      value = O[index++];
+      // eslint-disable-next-line no-self-compare
+      if (value != value) return true;
+    // Array#indexOf ignores holes, Array#includes - not
+    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
+      if (O[index] === el) return IS_INCLUDES || index || 0;
+    } return !IS_INCLUDES && -1;
+  };
+};
+
+
+/***/ }),
+/* 90 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var toInteger = __webpack_require__(31);
+var max = Math.max;
+var min = Math.min;
+module.exports = function (index, length) {
+  index = toInteger(index);
+  return index < 0 ? max(index + length, 0) : min(index, length);
+};
+
+
+/***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var addToUnscopables = __webpack_require__(92);
+var step = __webpack_require__(93);
+var Iterators = __webpack_require__(16);
+var toIObject = __webpack_require__(12);
+
+// 22.1.3.4 Array.prototype.entries()
+// 22.1.3.13 Array.prototype.keys()
+// 22.1.3.29 Array.prototype.values()
+// 22.1.3.30 Array.prototype[@@iterator]()
+module.exports = __webpack_require__(51)(Array, 'Array', function (iterated, kind) {
+  this._t = toIObject(iterated); // target
+  this._i = 0;                   // next index
+  this._k = kind;                // kind
+// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
+}, function () {
+  var O = this._t;
+  var kind = this._k;
+  var index = this._i++;
+  if (!O || index >= O.length) {
+    this._t = undefined;
+    return step(1);
+  }
+  if (kind == 'keys') return step(0, index);
+  if (kind == 'values') return step(0, O[index]);
+  return step(0, [index, O[index]]);
+}, 'values');
+
+// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
+Iterators.Arguments = Iterators.Array;
+
+addToUnscopables('keys');
+addToUnscopables('values');
+addToUnscopables('entries');
+
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports) {
+
+module.exports = function () { /* empty */ };
+
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports) {
+
+module.exports = function (done, value) {
+  return { value: value, done: !!done };
+};
+
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(95), __esModule: true };
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(96);
+__webpack_require__(60);
+__webpack_require__(101);
+__webpack_require__(102);
+module.exports = __webpack_require__(1).Symbol;
+
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// ECMAScript 6 symbols shim
+var global = __webpack_require__(0);
+var has = __webpack_require__(9);
+var DESCRIPTORS = __webpack_require__(7);
+var $export = __webpack_require__(3);
+var redefine = __webpack_require__(52);
+var META = __webpack_require__(97).KEY;
+var $fails = __webpack_require__(15);
+var shared = __webpack_require__(28);
+var setToStringTag = __webpack_require__(24);
+var uid = __webpack_require__(20);
+var wks = __webpack_require__(2);
+var wksExt = __webpack_require__(35);
+var wksDefine = __webpack_require__(36);
+var enumKeys = __webpack_require__(98);
+var isArray = __webpack_require__(99);
+var anObject = __webpack_require__(4);
+var isObject = __webpack_require__(6);
+var toIObject = __webpack_require__(12);
+var toPrimitive = __webpack_require__(30);
+var createDesc = __webpack_require__(22);
+var _create = __webpack_require__(32);
+var gOPNExt = __webpack_require__(100);
+var $GOPD = __webpack_require__(59);
+var $DP = __webpack_require__(5);
+var $keys = __webpack_require__(33);
+var gOPD = $GOPD.f;
+var dP = $DP.f;
+var gOPN = gOPNExt.f;
+var $Symbol = global.Symbol;
+var $JSON = global.JSON;
+var _stringify = $JSON && $JSON.stringify;
+var PROTOTYPE = 'prototype';
+var HIDDEN = wks('_hidden');
+var TO_PRIMITIVE = wks('toPrimitive');
+var isEnum = {}.propertyIsEnumerable;
+var SymbolRegistry = shared('symbol-registry');
+var AllSymbols = shared('symbols');
+var OPSymbols = shared('op-symbols');
+var ObjectProto = Object[PROTOTYPE];
+var USE_NATIVE = typeof $Symbol == 'function';
+var QObject = global.QObject;
+// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
+var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
+
+// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
+var setSymbolDesc = DESCRIPTORS && $fails(function () {
+  return _create(dP({}, 'a', {
+    get: function () { return dP(this, 'a', { value: 7 }).a; }
+  })).a != 7;
+}) ? function (it, key, D) {
+  var protoDesc = gOPD(ObjectProto, key);
+  if (protoDesc) delete ObjectProto[key];
+  dP(it, key, D);
+  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
+} : dP;
+
+var wrap = function (tag) {
+  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
+  sym._k = tag;
+  return sym;
+};
+
+var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
+  return typeof it == 'symbol';
+} : function (it) {
+  return it instanceof $Symbol;
+};
+
+var $defineProperty = function defineProperty(it, key, D) {
+  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
+  anObject(it);
+  key = toPrimitive(key, true);
+  anObject(D);
+  if (has(AllSymbols, key)) {
+    if (!D.enumerable) {
+      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
+      it[HIDDEN][key] = true;
+    } else {
+      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
+      D = _create(D, { enumerable: createDesc(0, false) });
+    } return setSymbolDesc(it, key, D);
+  } return dP(it, key, D);
+};
+var $defineProperties = function defineProperties(it, P) {
+  anObject(it);
+  var keys = enumKeys(P = toIObject(P));
+  var i = 0;
+  var l = keys.length;
+  var key;
+  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
+  return it;
+};
+var $create = function create(it, P) {
+  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
+};
+var $propertyIsEnumerable = function propertyIsEnumerable(key) {
+  var E = isEnum.call(this, key = toPrimitive(key, true));
+  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
+  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
+};
+var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
+  it = toIObject(it);
+  key = toPrimitive(key, true);
+  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
+  var D = gOPD(it, key);
+  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
+  return D;
+};
+var $getOwnPropertyNames = function getOwnPropertyNames(it) {
+  var names = gOPN(toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
+  } return result;
+};
+var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
+  var IS_OP = it === ObjectProto;
+  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
+  var result = [];
+  var i = 0;
+  var key;
+  while (names.length > i) {
+    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
+  } return result;
+};
+
+// 19.4.1.1 Symbol([description])
+if (!USE_NATIVE) {
+  $Symbol = function Symbol() {
+    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
+    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
+    var $set = function (value) {
+      if (this === ObjectProto) $set.call(OPSymbols, value);
+      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
+      setSymbolDesc(this, tag, createDesc(1, value));
+    };
+    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
+    return wrap(tag);
+  };
+  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
+    return this._k;
+  });
+
+  $GOPD.f = $getOwnPropertyDescriptor;
+  $DP.f = $defineProperty;
+  __webpack_require__(58).f = gOPNExt.f = $getOwnPropertyNames;
+  __webpack_require__(37).f = $propertyIsEnumerable;
+  __webpack_require__(57).f = $getOwnPropertySymbols;
+
+  if (DESCRIPTORS && !__webpack_require__(23)) {
+    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
+  }
+
+  wksExt.f = function (name) {
+    return wrap(wks(name));
+  };
+}
+
+$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
+
+for (var es6Symbols = (
+  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
+  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
+).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
+
+for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
+
+$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
+  // 19.4.2.1 Symbol.for(key)
+  'for': function (key) {
+    return has(SymbolRegistry, key += '')
+      ? SymbolRegistry[key]
+      : SymbolRegistry[key] = $Symbol(key);
+  },
+  // 19.4.2.5 Symbol.keyFor(sym)
+  keyFor: function keyFor(sym) {
+    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
+    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
+  },
+  useSetter: function () { setter = true; },
+  useSimple: function () { setter = false; }
+});
+
+$export($export.S + $export.F * !USE_NATIVE, 'Object', {
+  // 19.1.2.2 Object.create(O [, Properties])
+  create: $create,
+  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
+  defineProperty: $defineProperty,
+  // 19.1.2.3 Object.defineProperties(O, Properties)
+  defineProperties: $defineProperties,
+  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
+  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
+  // 19.1.2.7 Object.getOwnPropertyNames(O)
+  getOwnPropertyNames: $getOwnPropertyNames,
+  // 19.1.2.8 Object.getOwnPropertySymbols(O)
+  getOwnPropertySymbols: $getOwnPropertySymbols
+});
+
+// 24.3.2 JSON.stringify(value [, replacer [, space]])
+$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
+  var S = $Symbol();
+  // MS Edge converts symbol values to JSON as {}
+  // WebKit converts symbol values to JSON as null
+  // V8 throws on boxed symbols
+  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
+})), 'JSON', {
+  stringify: function stringify(it) {
+    var args = [it];
+    var i = 1;
+    var replacer, $replacer;
+    while (arguments.length > i) args.push(arguments[i++]);
+    $replacer = replacer = args[1];
+    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
+    if (!isArray(replacer)) replacer = function (key, value) {
+      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
+      if (!isSymbol(value)) return value;
+    };
+    args[1] = replacer;
+    return _stringify.apply($JSON, args);
+  }
+});
+
+// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
+$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(10)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
+// 19.4.3.5 Symbol.prototype[@@toStringTag]
+setToStringTag($Symbol, 'Symbol');
+// 20.2.1.9 Math[@@toStringTag]
+setToStringTag(Math, 'Math', true);
+// 24.3.3 JSON[@@toStringTag]
+setToStringTag(global.JSON, 'JSON', true);
+
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var META = __webpack_require__(20)('meta');
+var isObject = __webpack_require__(6);
+var has = __webpack_require__(9);
+var setDesc = __webpack_require__(5).f;
+var id = 0;
+var isExtensible = Object.isExtensible || function () {
+  return true;
+};
+var FREEZE = !__webpack_require__(15)(function () {
+  return isExtensible(Object.preventExtensions({}));
+});
+var setMeta = function (it) {
+  setDesc(it, META, { value: {
+    i: 'O' + ++id, // object ID
+    w: {}          // weak collections IDs
+  } });
+};
+var fastKey = function (it, create) {
+  // return primitive with prefix
+  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return 'F';
+    // not necessary to add metadata
+    if (!create) return 'E';
+    // add missing metadata
+    setMeta(it);
+  // return object ID
+  } return it[META].i;
+};
+var getWeak = function (it, create) {
+  if (!has(it, META)) {
+    // can't set metadata to uncaught frozen object
+    if (!isExtensible(it)) return true;
+    // not necessary to add metadata
+    if (!create) return false;
+    // add missing metadata
+    setMeta(it);
+  // return hash weak collections IDs
+  } return it[META].w;
+};
+// add metadata on freeze-family methods calling
+var onFreeze = function (it) {
+  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
+  return it;
+};
+var meta = module.exports = {
+  KEY: META,
+  NEED: false,
+  fastKey: fastKey,
+  getWeak: getWeak,
+  onFreeze: onFreeze
+};
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// all enumerable object keys, includes symbols
+var getKeys = __webpack_require__(33);
+var gOPS = __webpack_require__(57);
+var pIE = __webpack_require__(37);
+module.exports = function (it) {
+  var result = getKeys(it);
+  var getSymbols = gOPS.f;
+  if (getSymbols) {
+    var symbols = getSymbols(it);
+    var isEnum = pIE.f;
+    var i = 0;
+    var key;
+    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
+  } return result;
+};
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.2.2 IsArray(argument)
+var cof = __webpack_require__(17);
+module.exports = Array.isArray || function isArray(arg) {
+  return cof(arg) == 'Array';
+};
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
+var toIObject = __webpack_require__(12);
+var gOPN = __webpack_require__(58).f;
+var toString = {}.toString;
+
+var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
+  ? Object.getOwnPropertyNames(window) : [];
+
+var getWindowNames = function (it) {
+  try {
+    return gOPN(it);
+  } catch (e) {
+    return windowNames.slice();
+  }
+};
+
+module.exports.f = function getOwnPropertyNames(it) {
+  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
+};
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(36)('asyncIterator');
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(36)('observable');
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(104), __esModule: true };
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(105);
+module.exports = __webpack_require__(1).Object.setPrototypeOf;
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.19 Object.setPrototypeOf(O, proto)
+var $export = __webpack_require__(3);
+$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(106).set });
+
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// Works with __proto__ only. Old v8 can't work with null proto objects.
+/* eslint-disable no-proto */
+var isObject = __webpack_require__(6);
+var anObject = __webpack_require__(4);
+var check = function (O, proto) {
+  anObject(O);
+  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
+};
+module.exports = {
+  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
+    function (test, buggy, set) {
+      try {
+        set = __webpack_require__(14)(Function.call, __webpack_require__(59).f(Object.prototype, '__proto__').set, 2);
+        set(test, []);
+        buggy = !(test instanceof Array);
+      } catch (e) { buggy = true; }
+      return function setPrototypeOf(O, proto) {
+        check(O, proto);
+        if (buggy) O.__proto__ = proto;
+        else set(O, proto);
+        return O;
+      };
+    }({}, false) : undefined),
+  check: check
+};
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(108), __esModule: true };
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(109);
+var $Object = __webpack_require__(1).Object;
+module.exports = function create(P, D) {
+  return $Object.create(P, D);
+};
+
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(3);
+// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
+$export($export.S, 'Object', { create: __webpack_require__(32) });
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/** @license React v16.3.2
  * react.production.min.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1854,27 +3185,27 @@ var registerBlockType = window.wp.blocks.registerBlockType;
  * LICENSE file in the root directory of this source tree.
  */
 
-var m=__webpack_require__(24),n=__webpack_require__(46),p=__webpack_require__(13),q="function"===typeof Symbol&&Symbol["for"],r=q?Symbol["for"]("react.element"):60103,t=q?Symbol["for"]("react.portal"):60106,u=q?Symbol["for"]("react.fragment"):60107,v=q?Symbol["for"]("react.strict_mode"):60108,w=q?Symbol["for"]("react.provider"):60109,x=q?Symbol["for"]("react.context"):60110,y=q?Symbol["for"]("react.async_mode"):60111,z=q?Symbol["for"]("react.forward_ref"):60112,A="function"===
-typeof Symbol&&Symbol.iterator;function B(a){for(var b=arguments.length-1,e="Minified React error #"+a+"; visit http://facebook.github.io/react/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);b=Error(e+" for the full message or use the non-minified dev environment for full errors and additional helpful warnings.");b.name="Invariant Violation";b.framesToPop=1;throw b;}
-var C={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};function D(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||C}D.prototype.isReactComponent={};D.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?B("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};D.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function E(){}
-E.prototype=D.prototype;function F(a,b,e){this.props=a;this.context=b;this.refs=n;this.updater=e||C}var G=F.prototype=new E;G.constructor=F;m(G,D.prototype);G.isPureReactComponent=!0;var H={current:null},I=Object.prototype.hasOwnProperty,J={key:!0,ref:!0,__self:!0,__source:!0};
-function K(a,b,e){var c=void 0,d={},g=null,h=null;if(null!=b)for(c in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(g=""+b.key),b)I.call(b,c)&&!J.hasOwnProperty(c)&&(d[c]=b[c]);var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){for(var k=Array(f),l=0;l<f;l++)k[l]=arguments[l+2];d.children=k}if(a&&a.defaultProps)for(c in f=a.defaultProps,f)void 0===d[c]&&(d[c]=f[c]);return{$$typeof:r,type:a,key:g,ref:h,props:d,_owner:H.current}}
-function L(a){return"object"===typeof a&&null!==a&&a.$$typeof===r}function escape(a){var b={"\x3d":"\x3d0",":":"\x3d2"};return"$"+(""+a).replace(/[=:]/g,function(a){return b[a]})}var M=/\/+/g,N=[];function O(a,b,e,c){if(N.length){var d=N.pop();d.result=a;d.keyPrefix=b;d.func=e;d.context=c;d.count=0;return d}return{result:a,keyPrefix:b,func:e,context:c,count:0}}function P(a){a.result=null;a.keyPrefix=null;a.func=null;a.context=null;a.count=0;10>N.length&&N.push(a)}
-function Q(a,b,e,c){var d=typeof a;if("undefined"===d||"boolean"===d)a=null;var g=!1;if(null===a)g=!0;else switch(d){case "string":case "number":g=!0;break;case "object":switch(a.$$typeof){case r:case t:g=!0}}if(g)return e(c,a,""===b?"."+R(a,0):b),1;g=0;b=""===b?".":b+":";if(Array.isArray(a))for(var h=0;h<a.length;h++){d=a[h];var f=b+R(d,h);g+=Q(d,f,e,c)}else if(null===a||"undefined"===typeof a?f=null:(f=A&&a[A]||a["@@iterator"],f="function"===typeof f?f:null),"function"===typeof f)for(a=f.call(a),
-h=0;!(d=a.next()).done;)d=d.value,f=b+R(d,h++),g+=Q(d,f,e,c);else"object"===d&&(e=""+a,B("31","[object Object]"===e?"object with keys {"+Object.keys(a).join(", ")+"}":e,""));return g}function R(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(a.key):b.toString(36)}function S(a,b){a.func.call(a.context,b,a.count++)}
-function T(a,b,e){var c=a.result,d=a.keyPrefix;a=a.func.call(a.context,b,a.count++);Array.isArray(a)?U(a,c,e,p.thatReturnsArgument):null!=a&&(L(a)&&(b=d+(!a.key||b&&b.key===a.key?"":(""+a.key).replace(M,"$\x26/")+"/")+e,a={$$typeof:r,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}),c.push(a))}function U(a,b,e,c,d){var g="";null!=e&&(g=(""+e).replace(M,"$\x26/")+"/");b=O(b,g,c,d);null==a||Q(a,"",T,b);P(b)}
-var V={Children:{map:function(a,b,e){if(null==a)return a;var c=[];U(a,c,null,b,e);return c},forEach:function(a,b,e){if(null==a)return a;b=O(null,null,b,e);null==a||Q(a,"",S,b);P(b)},count:function(a){return null==a?0:Q(a,"",p.thatReturnsNull,null)},toArray:function(a){var b=[];U(a,b,null,p.thatReturnsArgument);return b},only:function(a){L(a)?void 0:B("143");return a}},createRef:function(){return{current:null}},Component:D,PureComponent:F,createContext:function(a,b){void 0===b&&(b=null);a={$$typeof:x,
-_calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:null,Consumer:null};a.Provider={$$typeof:w,_context:a};return a.Consumer=a},forwardRef:function(a){return{$$typeof:z,render:a}},Fragment:u,StrictMode:v,unstable_AsyncMode:y,createElement:K,cloneElement:function(a,b,e){var c=void 0,d=m({},a.props),g=a.key,h=a.ref,f=a._owner;if(null!=b){void 0!==b.ref&&(h=b.ref,f=H.current);void 0!==b.key&&(g=""+b.key);var k=void 0;a.type&&a.type.defaultProps&&(k=a.type.defaultProps);for(c in b)I.call(b,
-c)&&!J.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:r,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=K.bind(null,a);b.type=a;return b},isValidElement:L,version:"16.3.1",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:H,assign:m}},W=Object.freeze({default:V}),X=W&&V||W;
-module.exports=X["default"]?X["default"]:X;
+var m=__webpack_require__(38),n=__webpack_require__(18),p=__webpack_require__(62),q=__webpack_require__(19),r="function"===typeof Symbol&&Symbol["for"],t=r?Symbol["for"]("react.element"):60103,u=r?Symbol["for"]("react.portal"):60106,v=r?Symbol["for"]("react.fragment"):60107,w=r?Symbol["for"]("react.strict_mode"):60108,x=r?Symbol["for"]("react.provider"):60109,y=r?Symbol["for"]("react.context"):60110,z=r?Symbol["for"]("react.async_mode"):60111,A=r?Symbol["for"]("react.forward_ref"):
+60112,B="function"===typeof Symbol&&Symbol.iterator;function C(a){for(var b=arguments.length-1,e="http://reactjs.org/docs/error-decoder.html?invariant\x3d"+a,c=0;c<b;c++)e+="\x26args[]\x3d"+encodeURIComponent(arguments[c+1]);n(!1,"Minified React error #"+a+"; visit %s for the full message or use the non-minified dev environment for full errors and additional helpful warnings. ",e)}var D={isMounted:function(){return!1},enqueueForceUpdate:function(){},enqueueReplaceState:function(){},enqueueSetState:function(){}};
+function E(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||D}E.prototype.isReactComponent={};E.prototype.setState=function(a,b){"object"!==typeof a&&"function"!==typeof a&&null!=a?C("85"):void 0;this.updater.enqueueSetState(this,a,b,"setState")};E.prototype.forceUpdate=function(a){this.updater.enqueueForceUpdate(this,a,"forceUpdate")};function F(){}F.prototype=E.prototype;function G(a,b,e){this.props=a;this.context=b;this.refs=p;this.updater=e||D}var H=G.prototype=new F;
+H.constructor=G;m(H,E.prototype);H.isPureReactComponent=!0;var I={current:null},J=Object.prototype.hasOwnProperty,K={key:!0,ref:!0,__self:!0,__source:!0};
+function L(a,b,e){var c=void 0,d={},g=null,h=null;if(null!=b)for(c in void 0!==b.ref&&(h=b.ref),void 0!==b.key&&(g=""+b.key),b)J.call(b,c)&&!K.hasOwnProperty(c)&&(d[c]=b[c]);var f=arguments.length-2;if(1===f)d.children=e;else if(1<f){for(var k=Array(f),l=0;l<f;l++)k[l]=arguments[l+2];d.children=k}if(a&&a.defaultProps)for(c in f=a.defaultProps,f)void 0===d[c]&&(d[c]=f[c]);return{$$typeof:t,type:a,key:g,ref:h,props:d,_owner:I.current}}
+function M(a){return"object"===typeof a&&null!==a&&a.$$typeof===t}function escape(a){var b={"\x3d":"\x3d0",":":"\x3d2"};return"$"+(""+a).replace(/[=:]/g,function(a){return b[a]})}var N=/\/+/g,O=[];function P(a,b,e,c){if(O.length){var d=O.pop();d.result=a;d.keyPrefix=b;d.func=e;d.context=c;d.count=0;return d}return{result:a,keyPrefix:b,func:e,context:c,count:0}}function Q(a){a.result=null;a.keyPrefix=null;a.func=null;a.context=null;a.count=0;10>O.length&&O.push(a)}
+function R(a,b,e,c){var d=typeof a;if("undefined"===d||"boolean"===d)a=null;var g=!1;if(null===a)g=!0;else switch(d){case "string":case "number":g=!0;break;case "object":switch(a.$$typeof){case t:case u:g=!0}}if(g)return e(c,a,""===b?"."+S(a,0):b),1;g=0;b=""===b?".":b+":";if(Array.isArray(a))for(var h=0;h<a.length;h++){d=a[h];var f=b+S(d,h);g+=R(d,f,e,c)}else if(null===a||"undefined"===typeof a?f=null:(f=B&&a[B]||a["@@iterator"],f="function"===typeof f?f:null),"function"===typeof f)for(a=f.call(a),
+h=0;!(d=a.next()).done;)d=d.value,f=b+S(d,h++),g+=R(d,f,e,c);else"object"===d&&(e=""+a,C("31","[object Object]"===e?"object with keys {"+Object.keys(a).join(", ")+"}":e,""));return g}function S(a,b){return"object"===typeof a&&null!==a&&null!=a.key?escape(a.key):b.toString(36)}function T(a,b){a.func.call(a.context,b,a.count++)}
+function U(a,b,e){var c=a.result,d=a.keyPrefix;a=a.func.call(a.context,b,a.count++);Array.isArray(a)?V(a,c,e,q.thatReturnsArgument):null!=a&&(M(a)&&(b=d+(!a.key||b&&b.key===a.key?"":(""+a.key).replace(N,"$\x26/")+"/")+e,a={$$typeof:t,type:a.type,key:b,ref:a.ref,props:a.props,_owner:a._owner}),c.push(a))}function V(a,b,e,c,d){var g="";null!=e&&(g=(""+e).replace(N,"$\x26/")+"/");b=P(b,g,c,d);null==a||R(a,"",U,b);Q(b)}
+var W={Children:{map:function(a,b,e){if(null==a)return a;var c=[];V(a,c,null,b,e);return c},forEach:function(a,b,e){if(null==a)return a;b=P(null,null,b,e);null==a||R(a,"",T,b);Q(b)},count:function(a){return null==a?0:R(a,"",q.thatReturnsNull,null)},toArray:function(a){var b=[];V(a,b,null,q.thatReturnsArgument);return b},only:function(a){M(a)?void 0:C("143");return a}},createRef:function(){return{current:null}},Component:E,PureComponent:G,createContext:function(a,b){void 0===b&&(b=null);a={$$typeof:y,
+_calculateChangedBits:b,_defaultValue:a,_currentValue:a,_changedBits:0,Provider:null,Consumer:null};a.Provider={$$typeof:x,_context:a};return a.Consumer=a},forwardRef:function(a){return{$$typeof:A,render:a}},Fragment:v,StrictMode:w,unstable_AsyncMode:z,createElement:L,cloneElement:function(a,b,e){null===a||void 0===a?C("267",a):void 0;var c=void 0,d=m({},a.props),g=a.key,h=a.ref,f=a._owner;if(null!=b){void 0!==b.ref&&(h=b.ref,f=I.current);void 0!==b.key&&(g=""+b.key);var k=void 0;a.type&&a.type.defaultProps&&
+(k=a.type.defaultProps);for(c in b)J.call(b,c)&&!K.hasOwnProperty(c)&&(d[c]=void 0===b[c]&&void 0!==k?k[c]:b[c])}c=arguments.length-2;if(1===c)d.children=e;else if(1<c){k=Array(c);for(var l=0;l<c;l++)k[l]=arguments[l+2];d.children=k}return{$$typeof:t,type:a.type,key:g,ref:h,props:d,_owner:f}},createFactory:function(a){var b=L.bind(null,a);b.type=a;return b},isValidElement:M,version:"16.3.2",__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{ReactCurrentOwner:I,assign:m}},X=Object.freeze({default:W}),
+Y=X&&W||X;module.exports=Y["default"]?Y["default"]:Y;
 
 
 /***/ }),
-/* 72 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.3.1
+/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.3.2
  * react.development.js
  *
  * Copyright (c) 2013-present, Facebook, Inc.
@@ -1891,16 +3222,16 @@ if (process.env.NODE_ENV !== "production") {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(24);
-var emptyObject = __webpack_require__(46);
+var _assign = __webpack_require__(38);
 var invariant = __webpack_require__(18);
-var warning = __webpack_require__(25);
-var emptyFunction = __webpack_require__(13);
-var checkPropTypes = __webpack_require__(47);
+var emptyObject = __webpack_require__(62);
+var warning = __webpack_require__(39);
+var emptyFunction = __webpack_require__(19);
+var checkPropTypes = __webpack_require__(63);
 
 // TODO: this is special because it gets imported during build.
 
-var ReactVersion = '16.3.1';
+var ReactVersion = '16.3.2';
 
 // The Symbol used to tag the ReactElement-like types. If there is no native Symbol
 // nor polyfill, then a plain number is used for performance.
@@ -1931,12 +3262,8 @@ function getIteratorFn(maybeIterable) {
   return null;
 }
 
-/**
- * WARNING: DO NOT manually require this module.
- * This is a replacement for `invariant(...)` used by the error code system
- * and will _only_ be required by the corresponding babel pass.
- * It always throws.
- */
+// Relying on the `invariant()` implementation lets us
+// have preserve the format and params in the www builds.
 
 /**
  * Forked from fbjs/warning:
@@ -2438,6 +3765,8 @@ function cloneAndReplaceKey(oldElement, newKey) {
  * See https://reactjs.org/docs/react-api.html#cloneelement
  */
 function cloneElement(element, config, children) {
+  !!(element === null || element === undefined) ? invariant(false, 'React.cloneElement(...): The argument must be a React element, but you passed %s.', element) : void 0;
+
   var propName = void 0;
 
   // Original props are copied
@@ -2652,7 +3981,7 @@ function traverseAllChildrenImpl(children, nameSoFar, callback, traverseContext)
       {
         // Warn about using Maps as children
         if (iteratorFn === children.entries) {
-          warning(didWarnAboutMaps, 'Using Maps as children is unsupported and will likely yield ' + 'unexpected results. Convert it to a sequence/iterable of keyed ' + 'ReactElements instead.%s', ReactDebugCurrentFrame.getStackAddendum());
+          !didWarnAboutMaps ? warning(false, 'Using Maps as children is unsupported and will likely yield ' + 'unexpected results. Convert it to a sequence/iterable of keyed ' + 'ReactElements instead.%s', ReactDebugCurrentFrame.getStackAddendum()) : void 0;
           didWarnAboutMaps = true;
         }
       }
@@ -2850,7 +4179,7 @@ function createContext(defaultValue, calculateChangedBits) {
     calculateChangedBits = null;
   } else {
     {
-      warning(calculateChangedBits === null || typeof calculateChangedBits === 'function', 'createContext: Expected the optional second argument to be a ' + 'function. Instead received: %s', calculateChangedBits);
+      !(calculateChangedBits === null || typeof calculateChangedBits === 'function') ? warning(false, 'createContext: Expected the optional second argument to be a ' + 'function. Instead received: %s', calculateChangedBits) : void 0;
     }
   }
 
@@ -2880,7 +4209,7 @@ function createContext(defaultValue, calculateChangedBits) {
 
 function forwardRef(render) {
   {
-    warning(typeof render === 'function', 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render);
+    !(typeof render === 'function') ? warning(false, 'forwardRef requires a render function but was given %s.', render === null ? 'null' : typeof render) : void 0;
   }
 
   return {
@@ -2917,6 +4246,13 @@ function getComponentName(fiber) {
       return 'ReactCall';
     case REACT_RETURN_TYPE:
       return 'ReactReturn';
+  }
+  if (typeof type === 'object' && type !== null) {
+    switch (type.$$typeof) {
+      case REACT_FORWARD_REF_TYPE:
+        var functionName = type.render.displayName || type.render.name || '';
+        return functionName !== '' ? 'ForwardRef(' + functionName + ')' : 'ForwardRef';
+    }
   }
   return null;
 }
@@ -3108,7 +4444,7 @@ function validatePropTypes(element) {
     warning(false, 'Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?', name || 'Unknown');
   }
   if (typeof componentClass.getDefaultProps === 'function') {
-    warning(componentClass.getDefaultProps.isReactClassApproved, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.');
+    !componentClass.getDefaultProps.isReactClassApproved ? warning(false, 'getDefaultProps is only used on classic React.createClass ' + 'definitions. Use a static property named `defaultProps` instead.') : void 0;
   }
 }
 
@@ -3284,1121 +4620,173 @@ module.exports = react;
   })();
 }
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 73 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools__ = __webpack_require__(112);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__resultsWrapper__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__searchTools__ = __webpack_require__(132);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__save__ = __webpack_require__(143);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__api__ = __webpack_require__(113);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__utils__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__ = __webpack_require__(115);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__previewPlayer__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(25);
 
 
 
 
 
 
-
-
-
-
-
-
+var _window$wp$components = window.wp.components,
+    TextControl = _window$wp$components.TextControl,
+    Button = _window$wp$components.Button,
+    ExternalLink = _window$wp$components.ExternalLink;
 
 // Internationalization
+
 var __ = window.wp.i18n.__;
-// Extend component
-
-var Component = window.wp.element.Component;
-var IconButton = window.wp.components.IconButton;
-var InspectorControls = window.wp.blocks.InspectorControls;
-var PanelBody = window.wp.components.PanelBody;
-
-var AppleMusicBlock = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(AppleMusicBlock, _Component);
-
-  /**
-   * Component constructor
-   * @param {object} props This component's props.
-   */
-  function AppleMusicBlock(props) {
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, AppleMusicBlock);
-
-    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (AppleMusicBlock.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(AppleMusicBlock)).call(this, props));
-
-    _this.state = {
-      isMusicSet: _this.isMusicSet()
-    };
-    _this.setMusicSelection = _this.setMusicSelection.bind(_this);
-    _this.updateAttributes = _this.updateAttributes.bind(_this);
-    _this.isMusicSet = _this.isMusicSet.bind(_this);
-    return _this;
-  }
-
-  /**
-   * Update the musicID attribute and add the musicItem object to state.
-   * @param {object} item The selected item.
-   */
-
-
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(AppleMusicBlock, [{
-    key: 'setMusicSelection',
-    value: function setMusicSelection(item) {
-      var _props = this.props,
-          musicType = _props.attributes.musicType,
-          setAttributes = _props.setAttributes;
-
-      var musicID = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* getObjKeyValue */])(item, 'id'); // get the music ID.
-
-      var type = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["d" /* getTypeObject */])(musicType);
-      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_11__utils__["c" /* getObjKeyValue */])(type, 'embedHeight');
-
-      this.setState({
-        isMusicSet: true
-      });
-
-      setAttributes({
-        item: item,
-        musicID: musicID,
-        iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_10__api__["c" /* iframeURL */])(musicType, musicID),
-        height: initialHeight
-      });
-    }
-
-    /**
-     * Update the attributes callback.
-     * @param {string} value the value to set the attribute.
-     * @param {string} key the key of the attribute, which attribute to set.
-     */
-
-  }, {
-    key: 'updateAttributes',
-    value: function updateAttributes(value, key) {
-      var _props2 = this.props,
-          attributes = _props2.attributes,
-          setAttributes = _props2.setAttributes;
-      // TODO: this could be less repetitive.
-
-      setAttributes({
-        width: 'width' === key ? value : attributes.width,
-        height: 'height' === key ? value : attributes.height,
-        embedType: 'embedType' === key ? value : attributes.embedType,
-        query: 'query' === key ? value : attributes.query,
-        musicType: 'musicType' === key ? value : attributes.musicType
-      });
-    }
-
-    /**
-     * Reset the search and clear selection.
-     */
-
-  }, {
-    key: 'resetSearch',
-    value: function resetSearch() {
-      var setAttributes = this.props.setAttributes;
-
-      this.setState({
-        isMusicSet: false
-      });
-      setAttributes({
-        item: {}
-      });
-    }
-
-    /**
-     * Check if an item has been selected.
-     */
-
-  }, {
-    key: 'isMusicSet',
-    value: function isMusicSet() {
-      var attributes = this.props.attributes;
-
-      if (attributes.musicID) {
-        return true;
-      }
-      return false;
-    }
-
-    // Component Render method.
-
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var _props3 = this.props,
-          attributes = _props3.attributes,
-          isSelected = _props3.isSelected,
-          className = _props3.className;
-
-
-      return wp.element.createElement(
-        'div',
-        null,
-        isSelected && wp.element.createElement(
-          InspectorControls,
-          { key: 'inspector' },
-          wp.element.createElement(
-            PanelBody,
-            { title: __('Apple Music Settings', 'apple-music') },
-            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
-              attributes: attributes,
-              updateSearch: this.updateAttributes
-            }),
-            this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
-              attributes: attributes,
-              onChange: this.updateAttributes
-            })
-          )
-        ),
-        isSelected && wp.element.createElement(
-          'div',
-          { className: 'edit-apple-music' },
-          !this.state.isMusicSet && wp.element.createElement(
-            'div',
-            null,
-            __('Get badges, links, and widgets for Apple Music.', 'apple-music'),
-            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__searchTools__["a" /* default */], {
-              attributes: attributes,
-              updateSearch: this.updateAttributes
-            })
-          ),
-          this.state.isMusicSet && wp.element.createElement(
-            'div',
-            null,
-            wp.element.createElement(
-              IconButton,
-              {
-                icon: 'arrow-left-alt2',
-                className: 'back-to-search',
-                onClick: function onClick() {
-                  return _this2.resetSearch();
-                }
-              },
-              __('Back to Seach', 'apple-music')
-            ),
-            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_6__displayTools__["a" /* default */], {
-              attributes: attributes,
-              onChange: this.updateAttributes,
-              inPanel: false
-            })
-          ),
-          !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__resultsWrapper__["a" /* default */], {
-            className: className,
-            attributes: attributes,
-            onSelect: this.setMusicSelection
-          })
-        ),
-        !isSelected && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_9__save__["a" /* default */], { attributes: attributes })
-      );
-    } // end render method.
-
-  }]);
-
-  return AppleMusicBlock;
-}(Component);
-
-/* harmony default export */ __webpack_exports__["a"] = (AppleMusicBlock);
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(75);
-module.exports = __webpack_require__(1).Object.getPrototypeOf;
-
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.2.9 Object.getPrototypeOf(O)
-var toObject = __webpack_require__(48);
-var $getPrototypeOf = __webpack_require__(49);
-
-__webpack_require__(76)('getPrototypeOf', function () {
-  return function getPrototypeOf(it) {
-    return $getPrototypeOf(toObject(it));
-  };
-});
-
-
-/***/ }),
-/* 76 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// most Object methods by ES6 should accept primitives
-var $export = __webpack_require__(3);
-var core = __webpack_require__(1);
-var fails = __webpack_require__(15);
-module.exports = function (KEY, exec) {
-  var fn = (core.Object || {})[KEY] || Object[KEY];
-  var exp = {};
-  exp[KEY] = exec(fn);
-  $export($export.S + $export.F * fails(function () { fn(1); }), 'Object', exp);
-};
-
-
-/***/ }),
-/* 77 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(78), __esModule: true };
-
-/***/ }),
-/* 78 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(79);
-var $Object = __webpack_require__(1).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-
-/***/ }),
-/* 79 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(3);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(8), 'Object', { defineProperty: __webpack_require__(6).f });
-
-
-/***/ }),
-/* 80 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(81), __esModule: true };
-
-/***/ }),
-/* 81 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(52);
-__webpack_require__(58);
-module.exports = __webpack_require__(40).f('iterator');
-
-
-/***/ }),
-/* 82 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(36);
-var defined = __webpack_require__(28);
-// true  -> String#at
-// false -> String#codePointAt
-module.exports = function (TO_STRING) {
-  return function (that, pos) {
-    var s = String(defined(that));
-    var i = toInteger(pos);
-    var l = s.length;
-    var a, b;
-    if (i < 0 || i >= l) return TO_STRING ? '' : undefined;
-    a = s.charCodeAt(i);
-    return a < 0xd800 || a > 0xdbff || i + 1 === l || (b = s.charCodeAt(i + 1)) < 0xdc00 || b > 0xdfff
-      ? TO_STRING ? s.charAt(i) : a
-      : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
-  };
-};
-
-
-/***/ }),
-/* 83 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var create = __webpack_require__(37);
-var descriptor = __webpack_require__(21);
-var setToStringTag = __webpack_require__(23);
-var IteratorPrototype = {};
-
-// 25.1.2.1.1 %IteratorPrototype%[@@iterator]()
-__webpack_require__(10)(IteratorPrototype, __webpack_require__(2)('iterator'), function () { return this; });
-
-module.exports = function (Constructor, NAME, next) {
-  Constructor.prototype = create(IteratorPrototype, { next: descriptor(1, next) });
-  setToStringTag(Constructor, NAME + ' Iterator');
-};
-
-
-/***/ }),
-/* 84 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(6);
-var anObject = __webpack_require__(4);
-var getKeys = __webpack_require__(38);
-
-module.exports = __webpack_require__(8) ? Object.defineProperties : function defineProperties(O, Properties) {
-  anObject(O);
-  var keys = getKeys(Properties);
-  var length = keys.length;
-  var i = 0;
-  var P;
-  while (length > i) dP.f(O, P = keys[i++], Properties[P]);
-  return O;
-};
-
-
-/***/ }),
-/* 85 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(17);
-// eslint-disable-next-line no-prototype-builtins
-module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
-  return cof(it) == 'String' ? it.split('') : Object(it);
-};
-
-
-/***/ }),
-/* 86 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// false -> Array#indexOf
-// true  -> Array#includes
-var toIObject = __webpack_require__(11);
-var toLength = __webpack_require__(56);
-var toAbsoluteIndex = __webpack_require__(87);
-module.exports = function (IS_INCLUDES) {
-  return function ($this, el, fromIndex) {
-    var O = toIObject($this);
-    var length = toLength(O.length);
-    var index = toAbsoluteIndex(fromIndex, length);
-    var value;
-    // Array#includes uses SameValueZero equality algorithm
-    // eslint-disable-next-line no-self-compare
-    if (IS_INCLUDES && el != el) while (length > index) {
-      value = O[index++];
-      // eslint-disable-next-line no-self-compare
-      if (value != value) return true;
-    // Array#indexOf ignores holes, Array#includes - not
-    } else for (;length > index; index++) if (IS_INCLUDES || index in O) {
-      if (O[index] === el) return IS_INCLUDES || index || 0;
-    } return !IS_INCLUDES && -1;
-  };
-};
-
-
-/***/ }),
-/* 87 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toInteger = __webpack_require__(36);
-var max = Math.max;
-var min = Math.min;
-module.exports = function (index, length) {
-  index = toInteger(index);
-  return index < 0 ? max(index + length, 0) : min(index, length);
-};
-
-
-/***/ }),
-/* 88 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var addToUnscopables = __webpack_require__(89);
-var step = __webpack_require__(90);
-var Iterators = __webpack_require__(16);
-var toIObject = __webpack_require__(11);
-
-// 22.1.3.4 Array.prototype.entries()
-// 22.1.3.13 Array.prototype.keys()
-// 22.1.3.29 Array.prototype.values()
-// 22.1.3.30 Array.prototype[@@iterator]()
-module.exports = __webpack_require__(53)(Array, 'Array', function (iterated, kind) {
-  this._t = toIObject(iterated); // target
-  this._i = 0;                   // next index
-  this._k = kind;                // kind
-// 22.1.5.2.1 %ArrayIteratorPrototype%.next()
-}, function () {
-  var O = this._t;
-  var kind = this._k;
-  var index = this._i++;
-  if (!O || index >= O.length) {
-    this._t = undefined;
-    return step(1);
-  }
-  if (kind == 'keys') return step(0, index);
-  if (kind == 'values') return step(0, O[index]);
-  return step(0, [index, O[index]]);
-}, 'values');
-
-// argumentsList[@@iterator] is %ArrayProto_values% (9.4.4.6, 9.4.4.7)
-Iterators.Arguments = Iterators.Array;
-
-addToUnscopables('keys');
-addToUnscopables('values');
-addToUnscopables('entries');
-
-
-/***/ }),
-/* 89 */
-/***/ (function(module, exports) {
-
-module.exports = function () { /* empty */ };
-
-
-/***/ }),
-/* 90 */
-/***/ (function(module, exports) {
-
-module.exports = function (done, value) {
-  return { value: value, done: !!done };
-};
-
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(92), __esModule: true };
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(93);
-__webpack_require__(62);
-__webpack_require__(98);
-__webpack_require__(99);
-module.exports = __webpack_require__(1).Symbol;
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-// ECMAScript 6 symbols shim
-var global = __webpack_require__(0);
-var has = __webpack_require__(9);
-var DESCRIPTORS = __webpack_require__(8);
-var $export = __webpack_require__(3);
-var redefine = __webpack_require__(54);
-var META = __webpack_require__(94).KEY;
-var $fails = __webpack_require__(15);
-var shared = __webpack_require__(30);
-var setToStringTag = __webpack_require__(23);
-var uid = __webpack_require__(19);
-var wks = __webpack_require__(2);
-var wksExt = __webpack_require__(40);
-var wksDefine = __webpack_require__(41);
-var enumKeys = __webpack_require__(95);
-var isArray = __webpack_require__(96);
-var anObject = __webpack_require__(4);
-var isObject = __webpack_require__(7);
-var toIObject = __webpack_require__(11);
-var toPrimitive = __webpack_require__(32);
-var createDesc = __webpack_require__(21);
-var _create = __webpack_require__(37);
-var gOPNExt = __webpack_require__(97);
-var $GOPD = __webpack_require__(61);
-var $DP = __webpack_require__(6);
-var $keys = __webpack_require__(38);
-var gOPD = $GOPD.f;
-var dP = $DP.f;
-var gOPN = gOPNExt.f;
-var $Symbol = global.Symbol;
-var $JSON = global.JSON;
-var _stringify = $JSON && $JSON.stringify;
-var PROTOTYPE = 'prototype';
-var HIDDEN = wks('_hidden');
-var TO_PRIMITIVE = wks('toPrimitive');
-var isEnum = {}.propertyIsEnumerable;
-var SymbolRegistry = shared('symbol-registry');
-var AllSymbols = shared('symbols');
-var OPSymbols = shared('op-symbols');
-var ObjectProto = Object[PROTOTYPE];
-var USE_NATIVE = typeof $Symbol == 'function';
-var QObject = global.QObject;
-// Don't use setters in Qt Script, https://github.com/zloirock/core-js/issues/173
-var setter = !QObject || !QObject[PROTOTYPE] || !QObject[PROTOTYPE].findChild;
-
-// fallback for old Android, https://code.google.com/p/v8/issues/detail?id=687
-var setSymbolDesc = DESCRIPTORS && $fails(function () {
-  return _create(dP({}, 'a', {
-    get: function () { return dP(this, 'a', { value: 7 }).a; }
-  })).a != 7;
-}) ? function (it, key, D) {
-  var protoDesc = gOPD(ObjectProto, key);
-  if (protoDesc) delete ObjectProto[key];
-  dP(it, key, D);
-  if (protoDesc && it !== ObjectProto) dP(ObjectProto, key, protoDesc);
-} : dP;
-
-var wrap = function (tag) {
-  var sym = AllSymbols[tag] = _create($Symbol[PROTOTYPE]);
-  sym._k = tag;
-  return sym;
-};
-
-var isSymbol = USE_NATIVE && typeof $Symbol.iterator == 'symbol' ? function (it) {
-  return typeof it == 'symbol';
-} : function (it) {
-  return it instanceof $Symbol;
-};
-
-var $defineProperty = function defineProperty(it, key, D) {
-  if (it === ObjectProto) $defineProperty(OPSymbols, key, D);
-  anObject(it);
-  key = toPrimitive(key, true);
-  anObject(D);
-  if (has(AllSymbols, key)) {
-    if (!D.enumerable) {
-      if (!has(it, HIDDEN)) dP(it, HIDDEN, createDesc(1, {}));
-      it[HIDDEN][key] = true;
-    } else {
-      if (has(it, HIDDEN) && it[HIDDEN][key]) it[HIDDEN][key] = false;
-      D = _create(D, { enumerable: createDesc(0, false) });
-    } return setSymbolDesc(it, key, D);
-  } return dP(it, key, D);
-};
-var $defineProperties = function defineProperties(it, P) {
-  anObject(it);
-  var keys = enumKeys(P = toIObject(P));
-  var i = 0;
-  var l = keys.length;
-  var key;
-  while (l > i) $defineProperty(it, key = keys[i++], P[key]);
-  return it;
-};
-var $create = function create(it, P) {
-  return P === undefined ? _create(it) : $defineProperties(_create(it), P);
-};
-var $propertyIsEnumerable = function propertyIsEnumerable(key) {
-  var E = isEnum.call(this, key = toPrimitive(key, true));
-  if (this === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return false;
-  return E || !has(this, key) || !has(AllSymbols, key) || has(this, HIDDEN) && this[HIDDEN][key] ? E : true;
-};
-var $getOwnPropertyDescriptor = function getOwnPropertyDescriptor(it, key) {
-  it = toIObject(it);
-  key = toPrimitive(key, true);
-  if (it === ObjectProto && has(AllSymbols, key) && !has(OPSymbols, key)) return;
-  var D = gOPD(it, key);
-  if (D && has(AllSymbols, key) && !(has(it, HIDDEN) && it[HIDDEN][key])) D.enumerable = true;
-  return D;
-};
-var $getOwnPropertyNames = function getOwnPropertyNames(it) {
-  var names = gOPN(toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (!has(AllSymbols, key = names[i++]) && key != HIDDEN && key != META) result.push(key);
-  } return result;
-};
-var $getOwnPropertySymbols = function getOwnPropertySymbols(it) {
-  var IS_OP = it === ObjectProto;
-  var names = gOPN(IS_OP ? OPSymbols : toIObject(it));
-  var result = [];
-  var i = 0;
-  var key;
-  while (names.length > i) {
-    if (has(AllSymbols, key = names[i++]) && (IS_OP ? has(ObjectProto, key) : true)) result.push(AllSymbols[key]);
-  } return result;
-};
-
-// 19.4.1.1 Symbol([description])
-if (!USE_NATIVE) {
-  $Symbol = function Symbol() {
-    if (this instanceof $Symbol) throw TypeError('Symbol is not a constructor!');
-    var tag = uid(arguments.length > 0 ? arguments[0] : undefined);
-    var $set = function (value) {
-      if (this === ObjectProto) $set.call(OPSymbols, value);
-      if (has(this, HIDDEN) && has(this[HIDDEN], tag)) this[HIDDEN][tag] = false;
-      setSymbolDesc(this, tag, createDesc(1, value));
-    };
-    if (DESCRIPTORS && setter) setSymbolDesc(ObjectProto, tag, { configurable: true, set: $set });
-    return wrap(tag);
-  };
-  redefine($Symbol[PROTOTYPE], 'toString', function toString() {
-    return this._k;
-  });
-
-  $GOPD.f = $getOwnPropertyDescriptor;
-  $DP.f = $defineProperty;
-  __webpack_require__(60).f = gOPNExt.f = $getOwnPropertyNames;
-  __webpack_require__(42).f = $propertyIsEnumerable;
-  __webpack_require__(59).f = $getOwnPropertySymbols;
-
-  if (DESCRIPTORS && !__webpack_require__(22)) {
-    redefine(ObjectProto, 'propertyIsEnumerable', $propertyIsEnumerable, true);
-  }
-
-  wksExt.f = function (name) {
-    return wrap(wks(name));
-  };
-}
-
-$export($export.G + $export.W + $export.F * !USE_NATIVE, { Symbol: $Symbol });
-
-for (var es6Symbols = (
-  // 19.4.2.2, 19.4.2.3, 19.4.2.4, 19.4.2.6, 19.4.2.8, 19.4.2.9, 19.4.2.10, 19.4.2.11, 19.4.2.12, 19.4.2.13, 19.4.2.14
-  'hasInstance,isConcatSpreadable,iterator,match,replace,search,species,split,toPrimitive,toStringTag,unscopables'
-).split(','), j = 0; es6Symbols.length > j;)wks(es6Symbols[j++]);
-
-for (var wellKnownSymbols = $keys(wks.store), k = 0; wellKnownSymbols.length > k;) wksDefine(wellKnownSymbols[k++]);
-
-$export($export.S + $export.F * !USE_NATIVE, 'Symbol', {
-  // 19.4.2.1 Symbol.for(key)
-  'for': function (key) {
-    return has(SymbolRegistry, key += '')
-      ? SymbolRegistry[key]
-      : SymbolRegistry[key] = $Symbol(key);
-  },
-  // 19.4.2.5 Symbol.keyFor(sym)
-  keyFor: function keyFor(sym) {
-    if (!isSymbol(sym)) throw TypeError(sym + ' is not a symbol!');
-    for (var key in SymbolRegistry) if (SymbolRegistry[key] === sym) return key;
-  },
-  useSetter: function () { setter = true; },
-  useSimple: function () { setter = false; }
-});
-
-$export($export.S + $export.F * !USE_NATIVE, 'Object', {
-  // 19.1.2.2 Object.create(O [, Properties])
-  create: $create,
-  // 19.1.2.4 Object.defineProperty(O, P, Attributes)
-  defineProperty: $defineProperty,
-  // 19.1.2.3 Object.defineProperties(O, Properties)
-  defineProperties: $defineProperties,
-  // 19.1.2.6 Object.getOwnPropertyDescriptor(O, P)
-  getOwnPropertyDescriptor: $getOwnPropertyDescriptor,
-  // 19.1.2.7 Object.getOwnPropertyNames(O)
-  getOwnPropertyNames: $getOwnPropertyNames,
-  // 19.1.2.8 Object.getOwnPropertySymbols(O)
-  getOwnPropertySymbols: $getOwnPropertySymbols
-});
-
-// 24.3.2 JSON.stringify(value [, replacer [, space]])
-$JSON && $export($export.S + $export.F * (!USE_NATIVE || $fails(function () {
-  var S = $Symbol();
-  // MS Edge converts symbol values to JSON as {}
-  // WebKit converts symbol values to JSON as null
-  // V8 throws on boxed symbols
-  return _stringify([S]) != '[null]' || _stringify({ a: S }) != '{}' || _stringify(Object(S)) != '{}';
-})), 'JSON', {
-  stringify: function stringify(it) {
-    var args = [it];
-    var i = 1;
-    var replacer, $replacer;
-    while (arguments.length > i) args.push(arguments[i++]);
-    $replacer = replacer = args[1];
-    if (!isObject(replacer) && it === undefined || isSymbol(it)) return; // IE8 returns string on undefined
-    if (!isArray(replacer)) replacer = function (key, value) {
-      if (typeof $replacer == 'function') value = $replacer.call(this, key, value);
-      if (!isSymbol(value)) return value;
-    };
-    args[1] = replacer;
-    return _stringify.apply($JSON, args);
-  }
-});
-
-// 19.4.3.4 Symbol.prototype[@@toPrimitive](hint)
-$Symbol[PROTOTYPE][TO_PRIMITIVE] || __webpack_require__(10)($Symbol[PROTOTYPE], TO_PRIMITIVE, $Symbol[PROTOTYPE].valueOf);
-// 19.4.3.5 Symbol.prototype[@@toStringTag]
-setToStringTag($Symbol, 'Symbol');
-// 20.2.1.9 Math[@@toStringTag]
-setToStringTag(Math, 'Math', true);
-// 24.3.3 JSON[@@toStringTag]
-setToStringTag(global.JSON, 'JSON', true);
-
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var META = __webpack_require__(19)('meta');
-var isObject = __webpack_require__(7);
-var has = __webpack_require__(9);
-var setDesc = __webpack_require__(6).f;
-var id = 0;
-var isExtensible = Object.isExtensible || function () {
-  return true;
-};
-var FREEZE = !__webpack_require__(15)(function () {
-  return isExtensible(Object.preventExtensions({}));
-});
-var setMeta = function (it) {
-  setDesc(it, META, { value: {
-    i: 'O' + ++id, // object ID
-    w: {}          // weak collections IDs
-  } });
-};
-var fastKey = function (it, create) {
-  // return primitive with prefix
-  if (!isObject(it)) return typeof it == 'symbol' ? it : (typeof it == 'string' ? 'S' : 'P') + it;
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return 'F';
-    // not necessary to add metadata
-    if (!create) return 'E';
-    // add missing metadata
-    setMeta(it);
-  // return object ID
-  } return it[META].i;
-};
-var getWeak = function (it, create) {
-  if (!has(it, META)) {
-    // can't set metadata to uncaught frozen object
-    if (!isExtensible(it)) return true;
-    // not necessary to add metadata
-    if (!create) return false;
-    // add missing metadata
-    setMeta(it);
-  // return hash weak collections IDs
-  } return it[META].w;
-};
-// add metadata on freeze-family methods calling
-var onFreeze = function (it) {
-  if (FREEZE && meta.NEED && isExtensible(it) && !has(it, META)) setMeta(it);
-  return it;
-};
-var meta = module.exports = {
-  KEY: META,
-  NEED: false,
-  fastKey: fastKey,
-  getWeak: getWeak,
-  onFreeze: onFreeze
-};
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// all enumerable object keys, includes symbols
-var getKeys = __webpack_require__(38);
-var gOPS = __webpack_require__(59);
-var pIE = __webpack_require__(42);
-module.exports = function (it) {
-  var result = getKeys(it);
-  var getSymbols = gOPS.f;
-  if (getSymbols) {
-    var symbols = getSymbols(it);
-    var isEnum = pIE.f;
-    var i = 0;
-    var key;
-    while (symbols.length > i) if (isEnum.call(it, key = symbols[i++])) result.push(key);
-  } return result;
-};
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.2.2 IsArray(argument)
-var cof = __webpack_require__(17);
-module.exports = Array.isArray || function isArray(arg) {
-  return cof(arg) == 'Array';
-};
-
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// fallback for IE11 buggy Object.getOwnPropertyNames with iframe and window
-var toIObject = __webpack_require__(11);
-var gOPN = __webpack_require__(60).f;
-var toString = {}.toString;
-
-var windowNames = typeof window == 'object' && window && Object.getOwnPropertyNames
-  ? Object.getOwnPropertyNames(window) : [];
-
-var getWindowNames = function (it) {
-  try {
-    return gOPN(it);
-  } catch (e) {
-    return windowNames.slice();
-  }
-};
-
-module.exports.f = function getOwnPropertyNames(it) {
-  return windowNames && toString.call(it) == '[object Window]' ? getWindowNames(it) : gOPN(toIObject(it));
-};
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(41)('asyncIterator');
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(41)('observable');
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(101), __esModule: true };
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(102);
-module.exports = __webpack_require__(1).Object.setPrototypeOf;
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 19.1.3.19 Object.setPrototypeOf(O, proto)
-var $export = __webpack_require__(3);
-$export($export.S, 'Object', { setPrototypeOf: __webpack_require__(103).set });
-
-
-/***/ }),
-/* 103 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// Works with __proto__ only. Old v8 can't work with null proto objects.
-/* eslint-disable no-proto */
-var isObject = __webpack_require__(7);
-var anObject = __webpack_require__(4);
-var check = function (O, proto) {
-  anObject(O);
-  if (!isObject(proto) && proto !== null) throw TypeError(proto + ": can't set as prototype!");
-};
-module.exports = {
-  set: Object.setPrototypeOf || ('__proto__' in {} ? // eslint-disable-line
-    function (test, buggy, set) {
-      try {
-        set = __webpack_require__(14)(Function.call, __webpack_require__(61).f(Object.prototype, '__proto__').set, 2);
-        set(test, []);
-        buggy = !(test instanceof Array);
-      } catch (e) { buggy = true; }
-      return function setPrototypeOf(O, proto) {
-        check(O, proto);
-        if (buggy) O.__proto__ = proto;
-        else set(O, proto);
-        return O;
-      };
-    }({}, false) : undefined),
-  check: check
-};
-
-
-/***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(105), __esModule: true };
-
-/***/ }),
-/* 105 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(106);
-var $Object = __webpack_require__(1).Object;
-module.exports = function create(P, D) {
-  return $Object.create(P, D);
-};
-
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(3);
-// 19.1.2.2 / 15.2.3.5 Object.create(O [, Properties])
-$export($export.S, 'Object', { create: __webpack_require__(37) });
-
-
-/***/ }),
-/* 107 */,
-/* 108 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__item__ = __webpack_require__(111);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api__ = __webpack_require__(113);
-
-
-
-
-
-
-
-
-
-
-var Component = window.wp.element.Component;
 
 /**
  * Component for displaying search results in Apple Music block.
  */
 
-var ResultsWrapper = function (_Component) {
-  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(ResultsWrapper, _Component);
+var DisplayTools = function DisplayTools(_ref) {
+  var _ref$attributes = _ref.attributes,
+      iframeSrc = _ref$attributes.iframeSrc,
+      item = _ref$attributes.item,
+      height = _ref$attributes.height,
+      musicType = _ref$attributes.musicType,
+      width = _ref$attributes.width,
+      inPanel = _ref.inPanel,
+      _onChange = _ref.onChange;
 
-  /**
-   * Component constructor
-   * @param {object} props This component's props.
-   */
-  function ResultsWrapper(props) {
-    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, ResultsWrapper);
+  var directLink = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'url']);
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["a" /* getItemArtworkURL */])(item, '200', '200');
+  var name = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'name']);
 
-    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (ResultsWrapper.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(ResultsWrapper)).call(this, props));
-
-    _this.state = {
-      data: []
-    };
-    _this.getResponse = _this.getResponse.bind(_this);
-    return _this;
-  }
-
-  /**
-   * Call the API when the component updates.
-   *
-   * @param {object} prevProps The previous prop state.
-   * @param {object} prevState The previous State.
-   */
-
-
-  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(ResultsWrapper, [{
-    key: 'componentDidUpdate',
-    value: function componentDidUpdate(prevProps, prevState) {
-      var _props$attributes = this.props.attributes,
-          query = _props$attributes.query,
-          musicType = _props$attributes.musicType;
-
-      if (prevState.data === this.state.data) {
-        this.getResponse(musicType, query);
-      }
-    }
-
-    /**
-     * Get response from API.
-     */
-
-  }, {
-    key: 'getResponse',
-    value: function getResponse(type, term) {
-      var _this2 = this;
-
-      Object(__WEBPACK_IMPORTED_MODULE_8__api__["d" /* searchCatalog */])(term, type).then(function (data) {
-        var result = Object(__WEBPACK_IMPORTED_MODULE_8__api__["b" /* getResponseData */])(data, type);
-        if (result) {
-          _this2.setState({
-            data: result
-          });
-        }
-      });
-    }
-
-    /**
-     * Update the selected item.
-     * @param {object} item The item attributes object.
-     */
-
-  }, {
-    key: 'selectItem',
-    value: function selectItem(item) {
-      var onSelect = this.props.onSelect;
-
-      this.setState({
-        data: []
-      });
-      // Pass the item to the parent.
-      onSelect(item);
-    }
-
-    // Component Render method.
-
-  }, {
-    key: 'render',
-    value: function render() {
-      var _this3 = this;
-
-      var className = this.props.className;
-
-
-      var results = Object(__WEBPACK_IMPORTED_MODULE_8__api__["a" /* getItems */])(this.state.data).map(function (item) {
-        return wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__item__["a" /* default */], {
-          item: item,
-          onClick: function onClick() {
-            return _this3.selectItem(item);
-          }
-        });
-      });
-
-      return wp.element.createElement(
+  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) ? wp.element.createElement(
+    'div',
+    null,
+    imageSrc && wp.element.createElement(
+      'div',
+      { className: 'image' },
+      wp.element.createElement('img', { src: imageSrc, alt: __(name, 'apple-music') })
+    ),
+    name && wp.element.createElement(
+      'div',
+      { className: 'right-side' },
+      wp.element.createElement(
         'div',
-        { className: className },
-        results
+        { className: 'name' },
+        Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'name'])
+      )
+    )
+  ) : null;
+
+  var artistName = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'artistName']);
+
+  return wp.element.createElement(
+    'div',
+    null,
+    Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(
+      'div',
+      null,
+      !inPanel && wp.element.createElement(
+        'div',
+        null,
+        wp.element.createElement(
+          'h1',
+          null,
+          name
+        ),
+        artistName && wp.element.createElement(
+          'div',
+          { className: 'secondary' },
+          artistName
+        )
+      ),
+      wp.element.createElement(TextControl, {
+        label: __('Height', 'apple-music'),
+        value: height,
+        onChange: function onChange(value) {
+          return _onChange(value, 'height');
+        },
+        placeholder: height
+      }),
+      wp.element.createElement(TextControl, {
+        label: __('Width', 'apple-music'),
+        value: width,
+        onChange: function onChange(value) {
+          return _onChange(value, 'width');
+        },
+        placeholder: width
+      })
+    ),
+    // Show the Preview player in the main content area.
+    !inPanel && Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_3__previewPlayer__["a" /* default */], {
+      height: height,
+      iframeSrc: iframeSrc,
+      width: width
+    }),
+    !inPanel && artwork,
+    __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__["a" /* default */].map(function (_ref2) {
+      var value = _ref2.value,
+          label = _ref2.label;
+
+      // If the musicType doesn't support embeds don't show preview player.
+      if ('preview-player' === value && !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType)) {
+        return null;
+      }
+      return wp.element.createElement(
+        Button,
+        {
+          key: value,
+          onClick: function onClick() {
+            return _onChange(value, 'embedType');
+          }
+        },
+        __(label, 'apple-music')
       );
-    }
-  }]);
-
-  return ResultsWrapper;
-}(Component);
-
-ResultsWrapper.defaultProps = {
-  className: ''
+    }),
+    !inPanel && wp.element.createElement(
+      'div',
+      null,
+      __('Direct Link: ', 'apple-music'),
+      wp.element.createElement(
+        ExternalLink,
+        { href: directLink },
+        directLink
+      )
+    )
+  );
 };
 
-ResultsWrapper.propTypes = {
-  attributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
-    query: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-    musicType: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+DisplayTools.defaultProps = {
+  inPanel: true
+};
+
+DisplayTools.propTypes = {
+  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+    width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+    item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
+      attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
+      id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
+      type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
+    })
   }).isRequired,
-  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
-  onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
+  onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool
 };
 
-/* harmony default export */ __webpack_exports__["a"] = (ResultsWrapper);
+/* harmony default export */ __webpack_exports__["a"] = (DisplayTools);
 
 /***/ }),
-/* 109 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4411,13 +4799,13 @@ ResultsWrapper.propTypes = {
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(19);
 var invariant = __webpack_require__(18);
-var warning = __webpack_require__(25);
-var assign = __webpack_require__(24);
+var warning = __webpack_require__(39);
+var assign = __webpack_require__(38);
 
-var ReactPropTypesSecret = __webpack_require__(26);
-var checkPropTypes = __webpack_require__(47);
+var ReactPropTypesSecret = __webpack_require__(40);
+var checkPropTypes = __webpack_require__(63);
 
 module.exports = function(isValidElement, throwOnDirectAccess) {
   /* global Symbol */
@@ -4945,10 +5333,10 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
   return ReactPropTypes;
 };
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(8)))
 
 /***/ }),
-/* 110 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4961,9 +5349,9 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
 
 
 
-var emptyFunction = __webpack_require__(13);
+var emptyFunction = __webpack_require__(19);
 var invariant = __webpack_require__(18);
-var ReactPropTypesSecret = __webpack_require__(26);
+var ReactPropTypesSecret = __webpack_require__(40);
 
 module.exports = function() {
   function shim(props, propName, componentName, location, propFullName, secret) {
@@ -5013,15 +5401,200 @@ module.exports = function() {
 
 
 /***/ }),
-/* 111 */
+/* 115 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+// Internationalization function.
+var __ = window.wp.i18n.__;
+/**
+ * The list of the embed types to use for embedding Apple Music.
+ *
+ * @type {Array}
+ */
+
+var embedTypes = [{
+  value: 'preview-player', label: __('Preview Player', 'apple-music')
+}, {
+  value: 'badge', label: __('Badge', 'apple-music')
+}, {
+  value: 'text-lockup', label: __('Text Lockup', 'apple-music')
+}, {
+  value: 'app-icon', label: __('App Icon', 'apple-music')
+}];
+
+/* harmony default export */ __webpack_exports__["a"] = (embedTypes);
+
+/***/ }),
+/* 116 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__ = __webpack_require__(61);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__item__ = __webpack_require__(117);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__api__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__utils__ = __webpack_require__(25);
+
+
+
+
+
+
+
+
+
+
+
+var Component = window.wp.element.Component;
+
+/**
+ * Component for displaying search results in Apple Music block.
+ */
+
+var ResultsWrapper = function (_Component) {
+  __WEBPACK_IMPORTED_MODULE_4_babel_runtime_helpers_inherits___default()(ResultsWrapper, _Component);
+
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function ResultsWrapper(props) {
+    __WEBPACK_IMPORTED_MODULE_1_babel_runtime_helpers_classCallCheck___default()(this, ResultsWrapper);
+
+    var _this = __WEBPACK_IMPORTED_MODULE_3_babel_runtime_helpers_possibleConstructorReturn___default()(this, (ResultsWrapper.__proto__ || __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_get_prototype_of___default()(ResultsWrapper)).call(this, props));
+
+    _this.state = {
+      data: []
+    };
+    _this.getResponse = _this.getResponse.bind(_this);
+    return _this;
+  }
+
+  /**
+   * Call the API when the component updates.
+   *
+   * @param {object} prevProps The previous prop state.
+   * @param {object} prevState The previous State.
+   */
+
+
+  __WEBPACK_IMPORTED_MODULE_2_babel_runtime_helpers_createClass___default()(ResultsWrapper, [{
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _props$attributes = this.props.attributes,
+          query = _props$attributes.query,
+          musicType = _props$attributes.musicType;
+
+      if (prevState.data === this.state.data) {
+        this.getResponse(musicType, query);
+      }
+    }
+
+    /**
+     * Get the music items response from the API.
+     * @returns {promise} resolves to set the state with an array items.
+     */
+
+  }, {
+    key: 'getResponse',
+    value: function getResponse(type, term) {
+      var _this2 = this;
+
+      Object(__WEBPACK_IMPORTED_MODULE_8__api__["c" /* searchCatalog */])(term, type).then(function (data) {
+        var result = Object(__WEBPACK_IMPORTED_MODULE_9__utils__["b" /* getNestedObject */])(data, ['results', type]);
+        if (result) {
+          _this2.setState({
+            data: result
+          });
+        }
+      });
+    }
+
+    /**
+     * Update the selected item.
+     * @param {object} item The item attributes object.
+     */
+
+  }, {
+    key: 'selectItem',
+    value: function selectItem(item) {
+      var onSelect = this.props.onSelect;
+
+      this.setState({
+        data: []
+      });
+      // Pass the item to the parent.
+      onSelect(item);
+    }
+
+    // Component Render method.
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var className = this.props.className;
+
+
+      var results = Object(__WEBPACK_IMPORTED_MODULE_8__api__["a" /* getItems */])(this.state.data).map(function (item) {
+        return wp.element.createElement(__WEBPACK_IMPORTED_MODULE_7__item__["a" /* default */], {
+          item: item,
+          onClick: function onClick() {
+            return _this3.selectItem(item);
+          }
+        });
+      });
+
+      return wp.element.createElement(
+        'div',
+        { className: className },
+        results
+      );
+    }
+  }]);
+
+  return ResultsWrapper;
+}(Component);
+
+ResultsWrapper.defaultProps = {
+  className: ''
+};
+
+ResultsWrapper.propTypes = {
+  attributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.shape({
+    query: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+    musicType: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
+  }).isRequired,
+  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string,
+  onSelect: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (ResultsWrapper);
+
+/***/ }),
+/* 117 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(131);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(25);
 
 
 
@@ -5082,319 +5655,45 @@ AppleMusicItem.propTypes = {
 /* harmony default export */ __webpack_exports__["a"] = (AppleMusicItem);
 
 /***/ }),
-/* 112 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__previewPlayer__ = __webpack_require__(142);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(131);
-
-
-
-
-
-
-var _window$wp$components = window.wp.components,
-    TextControl = _window$wp$components.TextControl,
-    Button = _window$wp$components.Button,
-    ExternalLink = _window$wp$components.ExternalLink;
-
-// Internationalization
-
-var __ = window.wp.i18n.__;
-
-/**
- * Component for displaying search results in Apple Music block.
- */
-
-var DisplayTools = function DisplayTools(_ref) {
-  var _ref$attributes = _ref.attributes,
-      iframeSrc = _ref$attributes.iframeSrc,
-      item = _ref$attributes.item,
-      height = _ref$attributes.height,
-      musicType = _ref$attributes.musicType,
-      width = _ref$attributes.width,
-      inPanel = _ref.inPanel,
-      _onChange = _ref.onChange;
-
-  var directLink = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'url']);
-  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["a" /* getItemArtworkURL */])(item, '200', '200');
-  var name = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'name']);
-
-  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) ? wp.element.createElement(
-    'div',
-    null,
-    imageSrc && wp.element.createElement(
-      'div',
-      { className: 'image' },
-      wp.element.createElement('img', { src: imageSrc, alt: __(name, 'apple-music') })
-    ),
-    name && wp.element.createElement(
-      'div',
-      { className: 'right-side' },
-      wp.element.createElement(
-        'div',
-        { className: 'name' },
-        Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'name'])
-      )
-    )
-  ) : null;
-
-  var artistName = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getNestedObject */])(item, ['attributes', 'artistName']);
-
-  return wp.element.createElement(
-    'div',
-    null,
-    Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(
-      'div',
-      null,
-      !inPanel && wp.element.createElement(
-        'div',
-        null,
-        wp.element.createElement(
-          'h1',
-          null,
-          name
-        ),
-        artistName && wp.element.createElement(
-          'div',
-          { className: 'secondary' },
-          artistName
-        )
-      ),
-      wp.element.createElement(TextControl, {
-        label: __('Height', 'apple-music'),
-        value: height,
-        onChange: function onChange(value) {
-          return _onChange(value, 'height');
-        },
-        placeholder: height
-      }),
-      wp.element.createElement(TextControl, {
-        label: __('Width', 'apple-music'),
-        value: width,
-        onChange: function onChange(value) {
-          return _onChange(value, 'width');
-        },
-        placeholder: width
-      })
-    ),
-    // Show the Preview player in the main content area.
-    !inPanel && Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType) && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_3__previewPlayer__["a" /* default */], {
-      height: height,
-      iframeSrc: iframeSrc,
-      width: width
-    }),
-    !inPanel && artwork,
-    __WEBPACK_IMPORTED_MODULE_2__config_embedTypes__["a" /* default */].map(function (_ref2) {
-      var value = _ref2.value,
-          label = _ref2.label;
-
-      // If the musicType doesn't support embeds don't show preview player.
-      if ('preview-player' === value && !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["e" /* showEmbed */])(musicType)) {
-        return null;
-      }
-      return wp.element.createElement(
-        Button,
-        {
-          key: value,
-          onClick: function onClick() {
-            return _onChange(value, 'embedType');
-          }
-        },
-        __(label, 'apple-music')
-      );
-    }),
-    !inPanel && wp.element.createElement(
-      'div',
-      null,
-      __('Direct Link: ', 'apple-music'),
-      wp.element.createElement(
-        ExternalLink,
-        { href: directLink },
-        directLink
-      )
-    )
-  );
-};
-
-DisplayTools.defaultProps = {
-  inPanel: true
-};
-
-DisplayTools.propTypes = {
-  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
-    width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
-      attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
-      id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-      type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
-    })
-  }).isRequired,
-  onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (DisplayTools);
-
-/***/ }),
-/* 113 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export request */
-/* harmony export (immutable) */ __webpack_exports__["d"] = searchCatalog;
-/* harmony export (immutable) */ __webpack_exports__["b"] = getResponseData;
-/* harmony export (immutable) */ __webpack_exports__["a"] = getItems;
-/* harmony export (immutable) */ __webpack_exports__["c"] = iframeURL;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__ = __webpack_require__(114);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__token__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(131);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__settings__ = __webpack_require__(130);
-
-
-
-
-
-// Base URL for the apple music API
-var baseURL = 'https://api.music.apple.com/v1';
-
-/**
- * Performs a generic request against the specified endpoint of the Apple Music API.
- *
- * @param {string} endpoint - The endpoint to query.
- * @returns {Promise} - A promise that will resolve with the JSON response.
- */
-function request(endpoint) {
-  return fetch(endpoint, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      Host: 'api.music.apple.com',
-      Authorization: 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__token__["a" /* default */],
-      'Cache-Control': 'no-transform, max-age=900'
-    }
-  }).then(function (res) {
-    return res.json();
-  }).catch(function (error) {
-    return error.status;
-  });
-}
-
-/**
- * Search the Apple Music using the requested term and music type catalog.
- * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html
- *
- * @param {string} term The entered text to search the API with.
- * @param {string} types The types query parameter.
- * @param {int} limit The limit on the number of objects that are returned.
- */
-function searchCatalog(term, types) {
-  var limit = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 25;
-
-  if (!term) {
-    return new __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_promise___default.a(function (resolve) {
-      return setTimeout(resolve, 100, 'No Search Term');
-    });
-  }
-  var catalogURL = baseURL + '/catalog/' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */] + '/search';
-  var query = 'term=' + term + '&limit=' + limit + '&types=' + types;
-
-  return request(catalogURL + '?' + query);
-}
-
-/**
- * Check the data response according to search type and return data.
- *
- * @param {object} data The fetched data to check for.
- * @param {string} type The music type to check for.
- * @returns {array} empty array or an array of objects.
- */
-function getResponseData(data, type) {
-  if (data.results) {
-    var result = Object.prototype.hasOwnProperty.call(data.results, type);
-    return result ? data.results[type] : [];
-  }
-  return [];
-}
-
-/**
- * Get the music item object.
- *
- * @param {object} response the music item object
- */
-function getItems(response) {
-  if (!response.data) {
-    return [];
-  }
-  return response.data;
-}
-
-/**
- * Get the API iframe URL for embedding.
- * @param {string} type the music type to embed.
- * @param {string} id the Apple Music ID.
- */
-function iframeURL(type, id) {
-  var baseUrl = 'https://tools.applemusic.com/embed/v1/';
-  var typeObject = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["d" /* getTypeObject */])(type);
-
-  var embedType = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getObjKeyValue */])(typeObject, 'embedType');
-
-  if (null !== embedType) {
-    return '' + baseUrl + embedType + '/' + id + '?country=' + __WEBPACK_IMPORTED_MODULE_3__settings__["a" /* storefront */];
-  }
-  return '';
-}
-
-/***/ }),
-/* 114 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(115), __esModule: true };
+module.exports = { "default": __webpack_require__(119), __esModule: true };
 
 /***/ }),
-/* 115 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(62);
-__webpack_require__(52);
-__webpack_require__(58);
-__webpack_require__(116);
-__webpack_require__(127);
-__webpack_require__(128);
+__webpack_require__(60);
+__webpack_require__(50);
+__webpack_require__(56);
+__webpack_require__(120);
+__webpack_require__(131);
+__webpack_require__(132);
 module.exports = __webpack_require__(1).Promise;
 
 
 /***/ }),
-/* 116 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
-var LIBRARY = __webpack_require__(22);
+var LIBRARY = __webpack_require__(23);
 var global = __webpack_require__(0);
 var ctx = __webpack_require__(14);
-var classof = __webpack_require__(63);
+var classof = __webpack_require__(67);
 var $export = __webpack_require__(3);
-var isObject = __webpack_require__(7);
-var aFunction = __webpack_require__(20);
-var anInstance = __webpack_require__(117);
-var forOf = __webpack_require__(118);
-var speciesConstructor = __webpack_require__(64);
-var task = __webpack_require__(65).set;
-var microtask = __webpack_require__(123)();
-var newPromiseCapabilityModule = __webpack_require__(45);
-var perform = __webpack_require__(66);
-var promiseResolve = __webpack_require__(67);
+var isObject = __webpack_require__(6);
+var aFunction = __webpack_require__(21);
+var anInstance = __webpack_require__(121);
+var forOf = __webpack_require__(122);
+var speciesConstructor = __webpack_require__(68);
+var task = __webpack_require__(69).set;
+var microtask = __webpack_require__(127)();
+var newPromiseCapabilityModule = __webpack_require__(41);
+var perform = __webpack_require__(70);
+var promiseResolve = __webpack_require__(71);
 var PROMISE = 'Promise';
 var TypeError = global.TypeError;
 var process = global.process;
@@ -5561,7 +5860,7 @@ if (!USE_NATIVE) {
     this._h = 0;              // <- rejection state, 0 - default, 1 - handled, 2 - unhandled
     this._n = false;          // <- notify
   };
-  Internal.prototype = __webpack_require__(124)($Promise.prototype, {
+  Internal.prototype = __webpack_require__(128)($Promise.prototype, {
     // 25.4.5.3 Promise.prototype.then(onFulfilled, onRejected)
     then: function then(onFulfilled, onRejected) {
       var reaction = newPromiseCapability(speciesConstructor(this, $Promise));
@@ -5592,8 +5891,8 @@ if (!USE_NATIVE) {
 }
 
 $export($export.G + $export.W + $export.F * !USE_NATIVE, { Promise: $Promise });
-__webpack_require__(23)($Promise, PROMISE);
-__webpack_require__(125)(PROMISE);
+__webpack_require__(24)($Promise, PROMISE);
+__webpack_require__(129)(PROMISE);
 Wrapper = __webpack_require__(1)[PROMISE];
 
 // statics
@@ -5612,7 +5911,7 @@ $export($export.S + $export.F * (LIBRARY || !USE_NATIVE), PROMISE, {
     return promiseResolve(LIBRARY && this === Wrapper ? $Promise : this, x);
   }
 });
-$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(126)(function (iter) {
+$export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(130)(function (iter) {
   $Promise.all(iter)['catch'](empty);
 })), PROMISE, {
   // 25.4.4.1 Promise.all(iterable)
@@ -5659,7 +5958,7 @@ $export($export.S + $export.F * !(USE_NATIVE && __webpack_require__(126)(functio
 
 
 /***/ }),
-/* 117 */
+/* 121 */
 /***/ (function(module, exports) {
 
 module.exports = function (it, Constructor, name, forbiddenField) {
@@ -5670,15 +5969,15 @@ module.exports = function (it, Constructor, name, forbiddenField) {
 
 
 /***/ }),
-/* 118 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ctx = __webpack_require__(14);
-var call = __webpack_require__(119);
-var isArrayIter = __webpack_require__(120);
+var call = __webpack_require__(123);
+var isArrayIter = __webpack_require__(124);
 var anObject = __webpack_require__(4);
-var toLength = __webpack_require__(56);
-var getIterFn = __webpack_require__(121);
+var toLength = __webpack_require__(54);
+var getIterFn = __webpack_require__(125);
 var BREAK = {};
 var RETURN = {};
 var exports = module.exports = function (iterable, entries, fn, that, ITERATOR) {
@@ -5701,7 +6000,7 @@ exports.RETURN = RETURN;
 
 
 /***/ }),
-/* 119 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // call something on iterator step with safe closing on error
@@ -5719,7 +6018,7 @@ module.exports = function (iterator, fn, value, entries) {
 
 
 /***/ }),
-/* 120 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // check on default Array iterator
@@ -5733,10 +6032,10 @@ module.exports = function (it) {
 
 
 /***/ }),
-/* 121 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var classof = __webpack_require__(63);
+var classof = __webpack_require__(67);
 var ITERATOR = __webpack_require__(2)('iterator');
 var Iterators = __webpack_require__(16);
 module.exports = __webpack_require__(1).getIteratorMethod = function (it) {
@@ -5747,7 +6046,7 @@ module.exports = __webpack_require__(1).getIteratorMethod = function (it) {
 
 
 /***/ }),
-/* 122 */
+/* 126 */
 /***/ (function(module, exports) {
 
 // fast apply, http://jsperf.lnkit.com/fast-apply/5
@@ -5769,11 +6068,11 @@ module.exports = function (fn, args, that) {
 
 
 /***/ }),
-/* 123 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var global = __webpack_require__(0);
-var macrotask = __webpack_require__(65).set;
+var macrotask = __webpack_require__(69).set;
 var Observer = global.MutationObserver || global.WebKitMutationObserver;
 var process = global.process;
 var Promise = global.Promise;
@@ -5843,7 +6142,7 @@ module.exports = function () {
 
 
 /***/ }),
-/* 124 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var hide = __webpack_require__(10);
@@ -5856,15 +6155,15 @@ module.exports = function (target, src, safe) {
 
 
 /***/ }),
-/* 125 */
+/* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 var global = __webpack_require__(0);
 var core = __webpack_require__(1);
-var dP = __webpack_require__(6);
-var DESCRIPTORS = __webpack_require__(8);
+var dP = __webpack_require__(5);
+var DESCRIPTORS = __webpack_require__(7);
 var SPECIES = __webpack_require__(2)('species');
 
 module.exports = function (KEY) {
@@ -5877,7 +6176,7 @@ module.exports = function (KEY) {
 
 
 /***/ }),
-/* 126 */
+/* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ITERATOR = __webpack_require__(2)('iterator');
@@ -5905,7 +6204,7 @@ module.exports = function (exec, skipClosing) {
 
 
 /***/ }),
-/* 127 */
+/* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5914,8 +6213,8 @@ module.exports = function (exec, skipClosing) {
 var $export = __webpack_require__(3);
 var core = __webpack_require__(1);
 var global = __webpack_require__(0);
-var speciesConstructor = __webpack_require__(64);
-var promiseResolve = __webpack_require__(67);
+var speciesConstructor = __webpack_require__(68);
+var promiseResolve = __webpack_require__(71);
 
 $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
   var C = speciesConstructor(this, core.Promise || global.Promise);
@@ -5932,15 +6231,15 @@ $export($export.P + $export.R, 'Promise', { 'finally': function (onFinally) {
 
 
 /***/ }),
-/* 128 */
+/* 132 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 // https://github.com/tc39/proposal-promise-try
 var $export = __webpack_require__(3);
-var newPromiseCapability = __webpack_require__(45);
-var perform = __webpack_require__(66);
+var newPromiseCapability = __webpack_require__(41);
+var perform = __webpack_require__(70);
 
 $export($export.S, 'Promise', { 'try': function (callbackfn) {
   var promiseCapability = newPromiseCapability.f(this);
@@ -5951,17 +6250,18 @@ $export($export.S, 'Promise', { 'try': function (callbackfn) {
 
 
 /***/ }),
-/* 129 */
+/* 133 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* eslint-disable */
+// Eventually this file will become unnecessary.
 var token = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldSWDQ2U1A5TjQifQ.eyJpc3MiOiJBSEtFSzNUMzZQIiwiaWF0IjoxNTE2NjYxOTY2LCJleHAiOjE1MzIzODMxNjZ9.9cCIFu1fq0wJV49HwbVdpreVQ2KQf14Yz0PRD3IjFGfayFXipsv8maSfAZLPuRNLFyhZWY8V2FB7uVBdYQOMNw';
 
 /* harmony default export */ __webpack_exports__["a"] = (token);
 
 /***/ }),
-/* 130 */
+/* 134 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5974,95 +6274,15 @@ var settings = window.appleMusicBlock;
 var storefront = undefined !== settings ? settings.storefront : 'us';
 
 /***/ }),
-/* 131 */
+/* 135 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["c"] = getObjKeyValue;
-/* harmony export (immutable) */ __webpack_exports__["d"] = getTypeObject;
-/* harmony export (immutable) */ __webpack_exports__["e"] = showEmbed;
-/* harmony export (immutable) */ __webpack_exports__["b"] = getNestedObject;
-/* harmony export (immutable) */ __webpack_exports__["a"] = getItemArtworkURL;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__ = __webpack_require__(133);
-
-
-/**
- * Get an objects key value.
- * @param {object} obj The Object to look for.
- * @param {object} key The key to return the associated value.
- */
-function getObjKeyValue(obj, key) {
-  if (obj && Object.prototype.hasOwnProperty.call(obj, key)) {
-    return obj[key];
-  }
-  return null;
-}
-
-/**
- * Get the music Type object from the Music Type object.
- * @param {type} type the musicType object
- */
-function getTypeObject(type) {
-  return __WEBPACK_IMPORTED_MODULE_0__config_musicTypes__["a" /* default */].find(function (x) {
-    return x.value === type;
-  });
-}
-
-/**
- * Check to see if this music type has an embeddable iframe.
- * @param {string} type The music type to check for.
- */
-function showEmbed(type) {
-  var musicType = getTypeObject(type);
-  return getObjKeyValue(musicType, 'embed');
-}
-
-/**
- * Pass in your object structure as array elements.
- *
- * getNestedObject(obj, [level-1-key, level-2-key]);
- * @param {object} nestedObj the object to retrieve the key value.
- * @param {array} pathArr the array of nested keys to search.
- * @return mixed
- */
-function getNestedObject(nestedObj, pathArr) {
-  return pathArr.reduce(function (obj, key) {
-    return obj && 'undefined' !== obj[key] ? obj[key] : undefined;
-  }, nestedObj);
-}
-
-/**
- * Get the artwork URL for a music item.
- * @see https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Artwork.html#//apple_ref/doc/uid/TP40017625-CH26-SW1
- * @param {object} item the music item object.
- * @param {string} width the width of the image.
- * @param {string} height the height of the image
- */
-function getItemArtworkURL(item) {
-  var width = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '118';
-  var height = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '118';
-
-  var imageSrc = getNestedObject(item, ['attributes', 'artwork', 'url']);
-  return imageSrc ? imageSrc.replace('{w}', width).replace('{h}', height).replace('{c}', 'sr') : null;
-}
-
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-  getObjKeyValue: getObjKeyValue,
-  getTypeObject: getTypeObject,
-  showEmbed: showEmbed,
-  getNestedObject: getNestedObject
-});
-
-/***/ }),
-/* 132 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_musicTypes__ = __webpack_require__(133);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__config_musicTypes__ = __webpack_require__(65);
 
 
 
@@ -6125,282 +6345,6 @@ SearchTools.propTypes = {
 
 /* harmony default export */ __webpack_exports__["a"] = (SearchTools);
 
-/***/ }),
-/* 133 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// Import internationalization function.
-var __ = window.wp.i18n.__;
-/**
- * The list of the types of resources to include in the results. The possible values are activities, artists, apple-curators, albums, curators, songs, playlists, music-videos, and stations.
- *
- * @see  https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html#//apple_ref/doc/uid/TP40017625-CH58-SW1
- * @type {Array} music type values and labels
- */
-
-var musicTypes = [{
-  value: 'artists',
-  label: __('Artists', 'apple-music'),
-  embedType: 'artist',
-  embed: false
-}, {
-  value: 'songs',
-  label: __('Songs', 'apple-music'),
-  embedHeight: '110px',
-  embedType: 'song',
-  embed: true
-}, {
-  value: 'albums',
-  label: __('Albums', 'apple-music'),
-  embedHeight: '500px',
-  embedType: 'album',
-  embed: true
-}, {
-  value: 'playlists',
-  label: __('Playlists', 'apple-music'),
-  embedHeight: '500px',
-  embedType: 'playlist',
-  embed: true
-}, {
-  value: 'activities', label: __('Activities', 'apple-music')
-}, {
-  value: 'curators',
-  label: __('Curators', 'apple-music'),
-  embedType: 'curator',
-  embed: false
-}, {
-  value: 'apple-curators', label: __('Apple Curators', 'apple-music')
-}, {
-  value: 'stations',
-  label: __('Stations', 'apple-music'),
-  embedType: 'station',
-  embed: false
-}, {
-  value: 'music-videos',
-  label: __('Music Videos', 'apple-music'),
-  embedType: 'music-video',
-  embed: false
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (musicTypes);
-
-/***/ }),
-/* 134 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-// Import internationalization function.
-var __ = window.wp.i18n.__;
-/**
- * The list of the embed types to use for embedding Apple Music.
- *
- * @type {Array}
- */
-
-var embedTypes = [{
-  value: 'preview-player', label: __('Preview Player', 'apple-music')
-}, {
-  value: 'badge', label: __('Badge', 'apple-music')
-}, {
-  value: 'text-lockup', label: __('Text Lockup', 'apple-music')
-}, {
-  value: 'app-icon', label: __('App Icon', 'apple-music')
-}];
-
-/* harmony default export */ __webpack_exports__["a"] = (embedTypes);
-
-/***/ }),
-/* 135 */,
-/* 136 */,
-/* 137 */,
-/* 138 */,
-/* 139 */,
-/* 140 */,
-/* 141 */,
-/* 142 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-
-
-
-var RawHTML = window.wp.element.RawHTML;
-
-// Internationalization
-
-var __ = window.wp.i18n.__;
-
-/**
- * The Preview Player component displays the iframe for embedding on
- * the front end and in the edit view.
- * Uses the Gutenberg Sandbox component.
- */
-
-var PreviewPlayer = function PreviewPlayer(_ref) {
-  var height = _ref.height,
-      iframeSrc = _ref.iframeSrc,
-      title = _ref.title,
-      width = _ref.width;
-
-  // if there is no iframeSrc return null.
-  if (!iframeSrc) {
-    return null;
-  }
-  // Setup the iframe for display
-  var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    title="' + title + '"\n    frameborder="0"></iframe>';
-
-  return wp.element.createElement(
-    'div',
-    { className: 'apple-music-embed-wrapper' },
-    wp.element.createElement(
-      RawHTML,
-      null,
-      iframeHTML
-    )
-  );
-};
-
-PreviewPlayer.defaultProps = {
-  title: __('Apple Music Preview Player', 'apple-music')
-};
-
-PreviewPlayer.propTypes = {
-  height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  title: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-  width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (PreviewPlayer);
-
-/***/ }),
-/* 143 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__previewPlayer__ = __webpack_require__(142);
-
-
-
-
-var AppleMusicDisplay = function AppleMusicDisplay(_ref) {
-  var _ref$attributes = _ref.attributes,
-      embedType = _ref$attributes.embedType,
-      height = _ref$attributes.height,
-      iframeSrc = _ref$attributes.iframeSrc,
-      width = _ref$attributes.width,
-      className = _ref.className;
-  return wp.element.createElement(
-    'div',
-    { className: className },
-    'preview-player' === embedType && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_2__previewPlayer__["a" /* default */], {
-      height: height,
-      iframeSrc: iframeSrc,
-      width: width
-    }),
-    'badge' === embedType && wp.element.createElement(
-      'div',
-      null,
-      'THIS IS WHERE THE BADGE WILL GO'
-    ),
-    'text-lockup' === embedType && wp.element.createElement(
-      'div',
-      null,
-      'THIS IS WHERE THE TEXT LOCKUP WILL GO'
-    ),
-    'app-icon' === embedType && wp.element.createElement(
-      'div',
-      null,
-      'THIS IS WHERE THE APP ICON WILL GO'
-    )
-  );
-};
-
-AppleMusicDisplay.propTypes = {
-  attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
-    embedType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    height: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    iframeSrc: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    item: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.shape({
-      attributes: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.any,
-      id: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-      type: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
-    }),
-    musicID: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    musicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string,
-    width: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string
-  }).isRequired
-};
-
-/* harmony default export */ __webpack_exports__["a"] = (AppleMusicDisplay);
-=======
-/***/ 68:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-var __ = window.wp.i18n.__;
-var registerBlockType = window.wp.blocks.registerBlockType;
-
-/**
- * Register Apple Music block
- */
-
-/* harmony default export */ __webpack_exports__["default"] = (registerBlockType('apple-music/widget', {
-  title: __('Apple Music', 'apple-music'),
-  description: __('Embed the apple music player into a post.', 'apple-music'),
-  category: 'widgets',
-  icon: 'format-audio',
-  keywords: [__('Apple Music', 'apple-music')],
-  supports: {
-    html: false
-  },
-  attributes: {
-    query: {
-      type: 'array',
-      source: 'children',
-      selector: '.display-music'
-    },
-    musicType: {
-      type: 'string',
-      default: 'artists'
-    },
-    musicID: {
-      type: 'integer'
-    },
-    item: {
-      type: 'object'
-    },
-    height: {
-      type: 'string'
-    },
-    width: {
-      type: 'string',
-      default: '100%'
-    },
-    embedType: {
-      type: 'string',
-      default: 'preview-player'
-    },
-    iframeSrc: {
-      type: 'string'
-    }
-  },
-  edit: '',
-  save: ''
-}));
->>>>>>> MUSIC-11-pull-1
-
 /***/ })
-
-/******/ });
+/******/ ]);
 //# sourceMappingURL=blocks.bundle.js.map
