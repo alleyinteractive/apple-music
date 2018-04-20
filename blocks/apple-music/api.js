@@ -11,12 +11,13 @@ const baseURL = 'https://api.music.apple.com/v1';
 /**
  * Performs a generic request against the specified endpoint of the Apple Music API.
  *
- * @param {string} endpoint - The endpoint to query.
- * @returns {Promise} - A promise that will resolve with the JSON response.
+ * @param {string} endpoint The endpoint to query.
+ * @param {string} method The request method.
+ * @returns {Promise} A promise that will resolve with the JSON response.
  */
-export function request(endpoint) {
+export function request(endpoint, method) {
   return fetch(endpoint, {
-    method: 'GET',
+    method,
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
       Host: 'api.music.apple.com',
@@ -26,6 +27,15 @@ export function request(endpoint) {
   })
     .then((res) => res.json())
     .catch((error) => error.status);
+}
+
+/**
+ * Make an endpoint request using the GET method.
+ * @param {string} endpoint the endpoint to GET.
+ * @returns Promise
+ */
+export function get(endpoint) {
+  return request(endpoint, 'GET');
 }
 
 /**
@@ -44,7 +54,7 @@ export function searchCatalog(term, types, limit = 25) {
   const catalogURL = `${baseURL}/catalog/${storefront}/search`;
   const query = `term=${term}&limit=${limit}&types=${types}`;
 
-  return request(`${catalogURL}?${query}`);
+  return get(`${catalogURL}?${query}`);
 }
 
 /**
