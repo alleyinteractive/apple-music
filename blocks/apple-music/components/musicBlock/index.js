@@ -114,7 +114,6 @@ class MusicBlock extends Component {
     const {
       attributes,
       isSelected,
-      className,
     } = this.props;
 
     return (
@@ -175,7 +174,7 @@ class MusicBlock extends Component {
               {
                 ! this.state.isMusicSet &&
                 <ResultsWrapper
-                  className={className}
+                  className={styles.itemWrapper}
                   attributes={attributes}
                   onSelect={this.setMusicSelection}
                 />
@@ -204,7 +203,6 @@ MusicBlock.propTypes = {
   }).isRequired,
   setAttributes: PropTypes.func.isRequired,
   isSelected: PropTypes.func.isRequired,
-  className: PropTypes.string.isRequired,
 };
 
 export default MusicBlock;

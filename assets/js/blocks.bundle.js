@@ -2395,8 +2395,7 @@ var MusicBlock = function (_Component) {
 
       var _props3 = this.props,
           attributes = _props3.attributes,
-          isSelected = _props3.isSelected,
-          className = _props3.className;
+          isSelected = _props3.isSelected;
 
 
       return wp.element.createElement(
@@ -2456,7 +2455,7 @@ var MusicBlock = function (_Component) {
             })
           ),
           !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__resultsWrapper__["a" /* default */], {
-            className: className,
+            className: __WEBPACK_IMPORTED_MODULE_13__musicBlock_css___default.a.itemWrapper,
             attributes: attributes,
             onSelect: this.setMusicSelection
           })
@@ -2482,8 +2481,7 @@ MusicBlock.propTypes = {
     })
   }).isRequired,
   setAttributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired,
-  isSelected: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired,
-  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string.isRequired
+  isSelected: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["a"] = (MusicBlock);
@@ -5634,8 +5632,13 @@ ResultsWrapper.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__musicItem_css__);
 
 
+
+
+// Css
 
 
 var Button = window.wp.components.Button;
@@ -5655,6 +5658,7 @@ var MusicItem = function MusicItem(_ref) {
   }
 
   var name = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getNestedObject */])(item, ['attributes', 'name']);
+  var artistName = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getNestedObject */])(item, ['attributes', 'artistName']);
   var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["a" /* getItemArtworkURL */])(item);
 
   return wp.element.createElement(
@@ -5666,20 +5670,29 @@ var MusicItem = function MusicItem(_ref) {
     },
     wp.element.createElement(
       'div',
-      { className: 'apple-music-item' },
+      { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.musicItem },
       imageSrc && wp.element.createElement(
         'div',
-        { className: 'apple-music-item-artwork' },
-        wp.element.createElement('img', { src: imageSrc, alt: __('Meaningful Text', 'apple-music') })
+        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artwork },
+        wp.element.createElement('img', {
+          src: imageSrc,
+          alt: __('Album Art:', 'apple-music') + ' ' + name,
+          className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artworkImage
+        })
       ),
       // the name of the music item.
       name && wp.element.createElement(
         'div',
-        { className: 'title' },
+        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.title },
         wp.element.createElement(
           'div',
-          { className: 'name' },
+          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.name },
           name
+        ),
+        wp.element.createElement(
+          'div',
+          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artistName },
+          artistName
         )
       )
     )
@@ -7087,12 +7100,13 @@ exports = module.exports = __webpack_require__(138)(false);
 exports.i(__webpack_require__(143), "");
 
 // module
-exports.push([module.i, "/* MusicBlock component styles */\n\n.musicBlock__introText__5gm8k {\n  color: var(--black);\n  margin-bottom: 30px;\n  text-align: center;\n}\n\n.musicBlock__backToSearch__3CGHH {\n  color: var(--red);\n\n  &:hover,\n  &:focus {\n    box-shadow: none;\n    color: var(--red);\n\n    svg {\n      -webkit-transform: translateX(-3px);\n              transform: translateX(-3px);\n    }\n  }\n\n  svg {\n    height: 17px;\n    -webkit-transform: translateX(0);\n            transform: translateX(0);\n    transition: -webkit-transform 0.1s ease-in-out;\n    transition: transform 0.1s ease-in-out;\n    transition: transform 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;\n    vertical-align: text-bottom;\n    width: 17px;\n  }\n}\n", ""]);
+exports.push([module.i, "/* MusicBlock component styles */\n\n.musicBlock__introText__5gm8k {\n  color: var(--black);\n  margin-bottom: 30px;\n  text-align: center;\n}\n\n.musicBlock__backToSearch__3CGHH {\n  color: var(--red);\n\n  &:hover,\n  &:focus {\n    box-shadow: none;\n    color: var(--red);\n\n    svg {\n      -webkit-transform: translateX(-3px);\n              transform: translateX(-3px);\n    }\n  }\n\n  svg {\n    height: 17px;\n    -webkit-transform: translateX(0);\n            transform: translateX(0);\n    transition: -webkit-transform 0.1s ease-in-out;\n    transition: transform 0.1s ease-in-out;\n    transition: transform 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;\n    vertical-align: text-bottom;\n    width: 17px;\n  }\n}\n\n.musicBlock__itemWrapper__2dIkL {\n  align-items: flex-start;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-evenly;\n}\n", ""]);
 
 // exports
 exports.locals = {
 	"introText": "musicBlock__introText__5gm8k",
-	"backToSearch": "musicBlock__backToSearch__3CGHH"
+	"backToSearch": "musicBlock__backToSearch__3CGHH",
+	"itemWrapper": "musicBlock__itemWrapper__2dIkL"
 };
 
 /***/ }),
@@ -7108,6 +7122,77 @@ exports.push([module.i, "/* Color Variables */\n\n:root {\n --black: #333;\n --r
 
 // exports
 
+
+/***/ }),
+/* 144 */,
+/* 145 */,
+/* 146 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(147);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(139)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../node_modules/css-loader/index.js??ref--2-1!../../../../node_modules/postcss-loader/lib/index.js??ref--2-2!./musicItem.css", function() {
+		var newContent = require("!!../../../../node_modules/css-loader/index.js??ref--2-1!../../../../node_modules/postcss-loader/lib/index.js??ref--2-2!./musicItem.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 147 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(138)(false);
+// imports
+exports.i(__webpack_require__(143), "");
+
+// module
+exports.push([module.i, "/* MusicItem component styles */\n\n.musicItem__musicItem__23VMv {\n  height: 190px;\n  margin-bottom: 10px;\n  width: 120px;\n}\n\n.musicItem__artworkImage__173hL {\n  border: 1px solid #E7E7E7;\n  border-radius: 8px;\n}\n\n.musicItem__title__2Iy-S {\n  color: var(--black);\n  font-size: 12px;\n  font-weight: 300;\n  margin-top: 5px;\n  text-align: left;\n}\n\n.musicItem__artistName__1AiK3 {\n  color: var(--greyed-out);\n  font-size: 11px;\n  font-weight: 300;\n  margin-top: 5px;\n  overflow: hidden;\n  text-align: left;\n  text-overflow: ellipsis;\n  white-space: normal;\n  \n}\n", ""]);
+
+// exports
+exports.locals = {
+	"musicItem": "musicItem__musicItem__23VMv",
+	"artworkImage": "musicItem__artworkImage__173hL",
+	"title": "musicItem__title__2Iy-S",
+	"artistName": "musicItem__artistName__1AiK3"
+};
 
 /***/ })
 /******/ ]);

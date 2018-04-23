@@ -29,3 +29,10 @@
     width: 17px;
   }
 }
+
+.itemWrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
