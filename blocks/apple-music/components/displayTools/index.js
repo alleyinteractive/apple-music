@@ -8,9 +8,6 @@ import {
   getNestedObject,
 } from '../../utils';
 
-// CSS
-import styles from './displayTools.css';
-
 const {
   TextControl,
   Button,
@@ -49,7 +46,7 @@ const DisplayTools = ({
       }
       {
         name &&
-        <div className={styles.rightSide}>
+        <div className="right-side">
           <div className="name">
             {getNestedObject(item, ['attributes', 'name'])}
           </div>
