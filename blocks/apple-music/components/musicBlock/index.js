@@ -10,11 +10,17 @@ import {
   getTypeObject,
 } from '../../utils';
 
+// CSS
+import styles from './musicBlock.css';
+
 // Internationalization
 const { __ } = window.wp.i18n;
 // Extend component
 const { Component } = window.wp.element;
-const { IconButton } = window.wp.components;
+const {
+  Button,
+  Dashicon,
+} = window.wp.components;
 
 const { InspectorControls } = window.wp.blocks;
 const { PanelBody } = window.wp.components;
@@ -132,30 +138,33 @@ class MusicBlock extends Component {
         }
         {
           isSelected &&
-            <div className="edit-apple-music">
+            <div className={styles.musicTools}>
               {
                 ! this.state.isMusicSet &&
                 <div>
-                  {__(
-                    'Get badges, links, and widgets for Apple Music.',
-                    'apple-music'
-                  )}
+                  <h3 className={styles.introText}>
+                    {__(
+                      'Get badges, links, and widgets for Apple Music.',
+                      'apple-music'
+                    )}
+                  </h3>
                   <SearchTools
                     attributes={attributes}
                     updateSearch={this.updateAttributes}
+                    inPanel={false}
                   />
                 </div>
               }
               {
                 this.state.isMusicSet &&
                 <div>
-                  <IconButton
-                    icon="arrow-left-alt2"
-                    className="back-to-search"
+                  <Button
+                    className={styles.backToSearch}
                     onClick={() => this.resetSearch()}
                   >
-                    {__('Back to Seach', 'apple-music')}
-                  </IconButton>
+                    <Dashicon icon="arrow-left-alt2" />
+                    {__('Back to Search', 'apple-music')}
+                  </Button>
                   <DisplayTools
                     attributes={attributes}
                     onChange={this.updateAttributes}

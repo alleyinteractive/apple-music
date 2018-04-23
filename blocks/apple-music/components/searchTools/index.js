@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import musicTypes from '../../config/musicTypes';
+import styles from './searchTools.css';
 
 const {
   TextControl,
@@ -19,17 +20,22 @@ const SearchTools = ({
     musicType,
   },
   updateSearch,
+  inPanel,
 }) => {
   // Get the current selected musicType object
   const typeObject = musicTypes.find((type) => (
     type.value === musicType
   ));
 
+  // apply appropriate classname for context
+  const className = inPanel ? 'search-tools-panel' : styles.searchTools;
+
   return (
-    <div className="apple-music-search-tools">
+    <div className={className}>
       <TextControl
-        label={`Search ${typeObject.label}`}
         value={query}
+        placeHolder={`Search ${typeObject.label}`}
+        className={styles.search}
         onChange={(term) => updateSearch(term, 'query')}
       />
       <SelectControl
@@ -38,10 +44,15 @@ const SearchTools = ({
         options={musicTypes.map(({ value, label }) => (
           { value, label }
         ))}
+        className={styles.select}
         onChange={(type) => updateSearch(type, 'musicType')}
       />
     </div>
   );
+};
+
+SearchTools.defaultProps = {
+  inPanel: true,
 };
 
 SearchTools.propTypes = {
@@ -50,6 +61,7 @@ SearchTools.propTypes = {
     musicType: PropTypes.string,
   }).isRequired,
   updateSearch: PropTypes.func.isRequired,
+  inPanel: PropTypes.bool,
 };
 
 export default SearchTools;
