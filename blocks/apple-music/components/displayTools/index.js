@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import embedTypes from '../config/embedTypes';
-import PreviewPlayer from './previewPlayer';
+import embedTypes from '../../config/embedTypes';
+import PreviewPlayer from '../previewPlayer';
 import {
   showEmbed,
   getItemArtworkURL,
   getNestedObject,
-} from '../utils';
+} from '../../utils';
 
 const {
   TextControl,

@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DisplayTools from './displayTools';
-import ResultsWrapper from './resultsWrapper';
-import SearchTools from './searchTools';
-import AppleMusicDisplay from './save';
-import { iframeURL } from '../api';
+import DisplayTools from '../displayTools';
+import ResultsWrapper from '../resultsWrapper';
+import SearchTools from '../searchTools';
+import MusicDisplay from '../musicDisplay';
+import { iframeURL } from '../../api';
 import {
   getObjKeyValue,
   getTypeObject,
-} from '../utils';
+} from '../../utils';
 
 // Internationalization
 const { __ } = window.wp.i18n;
@@ -19,7 +19,7 @@ const { IconButton } = window.wp.components;
 const { InspectorControls } = window.wp.blocks;
 const { PanelBody } = window.wp.components;
 
-class AppleMusicBlock extends Component {
+class MusicBlock extends Component {
   /**
    * Component constructor
    * @param {object} props This component's props.
@@ -175,14 +175,14 @@ class AppleMusicBlock extends Component {
         }
         {
           ! isSelected &&
-          <AppleMusicDisplay attributes={attributes} />
+          <MusicDisplay attributes={attributes} />
         }
       </div>
     );
   } // end render method.
 }
 
-AppleMusicBlock.propTypes = {
+MusicBlock.propTypes = {
   attributes: PropTypes.shape({
     width: PropTypes.string,
     height: PropTypes.string,
@@ -198,4 +198,4 @@ AppleMusicBlock.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
-export default AppleMusicBlock;
+export default MusicBlock;

@@ -1,9 +1,9 @@
-import token from './token';
+import token from '../token';
 import {
   getObjKeyValue,
   getTypeObject,
-} from './utils';
-import { storefront } from './settings';
+} from '../utils';
+import { storefront } from '../settings';
 
 // Base URL for the apple music API
 const baseURL = 'https://api.music.apple.com/v1';

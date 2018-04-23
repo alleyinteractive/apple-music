@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import musicTypes from '../config/musicTypes';
+import musicTypes from '../../config/musicTypes';
 
 const {
   TextControl,

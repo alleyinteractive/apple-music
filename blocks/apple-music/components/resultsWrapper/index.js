@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import AppleMusicItem from './item';
+import MusicItem from '../musicItem';
 import {
   searchCatalog,
   getItems,
-} from '../api';
-import { getNestedObject } from '../utils';
+} from '../../api';
+import { getNestedObject } from '../../utils';
 
 const { Component } = window.wp.element;
 
@@ -73,7 +73,7 @@ class ResultsWrapper extends Component {
 
     const results = getItems(this.state.data)
       .map((item) => (
-        <AppleMusicItem
+        <MusicItem
           item={item}
           onClick={() => this.selectItem(item)}
         />

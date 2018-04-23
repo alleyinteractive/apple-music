@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   getItemArtworkURL,
   getNestedObject,
-} from '../utils';
+} from '../../utils';
 
 const {
   Button,
@@ -12,7 +12,7 @@ const {
 // Internationalization
 const { __ } = window.wp.i18n;
 
-const AppleMusicItem = ({
+const MusicItem = ({
   item,
   onClick,
 }) => {
@@ -46,9 +46,9 @@ const AppleMusicItem = ({
   );
 };
 
-AppleMusicItem.propTypes = {
+MusicItem.propTypes = {
   item: PropTypes.arrayOf(PropTypes.object).isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default AppleMusicItem;
+export default MusicItem;

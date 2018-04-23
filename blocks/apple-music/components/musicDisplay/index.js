@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PreviewPlayer from './previewPlayer';
+import PreviewPlayer from '../previewPlayer';
 
-const AppleMusicDisplay = ({
+const MusicDisplay = ({
   attributes: {
     embedType,
     height,
@@ -41,7 +41,7 @@ const AppleMusicDisplay = ({
   </div>
 );
 
-AppleMusicDisplay.propTypes = {
+MusicDisplay.propTypes = {
   attributes: PropTypes.shape({
     embedType: PropTypes.string,
     height: PropTypes.string,
@@ -58,4 +58,4 @@ AppleMusicDisplay.propTypes = {
   className: PropTypes.string.isRequired,
 };
 
-export default AppleMusicDisplay;
+export default MusicDisplay;
