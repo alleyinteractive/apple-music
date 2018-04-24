@@ -1,5 +1,6 @@
 import MusicBlock from './components/musicBlock';
 import MusicDisplay from './components/musicDisplay';
+import { appleMusicIcon } from './icons';
 
 const { __ } = window.wp.i18n;
 const { registerBlockType } = window.wp.blocks;
@@ -12,9 +13,9 @@ export default registerBlockType(
   {
     title: __('Apple Music', 'apple-music'),
     description:
-      __('Embed the apple music player into a post.', 'apple-music'),
+      __('Embed an Apple music widget into a post.', 'apple-music'),
     category: 'widgets',
-    icon: 'format-audio',
+    icon: appleMusicIcon,
     keywords: [
       __('Apple Music', 'apple-music'),
     ],

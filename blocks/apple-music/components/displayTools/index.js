@@ -121,8 +121,8 @@ const DisplayTools = ({
       }
       {
         ! inPanel &&
-        <div>
-          {__('Direct Link: ', 'apple-music')}
+        <div className={styles.directLink}>
+          <b>{__('Direct Link: ', 'apple-music')}</b>
           <ExternalLink href={directLink}>
             {directLink}
           </ExternalLink>

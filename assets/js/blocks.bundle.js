@@ -5887,8 +5887,12 @@ var DisplayTools = function DisplayTools(_ref) {
     }),
     !inPanel && wp.element.createElement(
       'div',
-      null,
-      __('Direct Link: ', 'apple-music'),
+      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.directLink },
+      wp.element.createElement(
+        'b',
+        null,
+        __('Direct Link: ', 'apple-music')
+      ),
       wp.element.createElement(
         ExternalLink,
         { href: directLink },
@@ -6007,14 +6011,15 @@ exports = module.exports = __webpack_require__(26)(false);
 
 
 // module
-exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }", ""]);
+exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}", ""]);
 
 // exports
 exports.locals = {
 	"name": "displayTools__name__3ThlN",
 	"secondary": "displayTools__secondary__2lZXQ",
 	"dimensionsForm": "displayTools__dimensionsForm__36bOK",
-	"dimensions": "displayTools__dimensions___W0Uh"
+	"dimensions": "displayTools__dimensions___W0Uh",
+	"directLink": "displayTools__directLink__mifB_"
 };
 
 /***/ }),
