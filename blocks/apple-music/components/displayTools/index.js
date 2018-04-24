@@ -8,6 +8,8 @@ import {
   getNestedObject,
 } from '../../utils';
 
+import styles from './displayTools.css';
+
 const {
   TextControl,
   Button,
@@ -55,33 +57,41 @@ const DisplayTools = ({
     </div>
   ) : null;
 
+  // conditional classes for edit styles.
+  const formClass = ! inPanel ? styles.dimensionsForm : '';
+  const textInput = ! inPanel ? styles.dimensions : '';
+
   return (
     <div>
       {
         showEmbed(musicType) &&
-        <div>
+        <div className={styles.details}>
           {
             ! inPanel &&
             <div>
-              <h1>{name}</h1>
+              <h1 className={styles.name}>{name}</h1>
               {
                 artistName &&
-                  <div className="secondary">{artistName}</div>
+                  <div className={styles.secondary}>{artistName}</div>
               }
             </div>
           }
-          <TextControl
-            label={__('Height', 'apple-music')}
-            value={height}
-            onChange={(value) => onChange(value, 'height')}
-            placeholder={height}
-          />
-          <TextControl
-            label={__('Width', 'apple-music')}
-            value={width}
-            onChange={(value) => onChange(value, 'width')}
-            placeholder={width}
-          />
+          <div className={formClass}>
+            <TextControl
+              className={textInput}
+              label={__('Height', 'apple-music')}
+              value={height}
+              onChange={(value) => onChange(value, 'height')}
+              placeholder={height}
+            />
+            <TextControl
+              className={textInput}
+              label={__('Width', 'apple-music')}
+              value={width}
+              onChange={(value) => onChange(value, 'width')}
+              placeholder={width}
+            />
+          </div>
         </div>
       }
       { // Show the Preview player in the main content area.
