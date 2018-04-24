@@ -2863,12 +2863,13 @@ var MusicBlock = function (_Component) {
 
       var _props3 = this.props,
           attributes = _props3.attributes,
+          className = _props3.className,
           isSelected = _props3.isSelected;
 
 
       return wp.element.createElement(
         'div',
-        null,
+        { className: className },
         isSelected && wp.element.createElement(
           InspectorControls,
           { key: 'inspector' },
@@ -2948,6 +2949,7 @@ MusicBlock.propTypes = {
       type: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
     })
   }).isRequired,
+  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string.isRequired,
   setAttributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired,
   isSelected: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
 };
@@ -5797,7 +5799,7 @@ var DisplayTools = function DisplayTools(_ref) {
     imageSrc && wp.element.createElement(
       'div',
       { className: 'image' },
-      wp.element.createElement('img', { src: imageSrc, alt: __(name, 'apple-music') })
+      wp.element.createElement('img', { src: imageSrc, alt: name })
     ),
     name && wp.element.createElement(
       'div',
@@ -5880,7 +5882,7 @@ var DisplayTools = function DisplayTools(_ref) {
             return _onChange(value, 'embedType');
           }
         },
-        __(label, 'apple-music')
+        label
       );
     }),
     !inPanel && wp.element.createElement(
@@ -6291,7 +6293,9 @@ var Button = window.wp.components.Button;
 
 // Internationalization
 
-var __ = window.wp.i18n.__;
+var _window$wp$i18n = window.wp.i18n,
+    __ = _window$wp$i18n.__,
+    sprintf = _window$wp$i18n.sprintf;
 
 
 var MusicItem = function MusicItem(_ref) {
@@ -6322,7 +6326,7 @@ var MusicItem = function MusicItem(_ref) {
         { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artwork },
         wp.element.createElement('img', {
           src: imageSrc,
-          alt: __('Album Art:', 'apple-music') + ' ' + name,
+          alt: sprintf(__('Album Art: %s', 'apple-music'), name),
           className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artworkImage
         })
       ),
@@ -7064,7 +7068,9 @@ var _window$wp$components = window.wp.components,
 
 // Internationalization
 
-var __ = window.wp.i18n.__;
+var _window$wp$i18n = window.wp.i18n,
+    __ = _window$wp$i18n.__,
+    sprintf = _window$wp$i18n.sprintf;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -7090,7 +7096,7 @@ var SearchTools = function SearchTools(_ref) {
     { className: className },
     wp.element.createElement(TextControl, {
       value: query,
-      placeHolder: 'Search ' + typeObject.label,
+      placeHolder: sprintf(__('Search ', 'apple-music'), typeObject.label),
       className: __WEBPACK_IMPORTED_MODULE_3__searchTools_css___default.a.search,
       onChange: function onChange(term) {
         return updateSearch(term, 'query');

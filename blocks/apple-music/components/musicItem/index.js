@@ -13,7 +13,7 @@ const {
 } = window.wp.components;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __, sprintf } = window.wp.i18n;
 
 const MusicItem = ({
   item,
@@ -38,7 +38,7 @@ const MusicItem = ({
           <div className={styles.artwork}>
             <img
               src={imageSrc}
-              alt={`${__('Album Art:', 'apple-music')} ${name}`}
+              alt={sprintf(__('Album Art: %s', 'apple-music'), name)}
               className={styles.artworkImage}
             />
           </div>

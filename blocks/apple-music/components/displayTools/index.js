@@ -43,7 +43,7 @@ const DisplayTools = ({
       {
         imageSrc &&
         <div className="image">
-          <img src={imageSrc} alt={__(name, 'apple-music')} />
+          <img src={imageSrc} alt={name} />
         </div>
       }
       {
@@ -114,7 +114,7 @@ const DisplayTools = ({
               key={value}
               onClick={() => onChange(value, 'embedType')}
             >
-              {__(label, 'apple-music')}
+              {label}
             </Button>
           );
         })
