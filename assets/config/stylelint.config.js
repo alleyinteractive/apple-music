@@ -37,7 +37,7 @@ module.exports = {
     'order/order': [
       {
         type: 'at-rule',
-        name: 'apply',
+        name: 'mixin',
       },
       'declarations',
       {
@@ -45,10 +45,6 @@ module.exports = {
         name: 'media',
       },
       'rules',
-    ],
-    'order/properties-order': [
-      ['composes', 'lost-column', 'lost-waffle'],
-      { unspecified: 'bottomAlphabetical' },
     ],
     'rule-empty-line-before': ['always', {
       ignore: ['after-comment'],
