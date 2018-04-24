@@ -1,9 +1,4 @@
-/* Color Variables */
+/* Shared styles */
 
-:root {
- --black: #333;
- --red: #FE2851;
- --grey: #888;
- --greyed-out: #AAA;
- --white: #FFF;
-}
+@import './colors.css';
+@import './helpers.css';

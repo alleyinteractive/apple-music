@@ -35,6 +35,7 @@
     "postcss-focus": "^3.0.0",
     "postcss-import": "^11.1.0",
     "postcss-loader": "^2.1.4",
+    "postcss-mixins": "^6.2.0",
     "postcss-nested": "^3.0.0",
     "postcss-reporter": "^5.0.0",
     "postcss-units": "^1.1.0",

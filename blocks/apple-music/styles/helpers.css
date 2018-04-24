@@ -1,0 +1,37 @@
+/**
+ * Helper styles.
+ */
+
+/* use line clamp to truncate line */
+/*  https://codepen.io/siiron/pen/jfBhy */
+@define-mixin line-clamp {
+  -webkit-box-orient : vertical;
+  display            : block;
+  /* stylelint-disable-next-line value-no-vendor-prefix */
+  display            : -webkit-box;
+  height             : calc(1em * 1.2 * 2);
+  -webkit-line-clamp : 2;
+  line-height        : 1.2;
+  overflow           : hidden;
+  padding            : 0;
+  position           : relative;
+  text-overflow      : ellipsis;
+
+  &::after {
+    background : linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%);
+    bottom     : 0;
+    content    : '...';
+    display    : block;
+    height     : calc(1em * 1.2);
+    position   : absolute;
+    right      : 0;
+    text-align : right;
+    width      : 25%;
+  }
+
+  @supports (-webkit-line-clamp: 1) {
+    &::after {
+        display: none;
+    }
+  }
+}
