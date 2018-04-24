@@ -1,0 +1,40 @@
+/* MusicItem component styles */
+
+@import '../../styles/shared.css';
+
+.musicItem {
+  /* height: 190px; */
+  margin-bottom: 10px;
+  width: 120px;
+}
+
+.artworkImage {
+  border-radius: 8px;
+}
+
+.title {
+  color: var(--black);
+  font-size: 12px;
+  font-weight: 300;
+  margin-top: em(5px);
+  text-align: left;
+}
+
+.name {
+  @mixin line-clamp;
+}
+
+.artistName {
+  @mixin line-clamp;
+}
+
+.artistName {
+  color: var(--greyed-out);
+  font-size: 11px;
+  font-weight: 300;
+  margin-top: 5px;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: normal;
+}

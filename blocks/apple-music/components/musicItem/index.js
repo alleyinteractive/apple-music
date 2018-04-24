@@ -5,6 +5,9 @@ import {
   getNestedObject,
 } from '../../utils';
 
+// Css
+import styles from './musicItem.css';
+
 const {
   Button,
 } = window.wp.components;
@@ -22,23 +25,29 @@ const MusicItem = ({
   }
 
   const name = getNestedObject(item, ['attributes', 'name']);
+  const artistName = getNestedObject(item, ['attributes', 'artistName']);
   const imageSrc = getItemArtworkURL(item);
 
   return (
     <Button
       onClick={() => onClick(item)}
     >
-      <div className="apple-music-item">
+      <div className={styles.musicItem}>
         {
           imageSrc &&
-          <div className="apple-music-item-artwork">
-            <img src={imageSrc} alt={__('Meaningful Text', 'apple-music')} />
+          <div className={styles.artwork}>
+            <img
+              src={imageSrc}
+              alt={`${__('Album Art:', 'apple-music')} ${name}`}
+              className={styles.artworkImage}
+            />
           </div>
         }
         { // the name of the music item.
           name &&
-          <div className="title">
-            <div className="name">{name}</div>
+          <div className={styles.title}>
+            <div className={styles.name}>{name}</div>
+            <div className={styles.artistName}>{artistName}</div>
           </div>
         }
       </div>

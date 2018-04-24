@@ -1,10 +1,6 @@
 // Webpack dependencies
 const path = require('path');
 
-const stylelint = require('stylelint');
-const stylelintConfig = require('./assets/config/stylelint.config.js');
-const autoprefixer = require('autoprefixer');
-
 module.exports = (env) => ({
   entry: {
     blocks: './blocks/index.js',
@@ -55,10 +51,10 @@ module.exports = (env) => ({
           {
             loader: 'postcss-loader',
             options: {
-              plugins: () => [
-                autoprefixer,
-                stylelint(stylelintConfig),
-              ],
+              config: {
+                path: path
+                  .resolve(__dirname, './assets/config/postcss.config.js'),
+              },
             },
           },
         ],

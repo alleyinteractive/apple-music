@@ -1,0 +1,23 @@
+/* SearchTools component styles */
+
+@import '../../styles/shared.css';
+
+.searchTools {
+  width: 100%;
+
+  label {
+    color: var(--grey);
+    display: inline-block;
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-right: 8px;
+  }
+
+  select {
+    display: inline-block;
+  }
+}
+
+.search {
+  margin-bottom: 1em;
+}

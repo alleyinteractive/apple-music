@@ -1,0 +1,38 @@
+/* MusicBlock component styles */
+
+@import '../../styles/shared.css';
+
+.introText {
+  color: var(--black);
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.backToSearch {
+  color: var(--red);
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    color: var(--red);
+
+    svg {
+      transform: translateX(-3px);
+    }
+  }
+
+  svg {
+    height: 17px;
+    transform: translateX(0);
+    transition: transform 0.1s ease-in-out;
+    vertical-align: text-bottom;
+    width: 17px;
+  }
+}
+
+.itemWrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
