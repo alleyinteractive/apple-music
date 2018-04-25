@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import embedTypes from '../../config/embedTypes';
 import PreviewPlayer from '../previewPlayer';
+import EmbedSlider from '../embedSlider';
 import {
   showEmbed,
   getItemArtworkURL,
@@ -12,7 +12,6 @@ import styles from './displayTools.css';
 
 const {
   TextControl,
-  Button,
   ExternalLink,
 } = window.wp.components;
 
@@ -29,6 +28,8 @@ const DisplayTools = ({
     height,
     musicType,
     width,
+    embedType,
+    embedStyle,
   },
   inPanel,
   onChange,
@@ -43,7 +44,7 @@ const DisplayTools = ({
       {
         imageSrc &&
         <div className="image">
-          <img src={imageSrc} alt={__(name, 'apple-music')} />
+          <img src={imageSrc} alt={name} />
         </div>
       }
       {
@@ -103,22 +104,13 @@ const DisplayTools = ({
         />
       }
       {! inPanel && artwork}
-      {
-        embedTypes.map(({ value, label }) => {
-          // If the musicType doesn't support embeds don't show preview player.
-          if ('preview-player' === value && ! showEmbed(musicType)) {
-            return null;
-          }
-          return (
-            <Button
-              key={value}
-              onClick={() => onChange(value, 'embedType')}
-            >
-              {__(label, 'apple-music')}
-            </Button>
-          );
-        })
-      }
+      <EmbedSlider
+        musicType={musicType}
+        embedType={embedType}
+        embedStyle={embedStyle}
+        onStyleChange={(x) => onChange(x, 'embedStyle')}
+        onTypeChange={(x) => onChange(x, 'embedType')}
+      />
       {
         ! inPanel &&
         <div>
