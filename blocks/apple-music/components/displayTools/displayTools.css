@@ -41,3 +41,9 @@
     width: 60px;
   }
 }
+
+.directLink {
+  font-size: rem(12px);
+  line-height: 1;
+  margin-top: em(10px);
+}

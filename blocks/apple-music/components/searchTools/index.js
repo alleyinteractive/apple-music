@@ -9,7 +9,7 @@ const {
 } = window.wp.components;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __, sprintf } = window.wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -34,7 +34,7 @@ const SearchTools = ({
     <div className={className}>
       <TextControl
         value={query}
-        placeHolder={`Search ${typeObject.label}`}
+        placeHolder={sprintf(__('Search ', 'apple-music'), typeObject.label)}
         className={styles.search}
         onChange={(term) => updateSearch(term, 'query')}
       />
