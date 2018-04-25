@@ -48,6 +48,9 @@ export default registerBlockType(
         type: 'string',
         default: 'preview-player',
       },
+      embedStyle: {
+        type: 'string',
+      },
       iframeSrc: {
         type: 'string',
       },
