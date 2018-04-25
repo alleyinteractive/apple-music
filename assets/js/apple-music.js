@@ -258,8 +258,10 @@ media.view.AppleMusic = media.View.extend( {
 
 	addToSelection: function ( target, id ) {
 
+		this.clearSelection();
+		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
+		
 		target.closest( '.apple-music-item' ).addClass( 'selected details' );
-
 		this.getSelection().add( this.collection._byId[id] );
 
 		// @TODO why isn't this triggered by the above line?
@@ -287,7 +289,6 @@ media.view.AppleMusic = media.View.extend( {
 	},
 
 	clearItems: function () {
-
 		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
 		this.$el.find( '.apple-music-items' ).empty();
 		this.$el.find( '.apple-music-pagination' ).hide();
@@ -295,23 +296,14 @@ media.view.AppleMusic = media.View.extend( {
 	},
 
 	loading: function () {
-
-		// show spinner
 		this.$el.find( '.spinner' ).addClass( 'is-active' );
-
-		// hide messages
 		this.$el.find( '.apple-music-error' ).hide().text( '' );
 		this.$el.find( '.apple-music-empty' ).hide().text( '' );
-
-		// disable 'load more' button
 		jQuery( '#apple-music-loadmore' ).attr( 'disabled', true );
 	},
 
 	loaded: function ( response ) {
-
-		// hide spinner
 		this.$el.find( '.spinner' ).removeClass( 'is-active' );
-
 	},
 
 	fetchItems: function () {
