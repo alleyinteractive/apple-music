@@ -41,16 +41,16 @@ const embedTypes = [
     label: __('App Icon', 'apple-music'),
     styles: [
       {
+        value: '',
         label: __('Standard', 'apple-news'),
-        hex: '',
       },
       {
+        value: 'FFFFFF',
         label: __('White', 'apple-news'),
-        hex: 'FFFFFF',
       },
       {
+        value: '000000',
         label: __('Black', 'apple-news'),
-        hex: '000000',
       },
     ],
   },
