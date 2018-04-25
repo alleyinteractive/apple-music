@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import embedTypes from '../../config/embedTypes';
 import { showEmbed } from '../../utils';
 
-// import badge from '../../../../assets/images/badge.svg';
-
 // Internationalization
 const { __ } = window.wp.i18n;
 // WP components

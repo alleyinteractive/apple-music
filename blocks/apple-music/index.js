@@ -51,7 +51,6 @@ export default registerBlockType(
       },
       embedStyle: {
         type: 'string',
-        default: 'standard',
       },
       iframeSrc: {
         type: 'string',
