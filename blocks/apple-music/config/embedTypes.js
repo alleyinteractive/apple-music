@@ -19,7 +19,7 @@ const embedTypes = [
     label: __('Text Lockup', 'apple-music'),
     styles: [
       {
-        value: 'standard-black',
+        value: 'standard',
         label: __('Standard Black', 'apple-news'),
       },
       {
@@ -41,7 +41,7 @@ const embedTypes = [
     label: __('App Icon', 'apple-music'),
     styles: [
       {
-        value: '',
+        value: 'standard',
         label: __('Standard', 'apple-news'),
       },
       {
