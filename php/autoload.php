@@ -24,9 +24,9 @@ function autoload( $cls ) {
 		return;
 	}
 
-	$cls = strtolower( str_replace( [ __NAMESPACE__ . '\\', '_' ], [ '', '-' ], $cls ) );
+	$cls  = strtolower( str_replace( [ __NAMESPACE__ . '\\', '_' ], [ '', '-' ], $cls ) );
 	$dirs = explode( '\\', $cls );
-	$cls = array_pop( $dirs );
+	$cls  = array_pop( $dirs );
 
 	foreach ( [ 'class', 'trait' ] as $type ) {
 		$filename = PATH . rtrim( '/php/' . implode( '/', $dirs ), '/' ) . "/{$type}-{$cls}.php";
