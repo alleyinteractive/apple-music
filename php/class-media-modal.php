@@ -6,7 +6,7 @@ class Media_Modal {
 
 	public $items = [];
 	public $meta = [
-		'count'  => null,
+		'count' => null,
 	];
 
 	public $id = null;
@@ -66,8 +66,8 @@ class Media_Modal {
 		$request['page'] = absint( $request['page'] );
 		$params          = $request['params'];
 
-		$tabs = $this->tabs();
-		$type = isset( $tabs[ key( $params ) ]['type'] ) ? $tabs[ key( $params ) ]['type'] : key( $params );
+		$tabs     = $this->tabs();
+		$type     = isset( $tabs[ key( $params ) ]['type'] ) ? $tabs[ key( $params ) ]['type'] : key( $params );
 		$api      = new API();
 		$response = $api->search( reset( $params ), $type, $request['page'] );
 
@@ -160,9 +160,9 @@ class Media_Modal {
 					case 'activities':
 					case 'music-videos':
 						// @codingStandardsIgnoreLine snake_case is returned by API.
-						$item['content']     = $attributes->artistName . ' ' . $attributes->name;
-						$thumbnail           = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
-						$item['thumbnail']   = esc_url_raw( $thumbnail );
+						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
+						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
+						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['description'] = $attributes->editorialNotes->short;
 						break;

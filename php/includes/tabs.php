@@ -4,29 +4,29 @@ add_filter( 'apple_music_media_modal_tabs', 'apple_music_media_modal_tabs' );
 
 function apple_music_media_modal_tabs() {
 	$tabs = [
-		'artists'    => [
+		'artists'     => [
 			'text'       => __( 'Artists', 'apple-music' ),
 			'defaultTab' => true,
 		],
-		'songs'      => [
+		'songs'       => [
 			'text' => __( 'Songs', 'apple-music' ),
 		],
-		'albums'     => [
+		'albums'      => [
 			'text' => __( 'Albums', 'apple-music' ),
 		],
-		'playlists'  => [
+		'playlists'   => [
 			'text' => __( 'Playlists', 'apple-music' ),
 		],
-		'activities' => [
+		'activities'  => [
 			'text' => __( 'Activities', 'apple-music' ),
 		],
-		'curators'   => [
+		'curators'    => [
 			'text' => __( 'Curators', 'apple-music' ),
 		],
-		'stations'   => [
+		'stations'    => [
 			'text' => __( 'Radio', 'apple-music' ),
 		],
-		'musicVideos'     => [
+		'musicVideos' => [
 			'text' => __( 'Music Videos', 'apple-music' ),
 			'type' => 'music-videos',
 		],
