@@ -11,6 +11,7 @@ module.exports = (env) => ({
       'js/[name].bundle.min.js' :
       'js/[name].bundle.js',
     path: path.join(__dirname, 'assets'),
+    publicPath: '/wp-content/plugins/apple-music/assets/',
   },
 
   resolve: {
@@ -55,6 +56,19 @@ module.exports = (env) => ({
                 path: path
                   .resolve(__dirname, './assets/config/postcss.config.js'),
               },
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpg|svg)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              limit: 10000,
+              mimetype: 'image/svg+xml',
+              outputPath: 'images/',
             },
           },
         ],
