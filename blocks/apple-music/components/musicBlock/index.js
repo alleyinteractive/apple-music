@@ -80,6 +80,7 @@ class MusicBlock extends Component {
       width: 'width' === key ? value : attributes.width,
       height: 'height' === key ? value : attributes.height,
       embedType: 'embedType' === key ? value : attributes.embedType,
+      embedStyle: 'embedStyle' === key ? value : attributes.embedStyle,
       query: 'query' === key ? value : attributes.query,
       musicType: 'musicType' === key ? value : attributes.musicType,
     });

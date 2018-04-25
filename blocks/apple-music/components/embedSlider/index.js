@@ -23,34 +23,10 @@ const EmbedSlider = ({
   onTypeChange,
   onStyleChange,
 }) => {
-  const embedStyles = embedTypes.map((x) => {
-    if (undefined !== x.styles && x.value === embedType) {
-      return x.styles;
-    }
-    return '';
-  });
-
-  const test = [
-    {
-      value: 'standard-black',
-      label: __('Standard Black', 'apple-news'),
-    },
-    {
-      value: 'standard-white',
-      label: __('Standard White', 'apple-news'),
-    },
-    {
-      value: 'mono-white',
-      label: __('Mono White', 'apple-news'),
-    },
-    {
-      value: 'mono-black',
-      label: __('Mono Black', 'apple-news'),
-    },
-  ];
-
-  console.log('Map', embedStyles);
-  console.log('Test', test);
+  // Get the styles options for the Select Control.
+  const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
+    (undefined !== styles && value === embedType) ?
+      acc.concat(styles) : acc.concat()), []);
 
   return (
     <div>
@@ -72,7 +48,7 @@ const EmbedSlider = ({
                 embedType === value) &&
                 <SelectControl
                   value={embedStyle}
-                  options={embedStyle}
+                  options={embedStyles}
                   onChange={(style) => onStyleChange(style, 'embedStyle')}
                 />
             }
