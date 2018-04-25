@@ -70,7 +70,7 @@ class API {
 	public function get_storefronts() {
 		$transient   = 'apple-music-storefronts';
 		$storefronts = get_transient( $transient );
-		//if ( false === $storefronts ) {
+		if ( false === $storefronts ) {
 
 		$url = sprintf( '%s/%s',
 			$this->base_url,
@@ -83,7 +83,7 @@ class API {
 			set_transient( $transient, $storefronts, DAY_IN_SECONDS );
 		}
 
-		//}
+		}
 
 		return $storefronts;
 	}

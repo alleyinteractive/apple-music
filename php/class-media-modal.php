@@ -7,8 +7,6 @@ class Media_Modal {
 	public $items = [];
 	public $meta = [
 		'count'  => null,
-		'max_id' => null,
-		'min_id' => null,
 	];
 
 	public $id = null;
@@ -62,16 +60,16 @@ class Media_Modal {
 		$request = wp_parse_args( stripslashes_deep( $_POST ), [
 			'params' => [],
 			'tab'    => null,
-			'min_id' => null,
-			'max_id' => null,
 			'page'   => 1,
 		] );
 
-		$request['page']    = absint( $request['page'] );
-		$request['user_id'] = absint( get_current_user_id() );
-		$params             = $request['params'];
+		$request['page'] = absint( $request['page'] );
+		$params          = $request['params'];
+
+		$tabs = $this->tabs();
+		$type = isset( $tabs[ key( $params ) ]['type'] ) ? $tabs[ key( $params ) ]['type'] : key( $params );
 		$api      = new API();
-		$response = $api->search( reset( $params ), key( $params ), $request['page'] );
+		$response = $api->search( reset( $params ), $type, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( [
@@ -210,9 +208,6 @@ class Media_Modal {
 
 		if ( is_null( $this->meta['count'] ) ) {
 			$this->meta['count'] = count( $this->items );
-		}
-		if ( is_null( $this->meta['min_id'] ) ) {
-			$this->meta['min_id'] = reset( $this->items )->id;
 		}
 
 		$output = [

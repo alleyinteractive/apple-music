@@ -21,7 +21,6 @@ media.view.AppleMusicItem = wp.Backbone.View.extend( {
 	className: 'apple-music-item attachment',
 
 	render: function () {
-
 		this.template = media.template( 'apple-music-item-' + this.options.tab );
 		this.$el.html( this.template( this.model.toJSON() ) );
 
@@ -345,9 +344,7 @@ media.view.AppleMusic = media.View.extend( {
 				this.fetchedEmpty( response );
 				return;
 			}
-
-			this.model.set( 'min_id', response.meta.min_id );
-
+			
 			this.model.set( 'items', response.items );
 
 			this.collection.reset( response.items );
@@ -375,8 +372,7 @@ media.view.AppleMusic = media.View.extend( {
 		}
 
 		jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
-		this.model.set( 'max_id', response.meta.max_id );
-
+		
 		this.trigger( 'loaded loaded:success', response );
 
 	},
@@ -448,9 +444,6 @@ media.view.AppleMusic = media.View.extend( {
 		// triggered when the search parameters are changed
 
 		this.model.set( 'page', null );
-		this.model.set( 'min_id', null );
-		this.model.set( 'max_id', null );
-
 		this.clearItems();
 		this.fetchItems();
 
@@ -558,8 +551,6 @@ media.controller.AppleMusic = media.controller.State.extend( {
 				id: tab,
 				params: {},
 				page: null,
-				min_id: null,
-				max_id: null,
 				fetchOnRender: options.tabs[tab].fetchOnRender,
 			} ) );
 
