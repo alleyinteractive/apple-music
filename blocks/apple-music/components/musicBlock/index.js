@@ -113,11 +113,12 @@ class MusicBlock extends Component {
   render() {
     const {
       attributes,
+      className,
       isSelected,
     } = this.props;
 
     return (
-      <div>
+      <div className={className}>
         { isSelected &&
           <InspectorControls key="inspector">
             <PanelBody title={__('Apple Music Settings', 'apple-music')}>
@@ -201,6 +202,7 @@ MusicBlock.propTypes = {
       type: PropTypes.string,
     }),
   }).isRequired,
+  className: PropTypes.string.isRequired,
   setAttributes: PropTypes.func.isRequired,
   isSelected: PropTypes.func.isRequired,
 };

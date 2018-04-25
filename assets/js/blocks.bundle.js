@@ -2863,12 +2863,13 @@ var MusicBlock = function (_Component) {
 
       var _props3 = this.props,
           attributes = _props3.attributes,
+          className = _props3.className,
           isSelected = _props3.isSelected;
 
 
       return wp.element.createElement(
         'div',
-        null,
+        { className: className },
         isSelected && wp.element.createElement(
           InspectorControls,
           { key: 'inspector' },
@@ -2948,6 +2949,7 @@ MusicBlock.propTypes = {
       type: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string
     })
   }).isRequired,
+  className: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.string.isRequired,
   setAttributes: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired,
   isSelected: __WEBPACK_IMPORTED_MODULE_6_prop_types___default.a.func.isRequired
 };
@@ -5797,7 +5799,7 @@ var DisplayTools = function DisplayTools(_ref) {
     imageSrc && wp.element.createElement(
       'div',
       { className: 'image' },
-      wp.element.createElement('img', { src: imageSrc, alt: __(name, 'apple-music') })
+      wp.element.createElement('img', { src: imageSrc, alt: name })
     ),
     name && wp.element.createElement(
       'div',
@@ -5880,13 +5882,17 @@ var DisplayTools = function DisplayTools(_ref) {
             return _onChange(value, 'embedType');
           }
         },
-        __(label, 'apple-music')
+        label
       );
     }),
     !inPanel && wp.element.createElement(
       'div',
-      null,
-      __('Direct Link: ', 'apple-music'),
+      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.directLink },
+      wp.element.createElement(
+        'b',
+        null,
+        __('Direct Link: ', 'apple-music')
+      ),
       wp.element.createElement(
         ExternalLink,
         { href: directLink },
@@ -6005,14 +6011,15 @@ exports = module.exports = __webpack_require__(26)(false);
 
 
 // module
-exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }", ""]);
+exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}", ""]);
 
 // exports
 exports.locals = {
 	"name": "displayTools__name__3ThlN",
 	"secondary": "displayTools__secondary__2lZXQ",
 	"dimensionsForm": "displayTools__dimensionsForm__36bOK",
-	"dimensions": "displayTools__dimensions___W0Uh"
+	"dimensions": "displayTools__dimensions___W0Uh",
+	"directLink": "displayTools__directLink__mifB_"
 };
 
 /***/ }),
@@ -6291,7 +6298,9 @@ var Button = window.wp.components.Button;
 
 // Internationalization
 
-var __ = window.wp.i18n.__;
+var _window$wp$i18n = window.wp.i18n,
+    __ = _window$wp$i18n.__,
+    sprintf = _window$wp$i18n.sprintf;
 
 
 var MusicItem = function MusicItem(_ref) {
@@ -6322,7 +6331,7 @@ var MusicItem = function MusicItem(_ref) {
         { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artwork },
         wp.element.createElement('img', {
           src: imageSrc,
-          alt: __('Album Art:', 'apple-music') + ' ' + name,
+          alt: sprintf(__('Album Art: %s', 'apple-music'), name),
           className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artworkImage
         })
       ),
@@ -7064,7 +7073,9 @@ var _window$wp$components = window.wp.components,
 
 // Internationalization
 
-var __ = window.wp.i18n.__;
+var _window$wp$i18n = window.wp.i18n,
+    __ = _window$wp$i18n.__,
+    sprintf = _window$wp$i18n.sprintf;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -7090,7 +7101,7 @@ var SearchTools = function SearchTools(_ref) {
     { className: className },
     wp.element.createElement(TextControl, {
       value: query,
-      placeHolder: 'Search ' + typeObject.label,
+      placeHolder: sprintf(__('Search ', 'apple-music'), typeObject.label),
       className: __WEBPACK_IMPORTED_MODULE_3__searchTools_css___default.a.search,
       onChange: function onChange(term) {
         return updateSearch(term, 'query');
