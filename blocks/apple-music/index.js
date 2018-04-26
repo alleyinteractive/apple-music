@@ -52,7 +52,7 @@ export default registerBlockType(
         source: 'children',
         selector: '.display-music',
       },
-      textLockupStyle: {
+      textLockUpStyle: {
         type: 'string',
         default: 'standard-black',
       },

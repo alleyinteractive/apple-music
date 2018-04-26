@@ -23,13 +23,14 @@ const { __ } = window.wp.i18n;
  */
 const DisplayTools = ({
   attributes: {
+    appIconStyle,
+    embedType,
+    height,
     iframeSrc,
     item,
-    height,
     musicType,
+    textLockUpStyle,
     width,
-    embedType,
-    embedStyle,
   },
   inPanel,
   onChange,
@@ -105,11 +106,13 @@ const DisplayTools = ({
       }
       {! inPanel && artwork}
       <EmbedSlider
-        musicType={musicType}
+        appIconStyle={appIconStyle}
         embedType={embedType}
-        embedStyle={embedStyle}
-        onStyleChange={(x) => onChange(x, 'embedStyle')}
+        musicType={musicType}
+        onAppIconChange={(x) => onChange(x, 'appIconStyle')}
+        onTextLockUpChange={(x) => onChange(x, 'textLockUpStyle')}
         onTypeChange={(x) => onChange(x, 'embedType')}
+        textLockUpStyle={textLockUpStyle}
       />
       {
         ! inPanel &&
