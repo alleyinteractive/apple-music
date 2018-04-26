@@ -23,37 +23,42 @@ export default registerBlockType(
       html: false,
     },
     attributes: {
-      query: {
-        type: 'array',
-        source: 'children',
-        selector: '.display-music',
-      },
-      musicType: {
+      appIconStyle: {
         type: 'string',
-        default: 'artists',
-      },
-      musicID: {
-        type: 'integer',
-      },
-      item: {
-        type: 'object',
-      },
-      height: {
-        type: 'string',
-      },
-      width: {
-        type: 'string',
-        default: '100%',
+        default: 'standard',
       },
       embedType: {
         type: 'string',
         default: 'preview-player',
       },
-      embedStyle: {
+      height: {
         type: 'string',
       },
       iframeSrc: {
         type: 'string',
+      },
+      item: {
+        type: 'object',
+      },
+      musicID: {
+        type: 'integer',
+      },
+      musicType: {
+        type: 'string',
+        default: 'artists',
+      },
+      query: {
+        type: 'array',
+        source: 'children',
+        selector: '.display-music',
+      },
+      textLockupStyle: {
+        type: 'string',
+        default: 'standard-black',
+      },
+      width: {
+        type: 'string',
+        default: '100%',
       },
     },
     edit: MusicBlock,
