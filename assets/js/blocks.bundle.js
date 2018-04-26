@@ -5948,15 +5948,7 @@ var DisplayTools = function DisplayTools(_ref) {
       appIconStyle: appIconStyle,
       embedType: embedType,
       musicType: musicType,
-      onAppIconChange: function onAppIconChange(x) {
-        return _onChange(x, 'appIconStyle');
-      },
-      onTextLockUpChange: function onTextLockUpChange(x) {
-        return _onChange(x, 'textLockUpStyle');
-      },
-      onTypeChange: function onTypeChange(x) {
-        return _onChange(x, 'embedType');
-      },
+      onChange: _onChange,
       textLockUpStyle: textLockUpStyle
     }),
     !inPanel && wp.element.createElement(
@@ -6019,7 +6011,9 @@ DisplayTools.propTypes = {
 
 
 // Internationalization
-var __ = window.wp.i18n.__;
+var _window$wp$i18n = window.wp.i18n,
+    __ = _window$wp$i18n.__,
+    sprintf = _window$wp$i18n.sprintf;
 // WP components
 
 var _window$wp$components = window.wp.components,
@@ -6035,9 +6029,7 @@ var EmbedSlider = function EmbedSlider(_ref) {
   var appIconStyle = _ref.appIconStyle,
       embedType = _ref.embedType,
       musicType = _ref.musicType,
-      onAppIconChange = _ref.onAppIconChange,
-      onTypeChange = _ref.onTypeChange,
-      onTextLockUpChange = _ref.onTextLockUpChange,
+      _onChange = _ref.onChange,
       textLockUpStyle = _ref.textLockUpStyle;
 
   // Get the styles options for the Select Control.
@@ -6075,6 +6067,7 @@ var EmbedSlider = function EmbedSlider(_ref) {
   function icon(type) {
     // define the default image URL.
     var imageURL = '';
+    var alt = __('Apple Music Icon', 'apple-music');
 
     switch (type) {
       case 'preview-player':
@@ -6084,18 +6077,21 @@ var EmbedSlider = function EmbedSlider(_ref) {
           wp.element.createElement(Dashicon, { icon: 'controls-play' })
         );
       case 'badge':
+        alt = __('badge icon', 'apple-music');
         imageURL = __WEBPACK_IMPORTED_MODULE_4__assets_images_badge_svg___default.a;
         break;
       case 'text-lockup':
+        alt = sprintf(__('%s text lockup icon', 'apple-music'), textLockUpStyle);
         imageURL = imageSrc(textLockUpStyle);
         break;
       case 'app-icon':
+        alt = sprintf(__('%s text lockup icon', 'apple-music'), textLockUpStyle);
         imageURL = imageSrc(appIconStyle);
         break;
       default:
         imageURL = '';
     }
-    return wp.element.createElement('img', { src: imageURL, alt: '' });
+    return imageURL ? wp.element.createElement('img', { src: imageURL, alt: alt }) : '';
   }
 
   return wp.element.createElement(
@@ -6118,7 +6114,7 @@ var EmbedSlider = function EmbedSlider(_ref) {
           {
             key: value,
             onClick: function onClick() {
-              return onTypeChange(value, 'embedType');
+              return _onChange(value, 'embedType');
             }
           },
           icon(value),
@@ -6128,14 +6124,14 @@ var EmbedSlider = function EmbedSlider(_ref) {
           value: textLockUpStyle,
           options: embedStyles,
           onChange: function onChange(x) {
-            return onTextLockUpChange(x, 'textLockUpStyle');
+            return _onChange(x, 'textLockUpStyle');
           }
         }),
         'app-icon' === embedType && 'app-icon' === value && wp.element.createElement(SelectControl, {
           value: appIconStyle,
           options: embedStyles,
           onChange: function onChange(x) {
-            return onAppIconChange(x, 'appIconStyle');
+            return _onChange(x, 'appIconStyle');
           }
         })
       );
@@ -6147,9 +6143,7 @@ EmbedSlider.propTypes = {
   appIconStyle: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
   embedType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
   musicType: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired,
-  onAppIconChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  onTextLockUpChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
-  onTypeChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
+  onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired,
   textLockUpStyle: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.string.isRequired
 };
 
@@ -6243,25 +6237,25 @@ var embedTypes = [{
 /* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/d811b38042dd9f30876a2b479ea8c61f.svg";
+module.exports = __webpack_require__.p + "images/4863871f6e12edb55bcee182b02a4f56.svg";
 
 /***/ }),
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/6900bd20e529a4961540d73748bab7a1.svg";
+module.exports = __webpack_require__.p + "images/754d6443dad00e43fe1aee1b53509895.svg";
 
 /***/ }),
 /* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/665505a0ae798e0aca8dbea081e6e4ac.svg";
+module.exports = __webpack_require__.p + "images/8020bec239fee6747323b767be146fe5.svg";
 
 /***/ }),
 /* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/5cc37d6145404cd6cb124b75fbb5be47.svg";
+module.exports = __webpack_require__.p + "images/ed8c5813d5d65b6e4c162eb72aa47e8d.svg";
 
 /***/ }),
 /* 127 */
@@ -6285,7 +6279,7 @@ module.exports = __webpack_require__.p + "images/12c4145ac7cf643721670a30947ff68
 /* 130 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "images/0d25cc45cdf313ef03b530088c810f14.svg";
+module.exports = __webpack_require__.p + "images/708e1b85ec7bb36ff6facba3b4a22a0e.svg";
 
 /***/ }),
 /* 131 */

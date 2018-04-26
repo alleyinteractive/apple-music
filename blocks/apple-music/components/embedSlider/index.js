@@ -7,7 +7,7 @@ import { showEmbed } from '../../utils';
 import badge from '../../../../assets/images/badge.svg';
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __, sprintf } = window.wp.i18n;
 // WP components
 const {
   Button,
@@ -22,9 +22,7 @@ const EmbedSlider = ({
   appIconStyle,
   embedType,
   musicType,
-  onAppIconChange,
-  onTypeChange,
-  onTextLockUpChange,
+  onChange,
   textLockUpStyle,
 }) => {
   // Get the styles options for the Select Control.
@@ -55,23 +53,33 @@ const EmbedSlider = ({
   function icon(type) {
     // define the default image URL.
     let imageURL = '';
+    let alt = __('Apple Music Icon', 'apple-music');
 
     switch (type) {
       case 'preview-player':
         return <div className=""><Dashicon icon="controls-play" /></div>;
       case 'badge':
+        alt = __('badge icon', 'apple-music');
         imageURL = badge;
         break;
       case 'text-lockup':
+        alt = sprintf(
+          __('%s text lockup icon', 'apple-music'),
+          textLockUpStyle
+        );
         imageURL = imageSrc(textLockUpStyle);
         break;
       case 'app-icon':
+        alt = sprintf(
+          __('%s text lockup icon', 'apple-music'),
+          textLockUpStyle
+        );
         imageURL = imageSrc(appIconStyle);
         break;
       default:
         imageURL = '';
     }
-    return <img src={imageURL} alt="" />;
+    return imageURL ? <img src={imageURL} alt={alt} /> : '';
   }
 
   return (
@@ -86,7 +94,7 @@ const EmbedSlider = ({
           <div>
             <Button
               key={value}
-              onClick={() => onTypeChange(value, 'embedType')}
+              onClick={() => onChange(value, 'embedType')}
             >
               {icon(value)}
               {__(label, 'apple-music')}
@@ -96,7 +104,7 @@ const EmbedSlider = ({
                 <SelectControl
                   value={textLockUpStyle}
                   options={embedStyles}
-                  onChange={(x) => onTextLockUpChange(x, 'textLockUpStyle')}
+                  onChange={(x) => onChange(x, 'textLockUpStyle')}
                 />
             }
             {
@@ -104,7 +112,7 @@ const EmbedSlider = ({
                 <SelectControl
                   value={appIconStyle}
                   options={embedStyles}
-                  onChange={(x) => onAppIconChange(x, 'appIconStyle')}
+                  onChange={(x) => onChange(x, 'appIconStyle')}
                 />
             }
           </div>
@@ -118,9 +126,7 @@ EmbedSlider.propTypes = {
   appIconStyle: PropTypes.string.isRequired,
   embedType: PropTypes.string.isRequired,
   musicType: PropTypes.string.isRequired,
-  onAppIconChange: PropTypes.func.isRequired,
-  onTextLockUpChange: PropTypes.func.isRequired,
-  onTypeChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
   textLockUpStyle: PropTypes.string.isRequired,
 };
 

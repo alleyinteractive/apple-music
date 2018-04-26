@@ -109,9 +109,7 @@ const DisplayTools = ({
         appIconStyle={appIconStyle}
         embedType={embedType}
         musicType={musicType}
-        onAppIconChange={(x) => onChange(x, 'appIconStyle')}
-        onTextLockUpChange={(x) => onChange(x, 'textLockUpStyle')}
-        onTypeChange={(x) => onChange(x, 'embedType')}
+        onChange={onChange}
         textLockUpStyle={textLockUpStyle}
       />
       {
