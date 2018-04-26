@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PreviewPlayer from '../previewPlayer';
+import PreviewPlayer from 'Components/previewPlayer';
 
 const MusicDisplay = ({
   attributes: {

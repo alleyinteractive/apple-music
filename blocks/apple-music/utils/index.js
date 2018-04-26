@@ -1,4 +1,4 @@
-import musicTypes from '../config/musicTypes';
+import musicTypes from 'Config/musicTypes';
 
 /**
  * Get an objects key value.

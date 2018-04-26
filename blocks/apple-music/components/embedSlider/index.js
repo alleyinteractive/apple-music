@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import embedTypes from '../../config/embedTypes';
-import { showEmbed } from '../../utils';
-
-// Import images.
-import badge from '../../../../assets/images/badge.svg';
+import badge from 'Images/badge.svg';
+import embedTypes from 'Config/embedTypes';
+import { showEmbed } from 'Utils';
 
 // Internationalization
 const { __, sprintf } = window.wp.i18n;
