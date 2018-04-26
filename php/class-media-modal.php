@@ -6,9 +6,7 @@ class Media_Modal {
 
 	public $items = [];
 	public $meta = [
-		'count'  => null,
-		'max_id' => null,
-		'min_id' => null,
+		'count' => null,
 	];
 
 	public $id = null;
@@ -62,16 +60,16 @@ class Media_Modal {
 		$request = wp_parse_args( stripslashes_deep( $_POST ), [
 			'params' => [],
 			'tab'    => null,
-			'min_id' => null,
-			'max_id' => null,
 			'page'   => 1,
 		] );
 
-		$request['page']    = absint( $request['page'] );
-		$request['user_id'] = absint( get_current_user_id() );
-		$params             = $request['params'];
+		$request['page'] = absint( $request['page'] );
+		$params          = $request['params'];
+
+		$tabs     = $this->tabs();
+		$type     = isset( $tabs[ key( $params ) ]['type'] ) ? $tabs[ key( $params ) ]['type'] : key( $params );
 		$api      = new API();
-		$response = $api->search( reset( $params ), key( $params ), $request['page'] );
+		$response = $api->search( reset( $params ), $type, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( [
@@ -162,9 +160,9 @@ class Media_Modal {
 					case 'activities':
 					case 'music-videos':
 						// @codingStandardsIgnoreLine snake_case is returned by API.
-						$item['content']     = $attributes->artistName . ' ' . $attributes->name;
-						$thumbnail           = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
-						$item['thumbnail']   = esc_url_raw( $thumbnail );
+						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
+						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
+						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						// @codingStandardsIgnoreLine snake_case is returned by API.
 						$item['description'] = $attributes->editorialNotes->short;
 						break;
@@ -210,9 +208,6 @@ class Media_Modal {
 
 		if ( is_null( $this->meta['count'] ) ) {
 			$this->meta['count'] = count( $this->items );
-		}
-		if ( is_null( $this->meta['min_id'] ) ) {
-			$this->meta['min_id'] = reset( $this->items )->id;
 		}
 
 		$output = [

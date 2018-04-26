@@ -21,7 +21,6 @@ media.view.AppleMusicItem = wp.Backbone.View.extend( {
 	className: 'apple-music-item attachment',
 
 	render: function () {
-
 		this.template = media.template( 'apple-music-item-' + this.options.tab );
 		this.$el.html( this.template( this.model.toJSON() ) );
 
@@ -259,8 +258,10 @@ media.view.AppleMusic = media.View.extend( {
 
 	addToSelection: function ( target, id ) {
 
+		this.clearSelection();
+		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
+		
 		target.closest( '.apple-music-item' ).addClass( 'selected details' );
-
 		this.getSelection().add( this.collection._byId[id] );
 
 		// @TODO why isn't this triggered by the above line?
@@ -288,7 +289,6 @@ media.view.AppleMusic = media.View.extend( {
 	},
 
 	clearItems: function () {
-
 		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
 		this.$el.find( '.apple-music-items' ).empty();
 		this.$el.find( '.apple-music-pagination' ).hide();
@@ -296,23 +296,14 @@ media.view.AppleMusic = media.View.extend( {
 	},
 
 	loading: function () {
-
-		// show spinner
 		this.$el.find( '.spinner' ).addClass( 'is-active' );
-
-		// hide messages
 		this.$el.find( '.apple-music-error' ).hide().text( '' );
 		this.$el.find( '.apple-music-empty' ).hide().text( '' );
-
-		// disable 'load more' button
 		jQuery( '#apple-music-loadmore' ).attr( 'disabled', true );
 	},
 
 	loaded: function ( response ) {
-
-		// hide spinner
 		this.$el.find( '.spinner' ).removeClass( 'is-active' );
-
 	},
 
 	fetchItems: function () {
@@ -345,9 +336,7 @@ media.view.AppleMusic = media.View.extend( {
 				this.fetchedEmpty( response );
 				return;
 			}
-
-			this.model.set( 'min_id', response.meta.min_id );
-
+			
 			this.model.set( 'items', response.items );
 
 			this.collection.reset( response.items );
@@ -375,8 +364,7 @@ media.view.AppleMusic = media.View.extend( {
 		}
 
 		jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
-		this.model.set( 'max_id', response.meta.max_id );
-
+		
 		this.trigger( 'loaded loaded:success', response );
 
 	},
@@ -448,9 +436,6 @@ media.view.AppleMusic = media.View.extend( {
 		// triggered when the search parameters are changed
 
 		this.model.set( 'page', null );
-		this.model.set( 'min_id', null );
-		this.model.set( 'max_id', null );
-
 		this.clearItems();
 		this.fetchItems();
 
@@ -558,8 +543,6 @@ media.controller.AppleMusic = media.controller.State.extend( {
 				id: tab,
 				params: {},
 				page: null,
-				min_id: null,
-				max_id: null,
 				fetchOnRender: options.tabs[tab].fetchOnRender,
 			} ) );
 
