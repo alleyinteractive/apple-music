@@ -53,6 +53,17 @@ class Settings {
 				'label_for' => 'storefront',
 			]
 		);
+
+		add_settings_field(
+			'apple_music_affiliate_token',
+			esc_html__( 'Apple Music Affiliate Token', 'apple-music' ),
+			[ $this, 'add_affiliate_token_field' ],
+			'apple_music',
+			'apple_music_settings',
+			[
+				'label_for' => 'affiliate_token',
+			]
+		);
 	}
 
 	/**
@@ -74,6 +85,18 @@ class Settings {
 	function get_token() {
 		$options = get_option( 'apple_music_options' );
 		$token   = ! empty( $options['token'] ) ? $options['token'] : '';
+
+		return $token;
+	}
+
+	/**
+	 * Helper to get affiliate token.
+	 *
+	 * @return string
+	 */
+	function get_affiliate_token() {
+		$options = get_option( 'apple_music_options' );
+		$token   = ! empty( $options['affiliate_token'] ) ? $options['affiliate_token'] : '';
 
 		return $token;
 	}
@@ -120,13 +143,29 @@ class Settings {
 		<select id="<?php echo esc_attr( $args['label_for'] ); ?>" name="apple_music_options[<?php echo esc_attr( $args['label_for'] ); ?>]">
 			<?php foreach ( $storefronts->data as $sf ) : ?>
 				<option value="<?php echo esc_attr( $sf->id ); ?>" <?php selected( $storefront, $sf->id ); ?>>
-					<?php esc_html( $sf->attributes->name ); ?>
+					<?php echo esc_html( $sf->attributes->name ); ?>
 				</option>
 			<?php endforeach; ?>
 		</select>
 		<p class="description">
 			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
 		</p>
+		<?php
+	}
+
+	/**
+	 * Affiliate token field.
+	 *
+	 * @param $args
+	 */
+	function add_affiliate_token_field( $args ) {
+		?>
+		<input type="text" name="apple_music_options[affiliate_token]" value="<?php echo esc_attr( $this->get_affiliate_token() ); ?>" class="large-text"/>
+
+		<p class="description">
+			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
+		</p>
+
 		<?php
 	}
 
