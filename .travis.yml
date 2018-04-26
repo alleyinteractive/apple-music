@@ -61,5 +61,5 @@ script:
   - |
     if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
       phpcs --standard=./phpcs.xml
-      phpcs -p -s -v -n --standard=./phpcs.xml --extensions=php .
+      phpcs -p -s -v -n -s --standard=./phpcs.xml --extensions=php .
     fi
