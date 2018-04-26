@@ -48,6 +48,19 @@
   "babel": {
     "presets": [
       "@wordpress/default"
+    ],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./"
+          ],
+          "alias": {
+            "Images": "./assets/images"
+          }
+        }
+      ]
     ]
   }
 }

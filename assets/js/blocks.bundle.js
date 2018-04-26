@@ -6154,8 +6154,7 @@ EmbedSlider.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_images_standard_black_svg__ = __webpack_require__(123);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__assets_images_standard_black_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__assets_images_standard_black_svg__);
+throw new Error("Cannot find module \"Images/standard-black.svg\"");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_images_standard_white_svg__ = __webpack_require__(124);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_images_standard_white_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_images_standard_white_svg__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_images_mono_white_svg__ = __webpack_require__(125);
@@ -6199,7 +6198,7 @@ var embedTypes = [{
   styles: [{
     value: 'standard-black',
     label: __('Standard Black', 'apple-music'),
-    imagePath: __WEBPACK_IMPORTED_MODULE_0__assets_images_standard_black_svg___default.a
+    imagePath: __WEBPACK_IMPORTED_MODULE_0_Images_standard_black_svg___default.a
   }, {
     value: 'standard-white',
     label: __('Standard White', 'apple-music'),
@@ -6234,12 +6233,7 @@ var embedTypes = [{
 /* harmony default export */ __webpack_exports__["a"] = (embedTypes);
 
 /***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__.p + "images/4863871f6e12edb55bcee182b02a4f56.svg";
-
-/***/ }),
+/* 123 */,
 /* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
