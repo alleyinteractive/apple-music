@@ -75,15 +75,12 @@ class MusicBlock extends Component {
    */
   updateAttributes(value, key) {
     const { attributes, setAttributes } = this.props;
-    // TODO: this could be less repetitive.
-    setAttributes({
-      width: 'width' === key ? value : attributes.width,
-      height: 'height' === key ? value : attributes.height,
-      embedType: 'embedType' === key ? value : attributes.embedType,
-      embedStyle: 'embedStyle' === key ? value : attributes.embedStyle,
-      query: 'query' === key ? value : attributes.query,
-      musicType: 'musicType' === key ? value : attributes.musicType,
-    });
+    // Clone the attributes object.
+    const attrsClone = Object.assign({}, attributes);
+    // Assign new value to cloned attribute key.
+    attrsClone[key] = value || attributes[key];
+    // Set the attributes using the cloned object.
+    setAttributes(attrsClone);
   }
 
   /**
