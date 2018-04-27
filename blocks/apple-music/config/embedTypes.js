@@ -61,12 +61,12 @@ const embedTypes = [
         imagePath: standard,
       },
       {
-        value: 'FFFFFF',
+        value: 'white',
         label: __('White', 'apple-music'),
         imagePath: white,
       },
       {
-        value: '000000',
+        value: 'black',
         label: __('Black', 'apple-music'),
         imagePath: black,
       },

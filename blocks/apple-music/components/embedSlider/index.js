@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
 import { showEmbed } from 'Utils';
+// Use a different declaration for styles since we are using this variable name.
+import css from './embedSlider.css';
 
 // Internationalization
 const { __, sprintf } = window.wp.i18n;
@@ -52,10 +54,17 @@ const EmbedSlider = ({
     // define the default image URL.
     let imageURL = '';
     let alt = __('Apple Music Icon', 'apple-music');
+    let imgClass = '';
 
     switch (type) {
       case 'preview-player':
-        return <div className=""><Dashicon icon="controls-play" /></div>;
+        return (
+          <div className={css.imageWrapper}>
+            <div className={css.previewPlayer}>
+              <Dashicon icon="controls-play" />
+            </div>
+          </div>
+        );
       case 'badge':
         alt = __('badge icon', 'apple-music');
         imageURL = badge;
@@ -65,41 +74,54 @@ const EmbedSlider = ({
           __('%s text lockup icon', 'apple-music'),
           textLockUpStyle
         );
+        imgClass = textLockUpStyle;
         imageURL = imageSrc(textLockUpStyle);
         break;
       case 'app-icon':
         alt = sprintf(
           __('%s text lockup icon', 'apple-music'),
-          textLockUpStyle
+          appIconStyle
         );
+        imgClass = appIconStyle;
         imageURL = imageSrc(appIconStyle);
         break;
       default:
         imageURL = '';
     }
-    return imageURL ? <img src={imageURL} alt={alt} /> : '';
+    return imageURL ? (
+      <div className={`${css.imageWrapper} ${css[imgClass]}`}>
+        <img
+          src={imageURL}
+          alt={alt}
+        />
+      </div>
+    ) : '';
   }
 
   return (
-    <div>
+    <div className={css.slider}>
       {embedTypes.map(({ value, label }) => {
         // If the musicType doesn't support embeds don't show preview player.
         if ('preview-player' === value && ! showEmbed(musicType)) {
           return null;
         }
+        // Active class for the selected embed type.
+        const activeClass = embedType === value ? css.active : '';
 
         return (
-          <div>
+          <div className={`${css.slide} ${activeClass}`}>
             <Button
+              className={css.iconSelector}
               key={value}
               onClick={() => onChange(value, 'embedType')}
             >
               {icon(value)}
-              {__(label, 'apple-music')}
+              <p>{__(label, 'apple-music')}</p>
             </Button>
             {
               ('text-lockup' === embedType && 'text-lockup' === value) &&
                 <SelectControl
+                  className={css.selectStyle}
                   value={textLockUpStyle}
                   options={embedStyles}
                   onChange={(x) => onChange(x, 'textLockUpStyle')}
@@ -108,6 +130,7 @@ const EmbedSlider = ({
             {
               ('app-icon' === embedType && 'app-icon' === value) &&
                 <SelectControl
+                  className={css.selectStyle}
                   value={appIconStyle}
                   options={embedStyles}
                   onChange={(x) => onChange(x, 'appIconStyle')}
