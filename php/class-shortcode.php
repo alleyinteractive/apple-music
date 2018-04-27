@@ -95,9 +95,13 @@ class Shortcode {
 			return false;
 		}
 
-		// Get storefront.
 		$settings   = new Settings();
+
+		// Get storefront.
 		$storefront = $settings->get_storefront();
+
+		// Get affiliate token, if applicable.
+		$affiliate_token = $settings->get_affiliate_token();
 
 		// If necessary, set a default format.
 		$format = array_key_exists( $shortcode_atts['format'], $formats ) ? $shortcode_atts['format'] : $all_types[ $shortcode_atts['type'] ]['default_format'];
@@ -105,11 +109,12 @@ class Shortcode {
 		// Embeds only (album, song, playlist).
 		if ( array_key_exists( $shortcode_atts['type'], $embeddable_types ) && 'player' === $format ) {
 
-			$url = sprintf( '%1$s/%2$s/%3$s?country=%4$s',
+			$url = sprintf( '%1$s/%2$s/%3$s?country=%4$s%5$s',
 				'https://tools.applemusic.com/embed/v1',
 				$embeddable_types[ $shortcode_atts['type'] ]['singular'],
 				$shortcode_atts['id'],
-				$storefront
+				$storefront,
+				! empty( $affiliate_token ) ? '&amp;at=' . $affiliate_token : ''
 			);
 
 			$output = sprintf( '<iframe src="%1$s" height="%2$s" width="%3$s" frameborder="0"></iframe>',
@@ -120,12 +125,13 @@ class Shortcode {
 
 		} else {
 
-			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s',
+			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s%6$s',
 				'https://geo.itunes.apple.com', // 1
 				$storefront, // 2
 				sanitize_text_field( $all_types[ $shortcode_atts['type'] ]['singular'] ), // 3
 				sanitize_title( $shortcode_atts['name'] ), // 4
-				sanitize_text_field( $shortcode_atts['id'] ) // 5
+				sanitize_text_field( $shortcode_atts['id'] ), // 5
+				! empty( $affiliate_token ) ? '?at=' . $affiliate_token : '' // 6
 			);
 
 			// If we just want a link, we're done here.
