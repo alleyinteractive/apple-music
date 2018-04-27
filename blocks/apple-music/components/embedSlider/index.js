@@ -21,10 +21,14 @@ const {
 const EmbedSlider = ({
   appIconStyle,
   embedType,
+  inPanel,
   musicType,
   onChange,
   textLockUpStyle,
 }) => {
+  // Class for slider context. In panel or editor.
+  const sliderClass = inPanel ? css.panelSlider : css.slider;
+
   // Get the styles options for the Select Control.
   const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
     (undefined !== styles && value === embedType) ?
@@ -99,7 +103,7 @@ const EmbedSlider = ({
   }
 
   return (
-    <div className={css.slider}>
+    <div className={sliderClass}>
       {embedTypes.map(({ value, label }) => {
         // If the musicType doesn't support embeds don't show preview player.
         if ('preview-player' === value && ! showEmbed(musicType)) {
@@ -143,9 +147,14 @@ const EmbedSlider = ({
   );
 };
 
+EmbedSlider.defaultProps = {
+  inPanel: true,
+};
+
 EmbedSlider.propTypes = {
   appIconStyle: PropTypes.string.isRequired,
   embedType: PropTypes.string.isRequired,
+  inPanel: PropTypes.bool,
   musicType: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   textLockUpStyle: PropTypes.string.isRequired,

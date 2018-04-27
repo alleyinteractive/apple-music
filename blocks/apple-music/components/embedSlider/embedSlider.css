@@ -102,3 +102,15 @@
     color: var(--red);
   }
 }
+
+.panelSlider {
+
+  .slide {
+    border-bottom: 1px solid #e2e4e7; /* WP Admin grey */
+    margin-top: em(12px);
+
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}

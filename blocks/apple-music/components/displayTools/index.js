@@ -108,6 +108,7 @@ const DisplayTools = ({
       <EmbedSlider
         appIconStyle={appIconStyle}
         embedType={embedType}
+        inPanel={inPanel}
         musicType={musicType}
         onChange={onChange}
         textLockUpStyle={textLockUpStyle}
