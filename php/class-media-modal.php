@@ -5,10 +5,7 @@ namespace Apple_Music;
 class Media_Modal {
 
 	public $items = [];
-	public $meta = [
-		'count' => null,
-	];
-
+	public $meta = [ 'count' => null ];
 	public $id = null;
 	public $content = null;
 
@@ -45,9 +42,10 @@ class Media_Modal {
 
 	public function tabs() {
 		$tabs = apply_filters( 'apple_music_types', [] );
+
 		return wp_list_pluck( $tabs, 'tab_text', 'tab_name' );
 	}
-	
+
 	public function add_button() {
 		echo '<a href="#" class="button">' . esc_html__( 'Apple Music' ) . '</a>';
 	}

@@ -65,7 +65,7 @@ function apple_music_types() {
 }
 
 function apple_music_get_player_types() {
-	$types        = apply_filters( 'apple_music_types', [ ] );
+	$types        = apply_filters( 'apple_music_types', [] );
 	$player_types = array_filter( $types, function ( $type ) {
 		return 'player' === $type['default_format'];
 	} );

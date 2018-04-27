@@ -43,15 +43,15 @@ class Shortcode {
 			],
 		];
 
-		$types        = apply_filters( 'apple_music_types', [] );
+		$types        = apply_filters( 'apple_music_types', [ ] );
 		$player_types = apple_music_get_player_types();
-		
+
 		// Do we have everything we need?
 		if ( empty( $shortcode_atts['id'] ) || empty( $shortcode_atts['type'] ) || ! array_key_exists( $shortcode_atts['type'], $types ) || ( ! array_key_exists( $shortcode_atts['type'], $player_types ) && 'player' === $shortcode_atts['format'] ) ) {
 			return false;
 		}
 
-		$settings   = new Settings();
+		$settings = new Settings();
 
 		// Get storefront.
 		$storefront = $settings->get_storefront();
