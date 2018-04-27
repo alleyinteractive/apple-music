@@ -4,6 +4,7 @@ import DisplayTools from 'Components/displayTools';
 import ResultsWrapper from 'Components/resultsWrapper';
 import SearchTools from 'Components/searchTools';
 import MusicDisplay from 'Components/musicDisplay';
+import BackToSearch from 'Components/backToSearch';
 import { iframeURL } from 'API';
 import {
   getObjKeyValue,
@@ -17,10 +18,6 @@ import styles from './musicBlock.css';
 const { __ } = window.wp.i18n;
 // Extend component
 const { Component } = window.wp.element;
-const {
-  Button,
-  Dashicon,
-} = window.wp.components;
 
 const { InspectorControls } = window.wp.blocks;
 const { PanelBody } = window.wp.components;
@@ -120,16 +117,22 @@ class MusicBlock extends Component {
         { isSelected &&
           <InspectorControls key="inspector">
             <PanelBody title={__('Apple Music Settings', 'apple-music')}>
-              <SearchTools
-                attributes={attributes}
-                updateSearch={this.updateAttributes}
-              />
+              {
+                ! this.state.isMusicSet &&
+                <SearchTools
+                  attributes={attributes}
+                  updateSearch={this.updateAttributes}
+                />
+              }
               {
                 this.state.isMusicSet &&
-                <DisplayTools
-                  attributes={attributes}
-                  onChange={this.updateAttributes}
-                />
+                <div>
+                  <BackToSearch onClick={() => this.resetSearch()} />
+                  <DisplayTools
+                    attributes={attributes}
+                    onChange={this.updateAttributes}
+                  />
+                </div>
               }
             </PanelBody>
           </InspectorControls>
@@ -156,13 +159,10 @@ class MusicBlock extends Component {
               {
                 this.state.isMusicSet &&
                 <div>
-                  <Button
-                    className={styles.backToSearch}
+                  <BackToSearch
                     onClick={() => this.resetSearch()}
-                  >
-                    <Dashicon icon="arrow-left-alt2" />
-                    {__('Back to Search', 'apple-music')}
-                  </Button>
+                    inPanel={false}
+                  />
                   <DisplayTools
                     attributes={attributes}
                     onChange={this.updateAttributes}
