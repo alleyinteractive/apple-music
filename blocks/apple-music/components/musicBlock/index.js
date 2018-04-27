@@ -9,6 +9,7 @@ import { iframeURL } from 'API';
 import {
   getObjKeyValue,
   getTypeObject,
+  showEmbed,
 } from 'Utils';
 
 // CSS
@@ -44,6 +45,7 @@ class MusicBlock extends Component {
   setMusicSelection(item) {
     const {
       attributes: {
+        embedType,
         musicType,
       },
       setAttributes,
@@ -57,7 +59,13 @@ class MusicBlock extends Component {
       isMusicSet: true,
     });
 
+    // If this music type does not have an embeddable iframe set the embed type default
+    const updateEmbedTyped = (! showEmbed(musicType) &&
+      'preview-player' === embedType) ?
+      'badge' : embedType;
+
     setAttributes({
+      embedType: updateEmbedTyped,
       item,
       musicID,
       iframeSrc: iframeURL(musicType, musicID),
@@ -89,7 +97,10 @@ class MusicBlock extends Component {
       isMusicSet: false,
     });
     setAttributes({
+      appIconStyle: 'standard',
+      embedType: 'preview-player',
       item: {},
+      textLockUpStyle: 'standard-black',
     });
   }
 

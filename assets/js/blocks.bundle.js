@@ -2911,7 +2911,9 @@ var MusicBlock = function (_Component) {
     key: 'setMusicSelection',
     value: function setMusicSelection(item) {
       var _props = this.props,
-          musicType = _props.attributes.musicType,
+          _props$attributes = _props.attributes,
+          embedType = _props$attributes.embedType,
+          musicType = _props$attributes.musicType,
           setAttributes = _props.setAttributes;
 
       var musicID = Object(__WEBPACK_IMPORTED_MODULE_14__utils__["d" /* getObjKeyValue */])(item, 'id'); // get the music ID.
@@ -2923,7 +2925,11 @@ var MusicBlock = function (_Component) {
         isMusicSet: true
       });
 
+      // If this music type does not have an embeddable iframe set the embed type default
+      var updateEmbedTyped = !Object(__WEBPACK_IMPORTED_MODULE_14__utils__["f" /* showEmbed */])(musicType) && 'preview-player' === embedType ? 'badge' : embedType;
+
       setAttributes({
+        embedType: updateEmbedTyped,
         item: item,
         musicID: musicID,
         iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_13__api__["b" /* iframeURL */])(musicType, musicID),
@@ -2965,7 +2971,10 @@ var MusicBlock = function (_Component) {
         isMusicSet: false
       });
       setAttributes({
-        item: {}
+        appIconStyle: 'standard',
+        embedType: 'preview-player',
+        item: {},
+        textLockUpStyle: 'standard-black'
       });
     }
 
