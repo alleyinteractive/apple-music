@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DisplayTools from '../displayTools';
-import ResultsWrapper from '../resultsWrapper';
-import SearchTools from '../searchTools';
-import MusicDisplay from '../musicDisplay';
-import { iframeURL } from '../../api';
+import DisplayTools from 'Components/displayTools';
+import ResultsWrapper from 'Components/resultsWrapper';
+import SearchTools from 'Components/searchTools';
+import MusicDisplay from 'Components/musicDisplay';
+import { iframeURL } from 'API';
 import {
   getObjKeyValue,
   getTypeObject,
-} from '../../utils';
+} from 'Utils';
 
 // CSS
 import styles from './musicBlock.css';

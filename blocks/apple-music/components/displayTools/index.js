@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PreviewPlayer from '../previewPlayer';
-import EmbedSlider from '../embedSlider';
+import PreviewPlayer from 'Components/previewPlayer';
+import EmbedSlider from 'Components/embedSlider';
 import {
   showEmbed,
   getItemArtworkURL,
   getNestedObject,
-} from '../../utils';
+} from 'Utils';
 
 import styles from './displayTools.css';
 
@@ -108,6 +108,7 @@ const DisplayTools = ({
       <EmbedSlider
         appIconStyle={appIconStyle}
         embedType={embedType}
+        inPanel={inPanel}
         musicType={musicType}
         onChange={onChange}
         textLockUpStyle={textLockUpStyle}

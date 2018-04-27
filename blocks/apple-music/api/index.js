@@ -1,8 +1,8 @@
-import token from '../token';
 import {
   getObjKeyValue,
   getTypeObject,
-} from '../utils';
+} from 'Utils';
+import token from '../token';
 import { storefront } from '../settings';
 
 // Base URL for the apple music API

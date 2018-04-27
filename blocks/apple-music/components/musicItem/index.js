@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {
   getItemArtworkURL,
   getNestedObject,
-} from '../../utils';
+} from 'Utils';
 
 // Css
 import styles from './musicItem.css';

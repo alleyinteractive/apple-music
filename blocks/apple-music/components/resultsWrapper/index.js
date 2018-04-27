@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MusicItem from '../musicItem';
+import MusicItem from 'Components/musicItem';
 import {
   searchCatalog,
   getItems,
-} from '../../api';
-import { getNestedObject } from '../../utils';
+} from 'API';
+import { getNestedObject } from 'Utils';
 
 const { Component } = window.wp.element;
 

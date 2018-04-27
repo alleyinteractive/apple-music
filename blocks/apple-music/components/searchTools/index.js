@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import musicTypes from '../../config/musicTypes';
+import musicTypes from 'Config/musicTypes';
 import styles from './searchTools.css';
 
 const {

@@ -48,6 +48,23 @@
   "babel": {
     "presets": [
       "@wordpress/default"
+    ],
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "root": [
+            "./"
+          ],
+          "alias": {
+            "API": "./blocks/apple-music/api",
+            "Components": "./blocks/apple-music/components",
+            "Config": "./blocks/apple-music/config",
+            "Images": "./assets/images",
+            "Utils": "./blocks/apple-music/utils"
+          }
+        }
+      ]
     ]
   }
 }
