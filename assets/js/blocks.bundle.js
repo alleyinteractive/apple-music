@@ -5940,8 +5940,11 @@ module.exports = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__previewPlayer__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__embedSlider__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__displayTools_css__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__displayTools_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools_css__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__displayTools_css__);
+
 
 
 
@@ -5976,50 +5979,58 @@ var DisplayTools = function DisplayTools(_ref) {
       _onChange = _ref.onChange;
 
   var directLink = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'url']);
-  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getItemArtworkURL */])(item, '200', '200');
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getItemArtworkURL */])(item, '200', '200') || __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png___default.a;
   var name = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'name']);
   var artistName = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'artistName']);
-
-  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) ? wp.element.createElement(
+  var genreNames = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'genreNames']);
+  var notesDesc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'editorialNotes', 'short']);
+  // The details information for music without preview player embed.
+  var details = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) ? wp.element.createElement(
     'div',
-    null,
+    { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.detailWrapper },
     imageSrc && wp.element.createElement(
       'div',
-      { className: 'image' },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.image },
       wp.element.createElement('img', { src: imageSrc, alt: name })
     ),
-    name && wp.element.createElement(
+    wp.element.createElement(
       'div',
-      { className: 'right-side' },
-      wp.element.createElement(
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.rightAside },
+      name && wp.element.createElement(
         'div',
-        { className: 'name' },
+        { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.sidePrimary },
         Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'name'])
+      ),
+      (genreNames || notesDesc) && wp.element.createElement(
+        'div',
+        { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.sideSecondary },
+        genreNames && genreNames.shift(),
+        notesDesc && notesDesc
       )
     )
   ) : null;
 
   // conditional classes for edit styles.
-  var formClass = !inPanel ? __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.dimensionsForm : '';
-  var textInput = !inPanel ? __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.dimensions : '';
+  var formClass = !inPanel ? __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.dimensionsForm : '';
+  var textInput = !inPanel ? __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.dimensions : '';
 
   return wp.element.createElement(
     'div',
     null,
     Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) && wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.details },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.details },
       !inPanel && wp.element.createElement(
         'div',
         null,
         wp.element.createElement(
           'h1',
-          { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.name },
+          { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.name },
           name
         ),
         artistName && wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.secondary },
+          { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.secondary },
           artistName
         )
       ),
@@ -6052,7 +6063,7 @@ var DisplayTools = function DisplayTools(_ref) {
       iframeSrc: iframeSrc,
       width: width
     }),
-    !inPanel && artwork,
+    !inPanel && details,
     wp.element.createElement(__WEBPACK_IMPORTED_MODULE_3__embedSlider__["a" /* default */], {
       appIconStyle: appIconStyle,
       embedType: embedType,
@@ -6063,7 +6074,7 @@ var DisplayTools = function DisplayTools(_ref) {
     }),
     !inPanel && wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.directLink },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.directLink },
       wp.element.createElement(
         'b',
         null,
@@ -6563,7 +6574,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}", ""]);
+exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}\n\n.displayTools__detailWrapper__3GEVa{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -webkit-box-pack:center;\n      -ms-flex-pack:center;\n          justify-content:center;\n}\n\n.displayTools__image__LCrgx{\n  display:inline-block;\n  height:auto;\n  max-width:200px;\n  vertical-align:top;\n}\n\n.displayTools__rightAside__1YQck{\n  display:inline-block;\n  margin-left:1.25em;\n  margin-top:0.625em;\n  word-wrap:break-word;\n}\n\n.displayTools__sidePrimary__3CLhi{\n  -webkit-box-orient:vertical;\n  display:block;\n  display:-webkit-box;\n  height:2.4em;\n  -webkit-line-clamp:2;\n  line-height:1.2;\n  overflow:hidden;\n  padding:0;\n  position:relative;\n  text-overflow:ellipsis;\n}\n\n.displayTools__sidePrimary__3CLhi::after{\n  background:-webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(75%, rgba(255, 255, 255, 1)));\n  background:linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%);\n  bottom:0;\n  content:'...';\n  display:block;\n  height:1.2em;\n  position:absolute;\n  right:0;\n  text-align:right;\n  width:25%;\n}\n\n@supports (-webkit-line-clamp: 1){\n\n  .displayTools__sidePrimary__3CLhi::after{\n    display:none;\n  }\n}\n\n.displayTools__sidePrimary__3CLhi{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  height:auto;\n  max-height:2.4em;\n}\n\n.displayTools__sideSecondary__3oF24{\n  font-size:0.938rem;\n  font-size:0.938rem;\n}", ""]);
 
 // exports
 exports.locals = {
@@ -6571,7 +6582,12 @@ exports.locals = {
 	"secondary": "displayTools__secondary__2lZXQ",
 	"dimensionsForm": "displayTools__dimensionsForm__36bOK",
 	"dimensions": "displayTools__dimensions___W0Uh",
-	"directLink": "displayTools__directLink__mifB_"
+	"directLink": "displayTools__directLink__mifB_",
+	"detailWrapper": "displayTools__detailWrapper__3GEVa",
+	"image": "displayTools__image__LCrgx",
+	"rightAside": "displayTools__rightAside__1YQck",
+	"sidePrimary": "displayTools__sidePrimary__3CLhi",
+	"sideSecondary": "displayTools__sideSecondary__3oF24"
 };
 
 /***/ }),
@@ -6742,8 +6758,11 @@ ResultsWrapper.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__musicItem_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__musicItem_css__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__musicItem_css__);
+
 
 
 
@@ -6771,7 +6790,7 @@ var MusicItem = function MusicItem(_ref) {
 
   var name = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getNestedObject */])(item, ['attributes', 'name']);
   var artistName = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getNestedObject */])(item, ['attributes', 'artistName']);
-  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getItemArtworkURL */])(item);
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getItemArtworkURL */])(item) || __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png___default.a;
 
   return wp.element.createElement(
     Button,
@@ -6782,28 +6801,28 @@ var MusicItem = function MusicItem(_ref) {
     },
     wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.musicItem },
+      { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.musicItem },
       imageSrc && wp.element.createElement(
         'div',
-        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artwork },
+        { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artwork },
         wp.element.createElement('img', {
           src: imageSrc,
           alt: sprintf(__('Album Art: %s', 'apple-music'), name),
-          className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artworkImage
+          className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artworkImage
         })
       ),
       // the name of the music item.
       name && wp.element.createElement(
         'div',
-        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.title },
+        { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.title },
         wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.name },
+          { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.name },
           name
         ),
         wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artistName },
+          { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artistName },
           artistName
         )
       )
@@ -7791,7 +7810,7 @@ var BackToSearch = function BackToSearch(_ref) {
       _onClick = _ref.onClick;
   return wp.element.createElement(
     'div',
-    { className: inPanel ? __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default.a.backToSearchWrapper : '' },
+    { className: __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default.a.backToSearchWrapper },
     wp.element.createElement(
       Button,
       {
@@ -7885,6 +7904,12 @@ exports.locals = {
 	"backToSearchPanel": "backToSearch__backToSearchPanel__3xf0t",
 	"backToSearchWrapper": "backToSearch__backToSearchWrapper__3msXu"
 };
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/0fc7d18e01c8c77b8b705cbf4697fb91.png";
 
 /***/ })
 /******/ ]);

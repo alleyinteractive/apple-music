@@ -17,7 +17,7 @@ const BackToSearch = ({
   inPanel,
   onClick,
 }) => (
-  <div className={inPanel ? styles.backToSearchWrapper : ''}>
+  <div className={styles.backToSearchWrapper}>
     <Button
       className={inPanel ? styles.backToSearchPanel : styles.backToSearch}
       onClick={() => onClick()}

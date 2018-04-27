@@ -67,7 +67,6 @@ module.exports = (env) => ({
             loader: 'file-loader',
             options: {
               limit: 10000,
-              mimetype: 'image/svg+xml',
               outputPath: 'images/',
             },
           },

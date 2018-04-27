@@ -4,6 +4,7 @@ import {
   getItemArtworkURL,
   getNestedObject,
 } from 'Utils';
+import placeholder from 'Images/apple.png';
 
 // Css
 import styles from './musicItem.css';
@@ -26,7 +27,7 @@ const MusicItem = ({
 
   const name = getNestedObject(item, ['attributes', 'name']);
   const artistName = getNestedObject(item, ['attributes', 'artistName']);
-  const imageSrc = getItemArtworkURL(item);
+  const imageSrc = getItemArtworkURL(item) || placeholder;
 
   return (
     <Button
