@@ -30,7 +30,7 @@ class Media_Modal {
 
 		$tabs = $this->tabs();
 
-		foreach ( [ 'search', 'item', 'sidebar' ] as $template ) {
+		foreach ( [ 'search', 'item' ] as $template ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
 					sanitize_html_class( $template ),
@@ -39,6 +39,7 @@ class Media_Modal {
 				call_user_func( 'Apple_Music\\' . $template, $id, $tab_id );
 			}
 		}
+		sidebar();
 
 	}
 
@@ -46,7 +47,7 @@ class Media_Modal {
 		$tabs = apply_filters( 'apple_music_types', [] );
 		return wp_list_pluck( $tabs, 'tab_text', 'tab_name' );
 	}
-
+	
 	public function add_button() {
 		echo '<a href="#" class="button">' . esc_html__( 'Apple Music' ) . '</a>';
 	}

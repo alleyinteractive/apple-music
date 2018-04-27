@@ -470,9 +470,10 @@ media.view.MediaFrame.Post = post_frame.extend( {
 			// Content
 			this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.appleMusicContentRender, this, appleMusic, tab ) );
 
-			// Set the default tab
-			if ( appleMusic.tabs[tab].tab_default ) {
+			// Set the first tab to default.
+			if ( typeof defaultSet === 'undefined' ) {
 				controller.content = id + '-content-' + tab;
+				var defaultSet = true;
 			}
 
 		}
@@ -498,7 +499,7 @@ media.view.MediaFrame.Post = post_frame.extend( {
 		for ( var tab in appleMusic.tabs ) {
 			tab_id = id + '-content-' + tab;
 			tabs[tab_id] = {
-				text: appleMusic.tabs[tab].text
+				text: appleMusic.tabs[tab]
 			};
 		}
 

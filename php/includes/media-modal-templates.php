@@ -48,16 +48,14 @@ function item( $id, $tab ) {
 	<?php
 }
 
-function sidebar( $id, $tab ) {
+function sidebar() {
 	?>
 	<script type="text/html" id="tmpl-apple-music-sidebar">
 		<h3>{{ data.content }}</h3>
 		<p>{{ data.description }}</p>
 
 		<form action="#" class="clearfix">
-			<?php// if $tab : ?>
 			<p><input type="radio" name="format" value="player" id="player"><label for="player"><?php esc_html_e( 'Player', 'apple-music' ); ?></label></p>
-			<?php //endif; ?>
 			<p><input type="radio" name="format" value="badge" id="badge"><label for="badge"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/badge.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music badge icon', 'apple-music' ); ?>"/></label></p>
 			<p><input type="radio" name="format" value="text-lockup" id="text-lockup"><label for="text-lockup"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/text-lockup.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music text lockup icon', 'apple-music' ); ?>"/></label></p>
 			<p><input type="radio" name="format" value="app-icon" id="app-icon"><label for="app-icon"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/app-icon.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music app icon', 'apple-music' ); ?>"/></label></p>
