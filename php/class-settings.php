@@ -92,7 +92,7 @@ class Settings {
 	/**
 	 * Helper to get affiliate token.
 	 *
-	 * @return string
+	 * @return string The affiliate token.
 	 */
 	function get_affiliate_token() {
 		$options = get_option( 'apple_music_options' );
@@ -156,9 +156,8 @@ class Settings {
 	/**
 	 * Affiliate token field.
 	 *
-	 * @param $args
 	 */
-	function add_affiliate_token_field( $args ) {
+	function add_affiliate_token_field() {
 		?>
 		<input type="text" name="apple_music_options[affiliate_token]" value="<?php echo esc_attr( $this->get_affiliate_token() ); ?>" class="large-text"/>
 
