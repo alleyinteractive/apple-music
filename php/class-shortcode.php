@@ -43,7 +43,7 @@ class Shortcode {
 			],
 		];
 
-		$types        = apply_filters( 'apple_music_types', [ ] );
+		$types        = apply_filters( 'apple_music_types', [] );
 		$player_types = apple_music_get_player_types();
 
 		// Do we have everything we need?
