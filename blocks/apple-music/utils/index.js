@@ -1,4 +1,5 @@
 import musicTypes from 'Config/musicTypes';
+import embedTypes from 'Config/embedTypes';
 
 /**
  * Get an objects key value.
@@ -56,7 +57,23 @@ export function getItemArtworkURL(item, width = '118', height = '118') {
     .replace('{h}', height).replace('{c}', 'sr') : null;
 }
 
+/**
+ * Get the image path for a embedType that has multiple icon styles.
+ *
+ * @param {string} styleValue value of the icon style found in embedTypes styles object.
+ * @returns {string} string - the image path or an empty string.
+ */
+export function getIconImagePath(styleValue) {
+  const src = embedTypes.reduce((acc, { styles }) => (
+    (undefined !== styles) ? acc.concat(styles) : acc.concat()), [])
+    // Reduce all the available styles by selected style and apply fallback.
+    .reduce((acc, { value, imagePath }) => (
+      (value === styleValue) ? imagePath : acc.concat()), '');
+  return src;
+}
+
 export default {
+  getIconImagePath,
   getObjKeyValue,
   getTypeObject,
   showEmbed,

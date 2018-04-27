@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
-import { showEmbed } from 'Utils';
-// Use a different declaration for styles since we are using this variable name.
+import {
+  getIconImagePath,
+  showEmbed,
+} from 'Utils';
+// Use "css" as a declaration for styles since we are using "styles" below.
 import css from './embedSlider.css';
 
 // Internationalization
@@ -27,7 +30,9 @@ const EmbedSlider = ({
   textLockUpStyle,
 }) => {
   // Class for slider context. In panel or editor.
-  const sliderClass = inPanel ? css.panelSlider : css.slider;
+  const sliderClass = inPanel ? '' : css.slider;
+  // Additional class to add to slide.
+  const panelSlideClass = inPanel ? css.panelSlide : '';
 
   // Get the styles options for the Select Control.
   const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
@@ -35,30 +40,16 @@ const EmbedSlider = ({
       acc.concat(styles) : acc.concat()), []);
 
   /**
-   * The icon image asset source.
-   * @param {string} style the image source for the image tag in the icon function.
-   * @param {string} fallback The image fallback URL to use.
-   * @returns {string} string - the image source or an empty string.
-   */
-  function imageSrc(style) {
-    const src = embedTypes.reduce((acc, { styles }) => (
-      (undefined !== styles) ? acc.concat(styles) : acc.concat()), [])
-      // Reduce all the available styles by selected style and apply fallback.
-      .reduce((acc, { value, imagePath }) => (
-        (value === style) ? imagePath : acc.concat()), '');
-    return src;
-  }
-
-  /**
    * Image Icon. Which image icon to apply.
+   * Adds an image element or the preview player dashicon.
    * @param {string} type the embedType to look for.
    * @returns {string} the image icon or an empty string.
    */
   function icon(type) {
     // define the default image URL.
     let imageURL = '';
-    let alt = __('Apple Music Icon', 'apple-music');
     let imgClass = '';
+    let alt = __('Apple Music Icon', 'apple-music');
 
     switch (type) {
       case 'preview-player':
@@ -79,15 +70,15 @@ const EmbedSlider = ({
           textLockUpStyle
         );
         imgClass = textLockUpStyle;
-        imageURL = imageSrc(textLockUpStyle);
+        imageURL = getIconImagePath(textLockUpStyle);
         break;
       case 'app-icon':
         alt = sprintf(
-          __('%s text lockup icon', 'apple-music'),
+          __('%s app icon', 'apple-music'),
           appIconStyle
         );
         imgClass = appIconStyle;
-        imageURL = imageSrc(appIconStyle);
+        imageURL = getIconImagePath(appIconStyle);
         break;
       default:
         imageURL = '';
@@ -113,7 +104,7 @@ const EmbedSlider = ({
         const activeClass = embedType === value ? css.active : '';
 
         return (
-          <div className={`${css.slide} ${activeClass}`}>
+          <div className={`${css.slide} ${panelSlideClass} ${activeClass}`}>
             <Button
               className={css.iconSelector}
               key={value}
@@ -122,7 +113,7 @@ const EmbedSlider = ({
               {icon(value)}
               <p>{__(label, 'apple-music')}</p>
             </Button>
-            {
+            { // Select field will only display when text-lockup is active.
               ('text-lockup' === embedType && 'text-lockup' === value) &&
                 <SelectControl
                   className={css.selectStyle}
@@ -131,7 +122,7 @@ const EmbedSlider = ({
                   onChange={(x) => onChange(x, 'textLockUpStyle')}
                 />
             }
-            {
+            { // Select field will only display when app-icon is active.
               ('app-icon' === embedType && 'app-icon' === value) &&
                 <SelectControl
                   className={css.selectStyle}
