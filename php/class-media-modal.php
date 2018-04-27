@@ -14,6 +14,7 @@ class Media_Modal {
 
 	public function __construct() {
 		add_action( 'wp_enqueue_media', [ $this, 'action_enqueue_media' ] );
+		add_action( 'media_buttons', [ $this, 'add_button' ] );
 		add_action( 'print_media_templates', [ $this, 'action_print_media_templates' ] );
 		add_action( 'wp_ajax_apple_music_request', [ $this, 'ajax_request' ] );
 
@@ -29,21 +30,25 @@ class Media_Modal {
 
 		$tabs = $this->tabs();
 
-		foreach ( [ 'search', 'item' ] as $t ) {
+		foreach ( [ 'search', 'item', 'sidebar' ] as $template ) {
 			foreach ( $tabs as $tab_id => $tab ) {
 				$id = sprintf( 'apple-music-%s-%s',
-					sanitize_html_class( $t ),
+					sanitize_html_class( $template ),
 					sanitize_html_class( $tab_id )
 				);
-				call_user_func( 'Apple_Music\\' . $t, $id, $tab_id );
+				call_user_func( 'Apple_Music\\' . $template, $id, $tab_id );
 			}
 		}
-		sidebar();
 
 	}
 
 	public function tabs() {
-		return apply_filters( 'apple_music_media_modal_tabs', [] );
+		$tabs = apply_filters( 'apple_music_types', [] );
+		return wp_list_pluck( $tabs, 'tab_text', 'tab_name' );
+	}
+
+	public function add_button() {
+		echo '<a href="#" class="button">' . esc_html__( 'Apple Music' ) . '</a>';
 	}
 
 	/**
