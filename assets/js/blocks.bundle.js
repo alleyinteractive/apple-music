@@ -2848,10 +2848,12 @@ var registerBlockType = window.wp.blocks.registerBlockType;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__resultsWrapper__ = __webpack_require__(136);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__searchTools__ = __webpack_require__(157);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__musicDisplay__ = __webpack_require__(76);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__api__ = __webpack_require__(70);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__utils__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__musicBlock_css__ = __webpack_require__(160);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__musicBlock_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__musicBlock_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__backToSearch__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__api__ = __webpack_require__(70);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__utils__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__musicBlock_css__ = __webpack_require__(160);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__musicBlock_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__musicBlock_css__);
+
 
 
 
@@ -2875,9 +2877,6 @@ var __ = window.wp.i18n.__;
 // Extend component
 
 var Component = window.wp.element.Component;
-var _window$wp$components = window.wp.components,
-    Button = _window$wp$components.Button,
-    Dashicon = _window$wp$components.Dashicon;
 var InspectorControls = window.wp.blocks.InspectorControls;
 var PanelBody = window.wp.components.PanelBody;
 
@@ -2912,22 +2911,28 @@ var MusicBlock = function (_Component) {
     key: 'setMusicSelection',
     value: function setMusicSelection(item) {
       var _props = this.props,
-          musicType = _props.attributes.musicType,
+          _props$attributes = _props.attributes,
+          embedType = _props$attributes.embedType,
+          musicType = _props$attributes.musicType,
           setAttributes = _props.setAttributes;
 
-      var musicID = Object(__WEBPACK_IMPORTED_MODULE_13__utils__["d" /* getObjKeyValue */])(item, 'id'); // get the music ID.
+      var musicID = Object(__WEBPACK_IMPORTED_MODULE_14__utils__["d" /* getObjKeyValue */])(item, 'id'); // get the music ID.
 
-      var type = Object(__WEBPACK_IMPORTED_MODULE_13__utils__["e" /* getTypeObject */])(musicType);
-      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_13__utils__["d" /* getObjKeyValue */])(type, 'embedHeight');
+      var type = Object(__WEBPACK_IMPORTED_MODULE_14__utils__["e" /* getTypeObject */])(musicType);
+      var initialHeight = Object(__WEBPACK_IMPORTED_MODULE_14__utils__["d" /* getObjKeyValue */])(type, 'embedHeight');
 
       this.setState({
         isMusicSet: true
       });
 
+      // If this music type does not have an embeddable iframe set the embed type default
+      var updateEmbedTyped = !Object(__WEBPACK_IMPORTED_MODULE_14__utils__["f" /* showEmbed */])(musicType) && 'preview-player' === embedType ? 'badge' : embedType;
+
       setAttributes({
+        embedType: updateEmbedTyped,
         item: item,
         musicID: musicID,
-        iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_12__api__["b" /* iframeURL */])(musicType, musicID),
+        iframeSrc: Object(__WEBPACK_IMPORTED_MODULE_13__api__["b" /* iframeURL */])(musicType, musicID),
         height: initialHeight
       });
     }
@@ -2966,7 +2971,10 @@ var MusicBlock = function (_Component) {
         isMusicSet: false
       });
       setAttributes({
-        item: {}
+        appIconStyle: 'standard',
+        embedType: 'preview-player',
+        item: {},
+        textLockUpStyle: 'standard-black'
       });
     }
 
@@ -3007,25 +3015,32 @@ var MusicBlock = function (_Component) {
           wp.element.createElement(
             PanelBody,
             { title: __('Apple Music Settings', 'apple-music') },
-            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_10__searchTools__["a" /* default */], {
+            !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_10__searchTools__["a" /* default */], {
               attributes: attributes,
               updateSearch: this.updateAttributes
             }),
-            this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__displayTools__["a" /* default */], {
-              attributes: attributes,
-              onChange: this.updateAttributes
-            })
+            this.state.isMusicSet && wp.element.createElement(
+              'div',
+              null,
+              wp.element.createElement(__WEBPACK_IMPORTED_MODULE_12__backToSearch__["a" /* default */], { onClick: function onClick() {
+                  return _this2.resetSearch();
+                } }),
+              wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__displayTools__["a" /* default */], {
+                attributes: attributes,
+                onChange: this.updateAttributes
+              })
+            )
           )
         ),
         isSelected && wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_14__musicBlock_css___default.a.musicTools },
+          { className: __WEBPACK_IMPORTED_MODULE_15__musicBlock_css___default.a.musicTools },
           !this.state.isMusicSet && wp.element.createElement(
             'div',
             null,
             wp.element.createElement(
               'h3',
-              { className: __WEBPACK_IMPORTED_MODULE_14__musicBlock_css___default.a.introText },
+              { className: __WEBPACK_IMPORTED_MODULE_15__musicBlock_css___default.a.introText },
               __('Get badges, links, and widgets for Apple Music.', 'apple-music')
             ),
             wp.element.createElement(__WEBPACK_IMPORTED_MODULE_10__searchTools__["a" /* default */], {
@@ -3037,17 +3052,12 @@ var MusicBlock = function (_Component) {
           this.state.isMusicSet && wp.element.createElement(
             'div',
             null,
-            wp.element.createElement(
-              Button,
-              {
-                className: __WEBPACK_IMPORTED_MODULE_14__musicBlock_css___default.a.backToSearch,
-                onClick: function onClick() {
-                  return _this2.resetSearch();
-                }
+            wp.element.createElement(__WEBPACK_IMPORTED_MODULE_12__backToSearch__["a" /* default */], {
+              onClick: function onClick() {
+                return _this2.resetSearch();
               },
-              wp.element.createElement(Dashicon, { icon: 'arrow-left-alt2' }),
-              __('Back to Search', 'apple-music')
-            ),
+              inPanel: false
+            }),
             wp.element.createElement(__WEBPACK_IMPORTED_MODULE_8__displayTools__["a" /* default */], {
               attributes: attributes,
               onChange: this.updateAttributes,
@@ -3055,7 +3065,7 @@ var MusicBlock = function (_Component) {
             })
           ),
           !this.state.isMusicSet && wp.element.createElement(__WEBPACK_IMPORTED_MODULE_9__resultsWrapper__["a" /* default */], {
-            className: __WEBPACK_IMPORTED_MODULE_14__musicBlock_css___default.a.itemWrapper,
+            className: __WEBPACK_IMPORTED_MODULE_15__musicBlock_css___default.a.itemWrapper,
             attributes: attributes,
             onSelect: this.setMusicSelection
           })
@@ -5939,8 +5949,11 @@ module.exports = function() {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__previewPlayer__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__embedSlider__ = __webpack_require__(122);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__displayTools_css__ = __webpack_require__(134);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__displayTools_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools_css__ = __webpack_require__(134);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__displayTools_css__);
+
 
 
 
@@ -5975,50 +5988,58 @@ var DisplayTools = function DisplayTools(_ref) {
       _onChange = _ref.onChange;
 
   var directLink = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'url']);
-  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getItemArtworkURL */])(item, '200', '200');
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["b" /* getItemArtworkURL */])(item, '200', '200') || __WEBPACK_IMPORTED_MODULE_5__assets_images_apple_png___default.a;
   var name = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'name']);
   var artistName = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'artistName']);
-
-  var artwork = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) ? wp.element.createElement(
+  var genreNames = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'genreNames']);
+  var notesDesc = Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'editorialNotes', 'short']);
+  // The details information for music without preview player embed.
+  var details = !Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) ? wp.element.createElement(
     'div',
-    null,
+    { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.detailWrapper },
     imageSrc && wp.element.createElement(
       'div',
-      { className: 'image' },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.image },
       wp.element.createElement('img', { src: imageSrc, alt: name })
     ),
-    name && wp.element.createElement(
+    wp.element.createElement(
       'div',
-      { className: 'right-side' },
-      wp.element.createElement(
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.rightAside },
+      name && wp.element.createElement(
         'div',
-        { className: 'name' },
+        { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.sidePrimary },
         Object(__WEBPACK_IMPORTED_MODULE_4__utils__["c" /* getNestedObject */])(item, ['attributes', 'name'])
+      ),
+      (genreNames || notesDesc) && wp.element.createElement(
+        'div',
+        { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.sideSecondary },
+        genreNames && genreNames.shift(),
+        notesDesc && notesDesc
       )
     )
   ) : null;
 
   // conditional classes for edit styles.
-  var formClass = !inPanel ? __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.dimensionsForm : '';
-  var textInput = !inPanel ? __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.dimensions : '';
+  var formClass = !inPanel ? __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.dimensionsForm : '';
+  var textInput = !inPanel ? __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.dimensions : '';
 
   return wp.element.createElement(
     'div',
     null,
     Object(__WEBPACK_IMPORTED_MODULE_4__utils__["f" /* showEmbed */])(musicType) && wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.details },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.details },
       !inPanel && wp.element.createElement(
         'div',
         null,
         wp.element.createElement(
           'h1',
-          { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.name },
+          { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.name },
           name
         ),
         artistName && wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.secondary },
+          { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.secondary },
           artistName
         )
       ),
@@ -6051,7 +6072,7 @@ var DisplayTools = function DisplayTools(_ref) {
       iframeSrc: iframeSrc,
       width: width
     }),
-    !inPanel && artwork,
+    !inPanel && details,
     wp.element.createElement(__WEBPACK_IMPORTED_MODULE_3__embedSlider__["a" /* default */], {
       appIconStyle: appIconStyle,
       embedType: embedType,
@@ -6062,7 +6083,7 @@ var DisplayTools = function DisplayTools(_ref) {
     }),
     !inPanel && wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_5__displayTools_css___default.a.directLink },
+      { className: __WEBPACK_IMPORTED_MODULE_6__displayTools_css___default.a.directLink },
       wp.element.createElement(
         'b',
         null,
@@ -6209,6 +6230,11 @@ var EmbedSlider = function EmbedSlider(_ref) {
   return wp.element.createElement(
     'div',
     { className: sliderClass },
+    inPanel && wp.element.createElement(
+      'p',
+      null,
+      __('Select Embed Type', 'apple-music')
+    ),
     __WEBPACK_IMPORTED_MODULE_3__config_embedTypes__["a" /* default */].map(function (_ref3) {
       var value = _ref3.value,
           label = _ref3.label;
@@ -6557,7 +6583,7 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}", ""]);
+exports.push([module.i, ".displayTools__name__3ThlN{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  font-weight:400;\n  line-height:1.4;\n  margin:0.5em 0 0;\n  text-align:center;\n}\n\n.displayTools__secondary__2lZXQ{\n  color:#888;\n  font-size:0.938rem;\n  font-size:0.938rem;\n  font-weight:300;\n  text-align:center;\n}\n\n.displayTools__dimensionsForm__36bOK{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-pack:distribute;\n      justify-content:space-around;\n  margin:20px auto;\n}\n\n.displayTools__dimensions___W0Uh{\n  font-size:0.75rem;\n  font-size:0.75rem;\n}\n\n.displayTools__dimensions___W0Uh label{\n    font-weight:700;\n    margin-right:0.5em;\n  }\n\n.displayTools__dimensions___W0Uh label,\n  .displayTools__dimensions___W0Uh input{\n    display:inline-block;\n  }\n\n.displayTools__dimensions___W0Uh input{\n    border-radius:4px;\n    width:60px;\n  }\n\n.displayTools__directLink__mifB_{\n  font-size:0.75rem;\n  font-size:0.75rem;\n  line-height:1;\n  margin-top:0.625em;\n}\n\n.displayTools__detailWrapper__3GEVa{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -webkit-box-pack:center;\n      -ms-flex-pack:center;\n          justify-content:center;\n}\n\n.displayTools__image__LCrgx{\n  display:inline-block;\n  height:auto;\n  max-width:200px;\n  vertical-align:top;\n}\n\n.displayTools__rightAside__1YQck{\n  display:inline-block;\n  margin-left:1.25em;\n  margin-top:0.625em;\n  word-wrap:break-word;\n}\n\n.displayTools__sidePrimary__3CLhi{\n  -webkit-box-orient:vertical;\n  display:block;\n  display:-webkit-box;\n  height:2.4em;\n  -webkit-line-clamp:2;\n  line-height:1.2;\n  overflow:hidden;\n  padding:0;\n  position:relative;\n  text-overflow:ellipsis;\n}\n\n.displayTools__sidePrimary__3CLhi::after{\n  background:-webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, 0)), color-stop(75%, rgba(255, 255, 255, 1)));\n  background:linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 75%);\n  bottom:0;\n  content:'...';\n  display:block;\n  height:1.2em;\n  position:absolute;\n  right:0;\n  text-align:right;\n  width:25%;\n}\n\n@supports (-webkit-line-clamp: 1){\n\n  .displayTools__sidePrimary__3CLhi::after{\n    display:none;\n  }\n}\n\n.displayTools__sidePrimary__3CLhi{\n  font-size:2.125rem;\n  font-size:2.125rem;\n  height:auto;\n  max-height:2.4em;\n}\n\n.displayTools__sideSecondary__3oF24{\n  font-size:0.938rem;\n  font-size:0.938rem;\n}", ""]);
 
 // exports
 exports.locals = {
@@ -6565,7 +6591,12 @@ exports.locals = {
 	"secondary": "displayTools__secondary__2lZXQ",
 	"dimensionsForm": "displayTools__dimensionsForm__36bOK",
 	"dimensions": "displayTools__dimensions___W0Uh",
-	"directLink": "displayTools__directLink__mifB_"
+	"directLink": "displayTools__directLink__mifB_",
+	"detailWrapper": "displayTools__detailWrapper__3GEVa",
+	"image": "displayTools__image__LCrgx",
+	"rightAside": "displayTools__rightAside__1YQck",
+	"sidePrimary": "displayTools__sidePrimary__3CLhi",
+	"sideSecondary": "displayTools__sideSecondary__3oF24"
 };
 
 /***/ }),
@@ -6736,8 +6767,11 @@ ResultsWrapper.propTypes = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__musicItem_css__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__musicItem_css__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__musicItem_css__);
+
 
 
 
@@ -6765,7 +6799,7 @@ var MusicItem = function MusicItem(_ref) {
 
   var name = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getNestedObject */])(item, ['attributes', 'name']);
   var artistName = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["c" /* getNestedObject */])(item, ['attributes', 'artistName']);
-  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getItemArtworkURL */])(item);
+  var imageSrc = Object(__WEBPACK_IMPORTED_MODULE_2__utils__["b" /* getItemArtworkURL */])(item) || __WEBPACK_IMPORTED_MODULE_3__assets_images_apple_png___default.a;
 
   return wp.element.createElement(
     Button,
@@ -6776,28 +6810,28 @@ var MusicItem = function MusicItem(_ref) {
     },
     wp.element.createElement(
       'div',
-      { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.musicItem },
+      { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.musicItem },
       imageSrc && wp.element.createElement(
         'div',
-        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artwork },
+        { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artwork },
         wp.element.createElement('img', {
           src: imageSrc,
           alt: sprintf(__('Album Art: %s', 'apple-music'), name),
-          className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artworkImage
+          className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artworkImage
         })
       ),
       // the name of the music item.
       name && wp.element.createElement(
         'div',
-        { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.title },
+        { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.title },
         wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.name },
+          { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.name },
           name
         ),
         wp.element.createElement(
           'div',
-          { className: __WEBPACK_IMPORTED_MODULE_3__musicItem_css___default.a.artistName },
+          { className: __WEBPACK_IMPORTED_MODULE_4__musicItem_css___default.a.artistName },
           artistName
         )
       )
@@ -7715,12 +7749,11 @@ exports = module.exports = __webpack_require__(21)(false);
 
 
 // module
-exports.push([module.i, ".musicBlock__introText__5gm8k{\n  color:#333;\n  margin-bottom:30px;\n  text-align:center;\n}\n\n.musicBlock__backToSearch__3CGHH{\n  color:#FE2851\n}\n\n.musicBlock__backToSearch__3CGHH:hover,\n  .musicBlock__backToSearch__3CGHH:focus{\n  -webkit-box-shadow:none;\n          box-shadow:none;\n  color:#FE2851;\n}\n\n.musicBlock__backToSearch__3CGHH:hover svg, .musicBlock__backToSearch__3CGHH:focus svg{\n      -webkit-transform:translateX(-3px);\n              transform:translateX(-3px);\n}\n\n.musicBlock__backToSearch__3CGHH svg{\n    height:17px;\n    -webkit-transform:translateX(0);\n            transform:translateX(0);\n    -webkit-transition:-webkit-transform 0.1s ease-in-out;\n    transition:-webkit-transform 0.1s ease-in-out;\n    transition:transform 0.1s ease-in-out;\n    transition:transform 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;\n    vertical-align:text-bottom;\n    width:17px;\n}\n\n.musicBlock__itemWrapper__2dIkL{\n  -webkit-box-align:start;\n      -ms-flex-align:start;\n          align-items:flex-start;\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-wrap:wrap;\n      flex-wrap:wrap;\n  -webkit-box-pack:space-evenly;\n      -ms-flex-pack:space-evenly;\n          justify-content:space-evenly;\n}", ""]);
+exports.push([module.i, ".musicBlock__introText__5gm8k{\n  color:#333;\n  margin-bottom:30px;\n  text-align:center;\n}\n\n.musicBlock__itemWrapper__2dIkL{\n  -webkit-box-align:start;\n      -ms-flex-align:start;\n          align-items:flex-start;\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -ms-flex-wrap:wrap;\n      flex-wrap:wrap;\n  -webkit-box-pack:space-evenly;\n      -ms-flex-pack:space-evenly;\n          justify-content:space-evenly;\n}", ""]);
 
 // exports
 exports.locals = {
 	"introText": "musicBlock__introText__5gm8k",
-	"backToSearch": "musicBlock__backToSearch__3CGHH",
 	"itemWrapper": "musicBlock__itemWrapper__2dIkL"
 };
 
@@ -7753,6 +7786,139 @@ var appleMusicIcon = wp.element.createElement(
 /* unused harmony default export */ var _unused_webpack_default_export = ({
   appleMusicIcon: appleMusicIcon
 });
+
+/***/ }),
+/* 163 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_react___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_react__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__backToSearch_css__ = __webpack_require__(164);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__backToSearch_css__);
+
+
+
+
+var _window$wp$components = window.wp.components,
+    Button = _window$wp$components.Button,
+    Dashicon = _window$wp$components.Dashicon;
+
+// Internationalization
+
+var __ = window.wp.i18n.__;
+
+/**
+ * The back to search button.
+ */
+
+var BackToSearch = function BackToSearch(_ref) {
+  var inPanel = _ref.inPanel,
+      _onClick = _ref.onClick;
+  return wp.element.createElement(
+    'div',
+    { className: __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default.a.backToSearchWrapper },
+    wp.element.createElement(
+      Button,
+      {
+        className: inPanel ? __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default.a.backToSearchPanel : __WEBPACK_IMPORTED_MODULE_2__backToSearch_css___default.a.backToSearch,
+        onClick: function onClick() {
+          return _onClick();
+        },
+        isLarge: inPanel
+      },
+      wp.element.createElement(Dashicon, { icon: 'arrow-left-alt2' }),
+      __('Back to Search', 'apple-music')
+    )
+  );
+};
+
+BackToSearch.defaultProps = {
+  inPanel: true
+};
+
+BackToSearch.propTypes = {
+  inPanel: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.bool,
+  onClick: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
+};
+
+/* harmony default export */ __webpack_exports__["a"] = (BackToSearch);
+
+/***/ }),
+/* 164 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(165);
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(22)(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {
+	module.hot.accept("!!../../../../node_modules/css-loader/index.js??ref--2-1!../../../../node_modules/postcss-loader/lib/index.js??ref--2-2!./backToSearch.css", function() {
+		var newContent = require("!!../../../../node_modules/css-loader/index.js??ref--2-1!../../../../node_modules/postcss-loader/lib/index.js??ref--2-2!./backToSearch.css");
+
+		if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+
+		var locals = (function(a, b) {
+			var key, idx = 0;
+
+			for(key in a) {
+				if(!b || a[key] !== b[key]) return false;
+				idx++;
+			}
+
+			for(key in b) idx--;
+
+			return idx === 0;
+		}(content.locals, newContent.locals));
+
+		if(!locals) throw new Error('Aborting CSS HMR due to changed css-modules locals.');
+
+		update(newContent);
+	});
+
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(21)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".backToSearch__backToSearch__3yJ0c{\n  color:#FE2851\n}\n\n.backToSearch__backToSearch__3yJ0c:hover,\n  .backToSearch__backToSearch__3yJ0c:focus{\n  -webkit-box-shadow:none;\n          box-shadow:none;\n  color:#FE2851;\n}\n\n.backToSearch__backToSearch__3yJ0c:hover svg, .backToSearch__backToSearch__3yJ0c:focus svg{\n      -webkit-transform:translateX(-3px);\n              transform:translateX(-3px);\n}\n\n.backToSearch__backToSearch__3yJ0c svg{\n    height:17px;\n    -webkit-transform:translateX(0);\n            transform:translateX(0);\n    -webkit-transition:-webkit-transform 0.1s ease-in-out;\n    transition:-webkit-transform 0.1s ease-in-out;\n    transition:transform 0.1s ease-in-out;\n    transition:transform 0.1s ease-in-out, -webkit-transform 0.1s ease-in-out;\n    vertical-align:text-bottom;\n    width:17px;\n}\n\n.backToSearch__backToSearchPanel__3xf0t svg{\n    height:16px;\n    vertical-align:sub;\n  }\n\n.backToSearch__backToSearchWrapper__3msXu{\n  margin-bottom:0.938em;\n}", ""]);
+
+// exports
+exports.locals = {
+	"backToSearch": "backToSearch__backToSearch__3yJ0c",
+	"backToSearchPanel": "backToSearch__backToSearchPanel__3xf0t",
+	"backToSearchWrapper": "backToSearch__backToSearchWrapper__3msXu"
+};
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "images/0fc7d18e01c8c77b8b705cbf4697fb91.png";
 
 /***/ })
 /******/ ]);

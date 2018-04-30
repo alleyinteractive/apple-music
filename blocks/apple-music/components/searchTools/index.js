@@ -34,7 +34,7 @@ const SearchTools = ({
     <div className={className}>
       <TextControl
         value={query}
-        placeHolder={sprintf(__('Search ', 'apple-music'), typeObject.label)}
+        placeHolder={sprintf(__('Search %s', 'apple-music'), typeObject.label)}
         className={styles.search}
         onChange={(term) => updateSearch(term, 'query')}
       />

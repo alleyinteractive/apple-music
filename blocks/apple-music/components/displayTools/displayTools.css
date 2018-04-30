@@ -47,3 +47,34 @@
   line-height: 1;
   margin-top: em(10px);
 }
+
+/* embed types without a preview player */
+.detailWrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  display: inline-block;
+  height: auto;
+  max-width: 200px;
+  vertical-align: top;
+}
+
+.rightAside {
+  display: inline-block;
+  margin-left: em(20px);
+  margin-top: em(10px);
+  overflow-wrap: break-word;
+}
+
+.sidePrimary {
+  @mixin line-clamp;
+  font-size: rem(34px);
+  height: auto;
+  max-height: calc(1em * 1.2 * 2);
+}
+
+.sideSecondary {
+  font-size: rem(15px);
+}

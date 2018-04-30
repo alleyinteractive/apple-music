@@ -7,6 +7,7 @@ import {
   getItemArtworkURL,
   getNestedObject,
 } from 'Utils';
+import placeholder from 'Images/apple.png';
 
 import styles from './displayTools.css';
 
@@ -36,26 +37,38 @@ const DisplayTools = ({
   onChange,
 }) => {
   const directLink = getNestedObject(item, ['attributes', 'url']);
-  const imageSrc = getItemArtworkURL(item, '200', '200');
+  const imageSrc = getItemArtworkURL(item, '200', '200') || placeholder;
   const name = getNestedObject(item, ['attributes', 'name']);
   const artistName = getNestedObject(item, ['attributes', 'artistName']);
-
-  const artwork = ! showEmbed(musicType) ? (
-    <div>
+  const genreNames = getNestedObject(item, ['attributes', 'genreNames']);
+  const notesDesc = getNestedObject(
+    item,
+    ['attributes', 'editorialNotes', 'short']
+  );
+  // The details information for music without preview player embed.
+  const details = ! showEmbed(musicType) ? (
+    <div className={styles.detailWrapper}>
       {
         imageSrc &&
-        <div className="image">
+        <div className={styles.image}>
           <img src={imageSrc} alt={name} />
         </div>
       }
-      {
-        name &&
-        <div className="right-side">
-          <div className="name">
+      <div className={styles.rightAside}>
+        {
+          name &&
+          <div className={styles.sidePrimary}>
             {getNestedObject(item, ['attributes', 'name'])}
           </div>
-        </div>
-      }
+        }
+        {
+          (genreNames || notesDesc) &&
+          <div className={styles.sideSecondary}>
+            {genreNames && genreNames.shift()}
+            {notesDesc && notesDesc}
+          </div>
+        }
+      </div>
     </div>
   ) : null;
 
@@ -104,7 +117,7 @@ const DisplayTools = ({
           width={width}
         />
       }
-      {! inPanel && artwork}
+      {! inPanel && details}
       <EmbedSlider
         appIconStyle={appIconStyle}
         embedType={embedType}

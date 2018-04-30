@@ -95,6 +95,10 @@ const EmbedSlider = ({
 
   return (
     <div className={sliderClass}>
+      {
+        inPanel &&
+        <p>{__('Select Embed Type', 'apple-music')}</p>
+      }
       {embedTypes.map(({ value, label }) => {
         // If the musicType doesn't support embeds don't show preview player.
         if ('preview-player' === value && ! showEmbed(musicType)) {

@@ -4,10 +4,12 @@ import DisplayTools from 'Components/displayTools';
 import ResultsWrapper from 'Components/resultsWrapper';
 import SearchTools from 'Components/searchTools';
 import MusicDisplay from 'Components/musicDisplay';
+import BackToSearch from 'Components/backToSearch';
 import { iframeURL } from 'API';
 import {
   getObjKeyValue,
   getTypeObject,
+  showEmbed,
 } from 'Utils';
 
 // CSS
@@ -17,10 +19,6 @@ import styles from './musicBlock.css';
 const { __ } = window.wp.i18n;
 // Extend component
 const { Component } = window.wp.element;
-const {
-  Button,
-  Dashicon,
-} = window.wp.components;
 
 const { InspectorControls } = window.wp.blocks;
 const { PanelBody } = window.wp.components;
@@ -47,6 +45,7 @@ class MusicBlock extends Component {
   setMusicSelection(item) {
     const {
       attributes: {
+        embedType,
         musicType,
       },
       setAttributes,
@@ -60,7 +59,13 @@ class MusicBlock extends Component {
       isMusicSet: true,
     });
 
+    // If this music type does not have an embeddable iframe set the embed type default
+    const updateEmbedTyped = (! showEmbed(musicType) &&
+      'preview-player' === embedType) ?
+      'badge' : embedType;
+
     setAttributes({
+      embedType: updateEmbedTyped,
       item,
       musicID,
       iframeSrc: iframeURL(musicType, musicID),
@@ -75,12 +80,21 @@ class MusicBlock extends Component {
    */
   updateAttributes(value, key) {
     const { attributes, setAttributes } = this.props;
-    // Clone the attributes object.
-    const attrsClone = Object.assign({}, attributes);
-    // Assign new value to cloned attribute key.
-    attrsClone[key] = value || attributes[key];
-    // Set the attributes using the cloned object.
-    setAttributes(attrsClone);
+    // update input fields by direct reference to avoid persistant first character.
+    if (['height', 'width', 'query'].includes(key)) {
+      setAttributes({
+        height: 'height' === key ? value : attributes.height,
+        query: 'query' === key ? value : attributes.query,
+        width: 'width' === key ? value : attributes.width,
+      });
+    } else {
+      // Clone the attributes object.
+      const attrsClone = Object.assign({}, attributes);
+      // Assign new value to cloned attribute key.
+      attrsClone[key] = value || attributes[key];
+      // Set the attributes using the cloned object.
+      setAttributes(attrsClone);
+    }
   }
 
   /**
@@ -92,7 +106,10 @@ class MusicBlock extends Component {
       isMusicSet: false,
     });
     setAttributes({
+      appIconStyle: 'standard',
+      embedType: 'preview-player',
       item: {},
+      textLockUpStyle: 'standard-black',
     });
   }
 
@@ -120,16 +137,22 @@ class MusicBlock extends Component {
         { isSelected &&
           <InspectorControls key="inspector">
             <PanelBody title={__('Apple Music Settings', 'apple-music')}>
-              <SearchTools
-                attributes={attributes}
-                updateSearch={this.updateAttributes}
-              />
+              {
+                ! this.state.isMusicSet &&
+                <SearchTools
+                  attributes={attributes}
+                  updateSearch={this.updateAttributes}
+                />
+              }
               {
                 this.state.isMusicSet &&
-                <DisplayTools
-                  attributes={attributes}
-                  onChange={this.updateAttributes}
-                />
+                <div>
+                  <BackToSearch onClick={() => this.resetSearch()} />
+                  <DisplayTools
+                    attributes={attributes}
+                    onChange={this.updateAttributes}
+                  />
+                </div>
               }
             </PanelBody>
           </InspectorControls>
@@ -156,13 +179,10 @@ class MusicBlock extends Component {
               {
                 this.state.isMusicSet &&
                 <div>
-                  <Button
-                    className={styles.backToSearch}
+                  <BackToSearch
                     onClick={() => this.resetSearch()}
-                  >
-                    <Dashicon icon="arrow-left-alt2" />
-                    {__('Back to Search', 'apple-music')}
-                  </Button>
+                    inPanel={false}
+                  />
                   <DisplayTools
                     attributes={attributes}
                     onChange={this.updateAttributes}
