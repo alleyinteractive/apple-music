@@ -9,7 +9,6 @@ function search() {
 		<form action="#" class="apple-music-toolbar-container clearfix">
 			<label for="apple-music-search"><?php esc_html_e( 'Search', 'apple-music' ); ?></label>
 			<!-- Input name below should come from the data -->
-			<!-- Value should be prepopulated with search term used (if applicable) -->
 			<input
 				type="text"
 				name="{{ data.tab }}"
