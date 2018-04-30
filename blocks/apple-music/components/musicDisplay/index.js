@@ -7,7 +7,11 @@ import {
 } from 'Utils';
 
 const { RawHTML } = window.wp.element;
-
+/**
+ * MusicDisplay component renders the HTML output of the Apple Music widget.
+ * Inline anchor tags and iframes are used to output the widget in the case
+ * that the user disables the plugin the content will be retained.
+ */
 const MusicDisplay = ({
   attributes: {
     appIconStyle,
@@ -32,9 +36,8 @@ const MusicDisplay = ({
   // App Icon style
   } else if ('app-icon' === embedType) {
     style = appIconStyle;
-  // Badge Icon.
   }
-
+  // concatenate the inline styles.
   inline = inline.concat(getIconStyle(embedType, style));
 
   return (
