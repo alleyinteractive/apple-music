@@ -1,2 +1,2 @@
-# Ignore apple-music.js and lint everything else.
-/assets/js/apple-music.js
+# Ignore media-modal.js and lint everything else.
+/assets/js/media-modal.js

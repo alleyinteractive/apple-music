@@ -15,7 +15,7 @@ function search( $id, $tab ) {
 				class="apple-music-input-text apple-music-input-search"
 				size="40"
 				id="apple-music-search"
-				placeholder="<?php printf( esc_attr__( 'Enter a %s', 'apple-music' ), esc_html( $tab ) ); ?>"
+				placeholder="<?php echo esc_attr__( 'Search Apple Music', 'apple-music' ); ?>"
 			>
 			<input class="button button-large" type="submit" value="<?php esc_attr_e( 'Search', 'apple-music' ); ?>">
 			<div class="spinner"></div>
@@ -57,8 +57,8 @@ function sidebar() {
 		<form action="#" class="clearfix">
 			<p><input type="radio" name="format" value="player" id="player"><label for="player"><?php esc_html_e( 'Player', 'apple-music' ); ?></label></p>
 			<p><input type="radio" name="format" value="badge" id="badge"><label for="badge"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/badge.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music badge icon', 'apple-music' ); ?>"/></label></p>
-			<p><input type="radio" name="format" value="text-lockup" id="text-lockup"><label for="text-lockup"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/text-lockup.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music text lockup icon', 'apple-music' ); ?>"/></label></p>
-			<p><input type="radio" name="format" value="app-icon" id="app-icon"><label for="app-icon"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/app-icon.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music app icon', 'apple-music' ); ?>"/></label></p>
+			<p><input type="radio" name="format" value="text-lockup" id="text-lockup"><label for="text-lockup"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/standard-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music text lockup icon', 'apple-music' ); ?>"/></label></p>
+			<p><input type="radio" name="format" value="app-icon" id="app-icon"><label for="app-icon"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'assets/images/app-icon-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music app icon', 'apple-music' ); ?>"/></label></p>
 			<p><input type="radio" name="format" value="link" id="link"><label for="link"><?php esc_html_e( 'Link', 'apple-music' ); ?></label></p>
 		</form>
 
