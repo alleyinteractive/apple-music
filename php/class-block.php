@@ -42,7 +42,7 @@ class Block {
 	public function enqueue_block_assets() {
 		wp_enqueue_style(
 			'apple-music-block',
-			PLUGIN_DIR_URL . 'assets/css/block.css',
+			PLUGIN_DIR_URL . 'assets/css/blocks.css',
 			[ 'wp-blocks' ],
 			APPLE_MUSIC_VERSION
 		);

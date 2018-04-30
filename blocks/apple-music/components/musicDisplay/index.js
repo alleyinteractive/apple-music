@@ -1,22 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewPlayer from 'Components/previewPlayer';
-import { getNestedObject } from 'Utils';
+import {
+  getNestedObject,
+  getIconStyle,
+} from 'Utils';
 
 const { RawHTML } = window.wp.element;
 
 const MusicDisplay = ({
   attributes: {
+    appIconStyle,
     embedType,
     height,
     iframeSrc,
     item,
+    textLockUpStyle,
     width,
   },
   className,
 }) => {
   const URL = getNestedObject(item, ['attributes', 'url']);
-  const badge = `<a href=${URL} style="display:inline-block;overflow:hidden;background:url(https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg) no-repeat;width:157px;height:45px;"></a>`;
+  // default inline styles.
+  let inline = `display:inline-block;background-repeat:no-repeat;
+    overflow:hidden;box-shadow:none;border:none;`;
+  let style = '';
+
+  // Text Lockup style.
+  if ('text-lockup' === embedType) {
+    style = textLockUpStyle;
+  // App Icon style
+  } else if ('app-icon' === embedType) {
+    style = appIconStyle;
+  // Badge Icon.
+  }
+
+  inline = inline.concat(getIconStyle(embedType, style));
 
   return (
     <div className={className}>
@@ -29,24 +48,10 @@ const MusicDisplay = ({
         />
       }
       {
-        'badge' === embedType &&
-        <div>
-          <RawHTML>
-            {badge}
-          </RawHTML>
-        </div>
-      }
-      {
-        'text-lockup' === embedType &&
-        <div>
-          {'THIS IS WHERE THE TEXT LOCKUP WILL GO'}
-        </div>
-      }
-      {
-        'app-icon' === embedType &&
-        <div>
-          {'THIS IS WHERE THE APP ICON WILL GO'}
-        </div>
+        ['badge', 'text-lockup', 'app-icon'].includes(embedType) &&
+        <RawHTML>
+          {`<a style="${inline}" href=${URL}></a>`}
+        </RawHTML>
       }
     </div>
   );
