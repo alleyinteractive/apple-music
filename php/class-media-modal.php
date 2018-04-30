@@ -99,14 +99,14 @@ class Media_Modal {
 	public function action_enqueue_media() {
 
 		wp_enqueue_script(
-			'apple-music',
-			PLUGIN_DIR_URL . 'assets/js/apple-music.js',
+			'apple-music-media-modal',
+			PLUGIN_DIR_URL . 'assets/js/media-modal.js',
 			[ 'jquery', 'media-views' ],
 			APPLE_MUSIC_VERSION
 		);
 
 		wp_localize_script(
-			'apple-music',
+			'apple-music-media-modal',
 			'appleMusic',
 			[
 				'_nonce' => wp_create_nonce( 'apple_music_request' ),
@@ -116,8 +116,8 @@ class Media_Modal {
 		);
 
 		wp_enqueue_style(
-			'apple-music',
-			PLUGIN_DIR_URL . 'assets/css/apple-music.css',
+			'apple-music-media-modal',
+			PLUGIN_DIR_URL . 'assets/css/media-modal.css',
 			[],
 			APPLE_MUSIC_VERSION
 		);

@@ -1,0 +1,37 @@
+/* BackToSearch component styles */
+
+@import '../../styles/shared.css';
+
+.backToSearch {
+  color: var(--red);
+
+  &:hover,
+  &:focus {
+    box-shadow: none;
+    color: var(--red);
+
+    svg {
+      transform: translateX(-3px);
+    }
+  }
+
+  svg {
+    height: 17px;
+    transform: translateX(0);
+    transition: transform 0.1s ease-in-out;
+    vertical-align: text-bottom;
+    width: 17px;
+  }
+}
+
+.backToSearchPanel {
+
+  svg {
+    height: 16px;
+    vertical-align: sub;
+  }
+}
+
+.backToSearchWrapper {
+  margin-bottom: em(15px);
+}
