@@ -25,17 +25,8 @@ class Media_Modal {
 	 */
 	public function action_print_media_templates() {
 
-		$tabs = $this->tabs();
-
-		foreach ( [ 'search', 'item' ] as $template ) {
-			foreach ( $tabs as $tab_id => $tab ) {
-				$id = sprintf( 'apple-music-%s-%s',
-					sanitize_html_class( $template ),
-					sanitize_html_class( $tab_id )
-				);
-				call_user_func( 'Apple_Music\\' . $template, $id, $tab_id );
-			}
-		}
+		item();
+		search();
 		sidebar();
 
 	}
