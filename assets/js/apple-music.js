@@ -470,9 +470,10 @@ media.view.MediaFrame.Post = post_frame.extend( {
 			// Content
 			this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.appleMusicContentRender, this, appleMusic, tab ) );
 
-			// Set the default tab
-			if ( appleMusic.tabs[tab].defaultTab ) {
+			// Set the first tab to default.
+			if ( typeof defaultSet === 'undefined' ) {
 				controller.content = id + '-content-' + tab;
+				var defaultSet = true;
 			}
 
 		}
@@ -498,7 +499,7 @@ media.view.MediaFrame.Post = post_frame.extend( {
 		for ( var tab in appleMusic.tabs ) {
 			tab_id = id + '-content-' + tab;
 			tabs[tab_id] = {
-				text: appleMusic.tabs[tab].text
+				text: appleMusic.tabs[tab]
 			};
 		}
 
@@ -563,11 +564,22 @@ media.controller.AppleMusic = media.controller.State.extend( {
 
 	appleMusicInsert: function () {
 
+		var format = $('.media-sidebar input[name="format"]:checked').val();
+
 		var selection = this.frame.content.get().getSelection(),
 			shortcodes = [];
 
 		selection.each( function ( model ) {
-			shortcodes.push( model.get( 'shortcode' ) );
+
+			if ( typeof(
+					format
+				) === 'undefined' ) {
+				var shortcode = model.get( 'shortcode' );
+			} else {
+				var shortcode = model.get( 'shortcode' ).replace( ']', 'format="' + format + '"]' );
+			}
+
+			shortcodes.push( shortcode );
 		}, this );
 
 		if ( typeof(
@@ -607,3 +619,5 @@ AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend( {
 		return this;
 	},
 } );
+
+
