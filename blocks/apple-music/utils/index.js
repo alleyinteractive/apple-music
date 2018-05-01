@@ -64,16 +64,53 @@ export function getItemArtworkURL(item, width = '118', height = '118') {
  * @returns {string} string - the image path or an empty string.
  */
 export function getIconImagePath(styleValue) {
-  const src = embedTypes.reduce((acc, { styles }) => (
+  return embedTypes.reduce((acc, { styles }) => (
     (undefined !== styles) ? acc.concat(styles) : acc.concat()), [])
     // Reduce all the available styles by selected style and apply fallback.
     .reduce((acc, { value, imagePath }) => (
       (value === styleValue) ? imagePath : acc.concat()), '');
-  return src;
+}
+
+/**
+ * Get the icon CSS style properties for inline styles.
+ *
+ * @param {string} type The type of embedType to look for.
+ * @param {string} style the embed type style. Defaults to empty.
+ * @returns {string} the inline styles for an embedType.
+ */
+export function getIconStyle(type, style = '') {
+  const st = embedTypes.reduce((acc, {
+    backgroundImage,
+    height,
+    styles,
+    value,
+    width,
+  }) => {
+    // Get the embed type.
+    if (value === type) {
+      let background = backgroundImage;
+      // if the embed type has multiple styles grab the matched background image.
+      if (undefined !== styles) {
+        background = styles.reduce((accum, x) => (
+          (style === x.value) ? x.backgroundImage : accum.concat()), '');
+      }
+      // return our needed values.
+      return acc.concat({ background, height, width });
+    }
+    return acc.concat();
+    // since we only need the first item in the array.
+  }, []).shift();
+
+  const background = st.background ? `background-image:${st.background};` : '';
+  const height = st.height ? `height:${st.height};` : '';
+  const width = st.width ? `width:${st.width};` : '';
+
+  return st ? `${height} ${width} ${background}` : '';
 }
 
 export default {
   getIconImagePath,
+  getIconStyle,
   getObjKeyValue,
   getTypeObject,
   showEmbed,
