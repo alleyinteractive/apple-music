@@ -10,8 +10,8 @@ module.exports = (env) => ({
     filename: env.production ?
       'js/[name].bundle.min.js' :
       'js/[name].bundle.js',
-    path: path.join(__dirname, 'assets'),
-    publicPath: '/wp-content/plugins/apple-music/assets/',
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/wp-content/plugins/apple-music/dist/',
   },
 
   resolve: {
@@ -66,8 +66,8 @@ module.exports = (env) => ({
           {
             loader: 'file-loader',
             options: {
-              limit: 10000,
-              outputPath: 'images/',
+              name: '../assets/images/[name].[ext]',
+              outputPath: '../dist/images',
             },
           },
         ],

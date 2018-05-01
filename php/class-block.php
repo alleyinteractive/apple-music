@@ -18,7 +18,7 @@ class Block {
 	public function enqueue_block_editor_assets() {
 		wp_enqueue_script(
 			'apple-music-block',
-			PLUGIN_DIR_URL . 'assets/js/blocks.bundle.min.js',
+			PLUGIN_DIR_URL . 'dist/js/blocks.bundle.min.js',
 			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
 			APPLE_MUSIC_VERSION
 		);
