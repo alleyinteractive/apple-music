@@ -1150,4 +1150,4 @@ module.exports = function (it, key) {
 /***/ })
 
 /******/ });
-//# sourceMappingURL=mediaModal.bundle.min.js.map
+//# sourceMappingURL=mediaModal.bundle.js.map
