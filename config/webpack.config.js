@@ -1,10 +1,16 @@
 // Webpack dependencies
 const path = require('path');
 
+// Plugins
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = (env) => ({
   entry: {
     block: './src/block/index.js',
-    mediaModal: './src/media-modal/media-modal.js',
+    mediaModal: [
+      './src/media-modal/media-modal.js',
+      './src/media-modal/media-modal.css',
+    ],
   },
 
   output: {
@@ -26,6 +32,34 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
+        test: /\.(scss|css)$/,
+        exclude: path.join(__dirname, '../src/block'), // exclude Gutenberg block.
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+                minimize: {
+                  autoprefixer: false,
+                },
+              },
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                config: {
+                  path: path
+                    .resolve(__dirname, './config/postcss.config.js'),
+                },
+              },
+            },
+          ],
+        }),
+      },
+      {
         enforce: 'pre',
         test: /\.js$/,
         exclude: [
@@ -41,6 +75,7 @@ module.exports = (env) => ({
       },
       {
         test: /\.(scss|css)$/,
+        include: path.join(__dirname, '../src/block'),
         use: [
           'style-loader',
           {
@@ -75,4 +110,8 @@ module.exports = (env) => ({
       },
     ],
   },
+
+  plugins: [
+    new ExtractTextPlugin('css/[name].min.css'),
+  ],
 });
