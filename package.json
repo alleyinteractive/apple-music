@@ -60,7 +60,6 @@
             "API": "./src/block/api",
             "Components": "./src/block/components",
             "Config": "./src/block/config",
-            "Dist": "./dist",
             "Images": "./src/images",
             "Utils": "./src/block/utils"
           }
