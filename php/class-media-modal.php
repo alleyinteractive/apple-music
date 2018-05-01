@@ -109,7 +109,7 @@ class Media_Modal {
 
 		wp_enqueue_script(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'assets/js/media-modal.js',
+			PLUGIN_DIR_URL . 'src/media-modal/media-modal.js',
 			[ 'jquery', 'media-views' ],
 			APPLE_MUSIC_VERSION
 		);
@@ -126,7 +126,7 @@ class Media_Modal {
 
 		wp_enqueue_style(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'assets/css/media-modal.css',
+			PLUGIN_DIR_URL . 'src/media-modal/media-modal.css',
 			[],
 			APPLE_MUSIC_VERSION
 		);
@@ -155,7 +155,7 @@ class Media_Modal {
 
 					case 'artists':
 						$item['content']   = $attributes->name;
-						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'assets/images/apple.png' );
+						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'src/images/apple.png' );
 						break;
 
 					case 'songs':
