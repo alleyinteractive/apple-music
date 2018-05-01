@@ -126,7 +126,7 @@ class Media_Modal {
 
 		wp_enqueue_style(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'src/media-modal/media-modal.css',
+			PLUGIN_DIR_URL . 'dist/css/mediaModal.min.css',
 			[],
 			APPLE_MUSIC_VERSION
 		);
