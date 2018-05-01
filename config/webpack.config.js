@@ -3,14 +3,14 @@ const path = require('path');
 
 module.exports = (env) => ({
   entry: {
-    blocks: './blocks/index.js',
+    block: './src/block/index.js',
   },
 
   output: {
     filename: env.production ?
       'js/[name].bundle.min.js' :
       'js/[name].bundle.js',
-    path: path.join(__dirname, 'dist'),
+    path: path.join(__dirname, '../dist'),
     publicPath: '/wp-content/plugins/apple-music/dist/',
   },
 
@@ -54,7 +54,7 @@ module.exports = (env) => ({
             options: {
               config: {
                 path: path
-                  .resolve(__dirname, './assets/config/postcss.config.js'),
+                  .resolve(__dirname, './config/postcss.config.js'),
               },
             },
           },
@@ -66,7 +66,7 @@ module.exports = (env) => ({
           {
             loader: 'file-loader',
             options: {
-              name: '../assets/images/[name].[ext]',
+              name: '../../src/images/[name].[ext]',
               outputPath: '../dist/images',
             },
           },
