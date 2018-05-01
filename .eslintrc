@@ -61,6 +61,6 @@
     "no-confusing-arrow": ["error", {"allowParens": true}],
     "no-constant-condition": ["error"],
     "arrow-parens": ["error", "always"],
-    "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }]
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   }
 }

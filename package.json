@@ -6,8 +6,8 @@
   "author": "Alley Interactive",
   "license": "GPL-2.0-or-later",
   "scripts": {
-    "build": "webpack --config webpack.config.js --env.production",
-    "watch": "webpack --config webpack.config.js --env.dev --watch"
+    "build": "webpack --config config/webpack.config.js --env.production",
+    "watch": "webpack --config config/webpack.config.js --env.dev --watch"
   },
   "devDependencies": {
     "@wordpress/babel-preset-default": "^1.1.3",
@@ -57,11 +57,11 @@
             "./"
           ],
           "alias": {
-            "API": "./blocks/apple-music/api",
-            "Components": "./blocks/apple-music/components",
-            "Config": "./blocks/apple-music/config",
-            "Images": "./assets/images",
-            "Utils": "./blocks/apple-music/utils"
+            "API": "./src/block/api",
+            "Components": "./src/block/components",
+            "Config": "./src/block/config",
+            "Images": "./src/images",
+            "Utils": "./src/block/utils"
           }
         }
       ]
