@@ -4,6 +4,7 @@ const path = require('path');
 module.exports = (env) => ({
   entry: {
     block: './src/block/index.js',
+    mediaModal: './src/media-modal/media-modal.js',
   },
 
   output: {

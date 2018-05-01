@@ -109,7 +109,7 @@ class Media_Modal {
 
 		wp_enqueue_script(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'src/media-modal/media-modal.js',
+			PLUGIN_DIR_URL . 'dist/js/mediaModal.bundle.min.js',
 			[ 'jquery', 'media-views' ],
 			APPLE_MUSIC_VERSION
 		);
