@@ -385,12 +385,14 @@ media.view.AppleMusic = media.View.extend({
     // triggered when a search is submitted
 
     const params = this.model.get('params');
-    // const els = this.$el.find('.apple-music-toolbar').find(':input').each(function (k, el) {
-    //   const n = jQuery(this).attr('name');
-    //   if (n) {
-    //     params[n] = jQuery(this).val();
-    //   }
-    // });
+    this.$el.find('.apple-music-toolbar')
+      .find(':input')
+      .each(function addParam() {
+        const n = jQuery(this).attr('name');
+        if (n) {
+          params[n] = jQuery(this).val();
+        }
+      });
 
     this.clearSelection();
     jQuery('#apple-music-button').attr('disabled', 'disabled');
@@ -448,8 +450,9 @@ media.view.MediaFrame.Post = postFrame.extend({
     };
 
     const tabKeys = Object.keys(appleMusic.tabs);
+    let defaultSet;
     for (let i = 0, len = tabKeys.length; i < len; i += 1) {
-      const tab = appleMusic.tabs[tabKeys[i]];
+      const tab = tabKeys[i];
       // Content
       this.on(
         `content:render:${id}-content-${tab}`,
@@ -460,7 +463,10 @@ media.view.MediaFrame.Post = postFrame.extend({
         )
       );
 
-      controller.content = `${id}-content-${tab}`;
+      if ('undefined' === typeof defaultSet) {
+        controller.content = `${id}-content-${tab}`;
+        defaultSet = true;
+      }
     }
 
     this.states.add([
@@ -488,7 +494,7 @@ media.view.MediaFrame.Post = postFrame.extend({
 
     const tabKeys = Object.keys(appleMusic.tabs);
     for (let i = 0, len = tabKeys.length; i < len; i += 1) {
-      const tab = appleMusic.tabs[tabKeys[i]];
+      const tab = tabKeys[i];
       const tabId = `${id}-content-${tab}`;
       tabs[tabId] = {
         text: appleMusic.tabs[tab],
@@ -500,7 +506,6 @@ media.view.MediaFrame.Post = postFrame.extend({
 
   appleMusicContentRender(service, tab) {
     /* called when a tab becomes active */
-
     this.content.set(new media.view.AppleMusic({
       controller: this,
       model: this.state().props.get(tab),
@@ -524,12 +529,12 @@ media.controller.AppleMusic = media.controller.State.extend({
 
     const tabKeys = Object.keys(options.tabs);
     for (let i = 0, len = tabKeys.length; i < len; i += 1) {
-      const tab = options.tabs[tabKeys[i]];
+      const tab = tabKeys[i];
       this.props.add(new Backbone.Model({
         id: tab,
         params: {},
         page: null,
-        fetchOnRender: tab.fetchOnRender,
+        fetchOnRender: options.tabs[tab].fetchOnRender,
       }));
     }
 
