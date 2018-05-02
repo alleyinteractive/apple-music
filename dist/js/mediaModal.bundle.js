@@ -651,4 +651,4 @@ AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend({
 /***/ })
 
 /******/ });
-//# sourceMappingURL=mediaModal.bundle.min.js.map
+//# sourceMappingURL=mediaModal.bundle.js.map
