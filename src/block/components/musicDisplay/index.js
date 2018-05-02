@@ -5,6 +5,7 @@ import {
   getNestedObject,
   getIconStyle,
 } from 'Utils';
+import { affiliateToken } from '../../settings';
 
 const { RawHTML } = window.wp.element;
 /**
@@ -24,7 +25,8 @@ const MusicDisplay = ({
   },
   className,
 }) => {
-  const URL = getNestedObject(item, ['attributes', 'url']);
+  let URL = getNestedObject(item, ['attributes', 'url']);
+  let iframeURL = iframeSrc;
   // default inline styles.
   let inline = `display:inline-block;background-repeat:no-repeat;
     overflow:hidden;box-shadow:none;border:none;`;
@@ -40,13 +42,19 @@ const MusicDisplay = ({
   // concatenate the inline styles.
   inline = inline.concat(getIconStyle(embedType, style));
 
+  // Set the affiliate token if applicable.
+  if (affiliateToken) {
+    iframeURL = iframeSrc.concat(`&=${affiliateToken}`);
+    URL = URL.concat(`?at=${affiliateToken}`);
+  }
+
   return (
     <div className={className}>
       {
         'preview-player' === embedType &&
         <PreviewPlayer
           height={height}
-          iframeSrc={iframeSrc}
+          iframeSrc={iframeURL}
           width={width}
         />
       }
