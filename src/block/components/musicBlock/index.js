@@ -101,15 +101,20 @@ class MusicBlock extends Component {
    * Reset the search and clear selection.
    */
   resetSearch() {
-    const { setAttributes } = this.props;
+    const {
+      setAttributes,
+      attributes,
+    } = this.props;
     this.setState({
       isMusicSet: false,
     });
     setAttributes({
-      appIconStyle: 'standard',
-      embedType: 'preview-player',
+      appIconStyle: '',
+      embedType: attributes.embedType,
       item: {},
-      textLockUpStyle: 'standard-black',
+      iframeSrc: '',
+      musicID: 0,
+      textLockUpStyle: '',
     });
   }
 

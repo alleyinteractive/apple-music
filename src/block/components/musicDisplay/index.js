@@ -7,6 +7,11 @@ import {
 } from 'Utils';
 import { affiliateToken } from '../../settings';
 
+// CSS
+import styles from './musicDisplay.css';
+
+// Internationalization
+const { __ } = window.wp.i18n;
 const { RawHTML } = window.wp.element;
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
@@ -44,9 +49,15 @@ const MusicDisplay = ({
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {
-    iframeURL = iframeSrc.concat(`&=${affiliateToken}`);
-    URL = URL.concat(`?at=${affiliateToken}`);
+    iframeURL = iframeSrc ? iframeSrc.concat(`&=${affiliateToken}`) : '';
+    URL = URL ? URL.concat(`?at=${affiliateToken}`) : '';
   }
+
+  const placeHolder = ! URL && ! iframeSrc ? (
+    <p className={styles.placeHolder}>
+      {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
+    </p>
+  ) : '';
 
   return (
     <div className={className}>
@@ -59,11 +70,12 @@ const MusicDisplay = ({
         />
       }
       {
-        ['badge', 'text-lockup', 'app-icon'].includes(embedType) &&
+        (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
         <RawHTML>
           {`<a style="${inline}" href=${URL}></a>`}
         </RawHTML>
       }
+      {placeHolder}
     </div>
   );
 };
