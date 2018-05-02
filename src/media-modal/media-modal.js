@@ -1,3 +1,5 @@
+/* global appleMusic, Backbone, tinymce, wp, _ */
+
 /*
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -11,613 +13,570 @@
 
  */
 
-var media = wp.media;
+const { media } = wp;
+
+const AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend({
+  template: wp.template('apple-music-sidebar'),
+
+  initialize() {
+    media
+      .view
+      .Settings
+      .AttachmentDisplay
+      .prototype
+      .initialize
+      .apply(this);
+  },
+
+  /**
+   * @returns {wp.media.view.Settings.AttachmentDisplay} Returns itself to allow chaining
+   */
+  render() {
+    _.extend(this.options, {
+      description: this.options.model.attributes.description,
+      content: this.options.model.attributes.content,
+    });
+
+    media.view.Settings.AttachmentDisplay.prototype.render.call(this);
+
+    return this;
+  },
+});
 
 // VIEW: MEDIA ITEM:
 
-media.view.AppleMusicItem = wp.Backbone.View.extend( {
+media.view.AppleMusicItem = wp.Backbone.View.extend({
+  tagName: 'li',
+  className: 'apple-music-item attachment',
 
-	tagName: 'li',
-	className: 'apple-music-item attachment',
+  render() {
+    this.template = media.template(`apple-music-item-${this.options.tab}`);
+    this.$el.html(this.template(this.model.toJSON()));
 
-	render: function () {
-		this.template = media.template( 'apple-music-item-' + this.options.tab );
-		this.$el.html( this.template( this.model.toJSON() ) );
-
-		return this;
-
-	}
-
-} );
+    return this;
+  },
+});
 
 // VIEW - BOTTOM TOOLBAR
 
-media.view.Toolbar.AppleMusic = media.view.Toolbar.extend( {
+media.view.Toolbar.AppleMusic = media.view.Toolbar.extend({
+  initialize() {
+    _.defaults(this.options, {
+      event: 'inserter',
+      close: false,
+      items: {
+        // See wp.media.view.Button
+        inserter: {
+          id: 'apple-music-button',
+          style: 'primary',
+          text: appleMusic.labels.insert,
+          priority: 80,
+          click() {
+            this.controller.state().appleMusicInsert();
+          },
+        },
+      },
+    });
 
-	initialize: function () {
+    media.view.Toolbar.prototype.initialize.apply(this);
 
-		_.defaults( this.options, {
-			event: 'inserter',
-			close: false,
-			items: {
-				// See wp.media.view.Button
-				inserter: {
-					id: 'apple-music-button',
-					style: 'primary',
-					text: appleMusic.labels.insert,
-					priority: 80,
-					click: function () {
-						this.controller.state().appleMusicInsert();
-					}
-				}
-			}
-		} );
+    this.set('pagination', new media.view.Button({
+      tagName: 'button',
+      classes: 'apple-music-pagination button button-secondary',
+      id: 'apple-music-loadmore',
+      text: appleMusic.labels.loadmore,
+      priority: - 20,
+    }));
+  },
 
-		media.view.Toolbar.prototype.initialize.apply( this, arguments );
+  refresh() {
+    const selection = this
+      .controller
+      .state()
+      .props
+      .get('_all')
+      .get('selection');
 
-		this.set( 'pagination', new media.view.Button( {
-			tagName: 'button',
-			classes: 'apple-music-pagination button button-secondary',
-			id: 'apple-music-loadmore',
-			text: appleMusic.labels.loadmore,
-			priority: - 20
-		} ) );
-	},
+    jQuery('#apple-music-button').prop('disabled', ! selection.length);
 
-	refresh: function () {
-
-		var selection = this.controller.state().props.get( '_all' ).get( 'selection' );
-
-		jQuery( '#apple-music-button' ).prop( 'disabled', ! selection.length );
-
-		//this.get( 'inserter' ).model.set( 'disabled', true );
-		media.view.Toolbar.prototype.refresh.apply( this, arguments );
-
-	}
-
-} );
+    // this.get('inserter').model.set('disabled', true);
+    media.view.Toolbar.prototype.refresh.apply(this);
+  },
+});
 
 // VIEW - MEDIA CONTENT AREA
 
-media.view.AppleMusic = media.View.extend( {
+media.view.AppleMusic = media.View.extend({
+  events: {
+    'click .apple-music-item-area': 'toggleSelectionHandler',
+    'click .apple-music-item .check': 'removeSelectionHandler',
+    'submit .apple-music-toolbar form': 'updateInput',
+  },
+
+  initialize() {
+    /* fired when you switch router tabs */
+
+    this.collection = new Backbone.Collection();
+    this.tab = this.options.tab;
 
-	events: {
-		'click .apple-music-item-area': 'toggleSelectionHandler',
-		'click .apple-music-item .check': 'removeSelectionHandler',
-		'submit .apple-music-toolbar form': 'updateInput'
-	},
+    this.createSidebar();
+    this.createToolbar();
+    this.clearItems();
 
-	initialize: function () {
-
-		/* fired when you switch router tabs */
-
-		var _this = this;
-
-		this.collection = new Backbone.Collection();
-		this.tab = this.options.tab;
-
-		this.createSidebar();
-		this.createToolbar();
-		this.clearItems();
-
-		if ( this.model.get( 'items' ) ) {
-
-			this.collection = new Backbone.Collection();
-			this.collection.reset( this.model.get( 'items' ) );
-
-			jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
-		} else {
-			jQuery( '#apple-music-loadmore' ).hide();
-		}
-
-		this.collection.on( 'reset', this.render, this );
-
-		this.model.on( 'change:params', this.changedParams, this );
-
-		this.on( 'loading', this.loading, this );
-		this.on( 'loaded', this.loaded, this );
-		this.on( 'change:params', this.changedParams, this );
-		this.on( 'change:page', this.changedPage, this );
-
-		jQuery( '.apple-music-pagination' ).click( function ( event ) {
-			_this.paginate( event );
-		} );
-
-		if ( _this.model.get( 'fetchOnRender' ) ) {
-			_this.model.set( 'fetchOnRender', false );
-			_this.fetchItems();
-		}
-
-	},
-
-	render: function () {
-
-		/* fired when you switch router tabs */
-
-		var selection = this.getSelection();
-
-		if ( this.collection && this.collection.models.length ) {
-
-			this.clearItems();
-
-			var container = document.createDocumentFragment();
-
-			this.collection.each( function ( model ) {
-				container.appendChild( this.renderItem( model ) );
-			}, this );
-
-			this.$el.find( '.apple-music-items' ).append( container );
-
-		}
-
-		selection.each( function ( model ) {
-			var id = '#apple-music-item-apple-music-' + this.tab + '-' + model.get( 'id' );
-			this.$el.find( id ).closest( '.apple-music-item' ).addClass( 'selected details' );
-		}, this );
-
-		jQuery( '#apple-music-button' ).prop( 'disabled', ! selection.length );
-
-
-		return this;
-
-	},
-
-	renderItem: function ( model ) {
-
-		var view = new media.view.AppleMusicItem( {
-			model: model,
-			tab: this.tab
-		} );
-
-		return view.render().el;
-
-	},
-
-	createToolbar: function () {
-
-		// @TODO this could be a separate view:
-		html = '<div class="apple-music-error attachments"></div>';
-		this.$el.prepend( html );
-
-		// @TODO this could be a separate view:
-		html = '<div class="apple-music-empty attachments"></div>';
-		this.$el.prepend( html );
-
-		// @TODO this could be a separate view:
-		html = '<ul class="apple-music-items attachments clearfix"></ul>';
-		this.$el.append( html );
-
-		// @TODO this could be a separate view:
-		var toolbar_template = media.template( 'apple-music-search-' + this.tab );
-		html = '<div class="apple-music-toolbar media-toolbar clearfix">' + toolbar_template( this.model.toJSON() ) + '</div>';
-		this.$el.prepend( html );
-
-	},
-
-	createSidebar: function () {
-		var sidebar = this.sidebar = new wp.media.view.Sidebar( {
-			controller: this.controller
-		} );
-
-		this.views.add( sidebar );
-	},
-
-
-	createSingle: function ( model, id ) {
-		var sidebar = this.sidebar,
-			that = this,
-			html = '';
-
-		sidebar.set( 'display', new AttachmentDisplaySettings( {
-			controller: this.controller,
-			model: model,
-			priority: 160,
-			tab: this.tab
-		} ) );
-		sidebar.$el.addClass( 'visible' );
-
-	},
-
-	removeSelectionHandler: function ( event ) {
-
-		var target = jQuery( '#' + event.currentTarget.id );
-		var id = target.attr( 'data-id' );
-
-		this.removeFromSelection( target, id );
-
-		event.preventDefault();
-
-	},
-
-	toggleSelectionHandler: function ( event ) {
-
-		if ( event.target.href ) {
-			return;
-		}
-
-		var target = jQuery( '#' + event.currentTarget.id.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" ) );
-		var id = target.attr( 'data-id' );
-
-		if ( this.getSelection().get( id ) ) {
-			this.removeFromSelection( target, id );
-			this.disposeSingle();
-		} else {
-			this.addToSelection( target, id );
-			this.createSingle( this.getSelection().get( id ), id );
-		}
-
-	},
-
-	disposeSingle: function () {
-		var sidebar = this.sidebar;
-		sidebar.unset( 'details' );
-		sidebar.unset( 'display' );
-		// Hide the sidebar on mobile
-		sidebar.$el.removeClass( 'visible' );
-	},
-
-	addToSelection: function ( target, id ) {
-
-		this.clearSelection();
-		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
-		
-		target.closest( '.apple-music-item' ).addClass( 'selected details' );
-		this.getSelection().add( this.collection._byId[id] );
-
-		// @TODO why isn't this triggered by the above line?
-		this.controller.state().props.trigger( 'change:selection' );
-
-	},
-
-	removeFromSelection: function ( target, id ) {
-
-		target.closest( '.apple-music-item' ).removeClass( 'selected details' );
-
-		this.getSelection().remove( this.collection._byId[id] );
-
-		// @TODO why isn't this triggered by the above line?
-		this.controller.state().props.trigger( 'change:selection' );
-
-	},
-
-	clearSelection: function () {
-		this.getSelection().reset();
-	},
-
-	getSelection: function () {
-		return this.controller.state().props.get( '_all' ).get( 'selection' );
-	},
-
-	clearItems: function () {
-		this.$el.find( '.apple-music-item' ).removeClass( 'selected details' );
-		this.$el.find( '.apple-music-items' ).empty();
-		this.$el.find( '.apple-music-pagination' ).hide();
-
-	},
-
-	loading: function () {
-		this.$el.find( '.spinner' ).addClass( 'is-active' );
-		this.$el.find( '.apple-music-error' ).hide().text( '' );
-		this.$el.find( '.apple-music-empty' ).hide().text( '' );
-		jQuery( '#apple-music-loadmore' ).attr( 'disabled', true );
-	},
-
-	loaded: function ( response ) {
-		this.$el.find( '.spinner' ).removeClass( 'is-active' );
-	},
-
-	fetchItems: function () {
-
-		this.trigger( 'loading' );
-
-		var data = {
-			_nonce: appleMusic._nonce,
-			tab: this.tab,
-			params: this.model.get( 'params' ),
-			page: this.model.get( 'page' ),
-			max_id: this.model.get( 'max_id' )
-		};
-
-
-		media.ajax( 'apple_music_request', {
-			context: this,
-			success: this.fetchedSuccess,
-			error: this.fetchedError,
-			data: data
-		} );
-
-	},
-
-	fetchedSuccess: function ( response ) {
-
-		if ( ! this.model.get( 'page' ) ) {
-
-			if ( ! response.items ) {
-				this.fetchedEmpty( response );
-				return;
-			}
-			
-			this.model.set( 'items', response.items );
-
-			this.collection.reset( response.items );
-
-		} else {
-
-			if ( ! response.items ) {
-				this.moreEmpty( response );
-				return;
-			}
-
-			this.model.set( 'items', this.model.get( 'items' ).concat( response.items ) );
-
-			var collection = new Backbone.Collection( response.items );
-			var container = document.createDocumentFragment();
-
-			this.collection.add( collection.models );
-
-			collection.each( function ( model ) {
-				container.appendChild( this.renderItem( model ) );
-			}, this );
-
-			this.$el.find( '.apple-music-items' ).append( container );
-
-		}
-
-		jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
-		
-		this.trigger( 'loaded loaded:success', response );
-
-	},
-
-	fetchedEmpty: function ( response ) {
-
-		this.$el.find( '.apple-music-empty' ).text( appleMusic.labels.noresults ).show();
-
-		this.$el.find( '.apple-music-pagination' ).hide();
-
-		this.trigger( 'loaded loaded:noresults', response );
-
-	},
-
-	fetchedError: function ( response ) {
-
-		this.$el.find( '.apple-music-error' ).text( response.error_message ).show();
-		jQuery( '#apple-music-loadmore' ).attr( 'disabled', false ).show();
-		this.trigger( 'loaded loaded:error', response );
-
-	},
-
-	updateInput: function ( event ) {
-
-		// triggered when a search is submitted
-
-		var params = this.model.get( 'params' );
-		var els = this.$el.find( '.apple-music-toolbar' ).find( ':input' ).each( function ( k, el ) {
-			var n = jQuery( this ).attr( 'name' );
-			if ( n ) {
-				params[n] = jQuery( this ).val();
-			}
-		} );
-
-		this.clearSelection();
-		jQuery( '#apple-music-button' ).attr( 'disabled', 'disabled' );
-		this.model.set( 'params', params );
-		this.trigger( 'change:params' ); // why isn't this triggering automatically? might be because params is an object
-
-		event.preventDefault();
-
-	},
-
-	paginate: function ( event ) {
-
-		if ( 0 == this.collection.length ) {
-			return;
-		}
-
-		var page = this.model.get( 'page' ) || 1;
-
-		this.model.set( 'page', page + 1 );
-		this.trigger( 'change:page' );
-
-		event.preventDefault();
-
-	},
-
-	changedPage: function () {
-
-		// triggered when the pagination is changed
-
-		this.fetchItems();
-
-	},
-
-	changedParams: function () {
-
-		// triggered when the search parameters are changed
-
-		this.model.set( 'page', null );
-		this.clearItems();
-		this.fetchItems();
-
-	}
-
-} );
+    if (this.model.get('items')) {
+      this.collection = new Backbone.Collection();
+      this.collection.reset(this.model.get('items'));
+
+      jQuery('#apple-music-loadmore').attr('disabled', false).show();
+    } else {
+      jQuery('#apple-music-loadmore').hide();
+    }
+
+    this.collection.on('reset', this.render, this);
+
+    this.model.on('change:params', this.changedParams, this);
+
+    this.on('loading', this.loading, this);
+    this.on('loaded', this.loaded, this);
+    this.on('change:params', this.changedParams, this);
+    this.on('change:page', this.changedPage, this);
+
+    jQuery('.apple-music-pagination').click((event) => {
+      this.paginate(event);
+    });
+
+    if (this.model.get('fetchOnRender')) {
+      this.model.set('fetchOnRender', false);
+      this.fetchItems();
+    }
+  },
+
+  render() {
+    /* fired when you switch router tabs */
+
+    const selection = this.getSelection();
+
+    if (this.collection && this.collection.models.length) {
+      this.clearItems();
+
+      const container = document.createDocumentFragment();
+
+      this.collection.each((model) => {
+        container.appendChild(this.renderItem(model));
+      });
+
+      this.$el.find('.apple-music-items').append(container);
+    }
+
+    selection.each((model) => {
+      const id = `#apple-music-item-apple-music-${this.tab}-${model.get('id')}`;
+      this.$el.find(id)
+        .closest('.apple-music-item')
+        .addClass('selected details');
+    });
+
+    jQuery('#apple-music-button').prop('disabled', ! selection.length);
+
+    return this;
+  },
+
+  renderItem(model) {
+    const view = new media.view.AppleMusicItem({
+      model,
+      tab: this.tab,
+    });
+
+    return view.render().el;
+  },
+
+  createToolbar() {
+    let html = '';
+    // @TODO this could be a separate view:
+    html = '<div class="apple-music-error attachments"></div>';
+    this.$el.prepend(html);
+
+    // @TODO this could be a separate view:
+    html = '<div class="apple-music-empty attachments"></div>';
+    this.$el.prepend(html);
+
+    // @TODO this could be a separate view:
+    html = '<ul class="apple-music-items attachments clearfix"></ul>';
+    this.$el.append(html);
+
+    // @TODO this could be a separate view:
+    const toolbarTemplate = media.template(`apple-music-search-${this.tab}`);
+    html = `<div class="apple-music-toolbar media-toolbar clearfix">${toolbarTemplate(this.model.toJSON())}</div>`; // eslint-disable-line max-len
+    this.$el.prepend(html);
+  },
+
+  createSidebar() {
+    const sidebar = new wp.media.view.Sidebar({
+      controller: this.controller,
+    });
+
+    this.sidebar = sidebar;
+    this.views.add(sidebar);
+  },
+
+  createSingle(model) {
+    const { sidebar } = this;
+
+    sidebar.set('display', new AttachmentDisplaySettings({
+      controller: this.controller,
+      model,
+      priority: 160,
+      tab: this.tab,
+    }));
+    sidebar.$el.addClass('visible');
+  },
+
+  removeSelectionHandler(event) {
+    const target = jQuery(`#${event.currentTarget.id}`);
+    const id = target.attr('data-id');
+
+    this.removeFromSelection(target, id);
+
+    event.preventDefault();
+  },
+
+  toggleSelectionHandler(event) {
+    if (event.target.href) {
+      return;
+    }
+
+    const target = jQuery(`#${
+      event.currentTarget.id.replace(/(:|\.|\[|\]|,|=|@)/g, '\\$1')
+    }`);
+    const id = target.attr('data-id');
+
+    if (this.getSelection().get(id)) {
+      this.removeFromSelection(target, id);
+      this.disposeSingle();
+    } else {
+      this.addToSelection(target, id);
+      this.createSingle(this.getSelection().get(id), id);
+    }
+  },
+
+  disposeSingle() {
+    const { sidebar } = this;
+    sidebar.unset('details');
+    sidebar.unset('display');
+    // Hide the sidebar on mobile
+    sidebar.$el.removeClass('visible');
+  },
+
+  addToSelection(target, id) {
+    this.clearSelection();
+    this.$el.find('.apple-music-item').removeClass('selected details');
+
+    target.closest('.apple-music-item').addClass('selected details');
+    this.getSelection().add(this.collection._byId[id]); // eslint-disable-line no-underscore-dangle
+
+    // @TODO why isn't this triggered by the above line?
+    this.controller.state().props.trigger('change:selection');
+  },
+
+  removeFromSelection(target, id) {
+    target.closest('.apple-music-item').removeClass('selected details');
+
+    this.getSelection().remove(this.collection._byId[id]); // eslint-disable-line no-underscore-dangle
+
+    // @TODO why isn't this triggered by the above line?
+    this.controller.state().props.trigger('change:selection');
+  },
+
+  clearSelection() {
+    this.getSelection().reset();
+  },
+
+  getSelection() {
+    return this.controller.state().props.get('_all').get('selection');
+  },
+
+  clearItems() {
+    this.$el.find('.apple-music-item').removeClass('selected details');
+    this.$el.find('.apple-music-items').empty();
+    this.$el.find('.apple-music-pagination').hide();
+  },
+
+  loading() {
+    this.$el.find('.spinner').addClass('is-active');
+    this.$el.find('.apple-music-error').hide().text('');
+    this.$el.find('.apple-music-empty').hide().text('');
+    jQuery('#apple-music-loadmore').attr('disabled', true);
+  },
+
+  loaded() {
+    this.$el.find('.spinner').removeClass('is-active');
+  },
+
+  fetchItems() {
+    this.trigger('loading');
+
+    const data = {
+      _nonce: appleMusic._nonce, // eslint-disable-line no-underscore-dangle
+      tab: this.tab,
+      params: this.model.get('params'),
+      page: this.model.get('page'),
+      max_id: this.model.get('max_id'),
+    };
+
+    media.ajax('apple_music_request', {
+      context: this,
+      success: this.fetchedSuccess,
+      error: this.fetchedError,
+      data,
+    });
+  },
+
+  fetchedSuccess(response) {
+    if (! this.model.get('page')) {
+      if (! response.items) {
+        this.fetchedEmpty(response);
+        return;
+      }
+
+      this.model.set('items', response.items);
+
+      this.collection.reset(response.items);
+    } else {
+      if (! response.items) {
+        this.moreEmpty(response);
+        return;
+      }
+
+      this.model.set('items', this.model.get('items').concat(response.items));
+
+      const collection = new Backbone.Collection(response.items);
+      const container = document.createDocumentFragment();
+
+      this.collection.add(collection.models);
+
+      collection.each((model) => {
+        container.appendChild(this.renderItem(model));
+      });
+
+      this.$el.find('.apple-music-items').append(container);
+    }
+
+    jQuery('#apple-music-loadmore').attr('disabled', false).show();
+
+    this.trigger('loaded loaded:success', response);
+  },
+
+  fetchedEmpty(response) {
+    this.$el.find('.apple-music-empty')
+      .text(appleMusic.labels.noresults)
+      .show();
+
+    this.$el.find('.apple-music-pagination').hide();
+
+    this.trigger('loaded loaded:noresults', response);
+  },
+
+  fetchedError(response) {
+    this.$el.find('.apple-music-error').text(response.error_message).show();
+    jQuery('#apple-music-loadmore').attr('disabled', false).show();
+    this.trigger('loaded loaded:error', response);
+  },
+
+  updateInput(event) {
+    // triggered when a search is submitted
+
+    const params = this.model.get('params');
+    this.$el.find('.apple-music-toolbar')
+      .find(':input')
+      .each(function addParam() {
+        const n = jQuery(this).attr('name');
+        if (n) {
+          params[n] = jQuery(this).val();
+        }
+      });
+
+    this.clearSelection();
+    jQuery('#apple-music-button').attr('disabled', 'disabled');
+    this.model.set('params', params);
+    this.trigger('change:params'); // why isn't this triggering automatically? might be because params is an object
+
+    event.preventDefault();
+  },
+
+  paginate(event) {
+    if (0 === this.collection.length) {
+      return;
+    }
+
+    const page = this.model.get('page') || 1;
+
+    this.model.set('page', page + 1);
+    this.trigger('change:page');
+
+    event.preventDefault();
+  },
+
+  changedPage() {
+    // triggered when the pagination is changed
+
+    this.fetchItems();
+  },
+
+  changedParams() {
+    // triggered when the search parameters are changed
+
+    this.model.set('page', null);
+    this.clearItems();
+    this.fetchItems();
+  },
+});
 
 // VIEW - MEDIA FRAME (MENU BAR)
 
-var post_frame = media.view.MediaFrame.Post;
+const postFrame = media.view.MediaFrame.Post;
 
-media.view.MediaFrame.Post = post_frame.extend( {
+media.view.MediaFrame.Post = postFrame.extend({
+  initialize() {
+    postFrame.prototype.initialize.apply(this);
 
-	initialize: function () {
+    const id = 'apple-music-service-apple-music';
+    const controller = {
+      id,
+      router: `${id}-router`,
+      toolbar: `${id}-toolbar`,
+      menu: 'default',
+      title: appleMusic.labels.title,
+      tabs: appleMusic.tabs,
+      priority: 100, // places it above Insert From URL
+    };
 
-		post_frame.prototype.initialize.apply( this, arguments );
+    const tabKeys = Object.keys(appleMusic.tabs);
+    let defaultSet;
+    for (let i = 0, len = tabKeys.length; i < len; i += 1) {
+      const tab = tabKeys[i];
+      // Content
+      this.on(
+        `content:render:${id}-content-${tab}`,
+        _.bind(
+          this.appleMusicContentRender,
+          this, appleMusic,
+          tab
+        )
+      );
 
+      if ('undefined' === typeof defaultSet) {
+        controller.content = `${id}-content-${tab}`;
+        defaultSet = true;
+      }
+    }
 
-		var id = 'apple-music-service-apple-music';
-		var controller = {
-			id: id,
-			router: id + '-router',
-			toolbar: id + '-toolbar',
-			menu: 'default',
-			title: appleMusic.labels.title,
-			tabs: appleMusic.tabs,
-			priority: 100 // places it above Insert From URL
-		};
+    this.states.add([
+      new media.controller.AppleMusic(controller),
+    ]);
 
-		for ( var tab in appleMusic.tabs ) {
+    // Tabs
+    this.on(`router:create:${id}-router`, this.createRouter, this);
+    this.on(
+      `router:render:${id}-router`,
+      _.bind(
+        this.appleMusicRouterRender,
+        this,
+        appleMusic
+      )
+    );
 
-			// Content
-			this.on( 'content:render:' + id + '-content-' + tab, _.bind( this.appleMusicContentRender, this, appleMusic, tab ) );
+    // Toolbar
+    this.on(`toolbar:create:${id}-toolbar`, this.appleMusicToolbarCreate, this);
+  },
 
-			// Set the first tab to default.
-			if ( typeof defaultSet === 'undefined' ) {
-				controller.content = id + '-content-' + tab;
-				var defaultSet = true;
-			}
+  appleMusicRouterRender(service, view) {
+    const id = 'apple-music-service-apple-music';
+    const tabs = {};
 
-		}
+    const tabKeys = Object.keys(appleMusic.tabs);
+    for (let i = 0, len = tabKeys.length; i < len; i += 1) {
+      const tab = tabKeys[i];
+      const tabId = `${id}-content-${tab}`;
+      tabs[tabId] = {
+        text: appleMusic.tabs[tab],
+      };
+    }
 
-		this.states.add( [
-			new media.controller.AppleMusic( controller )
-		] );
+    view.set(tabs);
+  },
 
-		// Tabs
-		this.on( 'router:create:' + id + '-router', this.createRouter, this );
-		this.on( 'router:render:' + id + '-router', _.bind( this.appleMusicRouterRender, this, appleMusic ) );
+  appleMusicContentRender(service, tab) {
+    /* called when a tab becomes active */
+    this.content.set(new media.view.AppleMusic({
+      controller: this,
+      model: this.state().props.get(tab),
+      tab,
+      className: `clearfix attachments-browser apple-music-content apple-music-content-apple-music apple-music-content-apple-music-${tab}`, // eslint-disable-line max-len
+    }));
+  },
 
-		// Toolbar
-		this.on( 'toolbar:create:' + id + '-toolbar', this.appleMusicToolbarCreate, this );
-
-	},
-
-	appleMusicRouterRender: function ( service, view ) {
-
-		var id = 'apple-music-service-apple-music';
-		var tabs = {};
-
-		for ( var tab in appleMusic.tabs ) {
-			tab_id = id + '-content-' + tab;
-			tabs[tab_id] = {
-				text: appleMusic.tabs[tab]
-			};
-		}
-
-		view.set( tabs );
-
-	},
-
-
-	appleMusicContentRender: function ( service, tab ) {
-
-		/* called when a tab becomes active */
-
-		this.content.set( new media.view.AppleMusic( {
-			controller: this,
-			model: this.state().props.get( tab ),
-			tab: tab,
-			className: 'clearfix attachments-browser apple-music-content apple-music-content-apple-music apple-music-content-apple-music-' + tab
-		} ) );
-
-	},
-
-	appleMusicToolbarCreate: function ( toolbar ) {
-		toolbar.view = new media.view.Toolbar.AppleMusic( {
-			controller: this
-		} );
-
-	}
-
-} );
+  appleMusicToolbarCreate(toolbar) {
+    toolbar.view = new media.view.Toolbar.AppleMusic({ // eslint-disable-line no-param-reassign
+      controller: this,
+    });
+  },
+});
 
 // CONTROLLER:
 
-media.controller.AppleMusic = media.controller.State.extend( {
+media.controller.AppleMusic = media.controller.State.extend({
+  initialize(options) {
+    this.props = new Backbone.Collection();
 
-	initialize: function ( options ) {
+    const tabKeys = Object.keys(options.tabs);
+    for (let i = 0, len = tabKeys.length; i < len; i += 1) {
+      const tab = tabKeys[i];
+      this.props.add(new Backbone.Model({
+        id: tab,
+        params: {},
+        page: null,
+        fetchOnRender: options.tabs[tab].fetchOnRender,
+      }));
+    }
 
-		this.props = new Backbone.Collection();
+    this.props.add(new Backbone.Model({
+      id: '_all',
+      selection: new Backbone.Collection(),
+    }));
 
-		for ( var tab in options.tabs ) {
+    this.props.on('change:selection', this.refresh, this);
+  },
 
-			this.props.add( new Backbone.Model( {
-				id: tab,
-				params: {},
-				page: null,
-				fetchOnRender: options.tabs[tab].fetchOnRender,
-			} ) );
+  refresh() {
+    this.frame.toolbar.get().refresh();
+  },
 
-		}
+  appleMusicInsert() {
+    const format = $('.media-sidebar input[name="format"]:checked').val();
 
-		this.props.add( new Backbone.Model( {
-			id: '_all',
-			selection: new Backbone.Collection()
-		} ) );
+    const selection = this.frame.content.get().getSelection();
+    const shortcodes = [];
+    let shortcode;
 
-		this.props.on( 'change:selection', this.refresh, this );
+    selection.each((model) => {
+      if ('undefined' === typeof format) {
+        shortcode = model.get('shortcode');
+      } else {
+        shortcode = model.get('shortcode').replace(']', `format="${format}"]`);
+      }
 
-	},
+      shortcodes.push(shortcode);
+    }, this);
 
-	refresh: function () {
-		this.frame.toolbar.get().refresh();
-	},
+    if ('undefined' === typeof tinymce
+      || null === tinymce.activeEditor
+      || tinymce.activeEditor.isHidden()
+    ) {
+      media.editor.insert(_.toArray(shortcodes).join('\n\n'));
+    } else {
+      media.editor.insert(`<p>${_.toArray(shortcodes).join('</p><p>')}</p>`);
+    }
 
-	appleMusicInsert: function () {
-
-		var format = $('.media-sidebar input[name="format"]:checked').val();
-
-		var selection = this.frame.content.get().getSelection(),
-			shortcodes = [];
-
-		selection.each( function ( model ) {
-
-			if ( typeof(
-					format
-				) === 'undefined' ) {
-				var shortcode = model.get( 'shortcode' );
-			} else {
-				var shortcode = model.get( 'shortcode' ).replace( ']', 'format="' + format + '"]' );
-			}
-
-			shortcodes.push( shortcode );
-		}, this );
-
-		if ( typeof(
-				tinymce
-			) === 'undefined' || tinymce.activeEditor === null || tinymce.activeEditor.isHidden() ) {
-			media.editor.insert( _.toArray( shortcodes ).join( "\n\n" ) );
-		} else {
-			media.editor.insert( "<p>" + _.toArray( shortcodes ).join( "</p><p>" ) + "</p>" );
-		}
-
-		selection.reset();
-		this.frame.close();
-
-	},
-
-} );
-
-AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend( {
-
-	template: wp.template( 'apple-music-sidebar' ),
-
-	initialize: function () {
-		media.view.Settings.AttachmentDisplay.prototype.initialize.apply( this, arguments );
-	},
-
-	/**
-	 * @returns {wp.media.view.Settings.AttachmentDisplay} Returns itself to allow chaining
-	 */
-	render: function () {
-		_.extend( this.options, {
-			description: this.options.model.attributes.description,
-			content: this.options.model.attributes.content,
-		} );
-
-		media.view.Settings.AttachmentDisplay.prototype.render.call( this );
-
-		return this;
-	},
-} );
-
-
+    selection.reset();
+    this.frame.close();
+  },
+});
