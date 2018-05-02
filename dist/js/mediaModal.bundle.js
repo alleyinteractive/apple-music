@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/wp-content/plugins/apple-music/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 165);
+/******/ 	return __webpack_require__(__webpack_require__.s = 166);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -154,12 +154,21 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 165:
+/***/ 166:
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(167);
+module.exports = __webpack_require__(171);
+
+
+/***/ }),
+
+/***/ 167:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(168);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__);
 
 /* global appleMusic, Backbone, tinymce, wp, _ */
@@ -522,12 +531,12 @@ media.view.AppleMusic = media.View.extend({
     // triggered when a search is submitted
 
     var params = this.model.get('params');
-    // const els = this.$el.find('.apple-music-toolbar').find(':input').each(function (k, el) {
-    //   const n = jQuery(this).attr('name');
-    //   if (n) {
-    //     params[n] = jQuery(this).val();
-    //   }
-    // });
+    this.$el.find('.apple-music-toolbar').find(':input').each(function addParam() {
+      var n = jQuery(this).attr('name');
+      if (n) {
+        params[n] = jQuery(this).val();
+      }
+    });
 
     this.clearSelection();
     jQuery('#apple-music-button').attr('disabled', 'disabled');
@@ -582,12 +591,16 @@ media.view.MediaFrame.Post = postFrame.extend({
     };
 
     var tabKeys = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default()(appleMusic.tabs);
+    var defaultSet = void 0;
     for (var i = 0, len = tabKeys.length; i < len; i += 1) {
-      var tab = appleMusic.tabs[tabKeys[i]];
+      var tab = tabKeys[i];
       // Content
       this.on('content:render:' + id + '-content-' + tab, _.bind(this.appleMusicContentRender, this, appleMusic, tab));
 
-      controller.content = id + '-content-' + tab;
+      if ('undefined' === typeof defaultSet) {
+        controller.content = id + '-content-' + tab;
+        defaultSet = true;
+      }
     }
 
     this.states.add([new media.controller.AppleMusic(controller)]);
@@ -605,7 +618,7 @@ media.view.MediaFrame.Post = postFrame.extend({
 
     var tabKeys = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default()(appleMusic.tabs);
     for (var i = 0, len = tabKeys.length; i < len; i += 1) {
-      var tab = appleMusic.tabs[tabKeys[i]];
+      var tab = tabKeys[i];
       var tabId = id + '-content-' + tab;
       tabs[tabId] = {
         text: appleMusic.tabs[tab]
@@ -616,7 +629,6 @@ media.view.MediaFrame.Post = postFrame.extend({
   },
   appleMusicContentRender: function appleMusicContentRender(service, tab) {
     /* called when a tab becomes active */
-
     this.content.set(new media.view.AppleMusic({
       controller: this,
       model: this.state().props.get(tab),
@@ -639,12 +651,12 @@ media.controller.AppleMusic = media.controller.State.extend({
 
     var tabKeys = __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default()(options.tabs);
     for (var i = 0, len = tabKeys.length; i < len; i += 1) {
-      var tab = options.tabs[tabKeys[i]];
+      var tab = tabKeys[i];
       this.props.add(new Backbone.Model({
         id: tab,
         params: {},
         page: null,
-        fetchOnRender: tab.fetchOnRender
+        fetchOnRender: options.tabs[tab].fetchOnRender
       }));
     }
 
@@ -688,23 +700,23 @@ media.controller.AppleMusic = media.controller.State.extend({
 
 /***/ }),
 
-/***/ 166:
+/***/ 168:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(167), __esModule: true };
+module.exports = { "default": __webpack_require__(169), __esModule: true };
 
 /***/ }),
 
-/***/ 167:
+/***/ 169:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(168);
+__webpack_require__(170);
 module.exports = __webpack_require__(0).Object.keys;
 
 
 /***/ }),
 
-/***/ 168:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
@@ -717,6 +729,13 @@ __webpack_require__(45)('keys', function () {
   };
 });
 
+
+/***/ }),
+
+/***/ 171:
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ }),
 
