@@ -25,7 +25,7 @@ class Media_Modal {
 	 */
 	public function action_print_media_templates() {
 
-		$tabs = $this->tabs();
+		$tabs = $this->get_tabs();
 
 		foreach ( [ 'search', 'item' ] as $template ) {
 			foreach ( $tabs as $tab_id => $tab ) {
@@ -40,9 +40,8 @@ class Media_Modal {
 
 	}
 
-	public function tabs() {
+	public function get_tabs() {
 		$tabs = apply_filters( 'apple_music_types', [] );
-
 		return wp_list_pluck( $tabs, 'tab_text', 'tab_name' );
 	}
 
@@ -69,11 +68,9 @@ class Media_Modal {
 
 		$request['page'] = absint( $request['page'] );
 		$params          = $request['params'];
-
-		$tabs     = $this->tabs();
-		$type     = isset( $tabs[ key( $params ) ]['type'] ) ? $tabs[ key( $params ) ]['type'] : key( $params );
-		$api      = new API();
-		$response = $api->search( reset( $params ), $type, $request['page'] );
+		$type_name = apple_music_search_types( 'tab_name', $request['tab'] );
+		$api             = new API();
+		$response        = $api->search( reset( $params ), $type_name, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
 			wp_send_json_error( [
@@ -120,7 +117,7 @@ class Media_Modal {
 			[
 				'_nonce' => wp_create_nonce( 'apple_music_request' ),
 				'labels' => $this->labels(),
-				'tabs'   => $this->tabs(),
+				'tabs'   => $this->get_tabs(),
 			]
 		);
 
