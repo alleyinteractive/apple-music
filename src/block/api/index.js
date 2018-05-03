@@ -47,7 +47,7 @@ export function get(endpoint) {
  * @param {int} limit The limit on the number of objects that are returned.
  * @returns Promise
  */
-export function searchCatalog(term, types, limit = 25) {
+export function searchCatalog(term, types, limit = 24) {
   if (! term) {
     return Promise.resolve('No Search Term');
   }

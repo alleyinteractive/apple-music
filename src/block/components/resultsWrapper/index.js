@@ -7,7 +7,11 @@ import {
 } from 'API';
 import { getNestedObject } from 'Utils';
 
+import styles from './resultsWrapper.css';
+
+const { sprintf, __ } = window.wp.i18n;
 const { Component } = window.wp.element;
+const { Button } = window.wp.components;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -21,6 +25,8 @@ class ResultsWrapper extends Component {
     super(props);
     this.state = {
       data: [],
+      limit: 8,
+      buttonText: __('View More', 'apple-music'),
     };
     this.getResponse = this.getResponse.bind(this);
   }
@@ -43,7 +49,7 @@ class ResultsWrapper extends Component {
    * @returns {promise} resolves to set the state with an array items.
    */
   getResponse(type, term) {
-    searchCatalog(term, type)
+    searchCatalog(term, type, this.state.limit)
       .then((data) => {
         const result = getNestedObject(data, ['results', type]);
         this.setState({
@@ -65,10 +71,28 @@ class ResultsWrapper extends Component {
     onSelect(item);
   }
 
+  /**
+   * Toggle the amount of items returned.
+   */
+  toggleView() {
+    if (24 === this.state.limit) {
+      this.setState({
+        limit: 8,
+        buttonText: __('View More', 'apple-music'),
+      });
+    } else {
+      this.setState({
+        limit: 24,
+        buttonText: __('View Less', 'apple-music'),
+      });
+    }
+  }
+
   // Component Render method.
   render() {
     const {
       className,
+      attributes: { musicType },
     } = this.props;
 
     const results = getItems(this.state.data)
@@ -79,9 +103,38 @@ class ResultsWrapper extends Component {
         />
       ));
 
+    /**
+     * Capitalize the first letter of a string.
+     * @param {string} string
+     * @returns {string} the string with the first character capitalized.
+     */
+    function ucFirst(string) {
+      return `${string
+        .charAt(0).toUpperCase()}${string.slice(1)}`;
+    }
+
     return (
-      <div className={className}>
-        {results}
+      <div>
+        {
+          0 !== this.state.data.length &&
+          <div className={styles.resultsBubbleHeader}>
+            <h3>{ucFirst(musicType)}</h3>
+            <div>
+              <span className={styles.viewLabel}>
+                {sprintf(__('1 - %s of 24', 'apple-music'), this.state.limit)}
+              </span>
+              <Button
+                className={styles.viewControl}
+                onClick={() => this.toggleView()}
+              >
+                {this.state.buttonText}
+              </Button>
+            </div>
+          </div>
+        }
+        <div className={className}>
+          {results}
+        </div>
       </div>
     );
   }
