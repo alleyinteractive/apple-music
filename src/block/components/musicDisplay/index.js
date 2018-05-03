@@ -5,7 +5,13 @@ import {
   getNestedObject,
   getIconStyle,
 } from 'Utils';
+import { affiliateToken } from '../../settings';
 
+// CSS
+import styles from './musicDisplay.css';
+
+// Internationalization
+const { __ } = window.wp.i18n;
 const { RawHTML } = window.wp.element;
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
@@ -24,7 +30,8 @@ const MusicDisplay = ({
   },
   className,
 }) => {
-  const URL = getNestedObject(item, ['attributes', 'url']);
+  let URL = getNestedObject(item, ['attributes', 'url']);
+  let iframeURL = iframeSrc;
   // default inline styles.
   let inline = `display:inline-block;background-repeat:no-repeat;
     overflow:hidden;box-shadow:none;border:none;`;
@@ -40,22 +47,35 @@ const MusicDisplay = ({
   // concatenate the inline styles.
   inline = inline.concat(getIconStyle(embedType, style));
 
+  // Set the affiliate token if applicable.
+  if (affiliateToken) {
+    iframeURL = iframeSrc ? iframeSrc.concat(`&=${affiliateToken}`) : '';
+    URL = URL ? URL.concat(`?at=${affiliateToken}`) : '';
+  }
+
+  const placeHolder = ! URL && ! iframeSrc ? (
+    <p className={styles.placeHolder}>
+      {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
+    </p>
+  ) : '';
+
   return (
     <div className={className}>
       {
         'preview-player' === embedType &&
         <PreviewPlayer
           height={height}
-          iframeSrc={iframeSrc}
+          iframeSrc={iframeURL}
           width={width}
         />
       }
       {
-        ['badge', 'text-lockup', 'app-icon'].includes(embedType) &&
+        (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
         <RawHTML>
           {`<a style="${inline}" href=${URL}></a>`}
         </RawHTML>
       }
+      {placeHolder}
     </div>
   );
 };

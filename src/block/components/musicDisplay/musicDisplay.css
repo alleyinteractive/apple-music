@@ -1,0 +1,7 @@
+/* MusicDisplay component styles */
+
+.placeHolder {
+  margin: 0;
+  opacity: .5;
+  pointer-events: none;
+}
