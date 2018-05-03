@@ -33,7 +33,6 @@ const AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend({
    */
   render() {
     const playerTabs = ['songs', 'albums', 'playlists'];
-    console.info(this.options.tab);
     _.extend(this.options, {
       description: this.options.model.attributes.description,
       content: this.options.model.attributes.content,
