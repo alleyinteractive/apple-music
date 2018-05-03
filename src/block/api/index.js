@@ -6,7 +6,7 @@ import token from '../token';
 import { storefront } from '../settings';
 
 // Base URL for the apple music API
-const baseURL = 'https://api.music.apple.com/v1';
+export const baseURL = 'https://api.music.apple.com';
 
 /**
  * Performs a generic request against the specified endpoint of the Apple Music API.
@@ -45,14 +45,16 @@ export function get(endpoint) {
  * @param {string} term The entered text to search the API with.
  * @param {string} types The types query parameter.
  * @param {int} limit The limit on the number of objects that are returned.
+ * @param {int} offset The number of items to offset the request.
  * @returns Promise
  */
-export function searchCatalog(term, types, limit = 25) {
+export function searchCatalog(term, types, limit = 24, offset = '') {
   if (! term) {
     return Promise.resolve('No Search Term');
   }
-  const catalogURL = `${baseURL}/catalog/${storefront}/search`;
-  const query = `term=${term}&limit=${limit}&types=${types}`;
+  const offsetParam = offset ? `&offset=${offset}` : '';
+  const catalogURL = `${baseURL}/v1/catalog/${storefront}/search`;
+  const query = `term=${term}&limit=${limit}&types=${types}${offsetParam}`;
 
   return get(`${catalogURL}?${query}`);
 }
@@ -74,13 +76,13 @@ export function getItems(response) {
  * @returns {string} the iframe URL.
  */
 export function iframeURL(type, id) {
-  const baseUrl = 'https://tools.applemusic.com/embed/v1/';
+  const embedURL = 'https://tools.applemusic.com/embed/v1/';
   const typeObject = getTypeObject(type);
 
   const embedType = getObjKeyValue(typeObject, 'embedType');
 
   if (null !== embedType) {
-    return `${baseUrl}${embedType}/${id}?country=${storefront}`;
+    return `${embedURL}${embedType}/${id}?country=${storefront}`;
   }
   return '';
 }

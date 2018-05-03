@@ -1,0 +1,31 @@
+/* ResultsWrapper component styles */
+
+@import '../../styles/shared.css';
+
+.resultsBubbleHeader {
+  align-items: baseline;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: em(12px);
+
+  h3 {
+    margin: 0;
+  }
+}
+
+.viewControl {
+  color: var(--red);
+  font-size: rem(12px);
+
+  &:focus {
+    box-shadow: none;
+    color: var(--red);
+  }
+
+  svg {
+    height: 14px;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    width: 14px;
+  }
+}

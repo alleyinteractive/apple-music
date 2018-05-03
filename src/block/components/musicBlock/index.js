@@ -109,12 +109,12 @@ class MusicBlock extends Component {
       isMusicSet: false,
     });
     setAttributes({
-      appIconStyle: '',
+      appIconStyle: 'standard',
       embedType: attributes.embedType,
       item: {},
       iframeSrc: '',
       musicID: 0,
-      textLockUpStyle: '',
+      textLockUpStyle: 'standard-black',
     });
   }
 

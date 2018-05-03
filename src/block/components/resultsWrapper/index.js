@@ -2,12 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import MusicItem from 'Components/musicItem';
 import {
+  baseURL,
+  get,
   searchCatalog,
   getItems,
 } from 'API';
 import { getNestedObject } from 'Utils';
 
+import styles from './resultsWrapper.css';
+
+const { __ } = window.wp.i18n;
 const { Component } = window.wp.element;
+const { Button, Dashicon } = window.wp.components;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -21,6 +27,9 @@ class ResultsWrapper extends Component {
     super(props);
     this.state = {
       data: [],
+      next: '',
+      paginated: false,
+      offset: 24,
     };
     this.getResponse = this.getResponse.bind(this);
   }
@@ -36,6 +45,10 @@ class ResultsWrapper extends Component {
     if (prevState.data === this.state.data) {
       this.getResponse(musicType, query);
     }
+    if (prevProps.attributes.query !== query ||
+      prevProps.attributes.musicType !== musicType) {
+      this.resetPagination();
+    }
   }
 
   /**
@@ -43,13 +56,46 @@ class ResultsWrapper extends Component {
    * @returns {promise} resolves to set the state with an array items.
    */
   getResponse(type, term) {
-    searchCatalog(term, type)
+    const offset = this.state.paginated ? this.state.offset : '';
+    searchCatalog(term, type, 24, offset)
       .then((data) => {
         const result = getNestedObject(data, ['results', type]);
         this.setState({
           data: result || [],
+          next: getNestedObject(result, ['next']) || '',
         });
       });
+  }
+
+  /**
+   * Reset the pagination
+   */
+  resetPagination() {
+    this.setState({
+      offset: this.state.limit,
+      paginated: false,
+    });
+  }
+
+  /**
+   * Get the next page.
+   */
+  paginate() {
+    const { attributes: { musicType } } = this.props;
+
+    const { offset, next } = this.state;
+    const endpoint = next ? `${baseURL}${next}&limit=24` : '';
+
+    get(endpoint).then((data) => {
+      const result = getNestedObject(data, ['results', musicType]);
+
+      this.setState({
+        data: result || [],
+        next: getNestedObject(result, ['next']) || '',
+        paginated: true,
+        offset: offset + 24,
+      });
+    });
   }
 
   /**
@@ -60,6 +106,7 @@ class ResultsWrapper extends Component {
     const { onSelect } = this.props;
     this.setState({
       data: [],
+      paginated: false,
     });
     // Pass the item to the parent.
     onSelect(item);
@@ -69,6 +116,7 @@ class ResultsWrapper extends Component {
   render() {
     const {
       className,
+      attributes: { musicType },
     } = this.props;
 
     const results = getItems(this.state.data)
@@ -79,9 +127,37 @@ class ResultsWrapper extends Component {
         />
       ));
 
+    /**
+     * Capitalize the first letter of a string.
+     * @param {string} string
+     * @returns {string} the string with the first character capitalized.
+     */
+    function ucFirst(string) {
+      return `${string
+        .charAt(0).toUpperCase()}${string.slice(1)}`;
+    }
+
     return (
-      <div className={className}>
-        {results}
+      <div>
+        {
+          0 !== this.state.data.length &&
+          <div className={styles.resultsBubbleHeader}>
+            <h3>{ucFirst(musicType)}</h3>
+            {
+              this.state.next &&
+                <Button
+                  className={styles.viewControl}
+                  onClick={() => this.paginate()}
+                >
+                  {__('Next', 'apple-music')}
+                  <Dashicon icon="arrow-right-alt2" />
+                </Button>
+            }
+          </div>
+        }
+        <div className={className}>
+          {results}
+        </div>
       </div>
     );
   }
