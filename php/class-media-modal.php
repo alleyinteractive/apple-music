@@ -85,7 +85,7 @@ class Media_Modal {
 
 	}
 
-	public function labels() {
+	public function get_labels() {
 		$labels = [
 			'title'     => __( 'Insert Apple Music', 'apple-music' ),
 			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
@@ -116,7 +116,7 @@ class Media_Modal {
 			'appleMusic',
 			[
 				'_nonce' => wp_create_nonce( 'apple_music_request' ),
-				'labels' => $this->labels(),
+				'labels' => $this->get_labels(),
 				'tabs'   => $this->get_tabs(),
 			]
 		);
