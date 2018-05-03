@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "/wp-content/plugins/apple-music/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 166);
+/******/ 	return __webpack_require__(__webpack_require__.s = 170);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -91,7 +91,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 /***/ (function(module, exports, __webpack_require__) {
 
 var dP = __webpack_require__(7);
-var createDesc = __webpack_require__(19);
+var createDesc = __webpack_require__(21);
 module.exports = __webpack_require__(5) ? function (object, key, value) {
   return dP.f(object, key, createDesc(1, value));
 } : function (object, key, value) {
@@ -107,7 +107,7 @@ module.exports = __webpack_require__(5) ? function (object, key, value) {
 
 // to indexed object, toObject with fallback for non-array-like ES3 strings
 var IObject = __webpack_require__(37);
-var defined = __webpack_require__(21);
+var defined = __webpack_require__(23);
 module.exports = function (it) {
   return IObject(defined(it));
 };
@@ -115,11 +115,11 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 15:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 // optional / simple context binding
-var aFunction = __webpack_require__(18);
+var aFunction = __webpack_require__(20);
 module.exports = function (fn, that, length) {
   aFunction(fn);
   if (that === undefined) return fn;
@@ -142,33 +142,21 @@ module.exports = function (fn, that, length) {
 
 /***/ }),
 
-/***/ 16:
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-module.exports = function (it) {
-  return toString.call(it).slice(8, -1);
-};
-
-
-/***/ }),
-
-/***/ 166:
+/***/ 170:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(167);
-module.exports = __webpack_require__(171);
+__webpack_require__(171);
+module.exports = __webpack_require__(175);
 
 
 /***/ }),
 
-/***/ 167:
+/***/ 171:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(168);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__ = __webpack_require__(172);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_babel_runtime_core_js_object_keys__);
 
 /* global appleMusic, Backbone, tinymce, wp, _ */
@@ -700,28 +688,28 @@ media.controller.AppleMusic = media.controller.State.extend({
 
 /***/ }),
 
-/***/ 168:
+/***/ 172:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = { "default": __webpack_require__(169), __esModule: true };
+module.exports = { "default": __webpack_require__(173), __esModule: true };
 
 /***/ }),
 
-/***/ 169:
+/***/ 173:
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(170);
+__webpack_require__(174);
 module.exports = __webpack_require__(0).Object.keys;
 
 
 /***/ }),
 
-/***/ 170:
+/***/ 174:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 Object.keys(O)
 var toObject = __webpack_require__(31);
-var $keys = __webpack_require__(20);
+var $keys = __webpack_require__(22);
 
 __webpack_require__(45)('keys', function () {
   return function keys(it) {
@@ -732,7 +720,7 @@ __webpack_require__(45)('keys', function () {
 
 /***/ }),
 
-/***/ 171:
+/***/ 175:
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
@@ -740,6 +728,18 @@ __webpack_require__(45)('keys', function () {
 /***/ }),
 
 /***/ 18:
+/***/ (function(module, exports) {
+
+var toString = {}.toString;
+
+module.exports = function (it) {
+  return toString.call(it).slice(8, -1);
+};
+
+
+/***/ }),
+
+/***/ 20:
 /***/ (function(module, exports) {
 
 module.exports = function (it) {
@@ -750,7 +750,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 19:
+/***/ 21:
 /***/ (function(module, exports) {
 
 module.exports = function (bitmap, value) {
@@ -765,7 +765,7 @@ module.exports = function (bitmap, value) {
 
 /***/ }),
 
-/***/ 20:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 // 19.1.2.14 / 15.2.3.14 Object.keys(O)
@@ -779,7 +779,7 @@ module.exports = Object.keys || function keys(O) {
 
 /***/ }),
 
-/***/ 21:
+/***/ 23:
 /***/ (function(module, exports) {
 
 // 7.2.1 RequireObjectCoercible(argument)
@@ -791,7 +791,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 22:
+/***/ 24:
 /***/ (function(module, exports) {
 
 // 7.1.4 ToInteger
@@ -804,7 +804,7 @@ module.exports = function (it) {
 
 /***/ }),
 
-/***/ 23:
+/***/ 25:
 /***/ (function(module, exports) {
 
 var id = 0;
@@ -853,7 +853,7 @@ module.exports = function (it, S) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var shared = __webpack_require__(29)('keys');
-var uid = __webpack_require__(23);
+var uid = __webpack_require__(25);
 module.exports = function (key) {
   return shared[key] || (shared[key] = uid(key));
 };
@@ -879,7 +879,7 @@ module.exports = function (key) {
 
 var global = __webpack_require__(1);
 var core = __webpack_require__(0);
-var ctx = __webpack_require__(15);
+var ctx = __webpack_require__(17);
 var hide = __webpack_require__(11);
 var has = __webpack_require__(9);
 var PROTOTYPE = 'prototype';
@@ -958,7 +958,7 @@ module.exports = (
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.13 ToObject(argument)
-var defined = __webpack_require__(21);
+var defined = __webpack_require__(23);
 module.exports = function (it) {
   return Object(defined(it));
 };
@@ -1004,7 +1004,7 @@ module.exports = function (object, names) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // fallback for non-array-like ES3 and non-enumerable old V8 strings
-var cof = __webpack_require__(16);
+var cof = __webpack_require__(18);
 // eslint-disable-next-line no-prototype-builtins
 module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
   return cof(it) == 'String' ? it.split('') : Object(it);
@@ -1017,7 +1017,7 @@ module.exports = Object('z').propertyIsEnumerable(0) ? Object : function (it) {
 /***/ (function(module, exports, __webpack_require__) {
 
 // 7.1.15 ToLength
-var toInteger = __webpack_require__(22);
+var toInteger = __webpack_require__(24);
 var min = Math.min;
 module.exports = function (it) {
   return it > 0 ? min(toInteger(it), 0x1fffffffffffff) : 0; // pow(2, 53) - 1 == 9007199254740991
@@ -1069,7 +1069,7 @@ module.exports = function (IS_INCLUDES) {
 /***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
-var toInteger = __webpack_require__(22);
+var toInteger = __webpack_require__(24);
 var max = Math.max;
 var min = Math.min;
 module.exports = function (index, length) {

@@ -13,16 +13,19 @@
   }
 }
 
-.viewLabel {
-  font-size: rem(12px);
-}
-
 .viewControl {
   color: var(--red);
   font-size: rem(12px);
 
   &:focus {
-    color: var(--red);
     box-shadow: none;
+    color: var(--red);
+  }
+
+  svg {
+    height: 14px;
+    padding-bottom: 2px;
+    vertical-align: middle;
+    width: 14px;
   }
 }
