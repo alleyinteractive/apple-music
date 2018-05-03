@@ -32,9 +32,11 @@ const AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend({
    * @returns {wp.media.view.Settings.AttachmentDisplay} Returns itself to allow chaining
    */
   render() {
+    const playerTabs = ['songs', 'albums', 'playlists'];
     _.extend(this.options, {
       description: this.options.model.attributes.description,
       content: this.options.model.attributes.content,
+      shouldDisplayPlayer: playerTabs.includes(this.options.tab),
     });
 
     media.view.Settings.AttachmentDisplay.prototype.render.call(this);
@@ -50,7 +52,8 @@ media.view.AppleMusicItem = wp.Backbone.View.extend({
   className: 'apple-music-item attachment',
 
   render() {
-    this.template = media.template(`apple-music-item-${this.options.tab}`);
+    this.template = media.template('apple-music-item');
+    this.model.set('tab', this.attributes.tab);
     this.$el.html(this.template(this.model.toJSON()));
 
     return this;
@@ -183,7 +186,9 @@ media.view.AppleMusic = media.View.extend({
   renderItem(model) {
     const view = new media.view.AppleMusicItem({
       model,
-      tab: this.tab,
+      attributes: {
+        tab: this.tab,
+      },
     });
 
     return view.render().el;
@@ -204,7 +209,7 @@ media.view.AppleMusic = media.View.extend({
     this.$el.append(html);
 
     // @TODO this could be a separate view:
-    const toolbarTemplate = media.template(`apple-music-search-${this.tab}`);
+    const toolbarTemplate = media.template('apple-music-search');
     html = `<div class="apple-music-toolbar media-toolbar clearfix">${toolbarTemplate(this.model.toJSON())}</div>`; // eslint-disable-line max-len
     this.$el.prepend(html);
   },
@@ -225,7 +230,9 @@ media.view.AppleMusic = media.View.extend({
       controller: this.controller,
       model,
       priority: 160,
-      tab: this.tab,
+      attributes: {
+        tab: this.tab,
+      },
     }));
     sidebar.$el.addClass('visible');
   },

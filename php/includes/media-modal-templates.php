@@ -11,7 +11,7 @@ function search() {
 			<!-- Input name below should come from the data -->
 			<input
 				type="text"
-				name="{{ data.tab }}"
+				name="{{ data.id }}"
 				value=""
 				class="apple-music-input-text apple-music-input-search"
 				size="40"
@@ -58,7 +58,9 @@ function sidebar() {
 
 		<form action="#" class="clearfix">
 			<!-- Player should only be an option for songs, albums and playlists -->
-			<p><input type="radio" name="format" value="player" id="player"><label for="player"><?php esc_html_e( 'Player', 'apple-music' ); ?></label></p>
+			<# if (data.shouldDisplayPlayer) { #>
+				<p><input type="radio" name="format" value="player" id="player"><label for="player"><?php esc_html_e( 'Player', 'apple-music' ); ?></label></p>
+			<# } #>
 			<p><input type="radio" name="format" value="badge" id="badge"><label for="badge"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/badge.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music badge icon', 'apple-music' ); ?>"/></label></p>
 			<p><input type="radio" name="format" value="text-lockup" id="text-lockup"><label for="text-lockup"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/standard-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music text lockup icon', 'apple-music' ); ?>"/></label></p>
 			<p><input type="radio" name="format" value="app-icon" id="app-icon"><label for="app-icon"><img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/app-icon-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music app icon', 'apple-music' ); ?>"/></label></p>
