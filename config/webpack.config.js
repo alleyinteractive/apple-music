@@ -32,7 +32,7 @@ module.exports = (env) => ({
   module: {
     rules: [
       {
-        test: /\.(scss|css)$/,
+        test: /\.css$/,
         exclude: path.join(__dirname, '../src/block'), // exclude Gutenberg block.
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',

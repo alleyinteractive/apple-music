@@ -6792,10 +6792,6 @@ var ResultsWrapper = function (_Component) {
     return _this;
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return true;
-  // }
-
   /**
    * Call the API when the component updates.
    *
@@ -6847,10 +6843,15 @@ var ResultsWrapper = function (_Component) {
     key: 'resetPagination',
     value: function resetPagination() {
       this.setState({
-        offset: this.state.limit,
+        offset: 24,
         paginated: false
       });
     }
+
+    /**
+     * Get the next page.
+     */
+
   }, {
     key: 'paginate',
     value: function paginate() {
@@ -8019,7 +8020,7 @@ exports = module.exports = __webpack_require__(15)(false);
 
 
 // module
-exports.push([module.i, ".musicDisplay__placeHolder__UM5Kh{\n  margin:0;\n  opacity:.5;\n  pointer-events:none;\n}", ""]);
+exports.push([module.i, ".musicDisplay__placeHolder__UM5Kh{\n  margin:0;\n  opacity:0.5;\n  pointer-events:none;\n}", ""]);
 
 // exports
 exports.locals = {
