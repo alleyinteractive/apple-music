@@ -6,8 +6,6 @@ class Media_Modal {
 
 	public $items = [];
 	public $meta = [ 'count' => null ];
-	public $id = null;
-	public $content = null;
 
 	public function __construct() {
 		add_action( 'wp_enqueue_media', [ $this, 'action_enqueue_media' ] );
@@ -68,7 +66,7 @@ class Media_Modal {
 
 		$request['page'] = absint( $request['page'] );
 		$params          = $request['params'];
-		$type_name = apple_music_search_types( 'tab_name', $request['tab'] );
+		$type_name       = apple_music_search_types( 'tab_name', $request['tab'] );
 		$api             = new API();
 		$response        = $api->search( reset( $params ), $type_name, $request['page'] );
 

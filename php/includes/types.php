@@ -82,7 +82,7 @@ function apple_music_get_player_types() {
  * @return bool|int|string Key of element.
  */
 function apple_music_search_types( $field, $value ) {
-	$types = apply_filters( 'apple_music_types', [ ] );
+	$types = apply_filters( 'apple_music_types', [] );
 	foreach ( $types as $key => $type ) {
 		if ( $type[ $field ] === $value ) {
 			return $key;
