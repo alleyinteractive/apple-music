@@ -34,10 +34,6 @@ class ResultsWrapper extends Component {
     this.getResponse = this.getResponse.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return true;
-  // }
-
   /**
    * Call the API when the component updates.
    *
@@ -81,6 +77,9 @@ class ResultsWrapper extends Component {
     });
   }
 
+  /**
+   * Get the next page.
+   */
   paginate() {
     const { attributes: { musicType } } = this.props;
 
