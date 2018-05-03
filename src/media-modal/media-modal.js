@@ -33,6 +33,7 @@ const AttachmentDisplaySettings = media.view.Settings.AttachmentDisplay.extend({
    */
   render() {
     const playerTabs = ['songs', 'albums', 'playlists'];
+    console.info(this.options.tab);
     _.extend(this.options, {
       description: this.options.model.attributes.description,
       content: this.options.model.attributes.content,
@@ -230,9 +231,7 @@ media.view.AppleMusic = media.View.extend({
       controller: this.controller,
       model,
       priority: 160,
-      attributes: {
-        tab: this.tab,
-      },
+      tab: this.tab,
     }));
     sidebar.$el.addClass('visible');
   },
