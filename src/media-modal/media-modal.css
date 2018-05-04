@@ -76,6 +76,15 @@ label[for='app-icon'] {
   }
 }
 
+label[for='player'] {
+	line-height: 1.9;
+
+	img {
+    height: 42px;
+    width: 42px;
+  }
+}
+
 .apple-music-select-format {
 
   p {
@@ -86,4 +95,14 @@ label[for='app-icon'] {
   label {
     margin-left: 5px;
   }
+
+	.dashicons-controls-play {
+		border: 2px solid;
+    border-radius: 50%;
+		margin-right: 5px;
+
+		&::before {
+			margin-left: 1px;
+		}
+	}
 }
