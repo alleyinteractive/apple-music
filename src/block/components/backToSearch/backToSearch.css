@@ -1,6 +1,6 @@
 /* BackToSearch component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .backToSearch {
   color: var(--red);

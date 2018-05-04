@@ -56,10 +56,11 @@ function item( $id, $tab ) {
 function sidebar() {
 	?>
 	<script type="text/html" id="tmpl-apple-music-sidebar">
-		<h3>{{ data.content }}</h3>
+		<h3 class="apple-music-selection">{{ data.content }}</h3>
 		<p>{{ data.description }}</p>
 
 		<form action="#" class="apple-music-select-format">
+			<p class="apple-music-form-description"><?php esc_html_e( 'Choose Embed style below.', 'apple-music' ); ?></p>
 			<p>
 				<input type="radio" name="format" value="player" id="player">
 				<label for="player">
@@ -74,15 +75,45 @@ function sidebar() {
 				</label>
 			</p>
 			<p>
-				<input type="radio" name="format" value="text-lockup" id="text-lockup">
-				<label for="text-lockup">
-					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/standard-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music text lockup icon', 'apple-music' ); ?>"/>
+				<input type="radio" name="format" value="text-lockup-standard-black" id="text-lockup-standard-black">
+				<label for="text-lockup-standard-black">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/standard-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music standard black text lockup icon', 'apple-music' ); ?>"/>
+				</label>
+			</p>
+			<p>
+				<input type="radio" name="format" value="text-lockup-standard-white" id="text-lockup-standard-white">
+				<label for="text-lockup-standard-white">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/standard-white.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music standard white text lockup icon', 'apple-music' ); ?>"/>
+				</label>
+			</p>
+			<p>
+				<input type="radio" name="format" value="text-lockup-mono-white" id="text-lockup-mono-white">
+				<label for="text-lockup-mono-white">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/mono-white.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music mono white text lockup icon', 'apple-music' ); ?>"/>
+				</label>
+			</p>
+			<p>
+				<input type="radio" name="format" value="text-lockup-mono-black" id="text-lockup-mono-black">
+				<label for="text-lockup-mono-black">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/mono-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music mono black text lockup icon', 'apple-music' ); ?>"/>
 				</label>
 			</p>
 			<p>
 				<input type="radio" name="format" value="app-icon" id="app-icon">
 				<label for="app-icon">
 					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/app-icon-standard.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music app icon', 'apple-music' ); ?>"/>
+				</label>
+			</p>
+			<p>
+				<input type="radio" name="format" value="app-icon-black" id="app-icon-black">
+				<label for="app-icon-black">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/app-icon-black.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music black app icon', 'apple-music' ); ?>"/>
+				</label>
+			</p>
+			<p>
+				<input type="radio" name="format" value="app-icon-white" id="app-icon-white">
+				<label for="app-icon-white">
+					<img src="<?php echo esc_url( PLUGIN_DIR_URL . 'src/images/app-icon-white.svg' ); ?>" alt="<?php esc_html_e( 'Apple Music white app icon', 'apple-music' ); ?>"/>
 				</label>
 			</p>
 			<p>

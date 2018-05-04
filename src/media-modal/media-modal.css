@@ -1,4 +1,9 @@
 
+/**
+ * Media Modal styles
+ */
+@import '../styles/shared.css';
+
 .apple-music-content {
 
 	.apple-music-error,
@@ -68,7 +73,9 @@
 	}
 }
 
-label[for='app-icon'] {
+label[for='app-icon'],
+label[for='app-icon-black'],
+label[for='app-icon-white'] {
 
 	img {
     height: 42px;
@@ -78,10 +85,15 @@ label[for='app-icon'] {
 
 label[for='player'] {
 	line-height: 1.9;
+}
+
+label[for='app-icon-white'],
+label[for='text-lockup-standard-white'],
+label[for='text-lockup-mono-white'] {
 
 	img {
-    height: 42px;
-    width: 42px;
+    @mixin checkered-background;
+		padding: 3px;
   }
 }
 
@@ -105,4 +117,13 @@ label[for='player'] {
 			margin-left: 1px;
 		}
 	}
+}
+
+.attachment-display-settings h3 {
+ color: var(--red);
+}
+
+.apple-music-form-description {
+	color: #989898;
+	font-style: italic;
 }

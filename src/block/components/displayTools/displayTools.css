@@ -1,6 +1,6 @@
 /* DisplayTools component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .name {
   font-size: rem(34px);

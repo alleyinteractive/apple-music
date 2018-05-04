@@ -1,6 +1,6 @@
 /* MusicItem component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .musicItem {
   /* height: 190px; */
