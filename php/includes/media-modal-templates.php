@@ -51,9 +51,9 @@ function item() {
 }
 
 /**
- * Undocumented function
+ * Apple Music media modal sidebar.
  *
- * @return void
+ * @return HTML for sidebar media modal sidebar form.
  */
 function sidebar() {
 	?>
