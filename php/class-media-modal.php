@@ -35,7 +35,7 @@ class Media_Modal {
 	}
 
 	public function add_button() {
-		echo '<a href="#" class="button">' . esc_html__( 'Apple Music' ) . '</a>';
+		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music' ) . '</a>';
 	}
 
 	/**
