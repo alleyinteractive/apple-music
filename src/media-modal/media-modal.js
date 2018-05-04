@@ -587,12 +587,12 @@ media.controller.AppleMusic = media.controller.State.extend({
 });
 
 // Create custom apple music button
-function openMediaModal() {
+function openMediaModal(evt) {
+  evt.preventDefault();
   media({
     frame: 'post',
     state: 'apple-music-service-apple-music',
   }).open();
-  return false;
 }
 
 // Bind button function
