@@ -29,9 +29,6 @@ class API {
 		return new API();
 	}
 
-	/**
-	 * Set up the singleton.
-	 */
 	public function __construct() {
 		$settings         = new Settings();
 		$this->token      = $settings->get_token();

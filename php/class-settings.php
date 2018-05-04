@@ -10,9 +10,6 @@ namespace Apple_Music;
 
 class Settings {
 
-	/**
-	 * Set up the singleton.
-	 */
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );
