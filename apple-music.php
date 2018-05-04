@@ -25,13 +25,3 @@ add_action( 'after_setup_theme', function () {
 	new Settings;
 	new Block;
 } );
-
-add_action( 'plugins_loaded', __NAMESPACE__ . '\myplugin_load_textdomain' );
-/**
- * Load plugin textdomain.
- *
- * @since 1.0.0
- */
-function myplugin_load_textdomain() {
-	load_plugin_textdomain( 'apple-music', false, basename( dirname( __FILE__ ) ) . '/languages' );
-}
