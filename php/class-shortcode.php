@@ -31,14 +31,39 @@ class Shortcode {
 				'default_color' => '', // Not used
 				'dimensions'    => 'width:157px;height:45px;',
 			],
-			'text-lockup' => [
+			'text-lockup-standard-black' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
 				'default_color' => 'standard-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
+			'text-lockup-standard-white' => [
+				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
+				'default_color' => 'standard-white.svg',
+				'dimensions'    => 'width:140px;height:30px;',
+			],
+			'text-lockup-mono-white' => [
+				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
+				'default_color' => 'mono-white.svg',
+				'dimensions'    => 'width:140px;height:30px;',
+			],
+			'text-lockup-mono-black' => [
+				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
+				'default_color' => 'mono-black.svg',
+				'dimensions'    => 'width:140px;height:30px;',
+			],
 			'app-icon'    => [
+				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg',
+				'default_color' => '',
+				'dimensions'    => 'width:40px;height:40px;',
+			],
+			'app-icon-black'    => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
 				'default_color' => '000000',
+				'dimensions'    => 'width:40px;height:40px;',
+			],
+			'app-icon-white'    => [
+				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
+				'default_color' => 'FFFFFF',
 				'dimensions'    => 'width:40px;height:40px;',
 			],
 		];
@@ -99,7 +124,7 @@ class Shortcode {
 			}
 
 			// Assemble the badge/text lockup/app icon.
-			$output = sprintf( '<a href="%1$s" style="display:inline-block;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
+			$output = sprintf( '<a href="%1$s" style="display:inline-block;box-shadow:none;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
 				esc_url( $url ), // 1
 				esc_url( $formats[ $format ]['background'] ), // 2
 				esc_attr( empty( $shortcode_atts['color'] ) ? $formats[ $format ]['default_color'] : $shortcode_atts['color'] ), // 3

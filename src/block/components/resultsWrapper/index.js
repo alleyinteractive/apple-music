@@ -72,7 +72,7 @@ class ResultsWrapper extends Component {
    */
   resetPagination() {
     this.setState({
-      offset: this.state.limit,
+      offset: 24,
       paginated: false,
     });
   }

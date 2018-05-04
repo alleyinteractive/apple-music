@@ -1,6 +1,6 @@
 /* SearchTools component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .searchTools {
   width: 100%;

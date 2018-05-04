@@ -1,110 +1,129 @@
-.media-frame .apple-music-content {
-	background: #fff;
+
+/**
+ * Media Modal styles
+ */
+@import '../styles/shared.css';
+
+.apple-music-content {
+
+	.apple-music-error,
+	.apple-music-empty {
+		bottom: auto;
+		display: none;
+		margin: 0 0 10px 0;
+		padding: 12px 16px;
+	}
+	
+	.apple-music-empty {
+		background: #ffd;
+	}
+	
+	.apple-music-error {
+		background: #fdd;
+	}
+	
+	.apple-music-toolbar {
+		background: #f5f5f5;
+		padding: 0;
+	}
+	
+	.apple-music-toolbar-container {
+		padding: 10px 9px;
+	}
+	
+	.apple-music-items {
+		display: flex;
+	  flex-wrap: wrap;
+	  padding-top: 10px;
+	}
 }
 
-.media-frame .apple-music-content .apple-music-error {
-	background: #fdd;
-	padding: 12px 16px;
-	margin: 0 0 10px 0;
-	bottom: auto;
-	display: none;
+.apple-music-item {
+  align-self: baseline;
 }
 
-.media-frame .apple-music-content .apple-music-empty {
-	background: #ffd;
-	padding: 12px 16px;
-	margin: 0 0 10px 0;
-	bottom: auto;
-	display: none;
+.apple-music-thumb img {
+  max-width: 100%;
 }
 
-.media-frame .apple-music-content .apple-music-toolbar {
-	background: #f5f5f5;
-	padding: 0;
-}
-body.mp6 .media-frame .apple-music-content .apple-music-toolbar {
-	background: #fff;
-	border-bottom: 1px solid #ddd;
-}
-
-.media-frame .apple-music-content .apple-music-toolbar-container {
-	padding: 10px 9px;
-}
-
-.media-frame .apple-music-content .attachments {
-	right: 0;
-}
-
-.media-frame .apple-music-content .apple-music-toolbar label,
-.media-frame .apple-music-content .apple-music-toolbar select,
-.media-frame .apple-music-content .apple-music-toolbar input {
-	float: left;
-}
-
-.media-frame .apple-music-content .media-toolbar .apple-music-input-search {
+.apple-music-input-search {
 	margin-left: 10px;
 }
 
-/* WP media manager style tweaks: */
-.media-frame .apple-music-content .apple-music-toolbar label {
-	margin: 7px;
-	color: #555;
+.apple-music-toolbar {
+
+	label,
+	select,
+	input {
+		float: left;
+	}
+	
+	label {
+		color: #555;
+		margin: 7px;
+	}
+	
+	.button {
+		margin-left: 5px;
+	}
+	
+	.spinner {
+		float: left;
+		margin: 6px 10px;
+	}
 }
 
-.media-frame .apple-music-content .apple-music-toolbar select {
-	margin: 1px;
-	padding: 6px 6px 5px;
-	height: 2.5em;
+label[for='app-icon'],
+label[for='app-icon-black'],
+label[for='app-icon-white'] {
+
+	img {
+    height: 42px;
+    width: 42px;
+  }
 }
 
-.media-frame .apple-music-content .apple-music-toolbar .button {
-	margin: 1px;
+label[for='player'] {
+	line-height: 1.9;
 }
 
-.media-frame .apple-music-content .apple-music-toolbar .spinner {
-	float: left;
-	margin: 7px 10px;
+label[for='app-icon-white'],
+label[for='text-lockup-standard-white'],
+label[for='text-lockup-mono-white'] {
+
+	img {
+    @mixin checkered-background;
+		padding: 3px;
+  }
 }
 
-.media-frame .apple-music-content .apple-music-pagination .spinner {
-	float: left;
-	margin: 3px 10px;
+.apple-music-select-format {
+
+  p {
+    align-items: center;
+    display: flex;
+  }
+
+  label {
+    margin-left: 5px;
+  }
+
+	.dashicons-controls-play {
+		border: 2px solid;
+    border-radius: 50%;
+		margin-right: 5px;
+
+		&::before {
+			margin-left: 1px;
+		}
+	}
 }
 
-.media-frame .apple-music-content .clearfix:after {
-	clear: both;
-	content: ".";
-	display: block;
-	height: 0;
-	visibility: hidden;
+.attachment-display-settings h3 {
+ color: var(--red);
 }
 
-.button.apple-music-pagination {
-	margin-top: 15px;
+.apple-music-form-description {
+	color: #989898;
+	font-style: italic;
 }
-
-/* ************************** */
-/* Generic media item styles: */
-/* ************************** */
-
-.media-frame .apple-music-content .apple-music-items {
-	padding-top: 10px;
-}
-
-.media-frame .apple-music-content .apple-music-item {
-	cursor: pointer;
-	border: 1px solid #fff;
-}
-
-.media-frame .apple-music-content .apple-music-item:hover {
-	border-color: #999;
-}
-
-.media-frame .apple-music-content .apple-music-item.selected {
-	border-color: transparent;
-}
-
-html.ie8 .media-frame .apple-music-content .apple-music-item.selected {
-	border-color: #999;
-}
-

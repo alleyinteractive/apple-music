@@ -1,6 +1,6 @@
 /* ResultsWrapper component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .resultsBubbleHeader {
   align-items: baseline;

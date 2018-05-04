@@ -1,6 +1,6 @@
 /* MusicBlock component styles */
 
-@import '../../styles/shared.css';
+@import '../../../styles/shared.css';
 
 .introText {
   color: var(--black);
