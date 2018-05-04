@@ -28,7 +28,7 @@ class API {
 	public static function instance() {
 		return new API();
 	}
-	
+
 	public function __construct() {
 		$settings         = new Settings();
 		$this->token      = $settings->get_token();
