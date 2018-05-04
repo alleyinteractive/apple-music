@@ -71,7 +71,19 @@
 label[for='app-icon'] {
 
 	img {
-    width: 42px;
     height: 42px;
+    width: 42px;
+  }
+}
+
+.apple-music-select-format {
+
+  p {
+    align-items: center;
+    display: flex;
+  }
+
+  label {
+    margin-left: 5px;
   }
 }
