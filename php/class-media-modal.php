@@ -123,11 +123,8 @@ class Media_Modal {
 
 		reset( $response );
 		$type = key( $response );
+		$this->add_meta( 'loadMore', ! empty( $response->$type->next ) );
 
-		if ( ! empty( $response->$type->next ) ) {
-			$load_more = true;
-			$this->add_meta( 'load-more', true );
-		}
 		if ( ! empty( $response->$type->data ) ) {
 			foreach ( $response->$type->data as $thing ) {
 
