@@ -130,7 +130,7 @@ media.view.AppleMusic = media.View.extend({
       this.collection = new Backbone.Collection();
       this.collection.reset(this.model.get('items'));
 
-      jQuery('#apple-music-loadmore').attr('disabled', false).show();
+      jQuery('#apple-music-loadmore').attr('disabled', true).show();
     } else {
       jQuery('#apple-music-loadmore').hide();
     }
@@ -144,9 +144,11 @@ media.view.AppleMusic = media.View.extend({
     this.on('change:params', this.changedParams, this);
     this.on('change:page', this.changedPage, this);
 
-    jQuery('.apple-music-pagination').click((event) => {
-      this.paginate(event);
-    });
+    setTimeout(() => {
+      jQuery('.apple-music-pagination').click((event) => {
+        this.paginate(event);
+      });
+    }, 0);
 
     if (this.model.get('fetchOnRender')) {
       this.model.set('fetchOnRender', false);
@@ -347,7 +349,7 @@ media.view.AppleMusic = media.View.extend({
       this.collection.reset(response.items);
     } else {
       if (! response.items) {
-        this.moreEmpty(response);
+        this.fetchedEmpty(response);
         return;
       }
 
@@ -365,7 +367,10 @@ media.view.AppleMusic = media.View.extend({
       this.$el.find('.apple-music-items').append(container);
     }
 
-    jQuery('#apple-music-loadmore').attr('disabled', false).show();
+    jQuery('#apple-music-loadmore').attr(
+      'disabled',
+      ! response.meta.loadMore
+    ).show();
 
     this.trigger('loaded loaded:success', response);
   },
@@ -382,7 +387,7 @@ media.view.AppleMusic = media.View.extend({
 
   fetchedError(response) {
     this.$el.find('.apple-music-error').text(response.error_message).show();
-    jQuery('#apple-music-loadmore').attr('disabled', false).show();
+    jQuery('#apple-music-loadmore').attr('disabled', true).show();
     this.trigger('loaded loaded:error', response);
   },
 
