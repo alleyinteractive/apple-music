@@ -1,14 +1,32 @@
 <?php
 
+/**
+ * Class to handle Apple Music shortcodes.
+ *
+ * @package Apple_Music
+ */
+
 namespace Apple_Music;
 
 class Shortcode {
 
+	/**
+	 * Shortcode constructor.
+	 */
 	public function __construct() {
 		add_shortcode( 'apple-music', [ $this, 'shortcode' ] );
 
 	}
 
+	/**
+	 * Build out the shortcode.
+	 * 
+	 * @param array $atts
+	 * @param null $content
+	 * @param string $tag
+	 *
+	 * @return bool|string
+	 */
 	public static function shortcode( $atts = [], $content = null, $tag = '' ) {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );

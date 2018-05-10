@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Settings for the Apple Music embed tool.
+ * Class to handle Apple Music admin settings.
  *
  * @package Apple_Music
  */
@@ -10,6 +10,9 @@ namespace Apple_Music;
 
 class Settings {
 
+	/**
+	 * Settings constructor.
+	 */
 	public function __construct() {
 		add_action( 'admin_menu', [ $this, 'options_page' ] );
 		add_action( 'admin_init', [ $this, 'register_settings' ] );

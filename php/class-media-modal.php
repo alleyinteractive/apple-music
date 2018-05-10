@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class to handle Apple Music media modal.
+ *
+ * @package Apple_Music
+ */
+
 namespace Apple_Music;
 
 class Media_Modal {
@@ -7,6 +13,9 @@ class Media_Modal {
 	public $items = [];
 	public $meta = [ 'count' => null ];
 
+	/**
+	 * Media_Modal constructor.
+	 */
 	public function __construct() {
 		add_action( 'wp_enqueue_media', [ $this, 'action_enqueue_media' ] );
 		add_action( 'media_buttons', [ $this, 'add_button' ] );
@@ -16,7 +25,7 @@ class Media_Modal {
 	}
 
 	/**
-	 * Load the Backbone templates for each of our registered services.
+	 * Load the Backbone templates.
 	 *
 	 * @action print_media_templates
 	 * @return null
@@ -29,11 +38,19 @@ class Media_Modal {
 
 	}
 
+	/**
+	 * Get our tabs.
+	 *
+	 * @return mixed
+	 */
 	public function get_tabs() {
 		$tabs = apply_filters( 'apple_music_types', [] );
 		return wp_list_pluck( $tabs, 'tab_text', 'tab_name' );
 	}
 
+	/**
+	 * Add dedicated media modal button.
+	 */
 	public function add_button() {
 		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music' ) . '</a>';
 	}
@@ -68,12 +85,17 @@ class Media_Modal {
 			] );
 
 		} else {
-			$this->response( $response );
+			$this->process_response( $response );
 			wp_send_json_success( $this->output() );
 		}
 
 	}
 
+	/**
+	 * Get media modal labels.
+	 *
+	 * @return array
+	 */
 	public function get_labels() {
 		$labels = [
 			'title'     => __( 'Insert Apple Music', 'apple-music' ),
@@ -119,7 +141,7 @@ class Media_Modal {
 
 	}
 
-	public function response( $response ) {
+	public function process_response( $response ) {
 
 		reset( $response );
 		$type = key( $response );
@@ -186,7 +208,11 @@ class Media_Modal {
 		}
 	}
 
-
+	/**
+	 * Collect data to send to media modal.
+	 *
+	 * @return array|bool
+	 */
 	public function output() {
 
 		if ( empty( $this->items ) ) {
