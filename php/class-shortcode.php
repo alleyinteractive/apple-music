@@ -87,25 +87,21 @@ class Shortcode {
 		// If necessary, set a default format.
 		$format = array_key_exists( $shortcode_atts['format'], $formats ) ? $shortcode_atts['format'] : $types[ $shortcode_atts['type'] ]['default_format'];
 
-			<iframe allow="encrypted-media" style="padding:0;width:660px;height:450px;max-width:100%;border:none;overflow:hidden;background:transparent;" src="https://embed.music.apple.com/us/album/fate/1375312252"></iframe>
-
-
-
 		// Embeds only (album, song, playlist).
 		if ( array_key_exists( $shortcode_atts['type'], $player_types ) && 'player' === $format ) {
 			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s%6$s',
 				'https://embed.music.apple.com', // 1
-				$storefront . // 2
+				$storefront, // 2
 				$player_types[ $shortcode_atts['type'] ]['singular'], // 3
 				sanitize_title( $shortcode_atts['name'] ), // 4
 				$shortcode_atts['id'], // 5
 				! empty( $affiliate_token ) ? '?at=' . $affiliate_token : '' // 6
 			);
 
-			$output = sprintf( '<iframe allow="encrypted-media" style="padding:0;width:%2$s;height:%3$s;max-width:100%;border:none;overflow:hidden;background:transparent;" src="%1$s"></iframe>',
-				$player_types[ $shortcode_atts['type'] ]['default_width'], // 2
-				$player_types[ $shortcode_atts['type'] ]['default_height'], // 3
-				esc_url( $url ) // 1
+			$output = sprintf( '<iframe allow="encrypted-media" style="padding:0;width:%1$s;height:%2$s;max-width:100%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
+				$player_types[ $shortcode_atts['type'] ]['default_width'], // 1
+				$player_types[ $shortcode_atts['type'] ]['default_height'], // 2
+				esc_url( $url ) // 3
 			);
 
 		} else {
