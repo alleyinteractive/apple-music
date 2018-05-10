@@ -1,9 +1,12 @@
 <?php
 
-namespace Apple_Music;
 /**
- * Apple music Gutenburg block class.
+ * Class to handle Apple Music Gutenberg blocks.
+ *
+ * @package Apple_Music
  */
+namespace Apple_Music;
+
 class Block {
 	/**
 	 * Block Construct
