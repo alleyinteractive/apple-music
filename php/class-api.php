@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Main handler for the Apple Music embed tool.
+ * Class to handle Apple Music API interactions.
  *
  * @package Apple_Music
  */
@@ -18,17 +18,16 @@ class API {
 	/**
 	 * @var string $storefront Apple Music Storefront to query.
 	 */
-	protected $storefront = 'us';
+	protected $storefront;
 
 	/**
 	 * @var string $token Pre-signed API Token.
 	 */
 	protected $token;
 
-	public static function instance() {
-		return new API();
-	}
-
+	/**
+	 * API constructor.
+	 */
 	public function __construct() {
 		$settings         = new Settings();
 		$this->token      = $settings->get_token();

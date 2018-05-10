@@ -13,7 +13,7 @@ class Test_API extends \WP_UnitTestCase {
 EOD;
 
 	function test_example() {
-		$api = \Apple_Music\API::instance();
+		$api = new \Apple_Music\API;
 
 		// @todo We wouldn't really want to hit the API in unit tests.
 		$results = $api->search( 'Kanye West', 'artists', 0 );
