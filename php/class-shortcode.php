@@ -20,7 +20,7 @@ class Shortcode {
 
 	/**
 	 * Build out the shortcode.
-	 * 
+	 *
 	 * @param array $atts
 	 * @param null $content
 	 * @param string $tag
