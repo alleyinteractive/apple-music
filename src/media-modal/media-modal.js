@@ -602,6 +602,8 @@ function openMediaModal(evt) {
 
 // Bind button function
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelector('.apple-music-button')
-    .addEventListener('click', openMediaModal);
+  const musicButton = document.querySelector('.apple-music-button');
+  if (undefined !== musicButton) {
+    musicButton.addEventListener('click', openMediaModal);
+  }
 });
