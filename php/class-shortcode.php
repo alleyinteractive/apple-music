@@ -107,18 +107,19 @@ class Shortcode {
 
 		// Embeds only (album, song, playlist).
 		if ( array_key_exists( $shortcode_atts['type'], $player_types ) && 'player' === $format ) {
-			$url = sprintf( '%1$s/%2$s/%3$s?country=%4$s%5$s',
-				'https://tools.applemusic.com/embed/v1',
-				$player_types[ $shortcode_atts['type'] ]['singular'],
-				$shortcode_atts['id'],
-				$storefront,
-				! empty( $affiliate_token ) ? '&amp;at=' . $affiliate_token : ''
+			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s%6$s',
+				'https://embed.music.apple.com', // 1
+				$storefront, // 2
+				$player_types[ $shortcode_atts['type'] ]['singular'], // 3
+				sanitize_title( $shortcode_atts['name'] ), // 4
+				$shortcode_atts['id'], // 5
+				! empty( $affiliate_token ) ? '?at=' . $affiliate_token : '' // 6
 			);
 
-			$output = sprintf( '<iframe src="%1$s" height="%2$s" width="%3$s" frameborder="0"></iframe>',
-				esc_url( $url ), // 1
+			$output = sprintf( '<iframe allow="encrypted-media" style="padding:0;width:%1$s;height:%2$s;max-width:100%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
+				$player_types[ $shortcode_atts['type'] ]['default_width'], // 1
 				$player_types[ $shortcode_atts['type'] ]['default_height'], // 2
-				$player_types[ $shortcode_atts['type'] ]['default_width'] // 3
+				esc_url( $url ) // 3
 			);
 
 		} else {
