@@ -76,13 +76,13 @@ export function getItems(response) {
  * @returns {string} the iframe URL.
  */
 export function iframeURL(type, id) {
-  const embedURL = 'https://tools.applemusic.com/embed/v1/';
+  const embedURL = 'https://embed.music.apple.com/';
   const typeObject = getTypeObject(type);
 
   const embedType = getObjKeyValue(typeObject, 'embedType');
 
   if (null !== embedType) {
-    return `${embedURL}${embedType}/${id}?country=${storefront}`;
+    return `${embedURL}${storefront}/${embedType}/${id}`;
   }
   return '';
 }

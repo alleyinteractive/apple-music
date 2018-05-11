@@ -60,7 +60,7 @@ export default registerBlockType(
       },
       width: {
         type: 'string',
-        default: '100%',
+        default: '660px',
       },
     },
     edit: MusicBlock,
