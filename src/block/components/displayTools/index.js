@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewPlayer from 'Components/previewPlayer';
@@ -14,10 +17,10 @@ import styles from './displayTools.css';
 const {
   TextControl,
   ExternalLink,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.

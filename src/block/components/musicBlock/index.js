@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import DisplayTools from 'Components/displayTools';
@@ -16,12 +19,12 @@ import {
 import styles from './musicBlock.css';
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 // Extend component
-const { Component } = window.wp.element;
+const { Component } = wp.element;
 
-const { InspectorControls } = window.wp.blocks;
-const { PanelBody } = window.wp.components;
+const { InspectorControls } = wp.blocks;
+const { PanelBody } = wp.components;
 
 class MusicBlock extends Component {
   /**

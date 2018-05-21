@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewPlayer from 'Components/previewPlayer';
@@ -11,8 +14,8 @@ import { affiliateToken } from '../../settings';
 import styles from './musicDisplay.css';
 
 // Internationalization
-const { __ } = window.wp.i18n;
-const { RawHTML } = window.wp.element;
+const { __ } = wp.i18n;
+const { RawHTML } = wp.element;
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
  * Inline anchor tags and iframes are used to output the widget in the case

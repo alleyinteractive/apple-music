@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import badge from 'Images/badge.svg';
@@ -10,13 +13,13 @@ import {
 import css from './embedSlider.css';
 
 // Internationalization
-const { __, sprintf } = window.wp.i18n;
+const { __, sprintf } = wp.i18n;
 // WP components
 const {
   Button,
   Dashicon,
   SelectControl,
-} = window.wp.components;
+} = wp.components;
 
 /**
  * Embed Slider used in the display tools.

@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import musicTypes from 'Config/musicTypes';
@@ -6,10 +9,10 @@ import styles from './searchTools.css';
 const {
   TextControl,
   SelectControl,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __, sprintf } = window.wp.i18n;
+const { __, sprintf } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.

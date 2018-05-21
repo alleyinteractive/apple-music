@@ -1,3 +1,5 @@
+/* global wp */
+/* eslint no-undef: "error" */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './backToSearch.css';
@@ -5,10 +7,10 @@ import styles from './backToSearch.css';
 const {
   Button,
   Dashicon,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * The back to search button.

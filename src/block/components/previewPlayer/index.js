@@ -1,10 +1,13 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const { RawHTML } = window.wp.element;
+const { RawHTML } = wp.element;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * The Preview Player component displays the iframe for embedding on

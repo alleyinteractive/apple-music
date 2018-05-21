@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 // Text lockup
 import standardBlack from 'Images/standard-black.svg';
 import standardWhite from 'Images/standard-white.svg';
@@ -9,7 +12,7 @@ import white from 'Images/app-icon-white.svg';
 import black from 'Images/app-icon-black.svg';
 
 // Internationalization function.
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * The list of the embed types to use for embedding Apple Music.

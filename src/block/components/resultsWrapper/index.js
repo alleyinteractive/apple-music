@@ -1,3 +1,6 @@
+/* global wp */
+/* eslint no-undef: "error" */
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import MusicItem from 'Components/musicItem';
@@ -11,9 +14,9 @@ import { getNestedObject } from 'Utils';
 
 import styles from './resultsWrapper.css';
 
-const { __ } = window.wp.i18n;
-const { Component } = window.wp.element;
-const { Button, Dashicon } = window.wp.components;
+const { __ } = wp.i18n;
+const { Component } = wp.element;
+const { Button, Dashicon } = wp.components;
 
 /**
  * Component for displaying search results in Apple Music block.
