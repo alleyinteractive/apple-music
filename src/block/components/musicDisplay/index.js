@@ -36,8 +36,14 @@ const MusicDisplay = ({
   let URL = getNestedObject(item, ['attributes', 'url']);
   let iframeURL = iframeSrc;
   // default inline styles.
-  let inline = `display:inline-block;background-repeat:no-repeat;
-    overflow:hidden;box-shadow:none;border:none;`;
+  let inline = {
+    display: 'inline-block',
+    backgroundRepeat: 'no-repeat',
+    overflow: 'hidden',
+    boxShadow: 'none',
+    border: 'none',
+  };
+
   let style = '';
 
   // Text Lockup style.
@@ -48,7 +54,7 @@ const MusicDisplay = ({
     style = appIconStyle;
   }
   // concatenate the inline styles.
-  inline = inline.concat(getIconStyle(embedType, style));
+  inline = Object.assign(inline, getIconStyle(embedType, style));
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {

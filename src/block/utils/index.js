@@ -76,10 +76,10 @@ export function getIconImagePath(styleValue) {
  *
  * @param {string} type The type of embedType to look for.
  * @param {string} style the embed type style. Defaults to empty.
- * @returns {string} the inline styles for an embedType.
+ * @returns {object} the JSX formatted inline styles for an embedType.
  */
 export function getIconStyle(type, style = '') {
-  const st = embedTypes.reduce((acc, {
+  return embedTypes.reduce((acc, {
     backgroundImage,
     height,
     styles,
@@ -95,17 +95,11 @@ export function getIconStyle(type, style = '') {
           (style === x.value) ? x.backgroundImage : accum.concat()), '');
       }
       // return our needed values.
-      return acc.concat({ background, height, width });
+      return acc.concat({ backgroundImage: background, height, width });
     }
     return acc.concat();
     // since we only need the first item in the array.
   }, []).shift();
-
-  const background = st.background ? `background-image:${st.background};` : '';
-  const height = st.height ? `height:${st.height};` : '';
-  const width = st.width ? `width:${st.width};` : '';
-
-  return st ? `${height} ${width} ${background}` : '';
 }
 
 export default {
