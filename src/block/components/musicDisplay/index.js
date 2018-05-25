@@ -4,7 +4,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewPlayer from 'Components/previewPlayer';
-import { getNestedObject } from 'Utils';
+import {
+  getNestedObject,
+  getIconStyle,
+} from 'Utils';
 import { affiliateToken } from '../../settings';
 
 // CSS
@@ -20,17 +23,30 @@ const { __ } = wp.i18n;
  */
 const MusicDisplay = ({
   attributes: {
+    appIconStyle,
     embedType,
     height,
     iframeSrc,
     item,
+    textLockUpStyle,
     width,
-    inlineStyle,
   },
   className,
 }) => {
   let URL = getNestedObject(item, ['attributes', 'url']);
   let iframeURL = iframeSrc;
+
+  let style = '';
+
+  // Text Lockup style.
+  if ('text-lockup' === embedType) {
+    style = textLockUpStyle;
+  // App Icon style
+  } else if ('app-icon' === embedType) {
+    style = appIconStyle;
+  }
+  // concatenate the inline styles.
+  const inline = getIconStyle(embedType, style);
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {
@@ -56,7 +72,7 @@ const MusicDisplay = ({
       }
       {
         (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
-        <a style={inlineStyle} href={URL}>
+        <a style={inline} href={URL}>
           To be replaced with screen reader text
         </a>
       }

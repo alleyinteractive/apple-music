@@ -76,12 +76,11 @@ export function getIconImagePath(styleValue) {
  *
  * Each param is a block attribute.
  *
- * @param {string} appIconStyle The app icon style.
  * @param {string} embedType The embed type.
- * @param {string} textLockUpStyle The block attributes.
+ * @param {string} style The icon style. Either appIconStyle or textLockUpStyle.
  * @returns {object} the JSX formatted inline styles for an embedType.
  */
-export function getIconStyle(appIconStyle, embedType, textLockUpStyle) {
+export function getIconStyle(embedType, style = '') {
   // Default Inline Styles
   const inlineStyles = {
     display: 'inline-block',
@@ -90,16 +89,6 @@ export function getIconStyle(appIconStyle, embedType, textLockUpStyle) {
     boxShadow: 'none',
     border: 'none',
   };
-
-  let style = '';
-
-  // Text Lockup style.
-  if ('text-lockup' === embedType) {
-    style = textLockUpStyle;
-  // App Icon style
-  } else if ('app-icon' === embedType) {
-    style = appIconStyle;
-  }
 
   return embedTypes.reduce((acc, {
     backgroundImage,

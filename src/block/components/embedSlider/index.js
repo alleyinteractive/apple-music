@@ -38,8 +38,6 @@ const EmbedSlider = ({
   // Additional class to add to slide.
   const panelSlideClass = inPanel ? css.panelSlide : '';
 
-  const inlineStyle = getIconStyle(appIconStyle, embedType, textLockUpStyle);
-
   // Get the styles options for the Select Control.
   const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
     (undefined !== styles && value === embedType) ?
@@ -118,7 +116,10 @@ const EmbedSlider = ({
             <Button
               className={css.iconSelector}
               key={value}
-              onClick={() => setAttributes({ embedType: value, inlineStyle })}
+              onClick={() => setAttributes({
+                embedType: value,
+                inlineStyle: getIconStyle(value),
+              })}
             >
               {icon(value)}
               <p>{__(label, 'apple-music')}</p>
@@ -131,7 +132,7 @@ const EmbedSlider = ({
                   options={embedStyles}
                   onChange={(x) => setAttributes({
                     textLockUpStyle: x,
-                    inlineStyle,
+                    inlineStyle: getIconStyle(embedType, x),
                   })}
                 />
             }
@@ -143,7 +144,7 @@ const EmbedSlider = ({
                   options={embedStyles}
                   onChange={(x) => setAttributes({
                     appIconStyle: x,
-                    inlineStyle,
+                    inlineStyle: getIconStyle(embedType, x),
                   })}
                 />
             }
