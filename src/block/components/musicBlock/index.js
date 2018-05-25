@@ -37,7 +37,6 @@ class MusicBlock extends Component {
       isMusicSet: this.isMusicSet(),
     };
     this.setMusicSelection = this.setMusicSelection.bind(this);
-    this.updateAttributes = this.updateAttributes.bind(this);
     this.isMusicSet = this.isMusicSet.bind(this);
   }
 
