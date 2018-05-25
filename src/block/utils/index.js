@@ -74,11 +74,33 @@ export function getIconImagePath(styleValue) {
 /**
  * Get the icon CSS style properties for inline styles.
  *
- * @param {string} type The type of embedType to look for.
- * @param {string} style the embed type style. Defaults to empty.
+ * Each param is a block attribute.
+ *
+ * @param {string} appIconStyle The app icon style.
+ * @param {string} embedType The embed type.
+ * @param {string} textLockUpStyle The block attributes.
  * @returns {object} the JSX formatted inline styles for an embedType.
  */
-export function getIconStyle(type, style = '') {
+export function getIconStyle(appIconStyle, embedType, textLockUpStyle) {
+  // Default Inline Styles
+  const inlineStyles = {
+    display: 'inline-block',
+    backgroundRepeat: 'no-repeat',
+    overflow: 'hidden',
+    boxShadow: 'none',
+    border: 'none',
+  };
+
+  let style = '';
+
+  // Text Lockup style.
+  if ('text-lockup' === embedType) {
+    style = textLockUpStyle;
+  // App Icon style
+  } else if ('app-icon' === embedType) {
+    style = appIconStyle;
+  }
+
   return embedTypes.reduce((acc, {
     backgroundImage,
     height,
@@ -87,15 +109,16 @@ export function getIconStyle(type, style = '') {
     width,
   }) => {
     // Get the embed type.
-    if (value === type) {
+    if (value === embedType) {
       let background = backgroundImage;
-      // if the embed type has multiple styles grab the matched background image.
+      // if the embed embedType has multiple styles grab the matched background image.
       if (undefined !== styles) {
         background = styles.reduce((accum, x) => (
           (style === x.value) ? x.backgroundImage : accum.concat()), '');
       }
-      // return our needed values.
-      return acc.concat({ backgroundImage: background, height, width });
+      // return the inline styles merged with the icon styles.
+      return acc.concat(Object
+        .assign(inlineStyles, { backgroundImage: background, height, width }));
     }
     return acc.concat();
     // since we only need the first item in the array.

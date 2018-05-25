@@ -42,13 +42,11 @@ export default registerBlockType(
       iframeSrc: {
         type: 'string',
       },
-      item: {
+      inlineStyle: {
         type: 'object',
       },
-      inline: {
-        source: 'attribute',
-        selector: '.musicBlock',
-        attribute: 'style',
+      item: {
+        type: 'object',
       },
       musicID: {
         type: 'integer',

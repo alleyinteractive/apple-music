@@ -7,6 +7,7 @@ import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
 import {
   getIconImagePath,
+  getIconStyle,
   showEmbed,
 } from 'Utils';
 // Use "css" as a declaration for styles since we are using "styles" below.
@@ -36,6 +37,8 @@ const EmbedSlider = ({
   const sliderClass = inPanel ? '' : css.slider;
   // Additional class to add to slide.
   const panelSlideClass = inPanel ? css.panelSlide : '';
+
+  const inlineStyle = getIconStyle(appIconStyle, embedType, textLockUpStyle);
 
   // Get the styles options for the Select Control.
   const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
@@ -115,7 +118,7 @@ const EmbedSlider = ({
             <Button
               className={css.iconSelector}
               key={value}
-              onClick={() => setAttributes({ embedType: value })}
+              onClick={() => setAttributes({ embedType: value, inlineStyle })}
             >
               {icon(value)}
               <p>{__(label, 'apple-music')}</p>
@@ -126,7 +129,10 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={textLockUpStyle}
                   options={embedStyles}
-                  onChange={(x) => setAttributes({ textLockUpStyle: x })}
+                  onChange={(x) => setAttributes({
+                    textLockUpStyle: x,
+                    inlineStyle,
+                  })}
                 />
             }
             { // Select field will only display when app-icon is active.
@@ -135,7 +141,10 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={appIconStyle}
                   options={embedStyles}
-                  onChange={(x) => setAttributes({ appIconStyle: x })}
+                  onChange={(x) => setAttributes({
+                    appIconStyle: x,
+                    inlineStyle,
+                  })}
                 />
             }
           </div>
