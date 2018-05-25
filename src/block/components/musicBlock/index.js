@@ -77,30 +77,6 @@ class MusicBlock extends Component {
   }
 
   /**
-   * Update the attributes callback.
-   * @param {string} value the value to set the attribute.
-   * @param {string} key the key of the attribute, which attribute to set.
-   */
-  updateAttributes(value, key) {
-    const { attributes, setAttributes } = this.props;
-    // update input fields by direct reference to avoid persistant first character.
-    if (['height', 'width', 'query'].includes(key)) {
-      setAttributes({
-        height: 'height' === key ? value : attributes.height,
-        query: 'query' === key ? value : attributes.query,
-        width: 'width' === key ? value : attributes.width,
-      });
-    } else {
-      // Clone the attributes object.
-      const attrsClone = Object.assign({}, attributes);
-      // Assign new value to cloned attribute key.
-      attrsClone[key] = value || attributes[key];
-      // Set the attributes using the cloned object.
-      setAttributes(attrsClone);
-    }
-  }
-
-  /**
    * Reset the search and clear selection.
    */
   resetSearch() {
@@ -149,7 +125,7 @@ class MusicBlock extends Component {
                 ! this.state.isMusicSet &&
                 <SearchTools
                   attributes={attributes}
-                  updateSearch={this.updateAttributes}
+                  setAttributes={this.props.setAttributes}
                 />
               }
               {
@@ -158,7 +134,7 @@ class MusicBlock extends Component {
                   <BackToSearch onClick={() => this.resetSearch()} />
                   <DisplayTools
                     attributes={attributes}
-                    onChange={this.updateAttributes}
+                    setAttributes={this.props.setAttributes}
                   />
                 </div>
               }
@@ -179,7 +155,7 @@ class MusicBlock extends Component {
                   </h3>
                   <SearchTools
                     attributes={attributes}
-                    updateSearch={this.updateAttributes}
+                    setAttributes={this.props.setAttributes}
                     inPanel={false}
                   />
                 </div>
@@ -193,7 +169,7 @@ class MusicBlock extends Component {
                   />
                   <DisplayTools
                     attributes={attributes}
-                    onChange={this.updateAttributes}
+                    setAttributes={this.props.setAttributes}
                     inPanel={false}
                   />
                 </div>

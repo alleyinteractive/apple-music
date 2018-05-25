@@ -29,7 +29,7 @@ const EmbedSlider = ({
   embedType,
   inPanel,
   musicType,
-  onChange,
+  setAttributes,
   textLockUpStyle,
 }) => {
   // Class for slider context. In panel or editor.
@@ -115,7 +115,7 @@ const EmbedSlider = ({
             <Button
               className={css.iconSelector}
               key={value}
-              onClick={() => onChange(value, 'embedType')}
+              onClick={() => setAttributes({ embedType: value })}
             >
               {icon(value)}
               <p>{__(label, 'apple-music')}</p>
@@ -126,7 +126,7 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={textLockUpStyle}
                   options={embedStyles}
-                  onChange={(x) => onChange(x, 'textLockUpStyle')}
+                  onChange={(x) => setAttributes({ textLockUpStyle: x })}
                 />
             }
             { // Select field will only display when app-icon is active.
@@ -135,7 +135,7 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={appIconStyle}
                   options={embedStyles}
-                  onChange={(x) => onChange(x, 'appIconStyle')}
+                  onChange={(x) => setAttributes({ appIconStyle: x })}
                 />
             }
           </div>
@@ -154,7 +154,7 @@ EmbedSlider.propTypes = {
   embedType: PropTypes.string.isRequired,
   inPanel: PropTypes.bool,
   musicType: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setAttributes: PropTypes.func.isRequired,
   textLockUpStyle: PropTypes.string.isRequired,
 };
 

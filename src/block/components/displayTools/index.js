@@ -37,7 +37,7 @@ const DisplayTools = ({
     width,
   },
   inPanel,
-  onChange,
+  setAttributes,
 }) => {
   const directLink = getNestedObject(item, ['attributes', 'url']);
   const imageSrc = getItemArtworkURL(item, '200', '200') || placeholder;
@@ -99,14 +99,14 @@ const DisplayTools = ({
               className={textInput}
               label={__('Height', 'apple-music')}
               value={height}
-              onChange={(value) => onChange(value, 'height')}
+              onChange={(value) => setAttributes({ height: value })}
               placeholder={height}
             />
             <TextControl
               className={textInput}
               label={__('Width', 'apple-music')}
               value={width}
-              onChange={(value) => onChange(value, 'width')}
+              onChange={(value) => setAttributes({ width: value })}
               placeholder={width}
             />
           </div>
@@ -126,7 +126,7 @@ const DisplayTools = ({
         embedType={embedType}
         inPanel={inPanel}
         musicType={musicType}
-        onChange={onChange}
+        setAttributes={setAttributes}
         textLockUpStyle={textLockUpStyle}
       />
       {
@@ -157,7 +157,7 @@ DisplayTools.propTypes = {
       type: PropTypes.string,
     }),
   }).isRequired,
-  onChange: PropTypes.func.isRequired,
+  setAttributes: PropTypes.func.isRequired,
   inPanel: PropTypes.bool,
 };
 

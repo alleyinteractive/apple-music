@@ -45,6 +45,11 @@ export default registerBlockType(
       item: {
         type: 'object',
       },
+      inline: {
+        source: 'attribute',
+        selector: '.musicBlock',
+        attribute: 'style',
+      },
       musicID: {
         type: 'integer',
       },
@@ -53,9 +58,7 @@ export default registerBlockType(
         default: 'artists',
       },
       query: {
-        type: 'array',
-        source: 'children',
-        selector: '.display-music',
+        type: 'string',
       },
       textLockUpStyle: {
         type: 'string',

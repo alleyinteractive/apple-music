@@ -15,7 +15,7 @@ import styles from './musicDisplay.css';
 
 // Internationalization
 const { __ } = wp.i18n;
-const { RawHTML } = wp.element;
+
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
  * Inline anchor tags and iframes are used to output the widget in the case
@@ -80,9 +80,9 @@ const MusicDisplay = ({
       }
       {
         (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
-        <RawHTML>
-          {`<a style="${inline}" href=${URL}></a>`}
-        </RawHTML>
+        <a style={inline} href={URL}>
+          To be replaced with screen reader text
+        </a>
       }
       {placeHolder}
     </div>
