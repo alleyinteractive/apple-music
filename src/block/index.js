@@ -1,10 +1,11 @@
 /* global wp */
 /* eslint no-undef: "error" */
-
+/* eslint-disable */
+import React from 'react';
 // Entry point for Apple Music Gutenberg block.
+import MusicBlock from 'Components/musicBlock';
+import MusicDisplay from 'Components/musicDisplay';
 import './i18n';
-import MusicBlock from './components/musicBlock';
-import MusicDisplay from './components/musicDisplay';
 import { appleMusicIcon } from './icons';
 
 const { __ } = wp.i18n;
@@ -42,8 +43,13 @@ export default registerBlockType(
       iframeSrc: {
         type: 'string',
       },
-      inlineStyle: {
+      imageAttributes: {
         type: 'object',
+        default: {
+          height: '45px',
+          width: '157px',
+          src: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
+        }
       },
       item: {
         type: 'object',
@@ -68,6 +74,6 @@ export default registerBlockType(
       },
     },
     edit: MusicBlock,
-    save: MusicDisplay,
+    save: ({ attributes }) => <MusicDisplay attributes={attributes} />,
   },
 );

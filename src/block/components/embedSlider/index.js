@@ -7,7 +7,7 @@ import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
 import {
   getIconImagePath,
-  getIconStyle,
+  getImageAttributes,
   showEmbed,
 } from 'Utils';
 // Use "css" as a declaration for styles since we are using "styles" below.
@@ -118,7 +118,7 @@ const EmbedSlider = ({
               key={value}
               onClick={() => setAttributes({
                 embedType: value,
-                inlineStyle: getIconStyle(value),
+                imageAttributes: getImageAttributes(value),
               })}
             >
               {icon(value)}
@@ -132,7 +132,7 @@ const EmbedSlider = ({
                   options={embedStyles}
                   onChange={(x) => setAttributes({
                     textLockUpStyle: x,
-                    inlineStyle: getIconStyle(embedType, x),
+                    imageAttributes: getImageAttributes(embedType, x),
                   })}
                 />
             }
@@ -144,7 +144,7 @@ const EmbedSlider = ({
                   options={embedStyles}
                   onChange={(x) => setAttributes({
                     appIconStyle: x,
-                    inlineStyle: getIconStyle(embedType, x),
+                    imageAttributes: getImageAttributes(embedType, x),
                   })}
                 />
             }

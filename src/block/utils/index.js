@@ -72,42 +72,34 @@ export function getIconImagePath(styleValue) {
 }
 
 /**
- * Get the icon CSS style properties for inline styles.
+ * Get the icon image attributes for the embedded icon image.
  *
  * Each param is a block attribute.
  *
  * @param {string} embedType The embed type.
  * @param {string} style The icon style. Either appIconStyle or textLockUpStyle.
- * @returns {object} the JSX formatted inline styles for an embedType.
+ * @returns {object} the image attributes set in the embedTypes.js config file.
  */
-export function getIconStyle(embedType, style = '') {
-  // Default Inline Styles
-  const inlineStyles = {
-    display: 'inline-block',
-    backgroundRepeat: 'no-repeat',
-    overflow: 'hidden',
-    boxShadow: 'none',
-    border: 'none',
-  };
-
+export function getImageAttributes(embedType, style = '') {
   return embedTypes.reduce((acc, {
-    backgroundImage,
     height,
+    imageSource,
     styles,
     value,
     width,
   }) => {
     // Get the embed type.
     if (value === embedType) {
-      let background = backgroundImage;
+      let src = imageSource;
       // if the embed embedType has multiple styles grab the matched background image.
       if (undefined !== styles) {
-        background = styles.reduce((accum, x) => (
-          (style === x.value) ? x.backgroundImage : accum.concat()), '');
+        src = styles.reduce((accum, x) => (
+          // Set the background or fallback to the default.
+          (style === x.value || x.default) ?
+            x.imageSource : accum.concat()), '');
       }
-      // return the inline styles merged with the icon styles.
-      return acc.concat(Object
-        .assign(inlineStyles, { backgroundImage: background, height, width }));
+      // return the image attributes in an object
+      return acc.concat({ src, width, height });
     }
     return acc.concat();
     // since we only need the first item in the array.
@@ -116,7 +108,7 @@ export function getIconStyle(embedType, style = '') {
 
 export default {
   getIconImagePath,
-  getIconStyle,
+  getImageAttributes,
   getObjKeyValue,
   getTypeObject,
   showEmbed,
