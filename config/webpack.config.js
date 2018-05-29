@@ -2,9 +2,11 @@
 const path = require('path');
 
 // Plugins
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = (env) => ({
+  mode: env.production ? 'production' : 'development',
+
   entry: {
     block: './src/block/index.js',
     mediaModal: [
@@ -29,35 +31,39 @@ module.exports = (env) => ({
 
   devtool: env.production ? 'source-map' : 'cheap-module-source-map',
 
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].min.css',
+    }),
+  ],
+
   module: {
     rules: [
       {
         test: /\.css$/,
         exclude: path.join(__dirname, '../src/block'), // exclude Gutenberg block.
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                sourceMap: true,
-                minimize: {
-                  autoprefixer: false,
-                },
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              minimize: {
+                autoprefixer: false,
               },
             },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: true,
-                config: {
-                  path: path
-                    .resolve(__dirname, './config/postcss.config.js'),
-                },
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+              config: {
+                path: path
+                  .resolve(__dirname, './config/postcss.config.js'),
               },
             },
-          ],
-        }),
+          },
+        ],
       },
       {
         enforce: 'pre',
@@ -110,8 +116,4 @@ module.exports = (env) => ({
       },
     ],
   },
-
-  plugins: [
-    new ExtractTextPlugin('css/[name].min.css'),
-  ],
 });

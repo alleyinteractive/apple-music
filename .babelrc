@@ -1,0 +1,22 @@
+{
+  "presets": [
+    "@wordpress/default"
+  ],
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": [
+          "./"
+        ],
+        "alias": {
+          "API": "./src/block/api",
+          "Components": "./src/block/components",
+          "Config": "./src/block/config",
+          "Images": "./src/images",
+          "Utils": "./src/block/utils"
+        }
+      }
+    ]
+  ]
+}
