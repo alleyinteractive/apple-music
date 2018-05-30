@@ -22,7 +22,8 @@
   },
   "globals": {
     "jQuery": true,
-    "angular": false
+    "angular": false,
+    "wp": true
   },
   "settings": {
     "import/resolver": {

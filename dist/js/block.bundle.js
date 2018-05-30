@@ -6475,8 +6475,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backToSearch.css */ "./src/block/components/backToSearch/backToSearch.css");
 /* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_backToSearch_css__WEBPACK_IMPORTED_MODULE_2__);
-/* global wp */
-/* eslint no-undef: "error" */
 
 
 
@@ -6577,9 +6575,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_apple_png__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./displayTools.css */ "./src/block/components/displayTools/displayTools.css");
 /* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_displayTools_css__WEBPACK_IMPORTED_MODULE_6__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -6797,9 +6792,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
 /* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./embedSlider.css */ "./src/block/components/embedSlider/embedSlider.css");
 /* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_embedSlider_css__WEBPACK_IMPORTED_MODULE_5__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -7016,9 +7008,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-/* global wp */
-/* eslint no-undef: "error" */
 
 
 
@@ -7290,9 +7279,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../settings */ "./src/block/settings.js");
 /* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./musicDisplay.css */ "./src/block/components/musicDisplay/musicDisplay.css");
 /* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_musicDisplay_css__WEBPACK_IMPORTED_MODULE_5__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -7429,9 +7415,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_apple_png__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./musicItem.css */ "./src/block/components/musicItem/musicItem.css");
 /* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_musicItem_css__WEBPACK_IMPORTED_MODULE_4__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -7552,9 +7535,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -7641,9 +7621,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-/* global wp */
-/* eslint no-undef: "error" */
 
 
 
@@ -7915,9 +7892,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _config_musicTypes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../config/musicTypes */ "./src/block/config/musicTypes.js");
 /* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./searchTools.css */ "./src/block/components/searchTools/searchTools.css");
 /* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_searchTools_css__WEBPACK_IMPORTED_MODULE_3__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 
 
 
@@ -8049,9 +8023,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_app_icon_white_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_app_icon_white_svg__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../images/app-icon-black.svg */ "./src/images/app-icon-black.svg");
 /* harmony import */ var _images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Text lockup
 
 
@@ -8144,9 +8115,6 @@ var embedTypes = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Import internationalization function.
 var __ = wp.i18n.__;
 /**
@@ -8220,9 +8188,6 @@ var musicTypes = [{
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Set the localization for Gutenberg
 var setLocaleData = wp.i18n.setLocaleData;
 
@@ -8281,9 +8246,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./i18n */ "./src/block/i18n.js");
 /* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_i18n__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons */ "./src/block/icons/index.js");
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Entry point for Apple Music Gutenberg block.
 
 

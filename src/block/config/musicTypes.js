@@ -1,6 +1,3 @@
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Import internationalization function.
 const { __ } = wp.i18n;
 /**

@@ -1,6 +1,3 @@
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Text lockup
 import standardBlack from 'Images/standard-black.svg';
 import standardWhite from 'Images/standard-white.svg';

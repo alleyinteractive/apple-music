@@ -1,6 +1,3 @@
-/* global wp */
-/* eslint no-undef: "error" */
-
 import React from 'react';
 import PropTypes from 'prop-types';
 import {

@@ -1,6 +1,3 @@
-/* global wp */
-/* eslint no-undef: "error" */
-
 // Entry point for Apple Music Gutenberg block.
 import MusicBlock from 'Components/musicBlock';
 import MusicDisplay from 'Components/musicDisplay';
