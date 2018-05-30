@@ -1,18 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PreviewPlayer from 'Components/previewPlayer';
-import {
-  getNestedObject,
-  getIconStyle,
-} from 'Utils';
+import { getNestedObject } from 'Utils';
 import { affiliateToken } from '../../settings';
 
 // CSS
 import styles from './musicDisplay.css';
 
 // Internationalization
-const { __ } = window.wp.i18n;
-const { RawHTML } = window.wp.element;
+const { __, sprintf } = wp.i18n;
+
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
  * Inline anchor tags and iframes are used to output the widget in the case
@@ -20,32 +17,17 @@ const { RawHTML } = window.wp.element;
  */
 const MusicDisplay = ({
   attributes: {
-    appIconStyle,
     embedType,
     height,
     iframeSrc,
+    imageAttributes,
     item,
-    textLockUpStyle,
     width,
   },
   className,
 }) => {
   let URL = getNestedObject(item, ['attributes', 'url']);
   let iframeURL = iframeSrc;
-  // default inline styles.
-  let inline = `display:inline-block;background-repeat:no-repeat;
-    overflow:hidden;box-shadow:none;border:none;`;
-  let style = '';
-
-  // Text Lockup style.
-  if ('text-lockup' === embedType) {
-    style = textLockUpStyle;
-  // App Icon style
-  } else if ('app-icon' === embedType) {
-    style = appIconStyle;
-  }
-  // concatenate the inline styles.
-  inline = inline.concat(getIconStyle(embedType, style));
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {
@@ -71,9 +53,17 @@ const MusicDisplay = ({
       }
       {
         (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
-        <RawHTML>
-          {`<a style="${inline}" href=${URL}></a>`}
-        </RawHTML>
+        <a href={URL}>
+          <img
+            src={imageAttributes.src}
+            height={imageAttributes.height}
+            width={imageAttributes.width}
+            alt={sprintf(
+              __('Listen to "%s" on Apple Music.', 'apple-music'),
+              getNestedObject(item, ['attributes', 'name'])
+            )}
+          />
+        </a>
       }
       {placeHolder}
     </div>

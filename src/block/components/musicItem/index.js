@@ -11,10 +11,10 @@ import styles from './musicItem.css';
 
 const {
   Button,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __, sprintf } = window.wp.i18n;
+const { __, sprintf } = wp.i18n;
 
 const MusicItem = ({
   item,

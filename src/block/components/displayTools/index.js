@@ -14,10 +14,10 @@ import styles from './displayTools.css';
 const {
   TextControl,
   ExternalLink,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __ } = window.wp.i18n;
+const { __ } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -34,7 +34,7 @@ const DisplayTools = ({
     width,
   },
   inPanel,
-  onChange,
+  setAttributes,
 }) => {
   const directLink = getNestedObject(item, ['attributes', 'url']);
   const imageSrc = getItemArtworkURL(item, '200', '200') || placeholder;
@@ -96,14 +96,14 @@ const DisplayTools = ({
               className={textInput}
               label={__('Height', 'apple-music')}
               value={height}
-              onChange={(value) => onChange(value, 'height')}
+              onChange={(value) => setAttributes({ height: value })}
               placeholder={height}
             />
             <TextControl
               className={textInput}
               label={__('Width', 'apple-music')}
               value={width}
-              onChange={(value) => onChange(value, 'width')}
+              onChange={(value) => setAttributes({ width: value })}
               placeholder={width}
             />
           </div>
@@ -123,7 +123,7 @@ const DisplayTools = ({
         embedType={embedType}
         inPanel={inPanel}
         musicType={musicType}
-        onChange={onChange}
+        setAttributes={setAttributes}
         textLockUpStyle={textLockUpStyle}
       />
       {
@@ -154,7 +154,7 @@ DisplayTools.propTypes = {
       type: PropTypes.string,
     }),
   }).isRequired,
-  onChange: PropTypes.func.isRequired,
+  setAttributes: PropTypes.func.isRequired,
   inPanel: PropTypes.bool,
 };
 

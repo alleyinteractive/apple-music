@@ -4,19 +4,20 @@ import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
 import {
   getIconImagePath,
+  getImageAttributes,
   showEmbed,
 } from 'Utils';
 // Use "css" as a declaration for styles since we are using "styles" below.
 import css from './embedSlider.css';
 
 // Internationalization
-const { __, sprintf } = window.wp.i18n;
+const { __, sprintf } = wp.i18n;
 // WP components
 const {
   Button,
   Dashicon,
   SelectControl,
-} = window.wp.components;
+} = wp.components;
 
 /**
  * Embed Slider used in the display tools.
@@ -26,7 +27,7 @@ const EmbedSlider = ({
   embedType,
   inPanel,
   musicType,
-  onChange,
+  setAttributes,
   textLockUpStyle,
 }) => {
   // Class for slider context. In panel or editor.
@@ -112,7 +113,10 @@ const EmbedSlider = ({
             <Button
               className={css.iconSelector}
               key={value}
-              onClick={() => onChange(value, 'embedType')}
+              onClick={() => setAttributes({
+                embedType: value,
+                imageAttributes: getImageAttributes(value),
+              })}
             >
               {icon(value)}
               <p>{__(label, 'apple-music')}</p>
@@ -123,7 +127,10 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={textLockUpStyle}
                   options={embedStyles}
-                  onChange={(x) => onChange(x, 'textLockUpStyle')}
+                  onChange={(x) => setAttributes({
+                    textLockUpStyle: x,
+                    imageAttributes: getImageAttributes(embedType, x),
+                  })}
                 />
             }
             { // Select field will only display when app-icon is active.
@@ -132,7 +139,10 @@ const EmbedSlider = ({
                   className={css.selectStyle}
                   value={appIconStyle}
                   options={embedStyles}
-                  onChange={(x) => onChange(x, 'appIconStyle')}
+                  onChange={(x) => setAttributes({
+                    appIconStyle: x,
+                    imageAttributes: getImageAttributes(embedType, x),
+                  })}
                 />
             }
           </div>
@@ -151,7 +161,7 @@ EmbedSlider.propTypes = {
   embedType: PropTypes.string.isRequired,
   inPanel: PropTypes.bool,
   musicType: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  setAttributes: PropTypes.func.isRequired,
   textLockUpStyle: PropTypes.string.isRequired,
 };
 

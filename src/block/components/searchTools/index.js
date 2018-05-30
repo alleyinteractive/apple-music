@@ -6,10 +6,10 @@ import styles from './searchTools.css';
 const {
   TextControl,
   SelectControl,
-} = window.wp.components;
+} = wp.components;
 
 // Internationalization
-const { __, sprintf } = window.wp.i18n;
+const { __, sprintf } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -19,7 +19,7 @@ const SearchTools = ({
     query,
     musicType,
   },
-  updateSearch,
+  setAttributes,
   inPanel,
 }) => {
   // Get the current selected musicType object
@@ -36,7 +36,7 @@ const SearchTools = ({
         value={query}
         placeHolder={sprintf(__('Search %s', 'apple-music'), typeObject.label)}
         className={styles.search}
-        onChange={(term) => updateSearch(term, 'query')}
+        onChange={(term) => setAttributes({ query: term })}
       />
       <SelectControl
         label={__('Music Type', 'apple-music')}
@@ -45,7 +45,7 @@ const SearchTools = ({
           { value, label }
         ))}
         className={styles.select}
-        onChange={(type) => updateSearch(type, 'musicType')}
+        onChange={(type) => setAttributes({ musicType: type })}
       />
     </div>
   );
@@ -60,7 +60,7 @@ SearchTools.propTypes = {
     query: PropTypes.string,
     musicType: PropTypes.string,
   }).isRequired,
-  updateSearch: PropTypes.func.isRequired,
+  setAttributes: PropTypes.func.isRequired,
   inPanel: PropTypes.bool,
 };
 

@@ -1,11 +1,11 @@
 // Entry point for Apple Music Gutenberg block.
+import MusicBlock from 'Components/musicBlock';
+import MusicDisplay from 'Components/musicDisplay';
 import './i18n';
-import MusicBlock from './components/musicBlock';
-import MusicDisplay from './components/musicDisplay';
 import { appleMusicIcon } from './icons';
 
-const { __ } = window.wp.i18n;
-const { registerBlockType } = window.wp.blocks;
+const { __ } = wp.i18n;
+const { registerBlockType } = wp.blocks;
 
 /**
  * Register Apple Music block
@@ -39,6 +39,14 @@ export default registerBlockType(
       iframeSrc: {
         type: 'string',
       },
+      imageAttributes: {
+        type: 'object',
+        default: {
+          height: '45px',
+          width: '157px',
+          src: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
+        },
+      },
       item: {
         type: 'object',
       },
@@ -50,9 +58,7 @@ export default registerBlockType(
         default: 'artists',
       },
       query: {
-        type: 'array',
-        source: 'children',
-        selector: '.display-music',
+        type: 'string',
       },
       textLockUpStyle: {
         type: 'string',

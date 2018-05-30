@@ -72,45 +72,43 @@ export function getIconImagePath(styleValue) {
 }
 
 /**
- * Get the icon CSS style properties for inline styles.
+ * Get the icon image attributes for the embedded icon image.
  *
- * @param {string} type The type of embedType to look for.
- * @param {string} style the embed type style. Defaults to empty.
- * @returns {string} the inline styles for an embedType.
+ * Each param is a block attribute.
+ *
+ * @param {string} embedType The embed type.
+ * @param {string} style The icon style. Either appIconStyle or textLockUpStyle.
+ * @returns {object} the image attributes set in the embedTypes.js config file.
  */
-export function getIconStyle(type, style = '') {
-  const st = embedTypes.reduce((acc, {
-    backgroundImage,
+export function getImageAttributes(embedType, style = '') {
+  return embedTypes.reduce((acc, {
     height,
+    imageSource,
     styles,
     value,
     width,
   }) => {
     // Get the embed type.
-    if (value === type) {
-      let background = backgroundImage;
-      // if the embed type has multiple styles grab the matched background image.
+    if (value === embedType) {
+      let src = imageSource;
+      // if the embed embedType has multiple styles grab the matched background image.
       if (undefined !== styles) {
-        background = styles.reduce((accum, x) => (
-          (style === x.value) ? x.backgroundImage : accum.concat()), '');
+        src = styles.reduce((accum, x) => (
+          // Set the background or fallback to the default.
+          (style === x.value || x.default) ?
+            x.imageSource : accum.concat()), '');
       }
-      // return our needed values.
-      return acc.concat({ background, height, width });
+      // return the image attributes in an object
+      return acc.concat({ src, width, height });
     }
     return acc.concat();
     // since we only need the first item in the array.
   }, []).shift();
-
-  const background = st.background ? `background-image:${st.background};` : '';
-  const height = st.height ? `height:${st.height};` : '';
-  const width = st.width ? `width:${st.width};` : '';
-
-  return st ? `${height} ${width} ${background}` : '';
 }
 
 export default {
   getIconImagePath,
-  getIconStyle,
+  getImageAttributes,
   getObjKeyValue,
   getTypeObject,
   showEmbed,
