@@ -12,7 +12,7 @@ const { __ } = wp.i18n;
 /**
  * The Preview Player component displays the iframe for embedding on
  * the front end and in the edit view.
- * Uses the Gutenberg Sandbox component.
+ * Uses the Gutenberg RawHTML component.
  */
 const PreviewPlayer = ({
   height,

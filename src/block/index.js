@@ -74,6 +74,6 @@ export default registerBlockType(
       },
     },
     edit: MusicBlock,
-    save: ({ attributes }) => <MusicDisplay attributes={attributes} />,
+    save: MusicDisplay,
   },
 );
