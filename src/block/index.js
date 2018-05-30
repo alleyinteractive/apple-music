@@ -1,7 +1,6 @@
 /* global wp */
 /* eslint no-undef: "error" */
-/* eslint-disable */
-import React from 'react';
+
 // Entry point for Apple Music Gutenberg block.
 import MusicBlock from 'Components/musicBlock';
 import MusicDisplay from 'Components/musicDisplay';
@@ -49,7 +48,7 @@ export default registerBlockType(
           height: '45px',
           width: '157px',
           src: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
-        }
+        },
       },
       item: {
         type: 'object',
