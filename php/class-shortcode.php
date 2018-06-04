@@ -104,7 +104,7 @@ class Shortcode {
 
 		// If necessary, set a default format.
 		$format = array_key_exists( $shortcode_atts['format'], $formats ) ? $shortcode_atts['format'] : $types[ $shortcode_atts['type'] ]['default_format'];
-		
+
 		// Embeds only (album, song, playlist).
 		if ( array_key_exists( $shortcode_atts['type'], $player_types ) && 'player' === $format ) {
 			$url = sprintf( '%1$s/%2$s/%3$s/%4$s%5$s',
