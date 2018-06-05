@@ -20,7 +20,7 @@ const { __ } = wp.i18n;
 // Extend component
 const { Component } = wp.element;
 
-const { InspectorControls } = wp.blocks;
+const { InspectorControls } = wp.editor;
 const { PanelBody } = wp.components;
 
 class MusicBlock extends Component {
