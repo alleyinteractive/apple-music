@@ -17,9 +17,7 @@ export default registerBlockType(
     description:
       __('Embed an Apple music widget into a post.', 'apple-music'),
     category: 'widgets',
-    icon: {
-      src: appleMusicIcon,
-    },
+    icon: appleMusicIcon,
     keywords: [
       __('Apple Music', 'apple-music'),
     ],
