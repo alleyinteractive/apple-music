@@ -12,6 +12,8 @@
   text-align: center;
 
   button {
+    align-items: center;
+    flex-direction: column;
     padding: 0;
 
     &:focus {
@@ -21,6 +23,7 @@
 
   p {
     font-size: rem(11px);
+    margin-top: 0;
   }
 }
 
@@ -106,7 +109,8 @@
 
 .panelSlide {
   border-bottom: 1px solid #e2e4e7; /* WP Admin grey */
-  margin-top: em(15px);
+  padding-top: em(15px);
+  padding-top: em(15px);
 
   &:last-of-type {
     border-bottom: none;

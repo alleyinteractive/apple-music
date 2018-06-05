@@ -1,10 +1,10 @@
 // Entry point for Apple Music Gutenberg block.
 import MusicBlock from 'Components/musicBlock';
 import MusicDisplay from 'Components/musicDisplay';
+import { __ } from '@wordpress/i18n';
 import './i18n';
 import { appleMusicIcon } from './icons';
 
-const { __ } = wp.i18n;
 const { registerBlockType } = wp.blocks;
 
 /**

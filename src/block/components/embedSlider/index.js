@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
+import { __, sprintf } from '@wordpress/i18n';
 import {
   getIconImagePath,
   getImageAttributes,
@@ -10,8 +11,6 @@ import {
 // Use "css" as a declaration for styles since we are using "styles" below.
 import css from './embedSlider.css';
 
-// Internationalization
-const { __, sprintf } = wp.i18n;
 // WP components
 const {
   Button,

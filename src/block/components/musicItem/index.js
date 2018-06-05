@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __, sprintf } from '@wordpress/i18n';
 import {
   getItemArtworkURL,
   getNestedObject,
@@ -12,9 +13,6 @@ import styles from './musicItem.css';
 const {
   Button,
 } = wp.components;
-
-// Internationalization
-const { __, sprintf } = wp.i18n;
 
 const MusicItem = ({
   item,

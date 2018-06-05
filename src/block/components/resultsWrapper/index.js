@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __ } from '@wordpress/i18n';
 import MusicItem from 'Components/musicItem';
 import {
   baseURL,
@@ -11,7 +12,6 @@ import { getNestedObject } from 'Utils';
 
 import styles from './resultsWrapper.css';
 
-const { __ } = wp.i18n;
 const { Component } = wp.element;
 const { Button, Dashicon } = wp.components;
 

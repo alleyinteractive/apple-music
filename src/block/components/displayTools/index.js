@@ -8,16 +8,13 @@ import {
   getNestedObject,
 } from 'Utils';
 import placeholder from 'Images/apple.png';
-
+import { __ } from '@wordpress/i18n';
 import styles from './displayTools.css';
 
 const {
   TextControl,
   ExternalLink,
 } = wp.components;
-
-// Internationalization
-const { __ } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.
