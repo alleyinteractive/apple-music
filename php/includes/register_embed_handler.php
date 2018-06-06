@@ -6,14 +6,10 @@ namespace Apple_Music;
 
 wp_embed_register_handler(
     'apple-music',
-    '/http(?:s)?\:\/\/(?:itunes|embed\.music)\.apple\.com\/([a-z]{2})\/(album|playlist|song|station)\/(?:[^\/]*\/)?(?:id)?(\d+|[a-z]{2}\.[a-z0-9\-]+)(?:\?(width|height)=(\d+)&(width|height)=(\d+))?(?:\?i=(\d+)$)?/i',
+    '/http(?:s)?\:\/\/(?:itunes|embed\.music)\.apple\.com\/([a-z]{2})\/(album|playlist|song|station)\/(?:[^\/]*\/)?(?:id)?(\d+|[a-z]{2}\.[a-z0-9\-]+)(?:\?(width|height)=(\d+)(px|%|)\+(width|height)=(\d+)(px|%|))?(?:\?i=(\d+)$)?/i',
     function( $matches, $attr, $url, $rawattr ) {
         if ( empty( $matches ) ) {
             return;
-        }
-
-        if ( ! is_admin() ) {
-            d($matches); 
         }
 
         $height = '450px';
