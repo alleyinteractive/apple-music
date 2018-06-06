@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
-import PreviewPlayer from 'Components/previewPlayer';
-import { getNestedObject } from 'Utils';
+// import PreviewPlayer from 'Components/previewPlayer';
+import {
+  getNestedObject,
+  iframeURL,
+} from 'Utils';
 import { affiliateToken } from '../../settings';
 
 // CSS
@@ -10,8 +13,7 @@ import styles from './musicDisplay.css';
 
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
- * Inline anchor tags and iframes are used to output the widget in the case
- * that the user disables the plugin the content will be retained.
+ * This is the output passed to the save method in registerBlockType.
  */
 const MusicDisplay = ({
   attributes: {
@@ -25,11 +27,10 @@ const MusicDisplay = ({
   className,
 }) => {
   let URL = getNestedObject(item, ['attributes', 'url']);
-  let iframeURL = iframeSrc;
+  const embedURL = iframeURL(iframeSrc, width, height);
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {
-    iframeURL = iframeSrc ? iframeSrc.concat(`&=${affiliateToken}`) : '';
     URL = URL ? URL.concat(`?at=${affiliateToken}`) : '';
   }
 
@@ -43,11 +44,7 @@ const MusicDisplay = ({
     <div className={className}>
       {
         'preview-player' === embedType &&
-        <PreviewPlayer
-          height={height}
-          iframeSrc={iframeURL}
-          width={width}
-        />
+        `\n${embedURL}\n` // URL needs to be on its own line.
       }
       {
         (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&
