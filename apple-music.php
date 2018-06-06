@@ -1,12 +1,13 @@
 <?php
-
 /*
-	Plugin Name: Apple Music
-	Plugin URI: https://github.com/alleyinteractive/apple-music
-	Description: Search Apple Music and embed content in your site.
-	Version: 0.0.1
-	Author: Alley Interactive
-	Author URI: http://www.alleyinteractive.com/
+ * Plugin Name: Apple Music
+ * Plugin URI: https://github.com/alleyinteractive/apple-music
+ * Description: Search Apple Music and embed content in your site.
+ * Version: 0.0.1
+ * Author: Alley Interactive
+ * Author URI: http://www.alleyinteractive.com/
+ * Text Domain: apple-music
+ * Domain Path: lang/
 */
 
 namespace Apple_Music;
@@ -19,7 +20,8 @@ define( 'APPLE_MUSIC_VERSION', '0.1.0' );
 require_once PATH . '/php/autoload.php';
 require_once PATH . '/php/includes/includes.php';
 
-add_action( 'after_setup_theme', function () {
+add_action( 'plugins_loaded', function () {
+	new Apple_Music_I18n;
 	new Media_Modal;
 	new Shortcode;
 	new Settings;

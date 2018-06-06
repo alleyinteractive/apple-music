@@ -1,4 +1,4 @@
 // Set the localization for Gutenberg
-const { setLocaleData } = wp.i18n;
+import { setLocaleData } from '@wordpress/i18n';
 
 setLocaleData({ '': {} }, 'apple-music');

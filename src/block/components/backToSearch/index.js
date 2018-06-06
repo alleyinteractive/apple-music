@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __ } from '@wordpress/i18n';
 import styles from './backToSearch.css';
 
 const {
   Button,
   Dashicon,
 } = wp.components;
-
-// Internationalization
-const { __ } = wp.i18n;
 
 /**
  * The back to search button.

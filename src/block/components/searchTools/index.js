@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __, sprintf } from '@wordpress/i18n';
 import musicTypes from 'Config/musicTypes';
 import styles from './searchTools.css';
 
@@ -7,9 +8,6 @@ const {
   TextControl,
   SelectControl,
 } = wp.components;
-
-// Internationalization
-const { __, sprintf } = wp.i18n;
 
 /**
  * Component for displaying search results in Apple Music block.

@@ -1,14 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __, sprintf } from '@wordpress/i18n';
 import PreviewPlayer from 'Components/previewPlayer';
 import { getNestedObject } from 'Utils';
 import { affiliateToken } from '../../settings';
 
 // CSS
 import styles from './musicDisplay.css';
-
-// Internationalization
-const { __, sprintf } = wp.i18n;
 
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.

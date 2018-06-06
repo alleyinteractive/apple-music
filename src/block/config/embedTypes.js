@@ -9,7 +9,7 @@ import white from 'Images/app-icon-white.svg';
 import black from 'Images/app-icon-black.svg';
 
 // Internationalization function.
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 
 /**
  * The list of the embed types to use for embedding Apple Music.

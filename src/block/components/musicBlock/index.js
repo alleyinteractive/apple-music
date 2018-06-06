@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { __ } from '@wordpress/i18n';
 import DisplayTools from 'Components/displayTools';
 import ResultsWrapper from 'Components/resultsWrapper';
 import SearchTools from 'Components/searchTools';
@@ -15,12 +16,10 @@ import {
 // CSS
 import styles from './musicBlock.css';
 
-// Internationalization
-const { __ } = wp.i18n;
 // Extend component
 const { Component } = wp.element;
 
-const { InspectorControls } = wp.blocks;
+const { InspectorControls } = wp.editor;
 const { PanelBody } = wp.components;
 
 class MusicBlock extends Component {

@@ -1,5 +1,5 @@
 // Import internationalization function.
-const { __ } = wp.i18n;
+import { __ } from '@wordpress/i18n';
 /**
  * The list of the types of resources to include in the results.
  * The possible values are activities, artists, apple-curators,
