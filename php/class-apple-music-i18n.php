@@ -6,7 +6,7 @@
  */
 namespace Apple_Music;
 
-class Apple_Music_i18n {
+class Apple_Music_I18n {
 	/**
 	 * Load the plugin text domain for translation.
 	 */
