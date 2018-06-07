@@ -3435,28 +3435,6 @@ exports.locals = {
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js??ref--7-1!./node_modules/postcss-loader/lib/index.js??ref--7-2!./src/block/components/musicDisplay/musicDisplay.css":
-/*!********************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/lib??ref--7-2!./src/block/components/musicDisplay/musicDisplay.css ***!
-  \********************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
-// imports
-
-
-// module
-exports.push([module.i, ".musicDisplay__placeHolder__UM5Kh .musicDisplay__components-placeholder__fieldset__2zZwI{\n    max-width:300px;\n  }", ""]);
-
-// exports
-exports.locals = {
-	"placeHolder": "musicDisplay__placeHolder__UM5Kh",
-	"components-placeholder__fieldset": "musicDisplay__components-placeholder__fieldset__2zZwI"
-};
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js??ref--7-1!./node_modules/postcss-loader/lib/index.js??ref--7-2!./src/block/components/musicItem/musicItem.css":
 /*!**************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--7-1!./node_modules/postcss-loader/lib??ref--7-2!./src/block/components/musicItem/musicItem.css ***!
@@ -8919,16 +8897,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
 /* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../settings */ "./src/block/settings.js");
 /* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../icons */ "./src/block/icons/index.js");
-/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./musicDisplay.css */ "./src/block/components/musicDisplay/musicDisplay.css");
-/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_musicDisplay_css__WEBPACK_IMPORTED_MODULE_6__);
 
 
 
 
 
-
-
-// CSS
 
 
 var Placeholder = wp.components.Placeholder;
@@ -8975,7 +8948,7 @@ var MusicDisplay = function MusicDisplay(_ref) {
       Placeholder,
       {
         icon: _icons__WEBPACK_IMPORTED_MODULE_5__["appleMusicIcon"],
-        className: _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6___default.a.placeHolder
+        className: 'apple-music-placeholder'
       },
       Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Get badges, links, and widgets for Apple Music.', 'apple-music')
     )
@@ -9000,36 +8973,6 @@ MusicDisplay.propTypes = {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (MusicDisplay);
-
-/***/ }),
-
-/***/ "./src/block/components/musicDisplay/musicDisplay.css":
-/*!************************************************************!*\
-  !*** ./src/block/components/musicDisplay/musicDisplay.css ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--7-1!../../../../node_modules/postcss-loader/lib??ref--7-2!./musicDisplay.css */ "./node_modules/css-loader/index.js??ref--7-1!./node_modules/postcss-loader/lib/index.js??ref--7-2!./src/block/components/musicDisplay/musicDisplay.css");
-
-if(typeof content === 'string') content = [[module.i, content, '']];
-
-var transform;
-var insertInto;
-
-
-
-var options = {"hmr":true}
-
-options.transform = transform
-options.insertInto = undefined;
-
-var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
-
-if(content.locals) module.exports = content.locals;
-
-if(false) {}
 
 /***/ }),
 

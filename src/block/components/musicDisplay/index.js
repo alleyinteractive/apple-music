@@ -8,9 +8,6 @@ import {
 import { affiliateToken } from '../../settings';
 import { appleMusicIcon } from '../../icons';
 
-// CSS
-import styles from './musicDisplay.css';
-
 const { Placeholder } = wp.components;
 
 /**
@@ -60,7 +57,7 @@ const MusicDisplay = ({
         ! URL && ! embedURL &&
         <Placeholder
           icon={appleMusicIcon}
-          className={styles.placeHolder}
+          className="apple-music-placeholder"
         >
           {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
         </Placeholder>
