@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class to handle Apple Music shortcodes.
  *
@@ -14,6 +15,7 @@ class Shortcode {
 	 */
 	public function __construct() {
 		add_shortcode( 'apple-music', [ $this, 'shortcode' ] );
+
 	}
 
 	/**
@@ -40,9 +42,9 @@ class Shortcode {
 		], $atts, $tag );
 
 		$formats = [
-			'player'                     => [],
-			'link'                       => [],
-			'badge'                      => [
+			'player'            => [],
+			'link'              => [],
+			'badge'             => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
 				'default_color' => '', // Not used
 				'dimensions'    => 'width:157px;height:45px;',
@@ -57,27 +59,27 @@ class Shortcode {
 				'default_color' => 'standard-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'text-lockup-mono-white'     => [
+			'text-lockup-mono-white' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
 				'default_color' => 'mono-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'text-lockup-mono-black'     => [
+			'text-lockup-mono-black' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
 				'default_color' => 'mono-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'app-icon'                   => [
+			'app-icon'    => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg',
 				'default_color' => '',
 				'dimensions'    => 'width:40px;height:40px;',
 			],
-			'app-icon-black'             => [
+			'app-icon-black'    => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
 				'default_color' => '000000',
 				'dimensions'    => 'width:40px;height:40px;',
 			],
-			'app-icon-white'             => [
+			'app-icon-white'    => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
 				'default_color' => 'FFFFFF',
 				'dimensions'    => 'width:40px;height:40px;',
