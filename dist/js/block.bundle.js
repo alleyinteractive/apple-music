@@ -81,10 +81,224 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/block/index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ "./node_modules/@wordpress/i18n/build-module/index.js":
+/*!************************************************************!*\
+  !*** ./node_modules/@wordpress/i18n/build-module/index.js ***!
+  \************************************************************/
+/*! exports provided: setLocaleData, getI18n, dcnpgettext, __, _x, _n, _nx, sprintf */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setLocaleData", function() { return setLocaleData; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getI18n", function() { return getI18n; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dcnpgettext", function() { return dcnpgettext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__", function() { return __; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_x", function() { return _x; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_n", function() { return _n; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "_nx", function() { return _nx; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sprintf", function() { return sprintf; });
+/* harmony import */ var babel_runtime_core_js_object_assign__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-runtime/core-js/object/assign */ "./node_modules/babel-runtime/core-js/object/assign.js");
+/* harmony import */ var babel_runtime_core_js_object_assign__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_core_js_object_assign__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var jed__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! jed */ "./node_modules/jed/jed.js");
+/* harmony import */ var jed__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(jed__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var memize__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! memize */ "./node_modules/memize/index.js");
+/* harmony import */ var memize__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(memize__WEBPACK_IMPORTED_MODULE_2__);
+
+/**
+ * External dependencies
+ */
+
+
+
+var i18n = void 0;
+
+/**
+ * Log to console, once per message; or more precisely, per referentially equal
+ * argument set. Because Jed throws errors, we log these to the console instead
+ * to avoid crashing the application.
+ *
+ * @param {...*} args Arguments to pass to `console.error`
+ */
+var logErrorOnce = memize__WEBPACK_IMPORTED_MODULE_2___default()(console.error); // eslint-disable-line no-console
+
+/**
+ * Merges locale data into the Jed instance by domain. Creates a new Jed
+ * instance if one has not yet been assigned.
+ *
+ * @see http://messageformat.github.io/Jed/
+ *
+ * @param {?Object} localeData Locale data configuration.
+ * @param {?string} domain     Domain for which configuration applies.
+ */
+function setLocaleData() {
+  var localeData = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { '': {} };
+  var domain = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'default';
+
+  if (!i18n) {
+    i18n = new jed__WEBPACK_IMPORTED_MODULE_1___default.a({
+      domain: 'default',
+      locale_data: {
+        default: {}
+      }
+    });
+  }
+
+  i18n.options.locale_data[domain] = babel_runtime_core_js_object_assign__WEBPACK_IMPORTED_MODULE_0___default()({}, i18n.options.locale_data[domain], localeData);
+}
+
+/**
+ * Returns the current Jed instance, initializing with a default configuration
+ * if not already assigned.
+ *
+ * @return {Jed} Jed instance.
+ */
+function getI18n() {
+  if (!i18n) {
+    setLocaleData();
+  }
+
+  return i18n;
+}
+
+/**
+ * Wrapper for Jed's `dcnpgettext`, its most qualified function. Absorbs errors
+ * which are thrown as the result of invalid translation.
+ *
+ * @param {?string} domain  Domain to retrieve the translated text.
+ * @param {?string} context Context information for the translators.
+ * @param {string}  single  Text to translate if non-plural. Used as fallback
+ *                          return value on a caught error.
+ * @param {?string} plural  The text to be used if the number is plural.
+ * @param {?number} number  The number to compare against to use either the
+ *                          singular or plural form.
+ *
+ * @return {string} The translated string.
+ */
+var dcnpgettext = memize__WEBPACK_IMPORTED_MODULE_2___default()(function () {
+  var domain = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'default';
+  var context = arguments[1];
+  var single = arguments[2];
+  var plural = arguments[3];
+  var number = arguments[4];
+
+  try {
+    return getI18n().dcnpgettext(domain, context, single, plural, number);
+  } catch (error) {
+    logErrorOnce('Jed localization error: \n\n' + error.toString());
+
+    return single;
+  }
+});
+
+/**
+ * Retrieve the translation of text.
+ *
+ * @see https://developer.wordpress.org/reference/functions/__/
+ *
+ * @param {string}  text   Text to translate.
+ * @param {?string} domain Domain to retrieve the translated text.
+ *
+ * @return {string} Translated text.
+ */
+function __(text, domain) {
+  return dcnpgettext(domain, undefined, text);
+}
+
+/**
+ * Retrieve translated string with gettext context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/_x/
+ *
+ * @param {string}  text    Text to translate.
+ * @param {string}  context Context information for the translators.
+ * @param {?string} domain  Domain to retrieve the translated text.
+ *
+ * @return {string} Translated context string without pipe.
+ */
+function _x(text, context, domain) {
+  return dcnpgettext(domain, context, text);
+}
+
+/**
+ * Translates and retrieves the singular or plural form based on the supplied
+ * number.
+ *
+ * @see https://developer.wordpress.org/reference/functions/_n/
+ *
+ * @param {string}  single The text to be used if the number is singular.
+ * @param {string}  plural The text to be used if the number is plural.
+ * @param {number}  number The number to compare against to use either the
+ *                         singular or plural form.
+ * @param {?string} domain Domain to retrieve the translated text.
+ *
+ * @return {string} The translated singular or plural form.
+ */
+function _n(single, plural, number, domain) {
+  return dcnpgettext(domain, undefined, single, plural, number);
+}
+
+/**
+ * Translates and retrieves the singular or plural form based on the supplied
+ * number, with gettext context.
+ *
+ * @see https://developer.wordpress.org/reference/functions/_nx/
+ *
+ * @param {string}  single  The text to be used if the number is singular.
+ * @param {string}  plural  The text to be used if the number is plural.
+ * @param {number}  number  The number to compare against to use either the
+ *                          singular or plural form.
+ * @param {string}  context Context information for the translators.
+ * @param {?string} domain  Domain to retrieve the translated text.
+ *
+ * @return {string} The translated singular or plural form.
+ */
+function _nx(single, plural, number, context, domain) {
+  return dcnpgettext(domain, context, single, plural, number);
+}
+
+/**
+ * Returns a formatted string. If an error occurs in applying the format, the
+ * original format string is returned.
+ *
+ * @param {string}   format  The format of the string to generate.
+ * @param {string[]} ...args Arguments to apply to the format.
+ *
+ * @see http://www.diveintojavascript.com/projects/javascript-sprintf
+ *
+ * @return {string} The formatted string.
+ */
+function sprintf(format) {
+  try {
+    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return jed__WEBPACK_IMPORTED_MODULE_1___default.a.sprintf.apply(jed__WEBPACK_IMPORTED_MODULE_1___default.a, [format].concat(args));
+  } catch (error) {
+    logErrorOnce('Jed sprintf error: \n\n' + error.toString());
+
+    return format;
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-runtime/core-js/object/assign.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/babel-runtime/core-js/object/assign.js ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(/*! core-js/library/fn/object/assign */ "./node_modules/core-js/library/fn/object/assign.js"), __esModule: true };
+
+/***/ }),
 
 /***/ "./node_modules/babel-runtime/core-js/object/create.js":
 /*!*************************************************************!*\
@@ -322,6 +536,19 @@ exports.default = typeof _symbol2.default === "function" && _typeof(_iterator2.d
 } : function (obj) {
   return obj && typeof _symbol2.default === "function" && obj.constructor === _symbol2.default && obj !== _symbol2.default.prototype ? "symbol" : typeof obj === "undefined" ? "undefined" : _typeof(obj);
 };
+
+/***/ }),
+
+/***/ "./node_modules/core-js/library/fn/object/assign.js":
+/*!**********************************************************!*\
+  !*** ./node_modules/core-js/library/fn/object/assign.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ../../modules/es6.object.assign */ "./node_modules/core-js/library/modules/es6.object.assign.js");
+module.exports = __webpack_require__(/*! ../../modules/_core */ "./node_modules/core-js/library/modules/_core.js").Object.assign;
+
 
 /***/ }),
 
@@ -1380,6 +1607,52 @@ module.exports.f = function (C) {
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/modules/_object-assign.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/_object-assign.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+// 19.1.2.1 Object.assign(target, source, ...)
+var getKeys = __webpack_require__(/*! ./_object-keys */ "./node_modules/core-js/library/modules/_object-keys.js");
+var gOPS = __webpack_require__(/*! ./_object-gops */ "./node_modules/core-js/library/modules/_object-gops.js");
+var pIE = __webpack_require__(/*! ./_object-pie */ "./node_modules/core-js/library/modules/_object-pie.js");
+var toObject = __webpack_require__(/*! ./_to-object */ "./node_modules/core-js/library/modules/_to-object.js");
+var IObject = __webpack_require__(/*! ./_iobject */ "./node_modules/core-js/library/modules/_iobject.js");
+var $assign = Object.assign;
+
+// should work with symbols and should have deterministic property order (V8 bug)
+module.exports = !$assign || __webpack_require__(/*! ./_fails */ "./node_modules/core-js/library/modules/_fails.js")(function () {
+  var A = {};
+  var B = {};
+  // eslint-disable-next-line no-undef
+  var S = Symbol();
+  var K = 'abcdefghijklmnopqrst';
+  A[S] = 7;
+  K.split('').forEach(function (k) { B[k] = k; });
+  return $assign({}, A)[S] != 7 || Object.keys($assign({}, B)).join('') != K;
+}) ? function assign(target, source) { // eslint-disable-line no-unused-vars
+  var T = toObject(target);
+  var aLen = arguments.length;
+  var index = 1;
+  var getSymbols = gOPS.f;
+  var isEnum = pIE.f;
+  while (aLen > index) {
+    var S = IObject(arguments[index++]);
+    var keys = getSymbols ? getKeys(S).concat(getSymbols(S)) : getKeys(S);
+    var length = keys.length;
+    var j = 0;
+    var key;
+    while (length > j) if (isEnum.call(S, key = keys[j++])) T[key] = S[key];
+  } return T;
+} : $assign;
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/modules/_object-create.js":
 /*!****************************************************************!*\
   !*** ./node_modules/core-js/library/modules/_object-create.js ***!
@@ -2283,6 +2556,21 @@ addToUnscopables('entries');
 
 /***/ }),
 
+/***/ "./node_modules/core-js/library/modules/es6.object.assign.js":
+/*!*******************************************************************!*\
+  !*** ./node_modules/core-js/library/modules/es6.object.assign.js ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 19.1.3.1 Object.assign(target, source)
+var $export = __webpack_require__(/*! ./_export */ "./node_modules/core-js/library/modules/_export.js");
+
+$export($export.S + $export.F, 'Object', { assign: __webpack_require__(/*! ./_object-assign */ "./node_modules/core-js/library/modules/_object-assign.js") });
+
+
+/***/ }),
+
 /***/ "./node_modules/core-js/library/modules/es6.object.create.js":
 /*!*******************************************************************!*\
   !*** ./node_modules/core-js/library/modules/es6.object.create.js ***!
@@ -3104,7 +3392,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".embedSlider__slider__1s9S2{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -webkit-box-pack:space-evenly;\n      -ms-flex-pack:space-evenly;\n          justify-content:space-evenly;\n  margin:1.875em auto 1.25em auto;\n}\n\n.embedSlider__slide__fD27G{\n  text-align:center;\n}\n\n.embedSlider__slide__fD27G button{\n    padding:0\n  }\n\n.embedSlider__slide__fD27G button:focus{\n    -webkit-box-shadow:none;\n            box-shadow:none;\n}\n\n.embedSlider__slide__fD27G p{\n    font-size:0.688rem;\n    font-size:0.688rem;\n  }\n\n.embedSlider__active__1Xnaw p{\n    color:#FE2851;\n  }\n\n.embedSlider__active__1Xnaw .embedSlider__previewPlayer__30TWs{\n    color:#FE2851;\n  }\n\n.embedSlider__previewPlayer__30TWs{\n  border:3px solid;\n  border-radius:50%;\n  height:33px;\n  margin:0 auto;\n  position:relative;\n  width:33px;\n}\n\n.embedSlider__previewPlayer__30TWs svg{\n    margin:3px 0 0 3px;\n  }\n\n.embedSlider__imageWrapper__1wkWm{\n  -webkit-box-align:center;\n      -ms-flex-align:center;\n          align-items:center;\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  height:48px;\n  -webkit-box-pack:center;\n      -ms-flex-pack:center;\n          justify-content:center;\n  margin-bottom:0.625em;\n}\n\n.embedSlider__imageWrapper__1wkWm img{\n    -ms-flex-item-align:center;\n        align-self:center;\n    max-height:100%;\n  }\n\n.embedSlider__standard-white__1gald img, .embedSlider__mono-white__VK0nQ img, .embedSlider__white__1f1J_ img{\n    background-color:grey;\n    background-image:linear-gradient(45deg, #d3d3d3 25%, transparent 25%),linear-gradient(-45deg, #d3d3d3 25%, transparent 25%),linear-gradient(45deg, transparent 75%, #d3d3d3 75%),linear-gradient(-45deg, transparent 75%, #d3d3d3 75%);\n    background-size:20px 20px;\n    background-position:0 0, 0 10px, 10px -10px, -10px 0px;\n    padding:3px;\n    vertical-align:middle;\n  }\n\n.embedSlider__standard__zbatz img, .embedSlider__white__1f1J_ img, .embedSlider__black__2lfYz img{\n    width:42px;\n    height:42px;\n  }\n\n.embedSlider__standard__zbatz img{\n    border-radius:5.5pt;\n    border:1px solid #E7E7E7;\n  }\n\n.embedSlider__selectStyle__1smtq{\n  font-size:0.688rem;\n  font-size:0.688rem;\n  margin-top:0.625em;\n}\n\n.embedSlider__iconSelector__1rrtn{\n  color:#333\n}\n\n.embedSlider__iconSelector__1rrtn:hover,\n  .embedSlider__iconSelector__1rrtn:focus{\n  color:#FE2851;\n}\n\n.embedSlider__panelSlide__30As9{\n  border-bottom:1px solid #e2e4e7;\n  margin-top:0.938em\n}\n\n.embedSlider__panelSlide__30As9:last-of-type{\n  border-bottom:none;\n}", ""]);
+exports.push([module.i, ".embedSlider__slider__1s9S2{\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  -webkit-box-pack:space-evenly;\n      -ms-flex-pack:space-evenly;\n          justify-content:space-evenly;\n  margin:1.875em auto 1.25em auto;\n}\n\n.embedSlider__slide__fD27G{\n  text-align:center;\n}\n\n.embedSlider__slide__fD27G button{\n    -webkit-box-align:center;\n        -ms-flex-align:center;\n            align-items:center;\n    -webkit-box-orient:vertical;\n    -webkit-box-direction:normal;\n        -ms-flex-direction:column;\n            flex-direction:column;\n    padding:0\n  }\n\n.embedSlider__slide__fD27G button:focus{\n    -webkit-box-shadow:none;\n            box-shadow:none;\n}\n\n.embedSlider__slide__fD27G p{\n    font-size:0.688rem;\n    font-size:0.688rem;\n    margin-top:0;\n  }\n\n.embedSlider__active__1Xnaw p{\n    color:#FE2851;\n  }\n\n.embedSlider__active__1Xnaw .embedSlider__previewPlayer__30TWs{\n    color:#FE2851;\n  }\n\n.embedSlider__previewPlayer__30TWs{\n  border:3px solid;\n  border-radius:50%;\n  height:33px;\n  margin:0 auto;\n  position:relative;\n  width:33px;\n}\n\n.embedSlider__previewPlayer__30TWs svg{\n    margin:3px 0 0 3px;\n  }\n\n.embedSlider__imageWrapper__1wkWm{\n  -webkit-box-align:center;\n      -ms-flex-align:center;\n          align-items:center;\n  display:-webkit-box;\n  display:-ms-flexbox;\n  display:flex;\n  height:48px;\n  -webkit-box-pack:center;\n      -ms-flex-pack:center;\n          justify-content:center;\n  margin-bottom:0.625em;\n}\n\n.embedSlider__imageWrapper__1wkWm img{\n    -ms-flex-item-align:center;\n        align-self:center;\n    max-height:100%;\n  }\n\n.embedSlider__standard-white__1gald img, .embedSlider__mono-white__VK0nQ img, .embedSlider__white__1f1J_ img{\n    background-color:grey;\n    background-image:linear-gradient(45deg, #d3d3d3 25%, transparent 25%),linear-gradient(-45deg, #d3d3d3 25%, transparent 25%),linear-gradient(45deg, transparent 75%, #d3d3d3 75%),linear-gradient(-45deg, transparent 75%, #d3d3d3 75%);\n    background-size:20px 20px;\n    background-position:0 0, 0 10px, 10px -10px, -10px 0px;\n    padding:3px;\n    vertical-align:middle;\n  }\n\n.embedSlider__standard__zbatz img, .embedSlider__white__1f1J_ img, .embedSlider__black__2lfYz img{\n    width:42px;\n    height:42px;\n  }\n\n.embedSlider__standard__zbatz img{\n    border-radius:5.5pt;\n    border:1px solid #E7E7E7;\n  }\n\n.embedSlider__selectStyle__1smtq{\n  font-size:0.688rem;\n  font-size:0.688rem;\n  margin-top:0.625em;\n}\n\n.embedSlider__iconSelector__1rrtn{\n  color:#333\n}\n\n.embedSlider__iconSelector__1rrtn:hover,\n  .embedSlider__iconSelector__1rrtn:focus{\n  color:#FE2851;\n}\n\n.embedSlider__panelSlide__30As9{\n  border-bottom:1px solid #e2e4e7;\n  padding-top:0.938em;\n  padding-top:0.938em\n}\n\n.embedSlider__panelSlide__30As9:last-of-type{\n  border-bottom:none;\n}", ""]);
 
 // exports
 exports.locals = {
@@ -3159,11 +3447,12 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".musicDisplay__placeHolder__UM5Kh{\n  margin:0;\n  opacity:0.5;\n  pointer-events:none;\n}", ""]);
+exports.push([module.i, ".musicDisplay__placeHolder__UM5Kh .musicDisplay__components-placeholder__fieldset__2zZwI{\n    max-width:300px;\n  }", ""]);
 
 // exports
 exports.locals = {
-	"placeHolder": "musicDisplay__placeHolder__UM5Kh"
+	"placeHolder": "musicDisplay__placeHolder__UM5Kh",
+	"components-placeholder__fieldset": "musicDisplay__components-placeholder__fieldset__2zZwI"
 };
 
 /***/ }),
@@ -3533,6 +3822,1158 @@ if (true) {
 }
 
 module.exports = warning;
+
+/***/ }),
+
+/***/ "./node_modules/jed/jed.js":
+/*!*********************************!*\
+  !*** ./node_modules/jed/jed.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * @preserve jed.js https://github.com/SlexAxton/Jed
+ */
+/*
+-----------
+A gettext compatible i18n library for modern JavaScript Applications
+
+by Alex Sexton - AlexSexton [at] gmail - @SlexAxton
+
+MIT License
+
+A jQuery Foundation project - requires CLA to contribute -
+https://contribute.jquery.org/CLA/
+
+
+
+Jed offers the entire applicable GNU gettext spec'd set of
+functions, but also offers some nicer wrappers around them.
+The api for gettext was written for a language with no function
+overloading, so Jed allows a little more of that.
+
+Many thanks to Joshua I. Miller - unrtst@cpan.org - who wrote
+gettext.js back in 2008. I was able to vet a lot of my ideas
+against his. I also made sure Jed passed against his tests
+in order to offer easy upgrades -- jsgettext.berlios.de
+*/
+(function (root, undef) {
+
+  // Set up some underscore-style functions, if you already have
+  // underscore, feel free to delete this section, and use it
+  // directly, however, the amount of functions used doesn't
+  // warrant having underscore as a full dependency.
+  // Underscore 1.3.0 was used to port and is licensed
+  // under the MIT License by Jeremy Ashkenas.
+  var ArrayProto    = Array.prototype,
+      ObjProto      = Object.prototype,
+      slice         = ArrayProto.slice,
+      hasOwnProp    = ObjProto.hasOwnProperty,
+      nativeForEach = ArrayProto.forEach,
+      breaker       = {};
+
+  // We're not using the OOP style _ so we don't need the
+  // extra level of indirection. This still means that you
+  // sub out for real `_` though.
+  var _ = {
+    forEach : function( obj, iterator, context ) {
+      var i, l, key;
+      if ( obj === null ) {
+        return;
+      }
+
+      if ( nativeForEach && obj.forEach === nativeForEach ) {
+        obj.forEach( iterator, context );
+      }
+      else if ( obj.length === +obj.length ) {
+        for ( i = 0, l = obj.length; i < l; i++ ) {
+          if ( i in obj && iterator.call( context, obj[i], i, obj ) === breaker ) {
+            return;
+          }
+        }
+      }
+      else {
+        for ( key in obj) {
+          if ( hasOwnProp.call( obj, key ) ) {
+            if ( iterator.call (context, obj[key], key, obj ) === breaker ) {
+              return;
+            }
+          }
+        }
+      }
+    },
+    extend : function( obj ) {
+      this.forEach( slice.call( arguments, 1 ), function ( source ) {
+        for ( var prop in source ) {
+          obj[prop] = source[prop];
+        }
+      });
+      return obj;
+    }
+  };
+  // END Miniature underscore impl
+
+  // Jed is a constructor function
+  var Jed = function ( options ) {
+    // Some minimal defaults
+    this.defaults = {
+      "locale_data" : {
+        "messages" : {
+          "" : {
+            "domain"       : "messages",
+            "lang"         : "en",
+            "plural_forms" : "nplurals=2; plural=(n != 1);"
+          }
+          // There are no default keys, though
+        }
+      },
+      // The default domain if one is missing
+      "domain" : "messages",
+      // enable debug mode to log untranslated strings to the console
+      "debug" : false
+    };
+
+    // Mix in the sent options with the default options
+    this.options = _.extend( {}, this.defaults, options );
+    this.textdomain( this.options.domain );
+
+    if ( options.domain && ! this.options.locale_data[ this.options.domain ] ) {
+      throw new Error('Text domain set to non-existent domain: `' + options.domain + '`');
+    }
+  };
+
+  // The gettext spec sets this character as the default
+  // delimiter for context lookups.
+  // e.g.: context\u0004key
+  // If your translation company uses something different,
+  // just change this at any time and it will use that instead.
+  Jed.context_delimiter = String.fromCharCode( 4 );
+
+  function getPluralFormFunc ( plural_form_string ) {
+    return Jed.PF.compile( plural_form_string || "nplurals=2; plural=(n != 1);");
+  }
+
+  function Chain( key, i18n ){
+    this._key = key;
+    this._i18n = i18n;
+  }
+
+  // Create a chainable api for adding args prettily
+  _.extend( Chain.prototype, {
+    onDomain : function ( domain ) {
+      this._domain = domain;
+      return this;
+    },
+    withContext : function ( context ) {
+      this._context = context;
+      return this;
+    },
+    ifPlural : function ( num, pkey ) {
+      this._val = num;
+      this._pkey = pkey;
+      return this;
+    },
+    fetch : function ( sArr ) {
+      if ( {}.toString.call( sArr ) != '[object Array]' ) {
+        sArr = [].slice.call(arguments, 0);
+      }
+      return ( sArr && sArr.length ? Jed.sprintf : function(x){ return x; } )(
+        this._i18n.dcnpgettext(this._domain, this._context, this._key, this._pkey, this._val),
+        sArr
+      );
+    }
+  });
+
+  // Add functions to the Jed prototype.
+  // These will be the functions on the object that's returned
+  // from creating a `new Jed()`
+  // These seem redundant, but they gzip pretty well.
+  _.extend( Jed.prototype, {
+    // The sexier api start point
+    translate : function ( key ) {
+      return new Chain( key, this );
+    },
+
+    textdomain : function ( domain ) {
+      if ( ! domain ) {
+        return this._textdomain;
+      }
+      this._textdomain = domain;
+    },
+
+    gettext : function ( key ) {
+      return this.dcnpgettext.call( this, undef, undef, key );
+    },
+
+    dgettext : function ( domain, key ) {
+     return this.dcnpgettext.call( this, domain, undef, key );
+    },
+
+    dcgettext : function ( domain , key /*, category */ ) {
+      // Ignores the category anyways
+      return this.dcnpgettext.call( this, domain, undef, key );
+    },
+
+    ngettext : function ( skey, pkey, val ) {
+      return this.dcnpgettext.call( this, undef, undef, skey, pkey, val );
+    },
+
+    dngettext : function ( domain, skey, pkey, val ) {
+      return this.dcnpgettext.call( this, domain, undef, skey, pkey, val );
+    },
+
+    dcngettext : function ( domain, skey, pkey, val/*, category */) {
+      return this.dcnpgettext.call( this, domain, undef, skey, pkey, val );
+    },
+
+    pgettext : function ( context, key ) {
+      return this.dcnpgettext.call( this, undef, context, key );
+    },
+
+    dpgettext : function ( domain, context, key ) {
+      return this.dcnpgettext.call( this, domain, context, key );
+    },
+
+    dcpgettext : function ( domain, context, key/*, category */) {
+      return this.dcnpgettext.call( this, domain, context, key );
+    },
+
+    npgettext : function ( context, skey, pkey, val ) {
+      return this.dcnpgettext.call( this, undef, context, skey, pkey, val );
+    },
+
+    dnpgettext : function ( domain, context, skey, pkey, val ) {
+      return this.dcnpgettext.call( this, domain, context, skey, pkey, val );
+    },
+
+    // The most fully qualified gettext function. It has every option.
+    // Since it has every option, we can use it from every other method.
+    // This is the bread and butter.
+    // Technically there should be one more argument in this function for 'Category',
+    // but since we never use it, we might as well not waste the bytes to define it.
+    dcnpgettext : function ( domain, context, singular_key, plural_key, val ) {
+      // Set some defaults
+
+      plural_key = plural_key || singular_key;
+
+      // Use the global domain default if one
+      // isn't explicitly passed in
+      domain = domain || this._textdomain;
+
+      var fallback;
+
+      // Handle special cases
+
+      // No options found
+      if ( ! this.options ) {
+        // There's likely something wrong, but we'll return the correct key for english
+        // We do this by instantiating a brand new Jed instance with the default set
+        // for everything that could be broken.
+        fallback = new Jed();
+        return fallback.dcnpgettext.call( fallback, undefined, undefined, singular_key, plural_key, val );
+      }
+
+      // No translation data provided
+      if ( ! this.options.locale_data ) {
+        throw new Error('No locale data provided.');
+      }
+
+      if ( ! this.options.locale_data[ domain ] ) {
+        throw new Error('Domain `' + domain + '` was not found.');
+      }
+
+      if ( ! this.options.locale_data[ domain ][ "" ] ) {
+        throw new Error('No locale meta information provided.');
+      }
+
+      // Make sure we have a truthy key. Otherwise we might start looking
+      // into the empty string key, which is the options for the locale
+      // data.
+      if ( ! singular_key ) {
+        throw new Error('No translation key found.');
+      }
+
+      var key  = context ? context + Jed.context_delimiter + singular_key : singular_key,
+          locale_data = this.options.locale_data,
+          dict = locale_data[ domain ],
+          defaultConf = (locale_data.messages || this.defaults.locale_data.messages)[""],
+          pluralForms = dict[""].plural_forms || dict[""]["Plural-Forms"] || dict[""]["plural-forms"] || defaultConf.plural_forms || defaultConf["Plural-Forms"] || defaultConf["plural-forms"],
+          val_list,
+          res;
+
+      var val_idx;
+      if (val === undefined) {
+        // No value passed in; assume singular key lookup.
+        val_idx = 0;
+
+      } else {
+        // Value has been passed in; use plural-forms calculations.
+
+        // Handle invalid numbers, but try casting strings for good measure
+        if ( typeof val != 'number' ) {
+          val = parseInt( val, 10 );
+
+          if ( isNaN( val ) ) {
+            throw new Error('The number that was passed in is not a number.');
+          }
+        }
+
+        val_idx = getPluralFormFunc(pluralForms)(val);
+      }
+
+      // Throw an error if a domain isn't found
+      if ( ! dict ) {
+        throw new Error('No domain named `' + domain + '` could be found.');
+      }
+
+      val_list = dict[ key ];
+
+      // If there is no match, then revert back to
+      // english style singular/plural with the keys passed in.
+      if ( ! val_list || val_idx > val_list.length ) {
+        if (this.options.missing_key_callback) {
+          this.options.missing_key_callback(key, domain);
+        }
+        res = [ singular_key, plural_key ];
+
+        // collect untranslated strings
+        if (this.options.debug===true) {
+          console.log(res[ getPluralFormFunc(pluralForms)( val ) ]);
+        }
+        return res[ getPluralFormFunc()( val ) ];
+      }
+
+      res = val_list[ val_idx ];
+
+      // This includes empty strings on purpose
+      if ( ! res  ) {
+        res = [ singular_key, plural_key ];
+        return res[ getPluralFormFunc()( val ) ];
+      }
+      return res;
+    }
+  });
+
+
+  // We add in sprintf capabilities for post translation value interolation
+  // This is not internally used, so you can remove it if you have this
+  // available somewhere else, or want to use a different system.
+
+  // We _slightly_ modify the normal sprintf behavior to more gracefully handle
+  // undefined values.
+
+  /**
+   sprintf() for JavaScript 0.7-beta1
+   http://www.diveintojavascript.com/projects/javascript-sprintf
+
+   Copyright (c) Alexandru Marasteanu <alexaholic [at) gmail (dot] com>
+   All rights reserved.
+
+   Redistribution and use in source and binary forms, with or without
+   modification, are permitted provided that the following conditions are met:
+       * Redistributions of source code must retain the above copyright
+         notice, this list of conditions and the following disclaimer.
+       * Redistributions in binary form must reproduce the above copyright
+         notice, this list of conditions and the following disclaimer in the
+         documentation and/or other materials provided with the distribution.
+       * Neither the name of sprintf() for JavaScript nor the
+         names of its contributors may be used to endorse or promote products
+         derived from this software without specific prior written permission.
+
+   THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+   ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+   WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+   DISCLAIMED. IN NO EVENT SHALL Alexandru Marasteanu BE LIABLE FOR ANY
+   DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+   (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+   LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+   ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+   (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+   SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  */
+  var sprintf = (function() {
+    function get_type(variable) {
+      return Object.prototype.toString.call(variable).slice(8, -1).toLowerCase();
+    }
+    function str_repeat(input, multiplier) {
+      for (var output = []; multiplier > 0; output[--multiplier] = input) {/* do nothing */}
+      return output.join('');
+    }
+
+    var str_format = function() {
+      if (!str_format.cache.hasOwnProperty(arguments[0])) {
+        str_format.cache[arguments[0]] = str_format.parse(arguments[0]);
+      }
+      return str_format.format.call(null, str_format.cache[arguments[0]], arguments);
+    };
+
+    str_format.format = function(parse_tree, argv) {
+      var cursor = 1, tree_length = parse_tree.length, node_type = '', arg, output = [], i, k, match, pad, pad_character, pad_length;
+      for (i = 0; i < tree_length; i++) {
+        node_type = get_type(parse_tree[i]);
+        if (node_type === 'string') {
+          output.push(parse_tree[i]);
+        }
+        else if (node_type === 'array') {
+          match = parse_tree[i]; // convenience purposes only
+          if (match[2]) { // keyword argument
+            arg = argv[cursor];
+            for (k = 0; k < match[2].length; k++) {
+              if (!arg.hasOwnProperty(match[2][k])) {
+                throw(sprintf('[sprintf] property "%s" does not exist', match[2][k]));
+              }
+              arg = arg[match[2][k]];
+            }
+          }
+          else if (match[1]) { // positional argument (explicit)
+            arg = argv[match[1]];
+          }
+          else { // positional argument (implicit)
+            arg = argv[cursor++];
+          }
+
+          if (/[^s]/.test(match[8]) && (get_type(arg) != 'number')) {
+            throw(sprintf('[sprintf] expecting number but found %s', get_type(arg)));
+          }
+
+          // Jed EDIT
+          if ( typeof arg == 'undefined' || arg === null ) {
+            arg = '';
+          }
+          // Jed EDIT
+
+          switch (match[8]) {
+            case 'b': arg = arg.toString(2); break;
+            case 'c': arg = String.fromCharCode(arg); break;
+            case 'd': arg = parseInt(arg, 10); break;
+            case 'e': arg = match[7] ? arg.toExponential(match[7]) : arg.toExponential(); break;
+            case 'f': arg = match[7] ? parseFloat(arg).toFixed(match[7]) : parseFloat(arg); break;
+            case 'o': arg = arg.toString(8); break;
+            case 's': arg = ((arg = String(arg)) && match[7] ? arg.substring(0, match[7]) : arg); break;
+            case 'u': arg = Math.abs(arg); break;
+            case 'x': arg = arg.toString(16); break;
+            case 'X': arg = arg.toString(16).toUpperCase(); break;
+          }
+          arg = (/[def]/.test(match[8]) && match[3] && arg >= 0 ? '+'+ arg : arg);
+          pad_character = match[4] ? match[4] == '0' ? '0' : match[4].charAt(1) : ' ';
+          pad_length = match[6] - String(arg).length;
+          pad = match[6] ? str_repeat(pad_character, pad_length) : '';
+          output.push(match[5] ? arg + pad : pad + arg);
+        }
+      }
+      return output.join('');
+    };
+
+    str_format.cache = {};
+
+    str_format.parse = function(fmt) {
+      var _fmt = fmt, match = [], parse_tree = [], arg_names = 0;
+      while (_fmt) {
+        if ((match = /^[^\x25]+/.exec(_fmt)) !== null) {
+          parse_tree.push(match[0]);
+        }
+        else if ((match = /^\x25{2}/.exec(_fmt)) !== null) {
+          parse_tree.push('%');
+        }
+        else if ((match = /^\x25(?:([1-9]\d*)\$|\(([^\)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-fosuxX])/.exec(_fmt)) !== null) {
+          if (match[2]) {
+            arg_names |= 1;
+            var field_list = [], replacement_field = match[2], field_match = [];
+            if ((field_match = /^([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+              field_list.push(field_match[1]);
+              while ((replacement_field = replacement_field.substring(field_match[0].length)) !== '') {
+                if ((field_match = /^\.([a-z_][a-z_\d]*)/i.exec(replacement_field)) !== null) {
+                  field_list.push(field_match[1]);
+                }
+                else if ((field_match = /^\[(\d+)\]/.exec(replacement_field)) !== null) {
+                  field_list.push(field_match[1]);
+                }
+                else {
+                  throw('[sprintf] huh?');
+                }
+              }
+            }
+            else {
+              throw('[sprintf] huh?');
+            }
+            match[2] = field_list;
+          }
+          else {
+            arg_names |= 2;
+          }
+          if (arg_names === 3) {
+            throw('[sprintf] mixing positional and named placeholders is not (yet) supported');
+          }
+          parse_tree.push(match);
+        }
+        else {
+          throw('[sprintf] huh?');
+        }
+        _fmt = _fmt.substring(match[0].length);
+      }
+      return parse_tree;
+    };
+
+    return str_format;
+  })();
+
+  var vsprintf = function(fmt, argv) {
+    argv.unshift(fmt);
+    return sprintf.apply(null, argv);
+  };
+
+  Jed.parse_plural = function ( plural_forms, n ) {
+    plural_forms = plural_forms.replace(/n/g, n);
+    return Jed.parse_expression(plural_forms);
+  };
+
+  Jed.sprintf = function ( fmt, args ) {
+    if ( {}.toString.call( args ) == '[object Array]' ) {
+      return vsprintf( fmt, [].slice.call(args) );
+    }
+    return sprintf.apply(this, [].slice.call(arguments) );
+  };
+
+  Jed.prototype.sprintf = function () {
+    return Jed.sprintf.apply(this, arguments);
+  };
+  // END sprintf Implementation
+
+  // Start the Plural forms section
+  // This is a full plural form expression parser. It is used to avoid
+  // running 'eval' or 'new Function' directly against the plural
+  // forms.
+  //
+  // This can be important if you get translations done through a 3rd
+  // party vendor. I encourage you to use this instead, however, I
+  // also will provide a 'precompiler' that you can use at build time
+  // to output valid/safe function representations of the plural form
+  // expressions. This means you can build this code out for the most
+  // part.
+  Jed.PF = {};
+
+  Jed.PF.parse = function ( p ) {
+    var plural_str = Jed.PF.extractPluralExpr( p );
+    return Jed.PF.parser.parse.call(Jed.PF.parser, plural_str);
+  };
+
+  Jed.PF.compile = function ( p ) {
+    // Handle trues and falses as 0 and 1
+    function imply( val ) {
+      return (val === true ? 1 : val ? val : 0);
+    }
+
+    var ast = Jed.PF.parse( p );
+    return function ( n ) {
+      return imply( Jed.PF.interpreter( ast )( n ) );
+    };
+  };
+
+  Jed.PF.interpreter = function ( ast ) {
+    return function ( n ) {
+      var res;
+      switch ( ast.type ) {
+        case 'GROUP':
+          return Jed.PF.interpreter( ast.expr )( n );
+        case 'TERNARY':
+          if ( Jed.PF.interpreter( ast.expr )( n ) ) {
+            return Jed.PF.interpreter( ast.truthy )( n );
+          }
+          return Jed.PF.interpreter( ast.falsey )( n );
+        case 'OR':
+          return Jed.PF.interpreter( ast.left )( n ) || Jed.PF.interpreter( ast.right )( n );
+        case 'AND':
+          return Jed.PF.interpreter( ast.left )( n ) && Jed.PF.interpreter( ast.right )( n );
+        case 'LT':
+          return Jed.PF.interpreter( ast.left )( n ) < Jed.PF.interpreter( ast.right )( n );
+        case 'GT':
+          return Jed.PF.interpreter( ast.left )( n ) > Jed.PF.interpreter( ast.right )( n );
+        case 'LTE':
+          return Jed.PF.interpreter( ast.left )( n ) <= Jed.PF.interpreter( ast.right )( n );
+        case 'GTE':
+          return Jed.PF.interpreter( ast.left )( n ) >= Jed.PF.interpreter( ast.right )( n );
+        case 'EQ':
+          return Jed.PF.interpreter( ast.left )( n ) == Jed.PF.interpreter( ast.right )( n );
+        case 'NEQ':
+          return Jed.PF.interpreter( ast.left )( n ) != Jed.PF.interpreter( ast.right )( n );
+        case 'MOD':
+          return Jed.PF.interpreter( ast.left )( n ) % Jed.PF.interpreter( ast.right )( n );
+        case 'VAR':
+          return n;
+        case 'NUM':
+          return ast.val;
+        default:
+          throw new Error("Invalid Token found.");
+      }
+    };
+  };
+
+  Jed.PF.extractPluralExpr = function ( p ) {
+    // trim first
+    p = p.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+
+    if (! /;\s*$/.test(p)) {
+      p = p.concat(';');
+    }
+
+    var nplurals_re = /nplurals\=(\d+);/,
+        plural_re = /plural\=(.*);/,
+        nplurals_matches = p.match( nplurals_re ),
+        res = {},
+        plural_matches;
+
+    // Find the nplurals number
+    if ( nplurals_matches.length > 1 ) {
+      res.nplurals = nplurals_matches[1];
+    }
+    else {
+      throw new Error('nplurals not found in plural_forms string: ' + p );
+    }
+
+    // remove that data to get to the formula
+    p = p.replace( nplurals_re, "" );
+    plural_matches = p.match( plural_re );
+
+    if (!( plural_matches && plural_matches.length > 1 ) ) {
+      throw new Error('`plural` expression not found: ' + p);
+    }
+    return plural_matches[ 1 ];
+  };
+
+  /* Jison generated parser */
+  Jed.PF.parser = (function(){
+
+var parser = {trace: function trace() { },
+yy: {},
+symbols_: {"error":2,"expressions":3,"e":4,"EOF":5,"?":6,":":7,"||":8,"&&":9,"<":10,"<=":11,">":12,">=":13,"!=":14,"==":15,"%":16,"(":17,")":18,"n":19,"NUMBER":20,"$accept":0,"$end":1},
+terminals_: {2:"error",5:"EOF",6:"?",7:":",8:"||",9:"&&",10:"<",11:"<=",12:">",13:">=",14:"!=",15:"==",16:"%",17:"(",18:")",19:"n",20:"NUMBER"},
+productions_: [0,[3,2],[4,5],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,3],[4,1],[4,1]],
+performAction: function anonymous(yytext,yyleng,yylineno,yy,yystate,$$,_$) {
+
+var $0 = $$.length - 1;
+switch (yystate) {
+case 1: return { type : 'GROUP', expr: $$[$0-1] };
+break;
+case 2:this.$ = { type: 'TERNARY', expr: $$[$0-4], truthy : $$[$0-2], falsey: $$[$0] };
+break;
+case 3:this.$ = { type: "OR", left: $$[$0-2], right: $$[$0] };
+break;
+case 4:this.$ = { type: "AND", left: $$[$0-2], right: $$[$0] };
+break;
+case 5:this.$ = { type: 'LT', left: $$[$0-2], right: $$[$0] };
+break;
+case 6:this.$ = { type: 'LTE', left: $$[$0-2], right: $$[$0] };
+break;
+case 7:this.$ = { type: 'GT', left: $$[$0-2], right: $$[$0] };
+break;
+case 8:this.$ = { type: 'GTE', left: $$[$0-2], right: $$[$0] };
+break;
+case 9:this.$ = { type: 'NEQ', left: $$[$0-2], right: $$[$0] };
+break;
+case 10:this.$ = { type: 'EQ', left: $$[$0-2], right: $$[$0] };
+break;
+case 11:this.$ = { type: 'MOD', left: $$[$0-2], right: $$[$0] };
+break;
+case 12:this.$ = { type: 'GROUP', expr: $$[$0-1] };
+break;
+case 13:this.$ = { type: 'VAR' };
+break;
+case 14:this.$ = { type: 'NUM', val: Number(yytext) };
+break;
+}
+},
+table: [{3:1,4:2,17:[1,3],19:[1,4],20:[1,5]},{1:[3]},{5:[1,6],6:[1,7],8:[1,8],9:[1,9],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16]},{4:17,17:[1,3],19:[1,4],20:[1,5]},{5:[2,13],6:[2,13],7:[2,13],8:[2,13],9:[2,13],10:[2,13],11:[2,13],12:[2,13],13:[2,13],14:[2,13],15:[2,13],16:[2,13],18:[2,13]},{5:[2,14],6:[2,14],7:[2,14],8:[2,14],9:[2,14],10:[2,14],11:[2,14],12:[2,14],13:[2,14],14:[2,14],15:[2,14],16:[2,14],18:[2,14]},{1:[2,1]},{4:18,17:[1,3],19:[1,4],20:[1,5]},{4:19,17:[1,3],19:[1,4],20:[1,5]},{4:20,17:[1,3],19:[1,4],20:[1,5]},{4:21,17:[1,3],19:[1,4],20:[1,5]},{4:22,17:[1,3],19:[1,4],20:[1,5]},{4:23,17:[1,3],19:[1,4],20:[1,5]},{4:24,17:[1,3],19:[1,4],20:[1,5]},{4:25,17:[1,3],19:[1,4],20:[1,5]},{4:26,17:[1,3],19:[1,4],20:[1,5]},{4:27,17:[1,3],19:[1,4],20:[1,5]},{6:[1,7],8:[1,8],9:[1,9],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16],18:[1,28]},{6:[1,7],7:[1,29],8:[1,8],9:[1,9],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16]},{5:[2,3],6:[2,3],7:[2,3],8:[2,3],9:[1,9],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16],18:[2,3]},{5:[2,4],6:[2,4],7:[2,4],8:[2,4],9:[2,4],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16],18:[2,4]},{5:[2,5],6:[2,5],7:[2,5],8:[2,5],9:[2,5],10:[2,5],11:[2,5],12:[2,5],13:[2,5],14:[2,5],15:[2,5],16:[1,16],18:[2,5]},{5:[2,6],6:[2,6],7:[2,6],8:[2,6],9:[2,6],10:[2,6],11:[2,6],12:[2,6],13:[2,6],14:[2,6],15:[2,6],16:[1,16],18:[2,6]},{5:[2,7],6:[2,7],7:[2,7],8:[2,7],9:[2,7],10:[2,7],11:[2,7],12:[2,7],13:[2,7],14:[2,7],15:[2,7],16:[1,16],18:[2,7]},{5:[2,8],6:[2,8],7:[2,8],8:[2,8],9:[2,8],10:[2,8],11:[2,8],12:[2,8],13:[2,8],14:[2,8],15:[2,8],16:[1,16],18:[2,8]},{5:[2,9],6:[2,9],7:[2,9],8:[2,9],9:[2,9],10:[2,9],11:[2,9],12:[2,9],13:[2,9],14:[2,9],15:[2,9],16:[1,16],18:[2,9]},{5:[2,10],6:[2,10],7:[2,10],8:[2,10],9:[2,10],10:[2,10],11:[2,10],12:[2,10],13:[2,10],14:[2,10],15:[2,10],16:[1,16],18:[2,10]},{5:[2,11],6:[2,11],7:[2,11],8:[2,11],9:[2,11],10:[2,11],11:[2,11],12:[2,11],13:[2,11],14:[2,11],15:[2,11],16:[2,11],18:[2,11]},{5:[2,12],6:[2,12],7:[2,12],8:[2,12],9:[2,12],10:[2,12],11:[2,12],12:[2,12],13:[2,12],14:[2,12],15:[2,12],16:[2,12],18:[2,12]},{4:30,17:[1,3],19:[1,4],20:[1,5]},{5:[2,2],6:[1,7],7:[2,2],8:[1,8],9:[1,9],10:[1,10],11:[1,11],12:[1,12],13:[1,13],14:[1,14],15:[1,15],16:[1,16],18:[2,2]}],
+defaultActions: {6:[2,1]},
+parseError: function parseError(str, hash) {
+    throw new Error(str);
+},
+parse: function parse(input) {
+    var self = this,
+        stack = [0],
+        vstack = [null], // semantic value stack
+        lstack = [], // location stack
+        table = this.table,
+        yytext = '',
+        yylineno = 0,
+        yyleng = 0,
+        recovering = 0,
+        TERROR = 2,
+        EOF = 1;
+
+    //this.reductionCount = this.shiftCount = 0;
+
+    this.lexer.setInput(input);
+    this.lexer.yy = this.yy;
+    this.yy.lexer = this.lexer;
+    if (typeof this.lexer.yylloc == 'undefined')
+        this.lexer.yylloc = {};
+    var yyloc = this.lexer.yylloc;
+    lstack.push(yyloc);
+
+    if (typeof this.yy.parseError === 'function')
+        this.parseError = this.yy.parseError;
+
+    function popStack (n) {
+        stack.length = stack.length - 2*n;
+        vstack.length = vstack.length - n;
+        lstack.length = lstack.length - n;
+    }
+
+    function lex() {
+        var token;
+        token = self.lexer.lex() || 1; // $end = 1
+        // if token isn't its numeric value, convert
+        if (typeof token !== 'number') {
+            token = self.symbols_[token] || token;
+        }
+        return token;
+    }
+
+    var symbol, preErrorSymbol, state, action, a, r, yyval={},p,len,newState, expected;
+    while (true) {
+        // retreive state number from top of stack
+        state = stack[stack.length-1];
+
+        // use default actions if available
+        if (this.defaultActions[state]) {
+            action = this.defaultActions[state];
+        } else {
+            if (symbol == null)
+                symbol = lex();
+            // read action for current state and first input
+            action = table[state] && table[state][symbol];
+        }
+
+        // handle parse error
+        _handle_error:
+        if (typeof action === 'undefined' || !action.length || !action[0]) {
+
+            if (!recovering) {
+                // Report error
+                expected = [];
+                for (p in table[state]) if (this.terminals_[p] && p > 2) {
+                    expected.push("'"+this.terminals_[p]+"'");
+                }
+                var errStr = '';
+                if (this.lexer.showPosition) {
+                    errStr = 'Parse error on line '+(yylineno+1)+":\n"+this.lexer.showPosition()+"\nExpecting "+expected.join(', ') + ", got '" + this.terminals_[symbol]+ "'";
+                } else {
+                    errStr = 'Parse error on line '+(yylineno+1)+": Unexpected " +
+                                  (symbol == 1 /*EOF*/ ? "end of input" :
+                                              ("'"+(this.terminals_[symbol] || symbol)+"'"));
+                }
+                this.parseError(errStr,
+                    {text: this.lexer.match, token: this.terminals_[symbol] || symbol, line: this.lexer.yylineno, loc: yyloc, expected: expected});
+            }
+
+            // just recovered from another error
+            if (recovering == 3) {
+                if (symbol == EOF) {
+                    throw new Error(errStr || 'Parsing halted.');
+                }
+
+                // discard current lookahead and grab another
+                yyleng = this.lexer.yyleng;
+                yytext = this.lexer.yytext;
+                yylineno = this.lexer.yylineno;
+                yyloc = this.lexer.yylloc;
+                symbol = lex();
+            }
+
+            // try to recover from error
+            while (1) {
+                // check for error recovery rule in this state
+                if ((TERROR.toString()) in table[state]) {
+                    break;
+                }
+                if (state == 0) {
+                    throw new Error(errStr || 'Parsing halted.');
+                }
+                popStack(1);
+                state = stack[stack.length-1];
+            }
+
+            preErrorSymbol = symbol; // save the lookahead token
+            symbol = TERROR;         // insert generic error symbol as new lookahead
+            state = stack[stack.length-1];
+            action = table[state] && table[state][TERROR];
+            recovering = 3; // allow 3 real symbols to be shifted before reporting a new error
+        }
+
+        // this shouldn't happen, unless resolve defaults are off
+        if (action[0] instanceof Array && action.length > 1) {
+            throw new Error('Parse Error: multiple actions possible at state: '+state+', token: '+symbol);
+        }
+
+        switch (action[0]) {
+
+            case 1: // shift
+                //this.shiftCount++;
+
+                stack.push(symbol);
+                vstack.push(this.lexer.yytext);
+                lstack.push(this.lexer.yylloc);
+                stack.push(action[1]); // push state
+                symbol = null;
+                if (!preErrorSymbol) { // normal execution/no error
+                    yyleng = this.lexer.yyleng;
+                    yytext = this.lexer.yytext;
+                    yylineno = this.lexer.yylineno;
+                    yyloc = this.lexer.yylloc;
+                    if (recovering > 0)
+                        recovering--;
+                } else { // error just occurred, resume old lookahead f/ before error
+                    symbol = preErrorSymbol;
+                    preErrorSymbol = null;
+                }
+                break;
+
+            case 2: // reduce
+                //this.reductionCount++;
+
+                len = this.productions_[action[1]][1];
+
+                // perform semantic action
+                yyval.$ = vstack[vstack.length-len]; // default to $$ = $1
+                // default location, uses first token for firsts, last for lasts
+                yyval._$ = {
+                    first_line: lstack[lstack.length-(len||1)].first_line,
+                    last_line: lstack[lstack.length-1].last_line,
+                    first_column: lstack[lstack.length-(len||1)].first_column,
+                    last_column: lstack[lstack.length-1].last_column
+                };
+                r = this.performAction.call(yyval, yytext, yyleng, yylineno, this.yy, action[1], vstack, lstack);
+
+                if (typeof r !== 'undefined') {
+                    return r;
+                }
+
+                // pop off stack
+                if (len) {
+                    stack = stack.slice(0,-1*len*2);
+                    vstack = vstack.slice(0, -1*len);
+                    lstack = lstack.slice(0, -1*len);
+                }
+
+                stack.push(this.productions_[action[1]][0]);    // push nonterminal (reduce)
+                vstack.push(yyval.$);
+                lstack.push(yyval._$);
+                // goto new state = table[STATE][NONTERMINAL]
+                newState = table[stack[stack.length-2]][stack[stack.length-1]];
+                stack.push(newState);
+                break;
+
+            case 3: // accept
+                return true;
+        }
+
+    }
+
+    return true;
+}};/* Jison generated lexer */
+var lexer = (function(){
+
+var lexer = ({EOF:1,
+parseError:function parseError(str, hash) {
+        if (this.yy.parseError) {
+            this.yy.parseError(str, hash);
+        } else {
+            throw new Error(str);
+        }
+    },
+setInput:function (input) {
+        this._input = input;
+        this._more = this._less = this.done = false;
+        this.yylineno = this.yyleng = 0;
+        this.yytext = this.matched = this.match = '';
+        this.conditionStack = ['INITIAL'];
+        this.yylloc = {first_line:1,first_column:0,last_line:1,last_column:0};
+        return this;
+    },
+input:function () {
+        var ch = this._input[0];
+        this.yytext+=ch;
+        this.yyleng++;
+        this.match+=ch;
+        this.matched+=ch;
+        var lines = ch.match(/\n/);
+        if (lines) this.yylineno++;
+        this._input = this._input.slice(1);
+        return ch;
+    },
+unput:function (ch) {
+        this._input = ch + this._input;
+        return this;
+    },
+more:function () {
+        this._more = true;
+        return this;
+    },
+pastInput:function () {
+        var past = this.matched.substr(0, this.matched.length - this.match.length);
+        return (past.length > 20 ? '...':'') + past.substr(-20).replace(/\n/g, "");
+    },
+upcomingInput:function () {
+        var next = this.match;
+        if (next.length < 20) {
+            next += this._input.substr(0, 20-next.length);
+        }
+        return (next.substr(0,20)+(next.length > 20 ? '...':'')).replace(/\n/g, "");
+    },
+showPosition:function () {
+        var pre = this.pastInput();
+        var c = new Array(pre.length + 1).join("-");
+        return pre + this.upcomingInput() + "\n" + c+"^";
+    },
+next:function () {
+        if (this.done) {
+            return this.EOF;
+        }
+        if (!this._input) this.done = true;
+
+        var token,
+            match,
+            col,
+            lines;
+        if (!this._more) {
+            this.yytext = '';
+            this.match = '';
+        }
+        var rules = this._currentRules();
+        for (var i=0;i < rules.length; i++) {
+            match = this._input.match(this.rules[rules[i]]);
+            if (match) {
+                lines = match[0].match(/\n.*/g);
+                if (lines) this.yylineno += lines.length;
+                this.yylloc = {first_line: this.yylloc.last_line,
+                               last_line: this.yylineno+1,
+                               first_column: this.yylloc.last_column,
+                               last_column: lines ? lines[lines.length-1].length-1 : this.yylloc.last_column + match[0].length}
+                this.yytext += match[0];
+                this.match += match[0];
+                this.matches = match;
+                this.yyleng = this.yytext.length;
+                this._more = false;
+                this._input = this._input.slice(match[0].length);
+                this.matched += match[0];
+                token = this.performAction.call(this, this.yy, this, rules[i],this.conditionStack[this.conditionStack.length-1]);
+                if (token) return token;
+                else return;
+            }
+        }
+        if (this._input === "") {
+            return this.EOF;
+        } else {
+            this.parseError('Lexical error on line '+(this.yylineno+1)+'. Unrecognized text.\n'+this.showPosition(),
+                    {text: "", token: null, line: this.yylineno});
+        }
+    },
+lex:function lex() {
+        var r = this.next();
+        if (typeof r !== 'undefined') {
+            return r;
+        } else {
+            return this.lex();
+        }
+    },
+begin:function begin(condition) {
+        this.conditionStack.push(condition);
+    },
+popState:function popState() {
+        return this.conditionStack.pop();
+    },
+_currentRules:function _currentRules() {
+        return this.conditions[this.conditionStack[this.conditionStack.length-1]].rules;
+    },
+topState:function () {
+        return this.conditionStack[this.conditionStack.length-2];
+    },
+pushState:function begin(condition) {
+        this.begin(condition);
+    }});
+lexer.performAction = function anonymous(yy,yy_,$avoiding_name_collisions,YY_START) {
+
+var YYSTATE=YY_START;
+switch($avoiding_name_collisions) {
+case 0:/* skip whitespace */
+break;
+case 1:return 20
+break;
+case 2:return 19
+break;
+case 3:return 8
+break;
+case 4:return 9
+break;
+case 5:return 6
+break;
+case 6:return 7
+break;
+case 7:return 11
+break;
+case 8:return 13
+break;
+case 9:return 10
+break;
+case 10:return 12
+break;
+case 11:return 14
+break;
+case 12:return 15
+break;
+case 13:return 16
+break;
+case 14:return 17
+break;
+case 15:return 18
+break;
+case 16:return 5
+break;
+case 17:return 'INVALID'
+break;
+}
+};
+lexer.rules = [/^\s+/,/^[0-9]+(\.[0-9]+)?\b/,/^n\b/,/^\|\|/,/^&&/,/^\?/,/^:/,/^<=/,/^>=/,/^</,/^>/,/^!=/,/^==/,/^%/,/^\(/,/^\)/,/^$/,/^./];
+lexer.conditions = {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],"inclusive":true}};return lexer;})()
+parser.lexer = lexer;
+return parser;
+})();
+// End parser
+
+  // Handle node, amd, and global systems
+  if (true) {
+    if (typeof module !== 'undefined' && module.exports) {
+      exports = module.exports = Jed;
+    }
+    exports.Jed = Jed;
+  }
+  else {}
+
+})(this);
+
+
+/***/ }),
+
+/***/ "./node_modules/memize/index.js":
+/*!**************************************!*\
+  !*** ./node_modules/memize/index.js ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = function memize( fn, options ) {
+	var size = 0,
+		maxSize, head, tail;
+
+	if ( options && options.maxSize ) {
+		maxSize = options.maxSize;
+	}
+
+	function memoized( /* ...args */ ) {
+		var node = head,
+			len = arguments.length,
+			args, i;
+
+		searchCache: while ( node ) {
+			// Perform a shallow equality test to confirm that whether the node
+			// under test is a candidate for the arguments passed. Two arrays
+			// are shallowly equal if their length matches and each entry is
+			// strictly equal between the two sets. Avoid abstracting to a
+			// function which could incur an arguments leaking deoptimization.
+
+			// Check whether node arguments match arguments length
+			if ( node.args.length !== arguments.length ) {
+				node = node.next;
+				continue;
+			}
+
+			// Check whether node arguments match arguments values
+			for ( i = 0; i < len; i++ ) {
+				if ( node.args[ i ] !== arguments[ i ] ) {
+					node = node.next;
+					continue searchCache;
+				}
+			}
+
+			// At this point we can assume we've found a match
+
+			// Surface matched node to head if not already
+			if ( node !== head ) {
+				// As tail, shift to previous. Must only shift if not also
+				// head, since if both head and tail, there is no previous.
+				if ( node === tail ) {
+					tail = node.prev;
+				}
+
+				// Adjust siblings to point to each other. If node was tail,
+				// this also handles new tail's empty `next` assignment.
+				node.prev.next = node.next;
+				if ( node.next ) {
+					node.next.prev = node.prev;
+				}
+
+				node.next = head;
+				node.prev = null;
+				head.prev = node;
+				head = node;
+			}
+
+			// Return immediately
+			return node.val;
+		}
+
+		// No cached value found. Continue to insertion phase:
+
+		// Create a copy of arguments (avoid leaking deoptimization)
+		args = new Array( len );
+		for ( i = 0; i < len; i++ ) {
+			args[ i ] = arguments[ i ];
+		}
+
+		node = {
+			args: args,
+
+			// Generate the result from original function
+			val: fn.apply( null, args )
+		};
+
+		// Don't need to check whether node is already head, since it would
+		// have been returned above already if it was
+
+		// Shift existing head down list
+		if ( head ) {
+			head.prev = node;
+			node.next = head;
+		} else {
+			// If no head, follows that there's no tail (at initial or reset)
+			tail = node;
+		}
+
+		// Trim tail if we're reached max size and are pending cache insertion
+		if ( size === maxSize ) {
+			tail = tail.prev;
+			tail.next = null;
+		} else {
+			size++;
+		}
+
+		head = node;
+
+		return node.val;
+	}
+
+	memoized.clear = function() {
+		head = null;
+		tail = null;
+		size = 0;
+	};
+
+	if ( false ) {}
+
+	return memoized;
+};
+
 
 /***/ }),
 
@@ -4318,6 +5759,215 @@ if (true) {
 var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
 
 module.exports = ReactPropTypesSecret;
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/decode.js":
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/decode.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+// If obj.hasOwnProperty has been overridden, then calling
+// obj.hasOwnProperty(prop) will break.
+// See: https://github.com/joyent/node/issues/1707
+function hasOwnProperty(obj, prop) {
+  return Object.prototype.hasOwnProperty.call(obj, prop);
+}
+
+module.exports = function(qs, sep, eq, options) {
+  sep = sep || '&';
+  eq = eq || '=';
+  var obj = {};
+
+  if (typeof qs !== 'string' || qs.length === 0) {
+    return obj;
+  }
+
+  var regexp = /\+/g;
+  qs = qs.split(sep);
+
+  var maxKeys = 1000;
+  if (options && typeof options.maxKeys === 'number') {
+    maxKeys = options.maxKeys;
+  }
+
+  var len = qs.length;
+  // maxKeys <= 0 means that we should not limit keys count
+  if (maxKeys > 0 && len > maxKeys) {
+    len = maxKeys;
+  }
+
+  for (var i = 0; i < len; ++i) {
+    var x = qs[i].replace(regexp, '%20'),
+        idx = x.indexOf(eq),
+        kstr, vstr, k, v;
+
+    if (idx >= 0) {
+      kstr = x.substr(0, idx);
+      vstr = x.substr(idx + 1);
+    } else {
+      kstr = x;
+      vstr = '';
+    }
+
+    k = decodeURIComponent(kstr);
+    v = decodeURIComponent(vstr);
+
+    if (!hasOwnProperty(obj, k)) {
+      obj[k] = v;
+    } else if (isArray(obj[k])) {
+      obj[k].push(v);
+    } else {
+      obj[k] = [obj[k], v];
+    }
+  }
+
+  return obj;
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/encode.js":
+/*!************************************************!*\
+  !*** ./node_modules/querystring-es3/encode.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+// Copyright Joyent, Inc. and other Node contributors.
+//
+// Permission is hereby granted, free of charge, to any person obtaining a
+// copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to permit
+// persons to whom the Software is furnished to do so, subject to the
+// following conditions:
+//
+// The above copyright notice and this permission notice shall be included
+// in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+// USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+var stringifyPrimitive = function(v) {
+  switch (typeof v) {
+    case 'string':
+      return v;
+
+    case 'boolean':
+      return v ? 'true' : 'false';
+
+    case 'number':
+      return isFinite(v) ? v : '';
+
+    default:
+      return '';
+  }
+};
+
+module.exports = function(obj, sep, eq, name) {
+  sep = sep || '&';
+  eq = eq || '=';
+  if (obj === null) {
+    obj = undefined;
+  }
+
+  if (typeof obj === 'object') {
+    return map(objectKeys(obj), function(k) {
+      var ks = encodeURIComponent(stringifyPrimitive(k)) + eq;
+      if (isArray(obj[k])) {
+        return map(obj[k], function(v) {
+          return ks + encodeURIComponent(stringifyPrimitive(v));
+        }).join(sep);
+      } else {
+        return ks + encodeURIComponent(stringifyPrimitive(obj[k]));
+      }
+    }).join(sep);
+
+  }
+
+  if (!name) return '';
+  return encodeURIComponent(stringifyPrimitive(name)) + eq +
+         encodeURIComponent(stringifyPrimitive(obj));
+};
+
+var isArray = Array.isArray || function (xs) {
+  return Object.prototype.toString.call(xs) === '[object Array]';
+};
+
+function map (xs, f) {
+  if (xs.map) return xs.map(f);
+  var res = [];
+  for (var i = 0; i < xs.length; i++) {
+    res.push(f(xs[i], i));
+  }
+  return res;
+}
+
+var objectKeys = Object.keys || function (obj) {
+  var res = [];
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) res.push(key);
+  }
+  return res;
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/querystring-es3/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/querystring-es3/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.decode = exports.parse = __webpack_require__(/*! ./decode */ "./node_modules/querystring-es3/decode.js");
+exports.encode = exports.stringify = __webpack_require__(/*! ./encode */ "./node_modules/querystring-es3/encode.js");
 
 
 /***/ }),
@@ -6473,8 +8123,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./backToSearch.css */ "./src/block/components/backToSearch/backToSearch.css");
-/* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_backToSearch_css__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./backToSearch.css */ "./src/block/components/backToSearch/backToSearch.css");
+/* harmony import */ var _backToSearch_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_backToSearch_css__WEBPACK_IMPORTED_MODULE_3__);
+
 
 
 
@@ -6482,10 +8134,6 @@ __webpack_require__.r(__webpack_exports__);
 var _wp$components = wp.components,
     Button = _wp$components.Button,
     Dashicon = _wp$components.Dashicon;
-
-// Internationalization
-
-var __ = wp.i18n.__;
 
 /**
  * The back to search button.
@@ -6496,18 +8144,18 @@ var BackToSearch = function BackToSearch(_ref) {
       _onClick = _ref.onClick;
   return wp.element.createElement(
     'div',
-    { className: _backToSearch_css__WEBPACK_IMPORTED_MODULE_2___default.a.backToSearchWrapper },
+    { className: _backToSearch_css__WEBPACK_IMPORTED_MODULE_3___default.a.backToSearchWrapper },
     wp.element.createElement(
       Button,
       {
-        className: inPanel ? _backToSearch_css__WEBPACK_IMPORTED_MODULE_2___default.a.backToSearchPanel : _backToSearch_css__WEBPACK_IMPORTED_MODULE_2___default.a.backToSearch,
+        className: inPanel ? _backToSearch_css__WEBPACK_IMPORTED_MODULE_3___default.a.backToSearchPanel : _backToSearch_css__WEBPACK_IMPORTED_MODULE_3___default.a.backToSearch,
         onClick: function onClick() {
           return _onClick();
         },
         isLarge: inPanel
       },
       wp.element.createElement(Dashicon, { icon: 'arrow-left-alt2' }),
-      __('Back to Search', 'apple-music')
+      Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Back to Search', 'apple-music')
     )
   );
 };
@@ -6573,8 +8221,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
 /* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../images/apple.png */ "./src/images/apple.png");
 /* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_apple_png__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./displayTools.css */ "./src/block/components/displayTools/displayTools.css");
-/* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_displayTools_css__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./displayTools.css */ "./src/block/components/displayTools/displayTools.css");
+/* harmony import */ var _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_displayTools_css__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
@@ -6587,10 +8236,6 @@ __webpack_require__.r(__webpack_exports__);
 var _wp$components = wp.components,
     TextControl = _wp$components.TextControl,
     ExternalLink = _wp$components.ExternalLink;
-
-// Internationalization
-
-var __ = wp.i18n.__;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -6618,23 +8263,23 @@ var DisplayTools = function DisplayTools(_ref) {
   // The details information for music without preview player embed.
   var details = !Object(_utils__WEBPACK_IMPORTED_MODULE_4__["showEmbed"])(musicType) ? wp.element.createElement(
     'div',
-    { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.detailWrapper },
+    { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.detailWrapper },
     imageSrc && wp.element.createElement(
       'div',
-      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.image },
+      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.image },
       wp.element.createElement('img', { src: imageSrc, alt: name })
     ),
     wp.element.createElement(
       'div',
-      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.rightAside },
+      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.rightAside },
       name && wp.element.createElement(
         'div',
-        { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.sidePrimary },
+        { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.sidePrimary },
         Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getNestedObject"])(item, ['attributes', 'name'])
       ),
       (genreNames || notesDesc) && wp.element.createElement(
         'div',
-        { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.sideSecondary },
+        { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.sideSecondary },
         genreNames && genreNames.shift(),
         notesDesc && notesDesc
       )
@@ -6642,26 +8287,26 @@ var DisplayTools = function DisplayTools(_ref) {
   ) : null;
 
   // conditional classes for edit styles.
-  var formClass = !inPanel ? _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.dimensionsForm : '';
-  var textInput = !inPanel ? _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.dimensions : '';
+  var formClass = !inPanel ? _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.dimensionsForm : '';
+  var textInput = !inPanel ? _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.dimensions : '';
 
   return wp.element.createElement(
     'div',
     null,
     Object(_utils__WEBPACK_IMPORTED_MODULE_4__["showEmbed"])(musicType) && wp.element.createElement(
       'div',
-      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.details },
+      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.details },
       !inPanel && wp.element.createElement(
         'div',
         null,
         wp.element.createElement(
           'h1',
-          { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.name },
+          { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.name },
           name
         ),
         artistName && wp.element.createElement(
           'div',
-          { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.secondary },
+          { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.secondary },
           artistName
         )
       ),
@@ -6670,7 +8315,7 @@ var DisplayTools = function DisplayTools(_ref) {
         { className: formClass },
         wp.element.createElement(TextControl, {
           className: textInput,
-          label: __('Height', 'apple-music'),
+          label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Height', 'apple-music'),
           value: height,
           onChange: function onChange(value) {
             return setAttributes({ height: value });
@@ -6679,7 +8324,7 @@ var DisplayTools = function DisplayTools(_ref) {
         }),
         wp.element.createElement(TextControl, {
           className: textInput,
-          label: __('Width', 'apple-music'),
+          label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Width', 'apple-music'),
           value: width,
           onChange: function onChange(value) {
             return setAttributes({ width: value });
@@ -6705,11 +8350,11 @@ var DisplayTools = function DisplayTools(_ref) {
     }),
     !inPanel && wp.element.createElement(
       'div',
-      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_6___default.a.directLink },
+      { className: _displayTools_css__WEBPACK_IMPORTED_MODULE_7___default.a.directLink },
       wp.element.createElement(
         'b',
         null,
-        __('Direct Link: ', 'apple-music')
+        Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_6__["__"])('Direct Link: ', 'apple-music')
       ),
       wp.element.createElement(
         ExternalLink,
@@ -6789,9 +8434,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_badge_svg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../images/badge.svg */ "./src/images/badge.svg");
 /* harmony import */ var _images_badge_svg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_badge_svg__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _config_embedTypes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../config/embedTypes */ "./src/block/config/embedTypes.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
-/* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./embedSlider.css */ "./src/block/components/embedSlider/embedSlider.css");
-/* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_embedSlider_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
+/* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./embedSlider.css */ "./src/block/components/embedSlider/embedSlider.css");
+/* harmony import */ var _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_embedSlider_css__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -6800,12 +8447,7 @@ __webpack_require__.r(__webpack_exports__);
 // Use "css" as a declaration for styles since we are using "styles" below.
 
 
-// Internationalization
-var _wp$i18n = wp.i18n,
-    __ = _wp$i18n.__,
-    sprintf = _wp$i18n.sprintf;
 // WP components
-
 var _wp$components = wp.components,
     Button = _wp$components.Button,
     Dashicon = _wp$components.Dashicon,
@@ -6824,9 +8466,9 @@ var EmbedSlider = function EmbedSlider(_ref) {
       textLockUpStyle = _ref.textLockUpStyle;
 
   // Class for slider context. In panel or editor.
-  var sliderClass = inPanel ? '' : _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.slider;
+  var sliderClass = inPanel ? '' : _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.slider;
   // Additional class to add to slide.
-  var panelSlideClass = inPanel ? _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.panelSlide : '';
+  var panelSlideClass = inPanel ? _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.panelSlide : '';
 
   // Get the styles options for the Select Control.
   var embedStyles = _config_embedTypes__WEBPACK_IMPORTED_MODULE_3__["default"].reduce(function (acc, _ref2) {
@@ -6845,39 +8487,39 @@ var EmbedSlider = function EmbedSlider(_ref) {
     // define the default image URL.
     var imageURL = '';
     var imgClass = '';
-    var alt = __('Apple Music Icon', 'apple-music');
+    var alt = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Apple Music Icon', 'apple-music');
 
     switch (type) {
       case 'preview-player':
         return wp.element.createElement(
           'div',
-          { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.imageWrapper },
+          { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.imageWrapper },
           wp.element.createElement(
             'div',
-            { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.previewPlayer },
+            { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.previewPlayer },
             wp.element.createElement(Dashicon, { icon: 'controls-play' })
           )
         );
       case 'badge':
-        alt = __('badge icon', 'apple-music');
+        alt = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('badge icon', 'apple-music');
         imageURL = _images_badge_svg__WEBPACK_IMPORTED_MODULE_2___default.a;
         break;
       case 'text-lockup':
-        alt = sprintf(__('%s text lockup icon', 'apple-music'), textLockUpStyle);
+        alt = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["sprintf"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('%s text lockup icon', 'apple-music'), textLockUpStyle);
         imgClass = textLockUpStyle;
-        imageURL = Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getIconImagePath"])(textLockUpStyle);
+        imageURL = Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getIconImagePath"])(textLockUpStyle);
         break;
       case 'app-icon':
-        alt = sprintf(__('%s app icon', 'apple-music'), appIconStyle);
+        alt = Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["sprintf"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('%s app icon', 'apple-music'), appIconStyle);
         imgClass = appIconStyle;
-        imageURL = Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getIconImagePath"])(appIconStyle);
+        imageURL = Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getIconImagePath"])(appIconStyle);
         break;
       default:
         imageURL = '';
     }
     return imageURL ? wp.element.createElement(
       'div',
-      { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.imageWrapper + ' ' + _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a[imgClass] },
+      { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.imageWrapper + ' ' + _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a[imgClass] },
       wp.element.createElement('img', {
         src: imageURL,
         alt: alt
@@ -6891,31 +8533,31 @@ var EmbedSlider = function EmbedSlider(_ref) {
     inPanel && wp.element.createElement(
       'p',
       null,
-      __('Select Embed Type', 'apple-music')
+      Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])('Select Embed Type', 'apple-music')
     ),
     _config_embedTypes__WEBPACK_IMPORTED_MODULE_3__["default"].map(function (_ref3) {
       var value = _ref3.value,
           label = _ref3.label;
 
       // If the musicType doesn't support embeds don't show preview player.
-      if ('preview-player' === value && !Object(_utils__WEBPACK_IMPORTED_MODULE_4__["showEmbed"])(musicType)) {
+      if ('preview-player' === value && !Object(_utils__WEBPACK_IMPORTED_MODULE_5__["showEmbed"])(musicType)) {
         return null;
       }
       // Active class for the selected embed type.
-      var activeClass = embedType === value ? _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.active : '';
+      var activeClass = embedType === value ? _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.active : '';
 
       return wp.element.createElement(
         'div',
-        { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.slide + ' ' + panelSlideClass + ' ' + activeClass },
+        { className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.slide + ' ' + panelSlideClass + ' ' + activeClass },
         wp.element.createElement(
           Button,
           {
-            className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.iconSelector,
+            className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.iconSelector,
             key: value,
             onClick: function onClick() {
               return setAttributes({
                 embedType: value,
-                imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getImageAttributes"])(value)
+                imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getImageAttributes"])(value)
               });
             }
           },
@@ -6923,30 +8565,30 @@ var EmbedSlider = function EmbedSlider(_ref) {
           wp.element.createElement(
             'p',
             null,
-            __(label, 'apple-music')
+            Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_4__["__"])(label, 'apple-music')
           )
         ),
         // Select field will only display when text-lockup is active.
         'text-lockup' === embedType && 'text-lockup' === value && wp.element.createElement(SelectControl, {
-          className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.selectStyle,
+          className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.selectStyle,
           value: textLockUpStyle,
           options: embedStyles,
           onChange: function onChange(x) {
             return setAttributes({
               textLockUpStyle: x,
-              imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getImageAttributes"])(embedType, x)
+              imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getImageAttributes"])(embedType, x)
             });
           }
         }),
         // Select field will only display when app-icon is active.
         'app-icon' === embedType && 'app-icon' === value && wp.element.createElement(SelectControl, {
-          className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_5___default.a.selectStyle,
+          className: _embedSlider_css__WEBPACK_IMPORTED_MODULE_6___default.a.selectStyle,
           value: appIconStyle,
           options: embedStyles,
           onChange: function onChange(x) {
             return setAttributes({
               appIconStyle: x,
-              imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_4__["getImageAttributes"])(embedType, x)
+              imageAttributes: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getImageAttributes"])(embedType, x)
             });
           }
         })
@@ -6995,15 +8637,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _displayTools__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../displayTools */ "./src/block/components/displayTools/index.js");
-/* harmony import */ var _resultsWrapper__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../resultsWrapper */ "./src/block/components/resultsWrapper/index.js");
-/* harmony import */ var _searchTools__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../searchTools */ "./src/block/components/searchTools/index.js");
-/* harmony import */ var _musicDisplay__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../musicDisplay */ "./src/block/components/musicDisplay/index.js");
-/* harmony import */ var _backToSearch__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../backToSearch */ "./src/block/components/backToSearch/index.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../../api */ "./src/block/api/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
-/* harmony import */ var _musicBlock_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./musicBlock.css */ "./src/block/components/musicBlock/musicBlock.css");
-/* harmony import */ var _musicBlock_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_musicBlock_css__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _displayTools__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../displayTools */ "./src/block/components/displayTools/index.js");
+/* harmony import */ var _resultsWrapper__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../resultsWrapper */ "./src/block/components/resultsWrapper/index.js");
+/* harmony import */ var _searchTools__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../searchTools */ "./src/block/components/searchTools/index.js");
+/* harmony import */ var _musicDisplay__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../musicDisplay */ "./src/block/components/musicDisplay/index.js");
+/* harmony import */ var _backToSearch__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../backToSearch */ "./src/block/components/backToSearch/index.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../../api */ "./src/block/api/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
+/* harmony import */ var _musicBlock_css__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./musicBlock.css */ "./src/block/components/musicBlock/musicBlock.css");
+/* harmony import */ var _musicBlock_css__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_musicBlock_css__WEBPACK_IMPORTED_MODULE_15__);
+
 
 
 
@@ -7022,12 +8666,9 @@ __webpack_require__.r(__webpack_exports__);
 // CSS
 
 
-// Internationalization
-var __ = wp.i18n.__;
 // Extend component
-
 var Component = wp.element.Component;
-var InspectorControls = wp.blocks.InspectorControls;
+var InspectorControls = wp.editor.InspectorControls;
 var PanelBody = wp.components.PanelBody;
 
 var MusicBlock = function (_Component) {
@@ -7065,23 +8706,23 @@ var MusicBlock = function (_Component) {
           musicType = _props$attributes.musicType,
           setAttributes = _props.setAttributes;
 
-      var musicID = Object(_utils__WEBPACK_IMPORTED_MODULE_13__["getObjKeyValue"])(item, 'id'); // get the music ID.
+      var musicID = Object(_utils__WEBPACK_IMPORTED_MODULE_14__["getObjKeyValue"])(item, 'id'); // get the music ID.
 
-      var type = Object(_utils__WEBPACK_IMPORTED_MODULE_13__["getTypeObject"])(musicType);
-      var initialHeight = Object(_utils__WEBPACK_IMPORTED_MODULE_13__["getObjKeyValue"])(type, 'embedHeight');
+      var type = Object(_utils__WEBPACK_IMPORTED_MODULE_14__["getTypeObject"])(musicType);
+      var initialHeight = Object(_utils__WEBPACK_IMPORTED_MODULE_14__["getObjKeyValue"])(type, 'embedHeight');
 
       this.setState({
         isMusicSet: true
       });
 
       // If this music type does not have an embeddable iframe set the embed type default
-      var updateEmbedTyped = !Object(_utils__WEBPACK_IMPORTED_MODULE_13__["showEmbed"])(musicType) && 'preview-player' === embedType ? 'badge' : embedType;
+      var updateEmbedTyped = !Object(_utils__WEBPACK_IMPORTED_MODULE_14__["showEmbed"])(musicType) && 'preview-player' === embedType ? 'badge' : embedType;
 
       setAttributes({
         embedType: updateEmbedTyped,
         item: item,
         musicID: musicID,
-        iframeSrc: Object(_api__WEBPACK_IMPORTED_MODULE_12__["iframeURL"])(musicType, musicID),
+        iframeSrc: Object(_api__WEBPACK_IMPORTED_MODULE_13__["iframeURL"])(musicType, musicID),
         height: initialHeight
       });
     }
@@ -7146,18 +8787,18 @@ var MusicBlock = function (_Component) {
           { key: 'inspector' },
           wp.element.createElement(
             PanelBody,
-            { title: __('Apple Music Settings', 'apple-music') },
-            !this.state.isMusicSet && wp.element.createElement(_searchTools__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            { title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Apple Music Settings', 'apple-music') },
+            !this.state.isMusicSet && wp.element.createElement(_searchTools__WEBPACK_IMPORTED_MODULE_10__["default"], {
               attributes: attributes,
               setAttributes: this.props.setAttributes
             }),
             this.state.isMusicSet && wp.element.createElement(
               'div',
               null,
-              wp.element.createElement(_backToSearch__WEBPACK_IMPORTED_MODULE_11__["default"], { onClick: function onClick() {
+              wp.element.createElement(_backToSearch__WEBPACK_IMPORTED_MODULE_12__["default"], { onClick: function onClick() {
                   return _this2.resetSearch();
                 } }),
-              wp.element.createElement(_displayTools__WEBPACK_IMPORTED_MODULE_7__["default"], {
+              wp.element.createElement(_displayTools__WEBPACK_IMPORTED_MODULE_8__["default"], {
                 attributes: attributes,
                 setAttributes: this.props.setAttributes
               })
@@ -7166,16 +8807,16 @@ var MusicBlock = function (_Component) {
         ),
         isSelected && wp.element.createElement(
           'div',
-          { className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_14___default.a.musicTools },
+          { className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_15___default.a.musicTools },
           !this.state.isMusicSet && wp.element.createElement(
             'div',
             null,
             wp.element.createElement(
               'h3',
-              { className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_14___default.a.introText },
-              __('Get badges, links, and widgets for Apple Music.', 'apple-music')
+              { className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_15___default.a.introText },
+              Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Get badges, links, and widgets for Apple Music.', 'apple-music')
             ),
-            wp.element.createElement(_searchTools__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            wp.element.createElement(_searchTools__WEBPACK_IMPORTED_MODULE_10__["default"], {
               attributes: attributes,
               setAttributes: this.props.setAttributes,
               inPanel: false
@@ -7184,25 +8825,25 @@ var MusicBlock = function (_Component) {
           this.state.isMusicSet && wp.element.createElement(
             'div',
             null,
-            wp.element.createElement(_backToSearch__WEBPACK_IMPORTED_MODULE_11__["default"], {
+            wp.element.createElement(_backToSearch__WEBPACK_IMPORTED_MODULE_12__["default"], {
               onClick: function onClick() {
                 return _this2.resetSearch();
               },
               inPanel: false
             }),
-            wp.element.createElement(_displayTools__WEBPACK_IMPORTED_MODULE_7__["default"], {
+            wp.element.createElement(_displayTools__WEBPACK_IMPORTED_MODULE_8__["default"], {
               attributes: attributes,
               setAttributes: this.props.setAttributes,
               inPanel: false
             })
           ),
-          !this.state.isMusicSet && wp.element.createElement(_resultsWrapper__WEBPACK_IMPORTED_MODULE_8__["default"], {
-            className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_14___default.a.itemWrapper,
+          !this.state.isMusicSet && wp.element.createElement(_resultsWrapper__WEBPACK_IMPORTED_MODULE_9__["default"], {
+            className: _musicBlock_css__WEBPACK_IMPORTED_MODULE_15___default.a.itemWrapper,
             attributes: attributes,
             onSelect: this.setMusicSelection
           })
         ),
-        !isSelected && wp.element.createElement(_musicDisplay__WEBPACK_IMPORTED_MODULE_10__["default"], { attributes: attributes })
+        !isSelected && wp.element.createElement(_musicDisplay__WEBPACK_IMPORTED_MODULE_11__["default"], { attributes: attributes })
       );
     } // end render method.
 
@@ -7274,11 +8915,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _previewPlayer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../previewPlayer */ "./src/block/components/previewPlayer/index.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
 /* harmony import */ var _settings__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../settings */ "./src/block/settings.js");
-/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./musicDisplay.css */ "./src/block/components/musicDisplay/musicDisplay.css");
-/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_musicDisplay_css__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../icons */ "./src/block/icons/index.js");
+/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./musicDisplay.css */ "./src/block/components/musicDisplay/musicDisplay.css");
+/* harmony import */ var _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_musicDisplay_css__WEBPACK_IMPORTED_MODULE_6__);
+
 
 
 
@@ -7288,15 +8931,11 @@ __webpack_require__.r(__webpack_exports__);
 // CSS
 
 
-// Internationalization
-var _wp$i18n = wp.i18n,
-    __ = _wp$i18n.__,
-    sprintf = _wp$i18n.sprintf;
+var Placeholder = wp.components.Placeholder;
 
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
- * Inline anchor tags and iframes are used to output the widget in the case
- * that the user disables the plugin the content will be retained.
+ * This is the output passed to the save method in registerBlockType.
  */
 
 var MusicDisplay = function MusicDisplay(_ref) {
@@ -7310,28 +8949,18 @@ var MusicDisplay = function MusicDisplay(_ref) {
       className = _ref.className;
 
   var URL = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getNestedObject"])(item, ['attributes', 'url']);
-  var iframeURL = iframeSrc;
+  var embedURL = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["iframeURL"])(iframeSrc, width, height);
 
   // Set the affiliate token if applicable.
   if (_settings__WEBPACK_IMPORTED_MODULE_4__["affiliateToken"]) {
-    iframeURL = iframeSrc ? iframeSrc.concat('&=' + _settings__WEBPACK_IMPORTED_MODULE_4__["affiliateToken"]) : '';
     URL = URL ? URL.concat('?at=' + _settings__WEBPACK_IMPORTED_MODULE_4__["affiliateToken"]) : '';
   }
-
-  var placeHolder = !URL && !iframeSrc ? wp.element.createElement(
-    'p',
-    { className: _musicDisplay_css__WEBPACK_IMPORTED_MODULE_5___default.a.placeHolder },
-    __('Get badges, links, and widgets for Apple Music.', 'apple-music')
-  ) : '';
 
   return wp.element.createElement(
     'div',
     { className: className },
-    'preview-player' === embedType && wp.element.createElement(_previewPlayer__WEBPACK_IMPORTED_MODULE_2__["default"], {
-      height: height,
-      iframeSrc: iframeURL,
-      width: width
-    }),
+    'preview-player' === embedType && '\n' + embedURL + '\n' // URL needs to be on its own line.
+    ,
     ['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL && wp.element.createElement(
       'a',
       { href: URL },
@@ -7339,10 +8968,17 @@ var MusicDisplay = function MusicDisplay(_ref) {
         src: imageAttributes.src,
         height: imageAttributes.height,
         width: imageAttributes.width,
-        alt: sprintf(__('Listen to "%s" on Apple Music.', 'apple-music'), Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getNestedObject"])(item, ['attributes', 'name']))
+        alt: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["sprintf"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Listen to "%s" on Apple Music.', 'apple-music'), Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getNestedObject"])(item, ['attributes', 'name']))
       })
     ),
-    placeHolder
+    !URL && !embedURL && wp.element.createElement(
+      Placeholder,
+      {
+        icon: _icons__WEBPACK_IMPORTED_MODULE_5__["appleMusicIcon"],
+        className: _musicDisplay_css__WEBPACK_IMPORTED_MODULE_6___default.a.placeHolder
+      },
+      Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Get badges, links, and widgets for Apple Music.', 'apple-music')
+    )
   );
 };
 
@@ -7410,11 +9046,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
-/* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../images/apple.png */ "./src/images/apple.png");
-/* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_apple_png__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./musicItem.css */ "./src/block/components/musicItem/musicItem.css");
-/* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_musicItem_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
+/* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../images/apple.png */ "./src/images/apple.png");
+/* harmony import */ var _images_apple_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_apple_png__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./musicItem.css */ "./src/block/components/musicItem/musicItem.css");
+/* harmony import */ var _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_musicItem_css__WEBPACK_IMPORTED_MODULE_5__);
+
 
 
 
@@ -7424,12 +9062,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Button = wp.components.Button;
-
-// Internationalization
-
-var _wp$i18n = wp.i18n,
-    __ = _wp$i18n.__,
-    sprintf = _wp$i18n.sprintf;
 
 
 var MusicItem = function MusicItem(_ref) {
@@ -7441,9 +9073,9 @@ var MusicItem = function MusicItem(_ref) {
     return null;
   }
 
-  var name = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getNestedObject"])(item, ['attributes', 'name']);
-  var artistName = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getNestedObject"])(item, ['attributes', 'artistName']);
-  var imageSrc = Object(_utils__WEBPACK_IMPORTED_MODULE_2__["getItemArtworkURL"])(item) || _images_apple_png__WEBPACK_IMPORTED_MODULE_3___default.a;
+  var name = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getNestedObject"])(item, ['attributes', 'name']);
+  var artistName = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getNestedObject"])(item, ['attributes', 'artistName']);
+  var imageSrc = Object(_utils__WEBPACK_IMPORTED_MODULE_3__["getItemArtworkURL"])(item) || _images_apple_png__WEBPACK_IMPORTED_MODULE_4___default.a;
 
   return wp.element.createElement(
     Button,
@@ -7454,28 +9086,28 @@ var MusicItem = function MusicItem(_ref) {
     },
     wp.element.createElement(
       'div',
-      { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.musicItem },
+      { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.musicItem },
       imageSrc && wp.element.createElement(
         'div',
-        { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.artwork },
+        { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.artwork },
         wp.element.createElement('img', {
           src: imageSrc,
-          alt: sprintf(__('Album Art: %s', 'apple-music'), name),
-          className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.artworkImage
+          alt: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["sprintf"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Album Art: %s', 'apple-music'), name),
+          className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.artworkImage
         })
       ),
       // the name of the music item.
       name && wp.element.createElement(
         'div',
-        { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.title },
+        { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.title },
         wp.element.createElement(
           'div',
-          { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.name },
+          { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.name },
           name
         ),
         wp.element.createElement(
           'div',
-          { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_4___default.a.artistName },
+          { className: _musicItem_css__WEBPACK_IMPORTED_MODULE_5___default.a.artistName },
           artistName
         )
       )
@@ -7531,18 +9163,53 @@ if(false) {}
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var babel_runtime_core_js_object_get_prototype_of__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-runtime/core-js/object/get-prototype-of */ "./node_modules/babel-runtime/core-js/object/get-prototype-of.js");
+/* harmony import */ var babel_runtime_core_js_object_get_prototype_of__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_core_js_object_get_prototype_of__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! babel-runtime/helpers/classCallCheck */ "./node_modules/babel-runtime/helpers/classCallCheck.js");
+/* harmony import */ var babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! babel-runtime/helpers/createClass */ "./node_modules/babel-runtime/helpers/createClass.js");
+/* harmony import */ var babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! babel-runtime/helpers/possibleConstructorReturn */ "./node_modules/babel-runtime/helpers/possibleConstructorReturn.js");
+/* harmony import */ var babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! babel-runtime/helpers/inherits */ "./node_modules/babel-runtime/helpers/inherits.js");
+/* harmony import */ var babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var memize__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! memize */ "./node_modules/memize/index.js");
+/* harmony import */ var memize__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(memize__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! querystring */ "./node_modules/querystring-es3/index.js");
+/* harmony import */ var querystring__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(querystring__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
 
 
 
-var RawHTML = wp.element.RawHTML;
 
-// Internationalization
 
-var __ = wp.i18n.__;
+
+
+// import { __ } from '@wordpress/i18n';
+
+
+
+
+var _wp$element = wp.element,
+    Component = _wp$element.Component,
+    RawHTML = _wp$element.RawHTML;
+
+/**
+ * Get the wp API embed HTML and provider object
+ * Borrowed from the core/embed block.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/master/core-blocks/embed/index.js
+ *
+ * Caches the embed API calls, so if blocks get transformed, or deleted and added again, we don't spam the API.
+ */
+
+var wpEmbedAPI = memize__WEBPACK_IMPORTED_MODULE_7___default()(function (url) {
+  return wp.apiRequest({ path: '/oembed/1.0/proxy?' + Object(querystring__WEBPACK_IMPORTED_MODULE_8__["stringify"])({ url: url }) });
+});
 
 /**
  * The Preview Player component displays the iframe for embedding on
@@ -7550,39 +9217,91 @@ var __ = wp.i18n.__;
  * Uses the Gutenberg RawHTML component.
  */
 
-var PreviewPlayer = function PreviewPlayer(_ref) {
-  var height = _ref.height,
-      iframeSrc = _ref.iframeSrc,
-      title = _ref.title,
-      width = _ref.width;
+var PreviewPlayer = function (_Component) {
+  babel_runtime_helpers_inherits__WEBPACK_IMPORTED_MODULE_4___default()(PreviewPlayer, _Component);
 
-  // if there is no iframeSrc return null.
-  if (!iframeSrc) {
-    return null;
+  /**
+   * Component constructor
+   * @param {object} props This component's props.
+   */
+  function PreviewPlayer(props) {
+    babel_runtime_helpers_classCallCheck__WEBPACK_IMPORTED_MODULE_1___default()(this, PreviewPlayer);
+
+    var _this = babel_runtime_helpers_possibleConstructorReturn__WEBPACK_IMPORTED_MODULE_3___default()(this, (PreviewPlayer.__proto__ || babel_runtime_core_js_object_get_prototype_of__WEBPACK_IMPORTED_MODULE_0___default()(PreviewPlayer)).call(this, props));
+
+    _this.state = {
+      html: ''
+    };
+
+    _this.doServerSideRender = _this.doServerSideRender.bind(_this);
+    return _this;
   }
-  // Setup the iframe for display
-  var iframeHTML = '<iframe\n    src="' + iframeSrc + '"\n    height="' + height + '"\n    width="' + width + '"\n    title="' + title + '"\n    frameborder="0"></iframe>';
 
-  return wp.element.createElement(
-    'div',
-    { className: 'apple-music-embed-wrapper' },
-    wp.element.createElement(
-      RawHTML,
-      null,
-      iframeHTML
-    )
-  );
-};
+  babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_2___default()(PreviewPlayer, [{
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.doServerSideRender();
+    }
 
-PreviewPlayer.defaultProps = {
-  title: __('Apple Music Preview Player', 'apple-music')
-};
+    /**
+     * Do a server side render of the iframe embed provided by the wpEmbedAPI.
+     * This sets the state of the preview with the iframe markup provided by the wp_embed_register_handler
+     */
+
+  }, {
+    key: 'doServerSideRender',
+    value: function doServerSideRender(event) {
+      var _this2 = this;
+
+      if (event) {
+        event.preventDefault();
+      }
+      var _props = this.props,
+          height = _props.height,
+          iframeSrc = _props.iframeSrc,
+          width = _props.width;
+      // concatenate the URL params to the iframeSrc.
+
+      var url = Object(_utils__WEBPACK_IMPORTED_MODULE_9__["iframeURL"])(iframeSrc, width, height);
+      wpEmbedAPI(url).then(function (obj) {
+        if (_this2.unmounting) {
+          return;
+        }
+        var html = obj.html;
+
+        if (html) {
+          _this2.setState({ html: html });
+        }
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      // if there is no iframeSrc return null.
+      if ('' === this.state.html) {
+        return null;
+      }
+
+      // Setup the iframe for display
+      return wp.element.createElement(
+        'div',
+        { className: 'apple-music-embed-wrapper' },
+        wp.element.createElement(
+          RawHTML,
+          null,
+          this.state.html
+        )
+      );
+    }
+  }]);
+
+  return PreviewPlayer;
+}(Component);
 
 PreviewPlayer.propTypes = {
-  height: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  iframeSrc: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired,
-  title: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
-  width: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string.isRequired
+  height: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
+  iframeSrc: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired,
+  width: prop_types__WEBPACK_IMPORTED_MODULE_6___default.a.string.isRequired
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (PreviewPlayer);
@@ -7612,11 +9331,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var _musicItem__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../musicItem */ "./src/block/components/musicItem/index.js");
-/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../api */ "./src/block/api/index.js");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
-/* harmony import */ var _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./resultsWrapper.css */ "./src/block/components/resultsWrapper/resultsWrapper.css");
-/* harmony import */ var _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_10___default = /*#__PURE__*/__webpack_require__.n(_resultsWrapper_css__WEBPACK_IMPORTED_MODULE_10__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _musicItem__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../musicItem */ "./src/block/components/musicItem/index.js");
+/* harmony import */ var _api__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../api */ "./src/block/api/index.js");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../utils */ "./src/block/utils/index.js");
+/* harmony import */ var _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./resultsWrapper.css */ "./src/block/components/resultsWrapper/resultsWrapper.css");
+/* harmony import */ var _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_resultsWrapper_css__WEBPACK_IMPORTED_MODULE_11__);
 
 
 
@@ -7630,7 +9350,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var __ = wp.i18n.__;
+
 var Component = wp.element.Component;
 var _wp$components = wp.components,
     Button = _wp$components.Button,
@@ -7696,11 +9416,11 @@ var ResultsWrapper = function (_Component) {
       var _this2 = this;
 
       var offset = this.state.paginated ? this.state.offset : '';
-      Object(_api__WEBPACK_IMPORTED_MODULE_8__["searchCatalog"])(term, type, 24, offset).then(function (data) {
-        var result = Object(_utils__WEBPACK_IMPORTED_MODULE_9__["getNestedObject"])(data, ['results', type]);
+      Object(_api__WEBPACK_IMPORTED_MODULE_9__["searchCatalog"])(term, type, 24, offset).then(function (data) {
+        var result = Object(_utils__WEBPACK_IMPORTED_MODULE_10__["getNestedObject"])(data, ['results', type]);
         _this2.setState({
           data: result || [],
-          next: Object(_utils__WEBPACK_IMPORTED_MODULE_9__["getNestedObject"])(result, ['next']) || ''
+          next: Object(_utils__WEBPACK_IMPORTED_MODULE_10__["getNestedObject"])(result, ['next']) || ''
         });
       });
     }
@@ -7732,14 +9452,14 @@ var ResultsWrapper = function (_Component) {
           offset = _state.offset,
           next = _state.next;
 
-      var endpoint = next ? '' + _api__WEBPACK_IMPORTED_MODULE_8__["baseURL"] + next + '&limit=24' : '';
+      var endpoint = next ? '' + _api__WEBPACK_IMPORTED_MODULE_9__["baseURL"] + next + '&limit=24' : '';
 
-      Object(_api__WEBPACK_IMPORTED_MODULE_8__["get"])(endpoint).then(function (data) {
-        var result = Object(_utils__WEBPACK_IMPORTED_MODULE_9__["getNestedObject"])(data, ['results', musicType]);
+      Object(_api__WEBPACK_IMPORTED_MODULE_9__["get"])(endpoint).then(function (data) {
+        var result = Object(_utils__WEBPACK_IMPORTED_MODULE_10__["getNestedObject"])(data, ['results', musicType]);
 
         _this3.setState({
           data: result || [],
-          next: Object(_utils__WEBPACK_IMPORTED_MODULE_9__["getNestedObject"])(result, ['next']) || '',
+          next: Object(_utils__WEBPACK_IMPORTED_MODULE_10__["getNestedObject"])(result, ['next']) || '',
           paginated: true,
           offset: offset + 24
         });
@@ -7776,8 +9496,8 @@ var ResultsWrapper = function (_Component) {
           musicType = _props.attributes.musicType;
 
 
-      var results = Object(_api__WEBPACK_IMPORTED_MODULE_8__["getItems"])(this.state.data).map(function (item) {
-        return wp.element.createElement(_musicItem__WEBPACK_IMPORTED_MODULE_7__["default"], {
+      var results = Object(_api__WEBPACK_IMPORTED_MODULE_9__["getItems"])(this.state.data).map(function (item) {
+        return wp.element.createElement(_musicItem__WEBPACK_IMPORTED_MODULE_8__["default"], {
           item: item,
           onClick: function onClick() {
             return _this4.selectItem(item);
@@ -7799,7 +9519,7 @@ var ResultsWrapper = function (_Component) {
         null,
         0 !== this.state.data.length && wp.element.createElement(
           'div',
-          { className: _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_10___default.a.resultsBubbleHeader },
+          { className: _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_11___default.a.resultsBubbleHeader },
           wp.element.createElement(
             'h3',
             null,
@@ -7808,12 +9528,12 @@ var ResultsWrapper = function (_Component) {
           this.state.next && wp.element.createElement(
             Button,
             {
-              className: _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_10___default.a.viewControl,
+              className: _resultsWrapper_css__WEBPACK_IMPORTED_MODULE_11___default.a.viewControl,
               onClick: function onClick() {
                 return _this4.paginate();
               }
             },
-            __('Next', 'apple-music'),
+            Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Next', 'apple-music'),
             wp.element.createElement(Dashicon, { icon: 'arrow-right-alt2' })
           )
         ),
@@ -7889,9 +9609,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _config_musicTypes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../config/musicTypes */ "./src/block/config/musicTypes.js");
-/* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./searchTools.css */ "./src/block/components/searchTools/searchTools.css");
-/* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_searchTools_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _config_musicTypes__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../config/musicTypes */ "./src/block/config/musicTypes.js");
+/* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./searchTools.css */ "./src/block/components/searchTools/searchTools.css");
+/* harmony import */ var _searchTools_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_searchTools_css__WEBPACK_IMPORTED_MODULE_4__);
+
 
 
 
@@ -7900,12 +9622,6 @@ __webpack_require__.r(__webpack_exports__);
 var _wp$components = wp.components,
     TextControl = _wp$components.TextControl,
     SelectControl = _wp$components.SelectControl;
-
-// Internationalization
-
-var _wp$i18n = wp.i18n,
-    __ = _wp$i18n.__,
-    sprintf = _wp$i18n.sprintf;
 
 /**
  * Component for displaying search results in Apple Music block.
@@ -7919,33 +9635,33 @@ var SearchTools = function SearchTools(_ref) {
       inPanel = _ref.inPanel;
 
   // Get the current selected musicType object
-  var typeObject = _config_musicTypes__WEBPACK_IMPORTED_MODULE_2__["default"].find(function (type) {
+  var typeObject = _config_musicTypes__WEBPACK_IMPORTED_MODULE_3__["default"].find(function (type) {
     return type.value === musicType;
   });
 
   // apply appropriate classname for context
-  var className = inPanel ? 'search-tools-panel' : _searchTools_css__WEBPACK_IMPORTED_MODULE_3___default.a.searchTools;
+  var className = inPanel ? 'search-tools-panel' : _searchTools_css__WEBPACK_IMPORTED_MODULE_4___default.a.searchTools;
 
   return wp.element.createElement(
     'div',
     { className: className },
     wp.element.createElement(TextControl, {
       value: query,
-      placeHolder: sprintf(__('Search %s', 'apple-music'), typeObject.label),
-      className: _searchTools_css__WEBPACK_IMPORTED_MODULE_3___default.a.search,
+      placeHolder: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["sprintf"])(Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Search %s', 'apple-music'), typeObject.label),
+      className: _searchTools_css__WEBPACK_IMPORTED_MODULE_4___default.a.search,
       onChange: function onChange(term) {
         return setAttributes({ query: term });
       }
     }),
     wp.element.createElement(SelectControl, {
-      label: __('Music Type', 'apple-music'),
+      label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Music Type', 'apple-music'),
       value: musicType,
-      options: _config_musicTypes__WEBPACK_IMPORTED_MODULE_2__["default"].map(function (_ref2) {
+      options: _config_musicTypes__WEBPACK_IMPORTED_MODULE_3__["default"].map(function (_ref2) {
         var value = _ref2.value,
             label = _ref2.label;
         return { value: value, label: label };
       }),
-      className: _searchTools_css__WEBPACK_IMPORTED_MODULE_3___default.a.select,
+      className: _searchTools_css__WEBPACK_IMPORTED_MODULE_4___default.a.select,
       onChange: function onChange(type) {
         return setAttributes({ musicType: type });
       }
@@ -8023,6 +9739,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _images_app_icon_white_svg__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_app_icon_white_svg__WEBPACK_IMPORTED_MODULE_5__);
 /* harmony import */ var _images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../images/app-icon-black.svg */ "./src/images/app-icon-black.svg");
 /* harmony import */ var _images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
 // Text lockup
 
 
@@ -8034,69 +9751,68 @@ __webpack_require__.r(__webpack_exports__);
 
 
 // Internationalization function.
-var __ = wp.i18n.__;
+
 
 /**
  * The list of the embed types to use for embedding Apple Music.
  *
  * @type {Array}
  */
-
 var embedTypes = [{
   value: 'preview-player',
-  label: __('Preview Player', 'apple-music')
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Preview Player', 'apple-music')
 }, {
   value: 'badge',
-  label: __('Badge', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Badge', 'apple-music'),
   height: '45px',
   width: '157px',
   imageSource: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg'
 }, {
   value: 'text-lockup',
-  label: __('Text Lockup', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Text Lockup', 'apple-music'),
   height: '30px',
   width: '140px',
   styles: [{
     default: true,
     value: 'standard-black',
-    label: __('Standard Black', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Standard Black', 'apple-music'),
     imagePath: _images_standard_black_svg__WEBPACK_IMPORTED_MODULE_0___default.a,
     imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/standard-black.svg'
   }, {
     value: 'standard-white',
-    label: __('Standard White', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Standard White', 'apple-music'),
     imagePath: _images_standard_white_svg__WEBPACK_IMPORTED_MODULE_1___default.a,
     imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/standard-white.svg'
   }, {
     value: 'mono-white',
-    label: __('Mono White', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Mono White', 'apple-music'),
     imagePath: _images_mono_white_svg__WEBPACK_IMPORTED_MODULE_2___default.a,
     imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/mono-white.svg'
   }, {
     value: 'mono-black',
-    label: __('Mono Black', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Mono Black', 'apple-music'),
     imagePath: _images_mono_black_svg__WEBPACK_IMPORTED_MODULE_3___default.a,
     imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/mono-black.svg'
   }]
 }, {
   value: 'app-icon',
-  label: __('App Icon', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('App Icon', 'apple-music'),
   height: '40px',
   width: '40px',
   styles: [{
     default: true,
     value: 'standard',
-    label: __('Standard', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Standard', 'apple-music'),
     imagePath: _images_app_icon_standard_svg__WEBPACK_IMPORTED_MODULE_4___default.a,
     imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg'
   }, {
     value: 'white',
-    label: __('White', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('White', 'apple-music'),
     imagePath: _images_app_icon_white_svg__WEBPACK_IMPORTED_MODULE_5___default.a,
     imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=FFFFFF'
   }, {
     value: 'black',
-    label: __('Black', 'apple-music'),
+    label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_7__["__"])('Black', 'apple-music'),
     imagePath: _images_app_icon_black_svg__WEBPACK_IMPORTED_MODULE_6___default.a,
     imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=000000'
   }]
@@ -8115,8 +9831,11 @@ var embedTypes = [{
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../i18n */ "./src/block/i18n.js");
 // Import internationalization function.
-var __ = wp.i18n.__;
+
+
 /**
  * The list of the types of resources to include in the results.
  * The possible values are activities, artists, apple-curators,
@@ -8131,48 +9850,47 @@ var __ = wp.i18n.__;
  * @see  https://developer.apple.com/library/content/documentation/NetworkingInternetWeb/Conceptual/AppleMusicWebServicesReference/Searchforresources.html#//apple_ref/doc/uid/TP40017625-CH58-SW1
  * @type {Array} music type values and labels
  */
-
 var musicTypes = [{
   value: 'artists',
-  label: __('Artists', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Artists', 'apple-music'),
   embedType: 'artist',
   embed: false
 }, {
   value: 'songs',
-  label: __('Songs', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Songs', 'apple-music'),
   embedHeight: '150px',
   embedType: 'song',
   embed: true
 }, {
   value: 'albums',
-  label: __('Albums', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Albums', 'apple-music'),
   embedHeight: '450px',
   embedType: 'album',
   embed: true
 }, {
   value: 'playlists',
-  label: __('Playlists', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Playlists', 'apple-music'),
   embedHeight: '450px',
   embedType: 'playlist',
   embed: true
 }, {
   value: 'activities',
-  label: __('Activities', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Activities', 'apple-music'),
   embedType: 'curator',
   embed: true
 }, {
   value: 'curators',
-  label: __('Curators', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Curators', 'apple-music'),
   embedType: 'curator',
   embed: false
 }, {
   value: 'stations',
-  label: __('Radio', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Radio', 'apple-music'),
   embedType: 'station',
   embed: false
 }, {
   value: 'music-videos',
-  label: __('Music Videos', 'apple-music'),
+  label: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["__"])('Music Videos', 'apple-music'),
   embedType: 'music-video',
   embed: false
 }];
@@ -8185,14 +9903,16 @@ var musicTypes = [{
 /*!***************************!*\
   !*** ./src/block/i18n.js ***!
   \***************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
 // Set the localization for Gutenberg
-var setLocaleData = wp.i18n.setLocaleData;
 
 
-setLocaleData({ '': {} }, 'apple-music');
+Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_0__["setLocaleData"])({ '': {} }, 'apple-music');
 
 /***/ }),
 
@@ -8217,7 +9937,7 @@ __webpack_require__.r(__webpack_exports__);
  */
 var appleMusicIcon = wp.element.createElement(
   "svg",
-  { className: "dashicon", width: "20px", height: "20px", viewBox: "0 0 20 20", version: "1.1", xmlns: "http://www.w3.org/2000/svg" },
+  { width: "20px", height: "20px", viewBox: "0 0 20 20", version: "1.1", fill: "#555d66", xmlns: "http://www.w3.org/2000/svg" },
   wp.element.createElement(
     "title",
     null,
@@ -8243,16 +9963,16 @@ var appleMusicIcon = wp.element.createElement(
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_musicBlock__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./components/musicBlock */ "./src/block/components/musicBlock/index.js");
 /* harmony import */ var _components_musicDisplay__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/musicDisplay */ "./src/block/components/musicDisplay/index.js");
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./i18n */ "./src/block/i18n.js");
-/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_i18n__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./icons */ "./src/block/icons/index.js");
+/* harmony import */ var _wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @wordpress/i18n */ "./node_modules/@wordpress/i18n/build-module/index.js");
+/* harmony import */ var _i18n__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./i18n */ "./src/block/i18n.js");
+/* harmony import */ var _icons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./icons */ "./src/block/icons/index.js");
 // Entry point for Apple Music Gutenberg block.
 
 
 
 
 
-var __ = wp.i18n.__;
+
 var registerBlockType = wp.blocks.registerBlockType;
 
 /**
@@ -8260,11 +9980,13 @@ var registerBlockType = wp.blocks.registerBlockType;
  */
 
 /* harmony default export */ __webpack_exports__["default"] = (registerBlockType('apple-music/widget', {
-  title: __('Apple Music', 'apple-music'),
-  description: __('Embed an Apple music widget into a post.', 'apple-music'),
+  title: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Apple Music', 'apple-music'),
+  description: Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Embed an Apple music widget into a post.', 'apple-music'),
   category: 'widgets',
-  icon: _icons__WEBPACK_IMPORTED_MODULE_3__["appleMusicIcon"],
-  keywords: [__('Apple Music', 'apple-music')],
+  icon: {
+    src: _icons__WEBPACK_IMPORTED_MODULE_4__["appleMusicIcon"]
+  },
+  keywords: [Object(_wordpress_i18n__WEBPACK_IMPORTED_MODULE_2__["__"])('Apple Music', 'apple-music')],
   supports: {
     html: false
   },
@@ -8362,7 +10084,7 @@ var token = 'eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IldSWDQ2U1A5TjQifQ.eyJp
 /*!**********************************!*\
   !*** ./src/block/utils/index.js ***!
   \**********************************/
-/*! exports provided: getObjKeyValue, getTypeObject, showEmbed, getNestedObject, getItemArtworkURL, getIconImagePath, getImageAttributes, default */
+/*! exports provided: getObjKeyValue, getTypeObject, showEmbed, getNestedObject, getItemArtworkURL, getIconImagePath, getImageAttributes, iframeURL, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8374,6 +10096,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItemArtworkURL", function() { return getItemArtworkURL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getIconImagePath", function() { return getIconImagePath; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getImageAttributes", function() { return getImageAttributes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "iframeURL", function() { return iframeURL; });
 /* harmony import */ var _config_musicTypes__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../config/musicTypes */ "./src/block/config/musicTypes.js");
 /* harmony import */ var _config_embedTypes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../config/embedTypes */ "./src/block/config/embedTypes.js");
 
@@ -8498,13 +10221,24 @@ function getImageAttributes(embedType) {
   }, []).shift();
 }
 
+/**
+ * Set up the iframeURL based on the regex pattern for the embed handler.
+ * @param {string} url the URL to pass to the Embed API
+ * @param {string} width the width of the iframe.
+ * @param {string} height the height of the iframe.
+ */
+function iframeURL(url, width, height) {
+  return url ? url.concat('?width=' + width + '+height=' + height) : '';
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   getIconImagePath: getIconImagePath,
   getImageAttributes: getImageAttributes,
   getObjKeyValue: getObjKeyValue,
   getTypeObject: getTypeObject,
   showEmbed: showEmbed,
-  getNestedObject: getNestedObject
+  getNestedObject: getNestedObject,
+  iframeURL: iframeURL
 });
 
 /***/ }),
@@ -8605,6 +10339,30 @@ module.exports = __webpack_require__.p + "../src/images/standard-black.svg";
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__.p + "../src/images/standard-white.svg";
+
+/***/ }),
+
+/***/ "./src/styles/block-styles.css":
+/*!*************************************!*\
+  !*** ./src/styles/block-styles.css ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
+/***/ 0:
+/*!****************************************************************!*\
+  !*** multi ./src/block/index.js ./src/styles/block-styles.css ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(/*! ./src/block/index.js */"./src/block/index.js");
+module.exports = __webpack_require__(/*! ./src/styles/block-styles.css */"./src/styles/block-styles.css");
+
 
 /***/ })
 

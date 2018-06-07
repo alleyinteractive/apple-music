@@ -1,0 +1,12 @@
+/* Apple Music Gutenberg block styles. */
+.musicDisplay__placeHolder__UM5Kh {
+    display: none;
+}
+
+.gutenberg-editor-page {
+
+    .musicDisplay__placeHolder__UM5Kh {
+        margin: 0;
+        pointer-events: none;
+    }
+}

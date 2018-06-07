@@ -8,7 +8,10 @@ module.exports = (env) => ({
   mode: env.production ? 'production' : 'development',
 
   entry: {
-    block: './src/block/index.js',
+    block: [
+      './src/block/index.js',
+      './src/styles/block-styles.css',
+    ],
     mediaModal: [
       './src/media-modal/media-modal.js',
       './src/media-modal/media-modal.css',

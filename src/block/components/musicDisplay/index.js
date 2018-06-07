@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
-// import PreviewPlayer from 'Components/previewPlayer';
 import {
   getNestedObject,
   iframeURL,
 } from 'Utils';
 import { affiliateToken } from '../../settings';
+import { appleMusicIcon } from '../../icons';
 
 // CSS
 import styles from './musicDisplay.css';
+
+const { Placeholder } = wp.components;
 
 /**
  * MusicDisplay component renders the HTML output of the Apple Music widget.
@@ -34,12 +36,6 @@ const MusicDisplay = ({
     URL = URL ? URL.concat(`?at=${affiliateToken}`) : '';
   }
 
-  const placeHolder = ! URL && ! iframeSrc ? (
-    <p className={styles.placeHolder}>
-      {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
-    </p>
-  ) : '';
-
   return (
     <div className={className}>
       {
@@ -60,7 +56,15 @@ const MusicDisplay = ({
           />
         </a>
       }
-      {placeHolder}
+      {
+        ! URL && ! embedURL &&
+        <Placeholder
+          icon={appleMusicIcon}
+          className={styles.placeHolder}
+        >
+          {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
+        </Placeholder>
+      }
     </div>
   );
 };

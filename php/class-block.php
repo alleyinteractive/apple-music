@@ -13,6 +13,7 @@ class Block {
 	 */
 	public function __construct() {
 		add_action( 'enqueue_block_editor_assets', [ $this, 'enqueue_block_editor_assets' ] );
+		add_action( 'enqueue_block_assets', [ $this, 'enqueue_block_assets' ] );
 	}
 
 	/**
@@ -37,6 +38,18 @@ class Block {
 				'storefront'     => ! empty( $storefront ) ? sanitize_text_field( $storefront ) : 'us',
 				'affiliateToken' => $settings->get_affiliate_token(),
 			]
+		);
+	}
+
+	/**
+	 * Enqueues assets for front and back end.
+	 */
+	public function enqueue_block_assets() {
+		wp_enqueue_style(
+			'apple-music-styles',
+			PLUGIN_DIR_URL . 'dist/css/block.min.css',
+			'',
+			APPLE_MUSIC_VERSION
 		);
 	}
 }
