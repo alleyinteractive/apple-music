@@ -42,9 +42,9 @@ class Shortcode {
 		], $atts, $tag );
 
 		$formats = [
-			'player'      => [],
-			'link'        => [],
-			'badge'       => [
+			'player'            => [],
+			'link'              => [],
+			'badge'             => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
 				'default_color' => '', // Not used
 				'dimensions'    => 'width:157px;height:45px;',
