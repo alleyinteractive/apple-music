@@ -70,12 +70,12 @@ export function getItems(response) {
 }
 
 /**
- * Get the API iframe URL for embedding.
+ * Set the API embed URL.
  * @param {string} type the music type to embed.
  * @param {string} id the Apple Music ID.
  * @returns {string} the iframe URL.
  */
-export function iframeURL(type, id) {
+export function setEmbedURL(type, id) {
   const embedURL = 'https://embed.music.apple.com/';
   const typeObject = getTypeObject(type);
 

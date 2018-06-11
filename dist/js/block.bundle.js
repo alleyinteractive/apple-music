@@ -7948,7 +7948,7 @@ module.exports = function (css) {
 /*!********************************!*\
   !*** ./src/block/api/index.js ***!
   \********************************/
-/*! exports provided: baseURL, request, get, searchCatalog, getItems, iframeURL */
+/*! exports provided: baseURL, request, get, searchCatalog, getItems, setEmbedURL */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -7958,7 +7958,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "get", function() { return get; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "searchCatalog", function() { return searchCatalog; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getItems", function() { return getItems; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "iframeURL", function() { return iframeURL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setEmbedURL", function() { return setEmbedURL; });
 /* harmony import */ var babel_runtime_core_js_promise__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! babel-runtime/core-js/promise */ "./node_modules/babel-runtime/core-js/promise.js");
 /* harmony import */ var babel_runtime_core_js_promise__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(babel_runtime_core_js_promise__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../utils */ "./src/block/utils/index.js");
@@ -8039,12 +8039,12 @@ function getItems(response) {
 }
 
 /**
- * Get the API iframe URL for embedding.
+ * Set the API embed URL.
  * @param {string} type the music type to embed.
  * @param {string} id the Apple Music ID.
  * @returns {string} the iframe URL.
  */
-function iframeURL(type, id) {
+function setEmbedURL(type, id) {
   var embedURL = 'https://embed.music.apple.com/';
   var typeObject = Object(_utils__WEBPACK_IMPORTED_MODULE_1__["getTypeObject"])(type);
 
@@ -8700,7 +8700,7 @@ var MusicBlock = function (_Component) {
         embedType: updateEmbedTyped,
         item: item,
         musicID: musicID,
-        iframeSrc: Object(_api__WEBPACK_IMPORTED_MODULE_13__["iframeURL"])(musicType, musicID),
+        iframeSrc: Object(_api__WEBPACK_IMPORTED_MODULE_13__["setEmbedURL"])(musicType, musicID),
         height: initialHeight
       });
     }
@@ -8904,6 +8904,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+var Fragment = wp.element.Fragment;
 var Placeholder = wp.components.Placeholder;
 
 /**
@@ -8932,8 +8933,11 @@ var MusicDisplay = function MusicDisplay(_ref) {
   return wp.element.createElement(
     'div',
     { className: className },
-    'preview-player' === embedType && '\n' + embedURL + '\n' // URL needs to be on its own line.
-    ,
+    'preview-player' === embedType && embedURL && wp.element.createElement(
+      Fragment,
+      null,
+      '\n' + embedURL + '\n'
+    ),
     ['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL && wp.element.createElement(
       'a',
       { href: URL },
@@ -9215,6 +9219,16 @@ var PreviewPlayer = function (_Component) {
         if (html) {
           _this2.setState({ html: html });
         }
+      },
+      /**
+       * Fallback for instances where the WP API returns a 404.
+       */
+      function () {
+        _this2.setState({
+          /* eslint-disable max-len */
+          html: '<iframe frameborder="0" allow="autoplay; encrypted-media" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:' + width + ';height:' + height + ';max-width:100%;border:none;overflow:hidden;background:transparent;" src="' + iframeSrc + '"></iframe>'
+          /* eslint-enable max-len */
+        });
       });
     }
   }, {

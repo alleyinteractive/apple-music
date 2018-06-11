@@ -8,6 +8,7 @@ import {
 import { affiliateToken } from '../../settings';
 import { appleMusicIcon } from '../../icons';
 
+const { Fragment } = wp.element;
 const { Placeholder } = wp.components;
 
 /**
@@ -36,8 +37,10 @@ const MusicDisplay = ({
   return (
     <div className={className}>
       {
-        'preview-player' === embedType &&
-        `\n${embedURL}\n` // URL needs to be on its own line.
+        ('preview-player' === embedType && embedURL) &&
+        <Fragment>
+          {`\n${embedURL}\n`}
+        </Fragment>
       }
       {
         (['badge', 'text-lockup', 'app-icon'].includes(embedType) && URL) &&

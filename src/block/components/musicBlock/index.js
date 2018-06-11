@@ -6,7 +6,7 @@ import ResultsWrapper from 'Components/resultsWrapper';
 import SearchTools from 'Components/searchTools';
 import MusicDisplay from 'Components/musicDisplay';
 import BackToSearch from 'Components/backToSearch';
-import { iframeURL } from 'API';
+import { setEmbedURL } from 'API';
 import {
   getObjKeyValue,
   getTypeObject,
@@ -66,7 +66,7 @@ class MusicBlock extends Component {
       embedType: updateEmbedTyped,
       item,
       musicID,
-      iframeSrc: iframeURL(musicType, musicID),
+      iframeSrc: setEmbedURL(musicType, musicID),
       height: initialHeight,
     });
   }
