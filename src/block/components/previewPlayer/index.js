@@ -52,15 +52,28 @@ class PreviewPlayer extends Component {
     const { height, iframeSrc, width } = this.props;
     // concatenate the URL params to the iframeSrc.
     const url = iframeURL(iframeSrc, width, height);
-    wpEmbedAPI(url).then((obj) => {
-      if (this.unmounting) {
-        return;
-      }
-      const { html } = obj;
-      if (html) {
-        this.setState({ html });
-      }
-    });
+    wpEmbedAPI(url)
+      .then(
+        (obj) => {
+          if (this.unmounting) {
+            return;
+          }
+          const { html } = obj;
+          if (html) {
+            this.setState({ html });
+          }
+        },
+        /**
+         * Fallback for instances where the WP API returns a 404 for the embed handler.
+         */
+        () => {
+          this.setState({
+            /* eslint-disable max-len */
+            html: `<iframe frameborder="0" allow="autoplay; encrypted-media" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:${width};height:${height};max-width:100%;border:none;overflow:hidden;background:transparent;" src="${iframeSrc}"></iframe>`,
+            /* eslint-enable max-len */
+          });
+        }
+      );
   }
 
   render() {
