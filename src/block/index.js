@@ -49,9 +49,6 @@ export default registerBlockType(
           src: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
         },
       },
-      item: {
-        type: 'object',
-      },
       ID: {
         type: 'integer',
       },
@@ -59,12 +56,18 @@ export default registerBlockType(
         type: 'string',
         default: 'artists',
       },
+      name: {
+        type: 'string',
+      },
       query: {
         type: 'string',
       },
       textLockUpStyle: {
         type: 'string',
         default: 'standard-black',
+      },
+      link: {
+        type: 'string',
       },
       width: {
         type: 'string',

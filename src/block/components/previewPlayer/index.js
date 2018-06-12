@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 // import { __ } from '@wordpress/i18n';
 import memoize from 'memize';
 import { stringify } from 'querystring';
-import { iframeURL } from 'Utils';
 
 const { Component, RawHTML } = wp.element;
 
@@ -51,8 +50,7 @@ class PreviewPlayer extends Component {
     }
     const { height, embedURL, width } = this.props;
     // concatenate the URL params to the embedURL.
-    const url = iframeURL(embedURL, width, height);
-    wpEmbedAPI(url)
+    wpEmbedAPI(embedURL)
       .then(
         (obj) => {
           if (this.unmounting) {

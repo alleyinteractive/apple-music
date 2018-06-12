@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
-import {
-  getNestedObject,
-  iframeURL,
-} from 'Utils';
+import { setEmbedDimensions } from 'Utils';
 import { affiliateToken } from '../../settings';
 import { appleMusicIcon } from '../../icons';
 
@@ -21,18 +18,17 @@ const MusicDisplay = ({
     height,
     embedURL,
     imageAttributes,
-    item,
     width,
+    name,
+    link,
   },
   className,
 }) => {
-  let URL = getNestedObject(item, ['attributes', 'url']);
-  const embedURLString = iframeURL(embedURL, width, height);
+  const embedURLString = setEmbedDimensions(embedURL, width, height);
 
   // Set the affiliate token if applicable.
-  if (affiliateToken) {
-    URL = URL ? URL.concat(`?at=${affiliateToken}`) : '';
-  }
+  const URL = affiliateToken && link ?
+    link.concat(`?at=${affiliateToken}`) : link;
 
   return (
     <div className={className}>
@@ -51,7 +47,7 @@ const MusicDisplay = ({
             width={imageAttributes.width}
             alt={sprintf(
               __('Listen to "%s" on Apple Music.', 'apple-music'),
-              getNestedObject(item, ['attributes', 'name'])
+              name
             )}
           />
         </a>
@@ -74,14 +70,10 @@ MusicDisplay.propTypes = {
     embedType: PropTypes.string,
     height: PropTypes.string,
     embedURL: PropTypes.string,
-    item: PropTypes.shape({
-      attributes: PropTypes.any,
-      id: PropTypes.string,
-      type: PropTypes.string,
-    }),
-    ID: PropTypes.string,
-    musicType: PropTypes.string,
+    imageAttributes: PropTypes.object,
     width: PropTypes.string,
+    name: PropTypes.string,
+    link: PropTypes.string,
   }).isRequired,
   className: PropTypes.string.isRequired,
 };

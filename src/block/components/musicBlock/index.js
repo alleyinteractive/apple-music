@@ -8,10 +8,14 @@ import MusicDisplay from 'Components/musicDisplay';
 import BackToSearch from 'Components/backToSearch';
 import { setEmbedURL } from 'API';
 import {
+  getItemArtworkURL,
   getObjKeyValue,
+  getNestedObject,
   getTypeObject,
   showEmbed,
+  setEmbedDimensions,
 } from 'Utils';
+import placeholder from 'Images/apple.png';
 
 // CSS
 import styles from './musicBlock.css';
@@ -31,6 +35,12 @@ class MusicBlock extends Component {
     super(props);
     this.state = {
       isMusicSet: this.isMusicSet(),
+      displayProps: {
+        imageSrc: placeholder,
+        artistName: '',
+        genreNames: [],
+        notesDesc: '',
+      },
     };
     this.setMusicSelection = this.setMusicSelection.bind(this);
     this.isMusicSet = this.isMusicSet.bind(this);
@@ -45,6 +55,7 @@ class MusicBlock extends Component {
       attributes: {
         embedType,
         musicType,
+        width,
       },
       setAttributes,
     } = this.props;
@@ -55,6 +66,15 @@ class MusicBlock extends Component {
 
     this.setState({
       isMusicSet: true,
+      displayProps: {
+        imageSrc: getItemArtworkURL(item, '200', '200') || placeholder,
+        artistName: getNestedObject(item, ['attributes', 'artistName']),
+        genreNames: getNestedObject(item, ['attributes', 'genreNames']),
+        notesDesc: getNestedObject(
+          item,
+          ['attributes', 'editorialNotes', 'short']
+        ),
+      },
     });
 
     // If this music type does not have an embeddable iframe set the embed type default
@@ -66,8 +86,14 @@ class MusicBlock extends Component {
       embedType: updateEmbedTyped,
       item,
       ID,
-      embedURL: setEmbedURL(musicType, ID),
+      embedURL: setEmbedDimensions(
+        setEmbedURL(musicType, ID),
+        width,
+        initialHeight
+      ),
+      name: getNestedObject(item, ['attributes', 'name']),
       height: initialHeight,
+      link: getNestedObject(item, ['attributes', 'url']),
     });
   }
 
@@ -81,6 +107,7 @@ class MusicBlock extends Component {
     } = this.props;
     this.setState({
       isMusicSet: false,
+      displayProps: {},
     });
     setAttributes({
       appIconStyle: 'standard',
@@ -89,6 +116,8 @@ class MusicBlock extends Component {
       embedURL: '',
       ID: 0,
       textLockUpStyle: 'standard-black',
+      name: '',
+      link: '',
     });
   }
 
@@ -130,6 +159,7 @@ class MusicBlock extends Component {
                   <DisplayTools
                     attributes={attributes}
                     setAttributes={this.props.setAttributes}
+                    displayProps={this.state.displayProps}
                   />
                 </div>
               }
@@ -165,6 +195,7 @@ class MusicBlock extends Component {
                   <DisplayTools
                     attributes={attributes}
                     setAttributes={this.props.setAttributes}
+                    displayProps={this.state.displayProps}
                     inPanel={false}
                   />
                 </div>
@@ -175,6 +206,7 @@ class MusicBlock extends Component {
                   className={styles.itemWrapper}
                   attributes={attributes}
                   onSelect={this.setMusicSelection}
+                  displayProps={this.state.displayProps}
                 />
               }
             </div>
@@ -193,11 +225,6 @@ MusicBlock.propTypes = {
     width: PropTypes.string,
     height: PropTypes.string,
     embedURL: PropTypes.string,
-    item: PropTypes.shape({
-      attributes: PropTypes.any,
-      id: PropTypes.string,
-      type: PropTypes.string,
-    }),
   }).isRequired,
   className: PropTypes.string.isRequired,
   setAttributes: PropTypes.func.isRequired,
