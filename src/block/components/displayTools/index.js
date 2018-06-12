@@ -20,6 +20,7 @@ const {
 const DisplayTools = ({
   attributes: {
     appIconStyle,
+    baseEmbedURL,
     embedType,
     height,
     embedURL,
@@ -91,7 +92,7 @@ const DisplayTools = ({
               value={height}
               onChange={(value) => setAttributes({
                 height: value,
-                embedURL: setEmbedDimensions(embedURL, width, value),
+                embedURL: setEmbedDimensions(baseEmbedURL, width, value),
               })}
               placeholder={height}
             />
@@ -101,7 +102,7 @@ const DisplayTools = ({
               value={width}
               onChange={(value) => setAttributes({
                 width: value,
-                embedURL: setEmbedDimensions(embedURL, value, height),
+                embedURL: setEmbedDimensions(baseEmbedURL, value, height),
               })}
               placeholder={width}
             />
@@ -144,9 +145,15 @@ DisplayTools.defaultProps = {
 
 DisplayTools.propTypes = {
   attributes: PropTypes.shape({
-    width: PropTypes.string,
+    appIconStyle: PropTypes.string,
+    embedType: PropTypes.string,
     height: PropTypes.string,
     embedURL: PropTypes.string,
+    musicType: PropTypes.string,
+    name: PropTypes.string,
+    textLockUpStyle: PropTypes.string,
+    width: PropTypes.string,
+    link: PropTypes.string,
   }).isRequired,
   displayProps: PropTypes.shape({
     imageSrc: PropTypes.string,

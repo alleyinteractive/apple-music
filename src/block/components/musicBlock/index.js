@@ -61,8 +61,10 @@ class MusicBlock extends Component {
     } = this.props;
     const ID = getObjKeyValue(item, 'id'); // get the music ID.
 
-    const type = getTypeObject(musicType);
-    const initialHeight = getObjKeyValue(type, 'embedHeight');
+    const initialHeight = getObjKeyValue(
+      getTypeObject(musicType),
+      'embedHeight'
+    );
 
     this.setState({
       isMusicSet: true,
@@ -82,12 +84,15 @@ class MusicBlock extends Component {
       'preview-player' === embedType) ?
       'badge' : embedType;
 
+    const baseEmbedURL = setEmbedURL(musicType, ID);
+
     setAttributes({
       embedType: updateEmbedTyped,
       item,
       ID,
+      baseEmbedURL,
       embedURL: setEmbedDimensions(
-        setEmbedURL(musicType, ID),
+        baseEmbedURL,
         width,
         initialHeight
       ),
@@ -107,12 +112,16 @@ class MusicBlock extends Component {
     } = this.props;
     this.setState({
       isMusicSet: false,
-      displayProps: {},
+      displayProps: {
+        imageSrc: placeholder,
+        artistName: '',
+        genreNames: [],
+        notesDesc: '',
+      },
     });
     setAttributes({
       appIconStyle: 'standard',
       embedType: attributes.embedType,
-      item: {},
       embedURL: '',
       ID: 0,
       textLockUpStyle: 'standard-black',

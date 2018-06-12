@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { __ } from '@wordpress/i18n';
 import memoize from 'memize';
 import { stringify } from 'querystring';
 

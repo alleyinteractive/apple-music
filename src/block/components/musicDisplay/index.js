@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@wordpress/i18n';
-import { setEmbedDimensions } from 'Utils';
 import { affiliateToken } from '../../settings';
 import { appleMusicIcon } from '../../icons';
 
@@ -15,17 +14,13 @@ const { Placeholder } = wp.components;
 const MusicDisplay = ({
   attributes: {
     embedType,
-    height,
     embedURL,
     imageAttributes,
-    width,
     name,
     link,
   },
   className,
 }) => {
-  const embedURLString = setEmbedDimensions(embedURL, width, height);
-
   // Set the affiliate token if applicable.
   const URL = affiliateToken && link ?
     link.concat(`?at=${affiliateToken}`) : link;
@@ -33,9 +28,9 @@ const MusicDisplay = ({
   return (
     <div className={className}>
       {
-        ('preview-player' === embedType && embedURLString) &&
+        ('preview-player' === embedType && embedURL) &&
         <Fragment>
-          {`\n${embedURLString}\n`}
+          {`\n${embedURL}\n`}
         </Fragment>
       }
       {
@@ -53,7 +48,7 @@ const MusicDisplay = ({
         </a>
       }
       {
-        ! URL && ! embedURLString &&
+        ! URL && ! embedURL &&
         <Placeholder
           icon={appleMusicIcon}
           className="apple-music-placeholder"
@@ -68,10 +63,8 @@ const MusicDisplay = ({
 MusicDisplay.propTypes = {
   attributes: PropTypes.shape({
     embedType: PropTypes.string,
-    height: PropTypes.string,
     embedURL: PropTypes.string,
     imageAttributes: PropTypes.object,
-    width: PropTypes.string,
     name: PropTypes.string,
     link: PropTypes.string,
   }).isRequired,

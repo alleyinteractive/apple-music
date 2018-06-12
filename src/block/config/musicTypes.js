@@ -47,7 +47,7 @@ const musicTypes = [
     value: 'activities',
     label: __('Activities', 'apple-music'),
     embedType: 'curator',
-    embed: true,
+    embed: false,
   },
   {
     value: 'curators',

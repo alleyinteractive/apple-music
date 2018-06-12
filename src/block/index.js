@@ -38,6 +38,9 @@ export default registerBlockType(
       height: {
         type: 'string',
       },
+      baseEmbedURL: {
+        type: 'string',
+      },
       embedURL: {
         type: 'string',
       },
