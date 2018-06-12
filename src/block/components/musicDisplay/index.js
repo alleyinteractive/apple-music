@@ -79,7 +79,7 @@ MusicDisplay.propTypes = {
       id: PropTypes.string,
       type: PropTypes.string,
     }),
-    musicID: PropTypes.string,
+    ID: PropTypes.string,
     musicType: PropTypes.string,
     width: PropTypes.string,
   }).isRequired,

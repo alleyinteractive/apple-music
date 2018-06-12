@@ -37,7 +37,7 @@ class MusicBlock extends Component {
   }
 
   /**
-   * Update the musicID attribute and add the musicItem object to state.
+   * Update the ID attribute and add the musicItem object to state.
    * @param {object} item The selected item.
    */
   setMusicSelection(item) {
@@ -48,7 +48,7 @@ class MusicBlock extends Component {
       },
       setAttributes,
     } = this.props;
-    const musicID = getObjKeyValue(item, 'id'); // get the music ID.
+    const ID = getObjKeyValue(item, 'id'); // get the music ID.
 
     const type = getTypeObject(musicType);
     const initialHeight = getObjKeyValue(type, 'embedHeight');
@@ -65,8 +65,8 @@ class MusicBlock extends Component {
     setAttributes({
       embedType: updateEmbedTyped,
       item,
-      musicID,
-      embedURL: setEmbedURL(musicType, musicID),
+      ID,
+      embedURL: setEmbedURL(musicType, ID),
       height: initialHeight,
     });
   }
@@ -87,7 +87,7 @@ class MusicBlock extends Component {
       embedType: attributes.embedType,
       item: {},
       embedURL: '',
-      musicID: 0,
+      ID: 0,
       textLockUpStyle: 'standard-black',
     });
   }
@@ -97,7 +97,7 @@ class MusicBlock extends Component {
    */
   isMusicSet() {
     const { attributes } = this.props;
-    if (attributes.musicID) {
+    if (attributes.ID) {
       return true;
     }
     return false;

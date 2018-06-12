@@ -52,7 +52,7 @@ export default registerBlockType(
       item: {
         type: 'object',
       },
-      musicID: {
+      ID: {
         type: 'integer',
       },
       musicType: {
