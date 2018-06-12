@@ -66,7 +66,7 @@ class MusicBlock extends Component {
       embedType: updateEmbedTyped,
       item,
       musicID,
-      iframeSrc: setEmbedURL(musicType, musicID),
+      embedURL: setEmbedURL(musicType, musicID),
       height: initialHeight,
     });
   }
@@ -86,7 +86,7 @@ class MusicBlock extends Component {
       appIconStyle: 'standard',
       embedType: attributes.embedType,
       item: {},
-      iframeSrc: '',
+      embedURL: '',
       musicID: 0,
       textLockUpStyle: 'standard-black',
     });
@@ -192,7 +192,7 @@ MusicBlock.propTypes = {
   attributes: PropTypes.shape({
     width: PropTypes.string,
     height: PropTypes.string,
-    iframeSrc: PropTypes.string,
+    embedURL: PropTypes.string,
     item: PropTypes.shape({
       attributes: PropTypes.any,
       id: PropTypes.string,

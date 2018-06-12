@@ -24,7 +24,7 @@ const DisplayTools = ({
     appIconStyle,
     embedType,
     height,
-    iframeSrc,
+    embedURL,
     item,
     musicType,
     textLockUpStyle,
@@ -110,7 +110,7 @@ const DisplayTools = ({
         (! inPanel && showEmbed(musicType)) &&
         <PreviewPlayer
           height={height}
-          iframeSrc={iframeSrc}
+          embedURL={embedURL}
           width={width}
         />
       }
@@ -144,7 +144,7 @@ DisplayTools.propTypes = {
   attributes: PropTypes.shape({
     width: PropTypes.string,
     height: PropTypes.string,
-    iframeSrc: PropTypes.string,
+    embedURL: PropTypes.string,
     item: PropTypes.shape({
       attributes: PropTypes.any,
       id: PropTypes.string,

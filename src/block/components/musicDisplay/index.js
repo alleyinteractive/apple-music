@@ -19,7 +19,7 @@ const MusicDisplay = ({
   attributes: {
     embedType,
     height,
-    iframeSrc,
+    embedURL,
     imageAttributes,
     item,
     width,
@@ -27,7 +27,7 @@ const MusicDisplay = ({
   className,
 }) => {
   let URL = getNestedObject(item, ['attributes', 'url']);
-  const embedURL = iframeURL(iframeSrc, width, height);
+  const embedURLString = iframeURL(embedURL, width, height);
 
   // Set the affiliate token if applicable.
   if (affiliateToken) {
@@ -37,9 +37,9 @@ const MusicDisplay = ({
   return (
     <div className={className}>
       {
-        ('preview-player' === embedType && embedURL) &&
+        ('preview-player' === embedType && embedURLString) &&
         <Fragment>
-          {`\n${embedURL}\n`}
+          {`\n${embedURLString}\n`}
         </Fragment>
       }
       {
@@ -57,7 +57,7 @@ const MusicDisplay = ({
         </a>
       }
       {
-        ! URL && ! embedURL &&
+        ! URL && ! embedURLString &&
         <Placeholder
           icon={appleMusicIcon}
           className="apple-music-placeholder"
@@ -73,7 +73,7 @@ MusicDisplay.propTypes = {
   attributes: PropTypes.shape({
     embedType: PropTypes.string,
     height: PropTypes.string,
-    iframeSrc: PropTypes.string,
+    embedURL: PropTypes.string,
     item: PropTypes.shape({
       attributes: PropTypes.any,
       id: PropTypes.string,

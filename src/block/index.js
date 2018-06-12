@@ -38,7 +38,7 @@ export default registerBlockType(
       height: {
         type: 'string',
       },
-      iframeSrc: {
+      embedURL: {
         type: 'string',
       },
       imageAttributes: {

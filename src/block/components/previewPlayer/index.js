@@ -49,9 +49,9 @@ class PreviewPlayer extends Component {
     if (event) {
       event.preventDefault();
     }
-    const { height, iframeSrc, width } = this.props;
-    // concatenate the URL params to the iframeSrc.
-    const url = iframeURL(iframeSrc, width, height);
+    const { height, embedURL, width } = this.props;
+    // concatenate the URL params to the embedURL.
+    const url = iframeURL(embedURL, width, height);
     wpEmbedAPI(url)
       .then(
         (obj) => {
@@ -69,7 +69,7 @@ class PreviewPlayer extends Component {
         () => {
           this.setState({
             /* eslint-disable max-len */
-            html: `<iframe frameborder="0" allow="autoplay; encrypted-media" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:${width};height:${height};max-width:100%;border:none;overflow:hidden;background:transparent;" src="${iframeSrc}"></iframe>`,
+            html: `<iframe frameborder="0" allow="autoplay; encrypted-media" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:${width};height:${height};max-width:100%;border:none;overflow:hidden;background:transparent;" src="${embedURL}"></iframe>`,
             /* eslint-enable max-len */
           });
         }
@@ -77,7 +77,7 @@ class PreviewPlayer extends Component {
   }
 
   render() {
-    // if there is no iframeSrc return null.
+    // if there is no embedURL return null.
     if ('' === this.state.html) {
       return null;
     }
@@ -95,7 +95,7 @@ class PreviewPlayer extends Component {
 
 PreviewPlayer.propTypes = {
   height: PropTypes.string.isRequired,
-  iframeSrc: PropTypes.string.isRequired,
+  embedURL: PropTypes.string.isRequired,
   width: PropTypes.string.isRequired,
 };
 
