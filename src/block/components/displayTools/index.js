@@ -14,6 +14,8 @@ const {
   ExternalLink,
 } = wp.components;
 
+const { Fragment } = wp.element;
+
 /**
  * Component for displaying search results in Apple Music block.
  */
@@ -71,19 +73,19 @@ const DisplayTools = ({
   const textInput = ! inPanel ? styles.dimensions : '';
 
   return (
-    <div>
+    <Fragment>
       {
         showEmbed(musicType) &&
         <div className={styles.details}>
           {
             ! inPanel &&
-            <div>
+            <Fragment>
               <h1 className={styles.name}>{name}</h1>
               {
                 artistName &&
                   <div className={styles.secondary}>{artistName}</div>
               }
-            </div>
+            </Fragment>
           }
           <div className={formClass}>
             <TextControl
@@ -135,7 +137,7 @@ const DisplayTools = ({
           </ExternalLink>
         </div>
       }
-    </div>
+    </Fragment>
   );
 };
 

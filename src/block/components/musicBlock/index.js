@@ -21,7 +21,7 @@ import placeholder from 'Images/apple.png';
 import styles from './musicBlock.css';
 
 // Extend component
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 
 const { InspectorControls } = wp.editor;
 const { PanelBody } = wp.components;
@@ -163,14 +163,14 @@ class MusicBlock extends Component {
               }
               {
                 this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <BackToSearch onClick={() => this.resetSearch()} />
                   <DisplayTools
                     attributes={attributes}
                     setAttributes={this.props.setAttributes}
                     displayProps={this.state.displayProps}
                   />
-                </div>
+                </Fragment>
               }
             </PanelBody>
           </InspectorControls>
@@ -180,7 +180,7 @@ class MusicBlock extends Component {
             <div className={styles.musicTools}>
               {
                 ! this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <h3 className={styles.introText}>
                     {__(
                       'Get badges, links, and widgets for Apple Music.',
@@ -192,11 +192,11 @@ class MusicBlock extends Component {
                     setAttributes={this.props.setAttributes}
                     inPanel={false}
                   />
-                </div>
+                </Fragment>
               }
               {
                 this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <BackToSearch
                     onClick={() => this.resetSearch()}
                     inPanel={false}
@@ -207,7 +207,7 @@ class MusicBlock extends Component {
                     displayProps={this.state.displayProps}
                     inPanel={false}
                   />
-                </div>
+                </Fragment>
               }
               {
                 ! this.state.isMusicSet &&
