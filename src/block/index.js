@@ -38,7 +38,10 @@ export default registerBlockType(
       height: {
         type: 'string',
       },
-      iframeSrc: {
+      baseEmbedURL: {
+        type: 'string',
+      },
+      embedURL: {
         type: 'string',
       },
       imageAttributes: {
@@ -49,15 +52,15 @@ export default registerBlockType(
           src: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
         },
       },
-      item: {
-        type: 'object',
-      },
-      musicID: {
+      ID: {
         type: 'integer',
       },
       musicType: {
         type: 'string',
         default: 'artists',
+      },
+      name: {
+        type: 'string',
       },
       query: {
         type: 'string',
@@ -65,6 +68,9 @@ export default registerBlockType(
       textLockUpStyle: {
         type: 'string',
         default: 'standard-black',
+      },
+      link: {
+        type: 'string',
       },
       width: {
         type: 'string',

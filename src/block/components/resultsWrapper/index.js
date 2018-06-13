@@ -12,7 +12,7 @@ import { getNestedObject } from 'Utils';
 
 import styles from './resultsWrapper.css';
 
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 const { Button, Dashicon } = wp.components;
 
 /**
@@ -138,7 +138,7 @@ class ResultsWrapper extends Component {
     }
 
     return (
-      <div>
+      <Fragment>
         {
           0 !== this.state.data.length &&
           <div className={styles.resultsBubbleHeader}>
@@ -158,7 +158,7 @@ class ResultsWrapper extends Component {
         <div className={className}>
           {results}
         </div>
-      </div>
+      </Fragment>
     );
   }
 }

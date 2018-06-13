@@ -8,16 +8,20 @@ import MusicDisplay from 'Components/musicDisplay';
 import BackToSearch from 'Components/backToSearch';
 import { setEmbedURL } from 'API';
 import {
+  getItemArtworkURL,
   getObjKeyValue,
+  getNestedObject,
   getTypeObject,
   showEmbed,
+  setEmbedDimensions,
 } from 'Utils';
+import placeholder from 'Images/apple.png';
 
 // CSS
 import styles from './musicBlock.css';
 
 // Extend component
-const { Component } = wp.element;
+const { Component, Fragment } = wp.element;
 
 const { InspectorControls } = wp.editor;
 const { PanelBody } = wp.components;
@@ -31,13 +35,19 @@ class MusicBlock extends Component {
     super(props);
     this.state = {
       isMusicSet: this.isMusicSet(),
+      displayProps: {
+        imageSrc: placeholder,
+        artistName: '',
+        genreNames: [],
+        notesDesc: '',
+      },
     };
     this.setMusicSelection = this.setMusicSelection.bind(this);
     this.isMusicSet = this.isMusicSet.bind(this);
   }
 
   /**
-   * Update the musicID attribute and add the musicItem object to state.
+   * Update the ID attribute and add the musicItem object to state.
    * @param {object} item The selected item.
    */
   setMusicSelection(item) {
@@ -45,16 +55,28 @@ class MusicBlock extends Component {
       attributes: {
         embedType,
         musicType,
+        width,
       },
       setAttributes,
     } = this.props;
-    const musicID = getObjKeyValue(item, 'id'); // get the music ID.
+    const ID = getObjKeyValue(item, 'id'); // get the music ID.
 
-    const type = getTypeObject(musicType);
-    const initialHeight = getObjKeyValue(type, 'embedHeight');
+    const initialHeight = getObjKeyValue(
+      getTypeObject(musicType),
+      'embedHeight'
+    );
 
     this.setState({
       isMusicSet: true,
+      displayProps: {
+        imageSrc: getItemArtworkURL(item, '200', '200') || placeholder,
+        artistName: getNestedObject(item, ['attributes', 'artistName']),
+        genreNames: getNestedObject(item, ['attributes', 'genreNames']),
+        notesDesc: getNestedObject(
+          item,
+          ['attributes', 'editorialNotes', 'short']
+        ),
+      },
     });
 
     // If this music type does not have an embeddable iframe set the embed type default
@@ -62,12 +84,21 @@ class MusicBlock extends Component {
       'preview-player' === embedType) ?
       'badge' : embedType;
 
+    const baseEmbedURL = setEmbedURL(musicType, ID);
+
     setAttributes({
       embedType: updateEmbedTyped,
       item,
-      musicID,
-      iframeSrc: setEmbedURL(musicType, musicID),
+      ID,
+      baseEmbedURL,
+      embedURL: setEmbedDimensions(
+        baseEmbedURL,
+        width,
+        initialHeight
+      ),
+      name: getNestedObject(item, ['attributes', 'name']),
       height: initialHeight,
+      link: getNestedObject(item, ['attributes', 'url']),
     });
   }
 
@@ -81,14 +112,21 @@ class MusicBlock extends Component {
     } = this.props;
     this.setState({
       isMusicSet: false,
+      displayProps: {
+        imageSrc: placeholder,
+        artistName: '',
+        genreNames: [],
+        notesDesc: '',
+      },
     });
     setAttributes({
       appIconStyle: 'standard',
       embedType: attributes.embedType,
-      item: {},
-      iframeSrc: '',
-      musicID: 0,
+      embedURL: '',
+      ID: 0,
       textLockUpStyle: 'standard-black',
+      name: '',
+      link: '',
     });
   }
 
@@ -97,7 +135,7 @@ class MusicBlock extends Component {
    */
   isMusicSet() {
     const { attributes } = this.props;
-    if (attributes.musicID) {
+    if (attributes.ID) {
       return true;
     }
     return false;
@@ -125,13 +163,14 @@ class MusicBlock extends Component {
               }
               {
                 this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <BackToSearch onClick={() => this.resetSearch()} />
                   <DisplayTools
                     attributes={attributes}
                     setAttributes={this.props.setAttributes}
+                    displayProps={this.state.displayProps}
                   />
-                </div>
+                </Fragment>
               }
             </PanelBody>
           </InspectorControls>
@@ -141,7 +180,7 @@ class MusicBlock extends Component {
             <div className={styles.musicTools}>
               {
                 ! this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <h3 className={styles.introText}>
                     {__(
                       'Get badges, links, and widgets for Apple Music.',
@@ -153,11 +192,11 @@ class MusicBlock extends Component {
                     setAttributes={this.props.setAttributes}
                     inPanel={false}
                   />
-                </div>
+                </Fragment>
               }
               {
                 this.state.isMusicSet &&
-                <div>
+                <Fragment>
                   <BackToSearch
                     onClick={() => this.resetSearch()}
                     inPanel={false}
@@ -165,9 +204,10 @@ class MusicBlock extends Component {
                   <DisplayTools
                     attributes={attributes}
                     setAttributes={this.props.setAttributes}
+                    displayProps={this.state.displayProps}
                     inPanel={false}
                   />
-                </div>
+                </Fragment>
               }
               {
                 ! this.state.isMusicSet &&
@@ -175,6 +215,7 @@ class MusicBlock extends Component {
                   className={styles.itemWrapper}
                   attributes={attributes}
                   onSelect={this.setMusicSelection}
+                  displayProps={this.state.displayProps}
                 />
               }
             </div>
@@ -192,12 +233,7 @@ MusicBlock.propTypes = {
   attributes: PropTypes.shape({
     width: PropTypes.string,
     height: PropTypes.string,
-    iframeSrc: PropTypes.string,
-    item: PropTypes.shape({
-      attributes: PropTypes.any,
-      id: PropTypes.string,
-      type: PropTypes.string,
-    }),
+    embedURL: PropTypes.string,
   }).isRequired,
   className: PropTypes.string.isRequired,
   setAttributes: PropTypes.func.isRequired,

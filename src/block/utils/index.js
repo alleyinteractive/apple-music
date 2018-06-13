@@ -107,13 +107,15 @@ export function getImageAttributes(embedType, style = '') {
 }
 
 /**
- * Set up the iframeURL based on the regex pattern for the embed handler.
+ * Set up the embed dimensions based on the regex pattern for the embed handler.
  * @param {string} url the URL to pass to the Embed API
  * @param {string} width the width of the iframe.
  * @param {string} height the height of the iframe.
  */
-export function iframeURL(url, width, height) {
-  return url ? url.concat(`?width=${width}+height=${height}`) : '';
+export function setEmbedDimensions(url, width, height) {
+  const heightParam = height ? `+height=${height}` : '';
+  const widthParam = width ? `width=${width}` : '';
+  return url ? url.concat(`?${widthParam}${heightParam}`) : '';
 }
 
 export default {
@@ -123,5 +125,5 @@ export default {
   getTypeObject,
   showEmbed,
   getNestedObject,
-  iframeURL,
+  setEmbedDimensions,
 };

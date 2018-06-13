@@ -4,10 +4,8 @@ import PreviewPlayer from 'Components/previewPlayer';
 import EmbedSlider from 'Components/embedSlider';
 import {
   showEmbed,
-  getItemArtworkURL,
-  getNestedObject,
+  setEmbedDimensions,
 } from 'Utils';
-import placeholder from 'Images/apple.png';
 import { __ } from '@wordpress/i18n';
 import styles from './displayTools.css';
 
@@ -16,32 +14,33 @@ const {
   ExternalLink,
 } = wp.components;
 
+const { Fragment } = wp.element;
+
 /**
  * Component for displaying search results in Apple Music block.
  */
 const DisplayTools = ({
   attributes: {
     appIconStyle,
+    baseEmbedURL,
     embedType,
     height,
-    iframeSrc,
-    item,
+    embedURL,
     musicType,
+    name,
     textLockUpStyle,
     width,
+    link,
+  },
+  displayProps: {
+    imageSrc,
+    artistName,
+    genreNames,
+    notesDesc,
   },
   inPanel,
   setAttributes,
 }) => {
-  const directLink = getNestedObject(item, ['attributes', 'url']);
-  const imageSrc = getItemArtworkURL(item, '200', '200') || placeholder;
-  const name = getNestedObject(item, ['attributes', 'name']);
-  const artistName = getNestedObject(item, ['attributes', 'artistName']);
-  const genreNames = getNestedObject(item, ['attributes', 'genreNames']);
-  const notesDesc = getNestedObject(
-    item,
-    ['attributes', 'editorialNotes', 'short']
-  );
   // The details information for music without preview player embed.
   const details = ! showEmbed(musicType) ? (
     <div className={styles.detailWrapper}>
@@ -55,7 +54,7 @@ const DisplayTools = ({
         {
           name &&
           <div className={styles.sidePrimary}>
-            {getNestedObject(item, ['attributes', 'name'])}
+            {name}
           </div>
         }
         {
@@ -74,33 +73,39 @@ const DisplayTools = ({
   const textInput = ! inPanel ? styles.dimensions : '';
 
   return (
-    <div>
+    <Fragment>
       {
         showEmbed(musicType) &&
         <div className={styles.details}>
           {
             ! inPanel &&
-            <div>
+            <Fragment>
               <h1 className={styles.name}>{name}</h1>
               {
                 artistName &&
                   <div className={styles.secondary}>{artistName}</div>
               }
-            </div>
+            </Fragment>
           }
           <div className={formClass}>
             <TextControl
               className={textInput}
               label={__('Height', 'apple-music')}
               value={height}
-              onChange={(value) => setAttributes({ height: value })}
+              onChange={(value) => setAttributes({
+                height: value,
+                embedURL: setEmbedDimensions(baseEmbedURL, width, value),
+              })}
               placeholder={height}
             />
             <TextControl
               className={textInput}
               label={__('Width', 'apple-music')}
               value={width}
-              onChange={(value) => setAttributes({ width: value })}
+              onChange={(value) => setAttributes({
+                width: value,
+                embedURL: setEmbedDimensions(baseEmbedURL, value, height),
+              })}
               placeholder={width}
             />
           </div>
@@ -110,7 +115,7 @@ const DisplayTools = ({
         (! inPanel && showEmbed(musicType)) &&
         <PreviewPlayer
           height={height}
-          iframeSrc={iframeSrc}
+          embedURL={embedURL}
           width={width}
         />
       }
@@ -127,12 +132,12 @@ const DisplayTools = ({
         ! inPanel &&
         <div className={styles.directLink}>
           <b>{__('Direct Link: ', 'apple-music')}</b>
-          <ExternalLink href={directLink}>
-            {directLink}
+          <ExternalLink href={link}>
+            {link}
           </ExternalLink>
         </div>
       }
-    </div>
+    </Fragment>
   );
 };
 
@@ -142,14 +147,21 @@ DisplayTools.defaultProps = {
 
 DisplayTools.propTypes = {
   attributes: PropTypes.shape({
-    width: PropTypes.string,
+    appIconStyle: PropTypes.string,
+    embedType: PropTypes.string,
     height: PropTypes.string,
-    iframeSrc: PropTypes.string,
-    item: PropTypes.shape({
-      attributes: PropTypes.any,
-      id: PropTypes.string,
-      type: PropTypes.string,
-    }),
+    embedURL: PropTypes.string,
+    musicType: PropTypes.string,
+    name: PropTypes.string,
+    textLockUpStyle: PropTypes.string,
+    width: PropTypes.string,
+    link: PropTypes.string,
+  }).isRequired,
+  displayProps: PropTypes.shape({
+    imageSrc: PropTypes.string,
+    artistName: PropTypes.string,
+    genreNames: PropTypes.array,
+    notesDesc: PropTypes.string,
   }).isRequired,
   setAttributes: PropTypes.func.isRequired,
   inPanel: PropTypes.bool,
