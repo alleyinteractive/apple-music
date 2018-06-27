@@ -13,7 +13,7 @@ class API {
 	/**
 	 * @var string $base_url Base Apple Music API endpoint URL.
 	 */
-	protected $base_url = 'https://api.music.apple.com/v1';
+	protected $base_url = 'http://union.staging.organicfruitapps.com/wp/v1';
 
 	/**
 	 * @var string $storefront Apple Music Storefront to query.
@@ -30,7 +30,6 @@ class API {
 	 */
 	public function __construct() {
 		$settings         = new Settings();
-		$this->token      = $settings->get_token();
 		$this->storefront = $settings->get_storefront();
 	}
 
@@ -98,22 +97,13 @@ class API {
 
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
 
-			$response = wpcom_vip_file_get_contents( $url_safe, 8, 900, [
-				'http_api_args' => [
-					'headers' => [
-						'Authorization' => "Bearer {$this->token}",
-					],
-				],
-			] );
+			$response = wpcom_vip_file_get_contents( $url_safe, 8, 900 );
 		} else {
 			$response = wp_safe_remote_request(
 				$url_safe,
 				[
 					'method'  => $method,
 					'timeout' => 8,
-					'headers' => [
-						'Authorization' => "Bearer {$this->token}",
-					],
 				]
 			);
 			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {

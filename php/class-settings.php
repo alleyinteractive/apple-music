@@ -33,17 +33,6 @@ class Settings {
 		);
 
 		add_settings_field(
-			'apple_music_token',
-			esc_html__( 'Apple Music Token', 'apple-music' ),
-			[ $this, 'add_token_field' ],
-			'apple_music',
-			'apple_music_settings',
-			[
-				'label_for' => 'token',
-			]
-		);
-
-		add_settings_field(
 			'apple_music_storefront',
 			esc_html__( 'Apple Music Storefront', 'apple-music' ),
 			[ $this, 'add_storefront_field' ],
@@ -73,20 +62,8 @@ class Settings {
 	 */
 	function section( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Section description placeholder', 'apple-music' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Apple Music plugin here.', 'apple-music' ); ?></p>
 		<?php
-	}
-
-	/**
-	 * Helper to get token.
-	 *
-	 * @return string
-	 */
-	function get_token() {
-		$options = get_option( 'apple_music_options' );
-		$token   = ! empty( $options['token'] ) ? $options['token'] : '';
-
-		return $token;
 	}
 
 	/**
@@ -111,22 +88,6 @@ class Settings {
 		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
 
 		return $storefront;
-	}
-
-	/**
-	 * Token field.
-	 *
-	 * @param $args
-	 */
-	function add_token_field( $args ) {
-		?>
-		<input type="text" name="apple_music_options[token]" value="<?php echo esc_attr( $this->get_token() ); ?>" class="large-text"/>
-
-		<p class="description">
-			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
-		</p>
-
-		<?php
 	}
 
 	/**
