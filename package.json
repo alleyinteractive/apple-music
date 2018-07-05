@@ -14,7 +14,7 @@
     "autoprefixer": "^8.6.4",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.5",
-    "babel-loader": "^7.1.4",
+    "babel-loader": "^7.1.5",
     "babel-plugin-module-resolver": "^3.1.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
@@ -22,7 +22,7 @@
     "eslint-import-resolver-babel-module": "^4.0.0",
     "eslint-loader": "^2.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-jsx-a11y": "^6.1.0",
     "eslint-plugin-react": "^7.10.0",
     "file-loader": "^1.1.11",
     "postcss": "^6.0.23",
@@ -35,7 +35,7 @@
   "dependencies": {
     "@wordpress/i18n": "^1.1.1",
     "memize": "^1.0.5",
-    "mini-css-extract-plugin": "^0.4.0",
+    "mini-css-extract-plugin": "^0.4.1",
     "postcss-cssnext": "^3.1.0",
     "postcss-discard-comments": "^2.0.4",
     "postcss-focus": "^3.0.0",
@@ -48,6 +48,6 @@
     "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "stylelint": "^9.3.0",
-    "webpack": "^4.12.2"
+    "webpack": "^4.15.1"
   }
 }
