@@ -13,7 +13,7 @@ class API {
 	/**
 	 * @var string $base_url Base Apple Music API endpoint URL.
 	 */
-	protected $base_url = 'http://union.staging.organicfruitapps.com/wp/v1';
+	protected $base_url = 'https://union.staging.organicfruitapps.com/wp/v1';
 
 	/**
 	 * @var string $storefront Apple Music Storefront to query.
