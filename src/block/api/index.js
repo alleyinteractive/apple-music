@@ -17,10 +17,6 @@ export const baseURL = 'https://union.staging.organicfruitapps.com/wp';
 export function request(endpoint, method) {
   return fetch(endpoint, {
     method,
-    mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json',
-    },
   })
     .then((res) => res.json())
     .catch((error) => error.status);
