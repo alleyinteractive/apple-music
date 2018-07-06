@@ -2,11 +2,10 @@ import {
   getObjKeyValue,
   getTypeObject,
 } from 'Utils';
-import token from '../token';
 import { storefront } from '../settings';
 
 // Base URL for the apple music API
-export const baseURL = 'https://api.music.apple.com';
+export const baseURL = 'https://union.staging.organicfruitapps.com/wp';
 
 /**
  * Performs a generic request against the specified endpoint of the Apple Music API.
@@ -18,12 +17,6 @@ export const baseURL = 'https://api.music.apple.com';
 export function request(endpoint, method) {
   return fetch(endpoint, {
     method,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      Host: 'api.music.apple.com',
-      Authorization: `Bearer ${token}`,
-      'Cache-Control': 'no-transform, max-age=900',
-    },
   })
     .then((res) => res.json())
     .catch((error) => error.status);
