@@ -8,11 +8,11 @@ Stable tag: 1.0.0
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl.html
 
-The Apple Music plugin enables you add songs, albums and artists through Apple Music badges, links and widgets on your Wordpress site.
+The Apple Music plugin enables you to add songs, albums and artists through Apple Music badges, links and widgets on your Wordpress site.
 
 == Description ==
 
-The Apple Music plugin enables you add songs, albums and artists through Apple Music badges, links and widgets on your Wordpress site.
+The Apple Music plugin enables you to add songs, albums and artists through Apple Music badges, links and widgets on your Wordpress site.
 
 == Installation ==
 
