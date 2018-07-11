@@ -109,7 +109,7 @@ class Settings {
 			<?php endforeach; ?>
 		</select>
 		<p class="description">
-			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
+			<?php esc_html_e( 'Choose your region here.', 'apple-music' ); ?>
 		</p>
 		<?php
 	}
@@ -123,7 +123,7 @@ class Settings {
 		<input type="text" name="apple_music_options[affiliate_token]" value="<?php echo esc_attr( $this->get_affiliate_token() ); ?>" class="large-text"/>
 
 		<p class="description">
-			<?php esc_html_e( 'Field description placeholder', 'apple-music' ); ?>
+			<?php esc_html_e( 'If you have one, you can add your Affiliate Token here.', 'apple-music' ); ?>
 		</p>
 
 		<?php
