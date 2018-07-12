@@ -33,7 +33,7 @@
     "webpack-cli": "^2.1.5"
   },
   "dependencies": {
-    "@wordpress/i18n": "^1.2.0",
+    "@wordpress/i18n": "^1.1.1",
     "memize": "^1.0.5",
     "mini-css-extract-plugin": "^0.4.1",
     "postcss-cssnext": "^3.1.0",
