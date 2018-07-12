@@ -98,7 +98,7 @@ class MusicBlock extends Component {
       ),
       name: getNestedObject(item, ['attributes', 'name']),
       height: initialHeight,
-      link: getNestedObject(item, ['attributes', 'url']),
+      link: `${getNestedObject(item, ['attributes', 'url'])}&app=music`,
     });
   }
 
