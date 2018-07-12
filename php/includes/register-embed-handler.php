@@ -32,6 +32,9 @@ wp_embed_register_handler(
 			return;
 		}
 
+		// Get affiliate token from Apple Music settings, if applicable.
+		$affiliate_token = ( new Settings() )->get_affiliate_token();
+
 		// default width and height
 		$height = '450px';
 		$width  = '650px';
@@ -57,10 +60,12 @@ wp_embed_register_handler(
 			}
 		}
 
-		$src = sprintf( 'https://embed.music.apple.com/%1$s/%2$s/%3$s',
+		// Source for embed URL
+		$src = sprintf( 'https://embed.music.apple.com/%1$s/%2$s/%3$s?app=music%4$s',
 			$matches[1], // Storefront
 			$matches[2], // type
-			$matches[3]  // ID
+			$matches[3], // ID
+			! empty( $affiliate_token ) ? '&at=' . esc_html( $affiliate_token ) : '' // affiliate token
 		);
 
 		return sprintf(
