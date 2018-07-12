@@ -79,6 +79,25 @@ class Settings {
 	}
 
 	/**
+	 * Apply the affiliate token to a URL.
+	 *
+	 * @param string  $url the URL to apply the affiliate token to.
+	 * @return string the URL with the affiliate token
+	 */
+	function apply_affiliate_token( $url ) {
+		$affiliate_token = $this->get_affiliate_token();
+		// Identify as Apple Music origin by appending this query var.
+		// This applies to all URLs regardless of affiliate token presence.
+		$query_vars = [ 'app' => 'music' ];
+
+		if ( ! empty( $affiliate_token ) ) {
+			$query_vars['at'] = $affiliate_token;
+		}
+
+		return add_query_arg( $query_vars, $url );
+	}
+
+	/**
 	 * Helper to get storefront.
 	 *
 	 * @return string

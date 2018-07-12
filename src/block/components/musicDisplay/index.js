@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { applyAffiliateToken } from 'Utils';
 import { __, sprintf } from '@wordpress/i18n';
-import { affiliateToken } from '../../settings';
 import { appleMusicIcon } from '../../icons';
 
 const { Fragment } = wp.element;
@@ -22,8 +22,7 @@ const MusicDisplay = ({
   className,
 }) => {
   // Set the affiliate token if applicable.
-  const URL = affiliateToken && link ?
-    link.concat(`?at=${affiliateToken}`) : link;
+  const URL = applyAffiliateToken(link);
 
   return (
     <div className={className}>
