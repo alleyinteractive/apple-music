@@ -1,5 +1,6 @@
 import musicTypes from 'Config/musicTypes';
 import embedTypes from 'Config/embedTypes';
+import { affiliateToken } from '../settings';
 
 /**
  * Get an objects key value.
@@ -118,6 +119,18 @@ export function setEmbedDimensions(url, width, height) {
   return url ? url.concat(`?${widthParam}${heightParam}`) : '';
 }
 
+/**
+ * Apply the affiliate token to a URL.
+ * @param {string} link the link to apply the affiliate token to.
+ * @returns {string}
+ */
+export function applyAffiliateToken(link) {
+  // if there is a link append the app=music query string
+  const url = link ? `${link}?app=music` : link;
+  return affiliateToken && link ?
+    url.concat(`&at=${affiliateToken}`) : url;
+}
+
 export default {
   getIconImagePath,
   getImageAttributes,
@@ -126,4 +139,5 @@ export default {
   showEmbed,
   getNestedObject,
   setEmbedDimensions,
+  applyAffiliateToken,
 };
