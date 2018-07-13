@@ -125,10 +125,10 @@ export function setEmbedDimensions(url, width, height) {
  * @returns {string}
  */
 export function applyAffiliateToken(link) {
-  let url = `${link}?app=music`;
-  url = affiliateToken && link ?
+  // if there is a link append the app=music query string
+  const url = link ? `${link}?app=music` : link;
+  return affiliateToken && link ?
     url.concat(`&at=${affiliateToken}`) : url;
-  return url;
 }
 
 export default {
