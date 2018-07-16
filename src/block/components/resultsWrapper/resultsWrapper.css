@@ -29,3 +29,18 @@
     width: 14px;
   }
 }
+
+.itemWrapper {
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.itemWrapperTwo {
+  display: flex;
+
+  button {
+    margin-right: 15px;
+  }
+}

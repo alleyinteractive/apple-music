@@ -115,7 +115,6 @@ class ResultsWrapper extends Component {
   // Component Render method.
   render() {
     const {
-      className,
       attributes: { musicType },
     } = this.props;
 
@@ -137,6 +136,10 @@ class ResultsWrapper extends Component {
         .charAt(0).toUpperCase()}${string.slice(1)}`;
     }
 
+    const items = getNestedObject(this.state.data, ['data']);
+    const wrapperClass = items && 2 === items.length ?
+      styles.itemWrapperTwo : styles.itemWrapper;
+
     return (
       <Fragment>
         {
@@ -155,7 +158,7 @@ class ResultsWrapper extends Component {
             }
           </div>
         }
-        <div className={className}>
+        <div className={wrapperClass}>
           {results}
         </div>
       </Fragment>
@@ -163,16 +166,11 @@ class ResultsWrapper extends Component {
   }
 }
 
-ResultsWrapper.defaultProps = {
-  className: '',
-};
-
 ResultsWrapper.propTypes = {
   attributes: PropTypes.shape({
     query: PropTypes.string,
     musicType: PropTypes.string,
   }).isRequired,
-  className: PropTypes.string,
   onSelect: PropTypes.func.isRequired,
 };
 

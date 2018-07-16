@@ -212,7 +212,6 @@ class MusicBlock extends Component {
               {
                 ! this.state.isMusicSet &&
                 <ResultsWrapper
-                  className={styles.itemWrapper}
                   attributes={attributes}
                   onSelect={this.setMusicSelection}
                   displayProps={this.state.displayProps}
