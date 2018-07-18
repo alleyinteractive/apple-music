@@ -136,10 +136,6 @@ class ResultsWrapper extends Component {
         .charAt(0).toUpperCase()}${string.slice(1)}`;
     }
 
-    const items = getNestedObject(this.state.data, ['data']);
-    const wrapperClass = items && 2 === items.length ?
-      styles.itemWrapperTwo : styles.itemWrapper;
-
     return (
       <Fragment>
         {
@@ -158,7 +154,7 @@ class ResultsWrapper extends Component {
             }
           </div>
         }
-        <div className={wrapperClass}>
+        <div className={styles.itemWrapper}>
           {results}
         </div>
       </Fragment>
