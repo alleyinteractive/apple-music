@@ -3,6 +3,7 @@
 @import '../../../styles/shared.css';
 
 .searchTools {
+  padding: 0 14px;
   width: 100%;
 
   label {

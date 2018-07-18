@@ -7,6 +7,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: em(12px);
+  padding: 0 14px;
 
   h3 {
     margin: 0;
@@ -34,13 +35,8 @@
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-.itemWrapperTwo {
-  display: flex;
 
   button {
-    margin-right: 15px;
+    width: 25%;
   }
 }
