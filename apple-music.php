@@ -26,4 +26,5 @@ add_action( 'plugins_loaded', function () {
 	new Shortcode;
 	new Settings;
 	new Block;
-} );
+}
+);
