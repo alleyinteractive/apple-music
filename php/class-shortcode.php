@@ -107,7 +107,7 @@ class Shortcode {
 			$url = sprintf( '%1$s/%2$s/%3$s/%4$s',
 				'https://embed.music.apple.com', // 1
 				$storefront, // 2
-				$player_types[ $shortcode_atts['type'] ]['singular'], // 3
+				$player_types[ $shortcode_atts['type'] ]['music_url_fragment'], // 3
 				$shortcode_atts['id'] // 4
 			);
 
@@ -122,7 +122,7 @@ class Shortcode {
 			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s',
 				'https://geo.itunes.apple.com', // 1
 				$storefront, // 2
-				sanitize_text_field( $types[ $shortcode_atts['type'] ]['singular'] ), // 3
+				sanitize_text_field( $types[ $shortcode_atts['type'] ]['itunes_url_fragment'] ), // 3
 				sanitize_title( $shortcode_atts['name'] ), // 4
 				sanitize_text_field( $shortcode_atts['id'] ) // 5
 			);
