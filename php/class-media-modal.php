@@ -156,9 +156,9 @@ class Media_Modal {
 		if ( ! empty( $response->$type->data ) ) {
 			foreach ( $response->$type->data as $thing ) {
 
-				$item       = [];
-				$item['id'] = $thing->id;
-				$attributes = $thing->attributes;
+				$item              = [];
+				$item['id']        = $thing->id;
+				$attributes        = $thing->attributes;
 				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
 				$item['shortcode'] = $shortcode;
 

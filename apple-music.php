@@ -20,11 +20,13 @@ define( 'APPLE_MUSIC_VERSION', '0.1.1' );
 require_once PATH . '/php/autoload.php';
 require_once PATH . '/php/includes/includes.php';
 
-add_action( 'plugins_loaded', function () {
-	new Apple_Music_I18n;
-	new Media_Modal;
-	new Shortcode;
-	new Settings;
-	new Block;
-}
+add_action(
+	 'plugins_loaded',
+	function () {
+		new Apple_Music_I18n;
+		new Media_Modal;
+		new Shortcode;
+		new Settings;
+		new Block;
+	}
 );
