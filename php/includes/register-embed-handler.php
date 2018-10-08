@@ -58,7 +58,8 @@ wp_embed_register_handler(
 		}
 
 		// Source for embed URL
-		$src = sprintf( 'https://embed.music.apple.com/%1$s/%2$s/%3$s',
+		$src = sprintf(
+			 'https://embed.music.apple.com/%1$s/%2$s/%3$s',
 			$matches[1], // Storefront
 			$matches[2], // type
 			$matches[3] // ID
@@ -70,5 +71,7 @@ wp_embed_register_handler(
 			esc_attr( $height ),
 			esc_url( ( new Settings() )->apply_affiliate_token( $src ) )
 		);
-	}, 10, 4
+	},
+	10,
+	4
 );

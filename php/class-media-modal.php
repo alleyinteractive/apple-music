@@ -11,7 +11,7 @@ namespace Apple_Music;
 class Media_Modal {
 
 	public $items = [];
-	public $meta = [ 'count' => null ];
+	public $meta  = [ 'count' => null ];
 
 	/**
 	 * Media_Modal constructor.
@@ -66,11 +66,14 @@ class Media_Modal {
 			wp_die( '-1' );
 		}
 
-		$request = wp_parse_args( stripslashes_deep( $_POST ), [
-			'params' => [],
-			'tab'    => null,
-			'page'   => 1,
-		] );
+		$request = wp_parse_args(
+			 stripslashes_deep( $_POST ),
+			[
+				'params' => [],
+				'tab'    => null,
+				'page'   => 1,
+			]
+			);
 
 		$request['page'] = absint( $request['page'] );
 		$params          = $request['params'];
@@ -79,10 +82,12 @@ class Media_Modal {
 		$response        = $api->search( reset( $params ), $type_name, $request['page'] );
 
 		if ( is_wp_error( $response ) ) {
-			wp_send_json_error( [
-				'error_code'    => $response->get_error_code(),
-				'error_message' => $response->get_error_message(),
-			] );
+			wp_send_json_error(
+				 [
+					 'error_code'    => $response->get_error_code(),
+					 'error_message' => $response->get_error_message(),
+				 ]
+				);
 
 		} else {
 			$this->process_response( $response );
@@ -154,13 +159,12 @@ class Media_Modal {
 		if ( ! empty( $response->$type->data ) ) {
 			foreach ( $response->$type->data as $thing ) {
 
-				$item              = [];
-				$item['id']        = $thing->id;
-				$attributes        = $thing->attributes;
+				$item       = [];
+				$item['id'] = $thing->id;
+				$attributes = $thing->attributes;
 
 				// Type must be extracted from URL for safety.
 				//$url = $attributes->url;
-
 
 				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
 				$item['shortcode'] = $shortcode;
