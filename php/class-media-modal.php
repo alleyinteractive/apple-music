@@ -151,9 +151,6 @@ class Media_Modal {
 		reset( $response );
 		$type = key( $response );
 
-		//print_r($response);
-		//die();
-
 		$this->add_meta( 'loadMore', ! empty( $response->$type->next ) );
 
 		if ( ! empty( $response->$type->data ) ) {
@@ -162,10 +159,6 @@ class Media_Modal {
 				$item       = [];
 				$item['id'] = $thing->id;
 				$attributes = $thing->attributes;
-
-				// Type must be extracted from URL for safety.
-				//$url = $attributes->url;
-
 				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
 				$item['shortcode'] = $shortcode;
 
