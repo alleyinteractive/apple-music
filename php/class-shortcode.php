@@ -51,22 +51,22 @@ class Shortcode {
 			],
 			'text-lockup-standard-black' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'standard-black.svg',
+				'default_color' => 'music-standard-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'text-lockup-standard-white' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'standard-white.svg',
+				'default_color' => 'music-standard-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'text-lockup-mono-white' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'mono-white.svg',
+				'default_color' => 'music-mono-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'text-lockup-mono-black' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'mono-black.svg',
+				'default_color' => 'music-mono-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'app-icon'    => [

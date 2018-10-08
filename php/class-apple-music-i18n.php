@@ -4,6 +4,7 @@
  *
  * @package Apple_Music
  */
+
 namespace Apple_Music;
 
 class Apple_Music_I18n {
