@@ -44,7 +44,8 @@ class API {
 	 */
 	public function search( $term, $types, $page ) {
 
-		$url = sprintf( '%s/%s/%s/%s',
+		$url = sprintf(
+			 '%s/%s/%s/%s',
 			$this->base_url,
 			'catalog',
 			$this->storefront,
@@ -67,7 +68,8 @@ class API {
 		$storefronts = get_transient( $transient );
 		if ( false === $storefronts ) {
 
-			$url = sprintf( '%s/%s',
+			$url = sprintf(
+				 '%s/%s',
 				$this->base_url,
 				'storefronts'
 			);

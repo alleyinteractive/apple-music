@@ -31,55 +31,59 @@ class Shortcode {
 
 		$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 
-		$shortcode_atts = shortcode_atts( [
-			'type'   => '',
-			'name'   => '',
-			'id'     => false,
-			'height' => null,
-			'width'  => null,
-			'format' => null,
-			'color'  => null,
-		], $atts, $tag );
+		$shortcode_atts = shortcode_atts(
+			 [
+				 'type'   => '',
+				 'name'   => '',
+				 'id'     => false,
+				 'height' => null,
+				 'width'  => null,
+				 'format' => null,
+				 'color'  => null,
+			 ],
+			 $atts,
+			 $tag
+			);
 
 		$formats = [
-			'player'            => [],
-			'link'              => [],
-			'badge'             => [
+			'player'                     => [],
+			'link'                       => [],
+			'badge'                      => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
 				'default_color' => '', // Not used
 				'dimensions'    => 'width:157px;height:45px;',
 			],
 			'text-lockup-standard-black' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'standard-black.svg',
+				'default_color' => 'music-standard-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
 			'text-lockup-standard-white' => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'standard-white.svg',
+				'default_color' => 'music-standard-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'text-lockup-mono-white' => [
+			'text-lockup-mono-white'     => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'mono-white.svg',
+				'default_color' => 'music-mono-white.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'text-lockup-mono-black' => [
+			'text-lockup-mono-black'     => [
 				'background'    => 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/',
-				'default_color' => 'mono-black.svg',
+				'default_color' => 'music-mono-black.svg',
 				'dimensions'    => 'width:140px;height:30px;',
 			],
-			'app-icon'    => [
+			'app-icon'                   => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg',
 				'default_color' => '',
 				'dimensions'    => 'width:40px;height:40px;',
 			],
-			'app-icon-black'    => [
+			'app-icon-black'             => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
 				'default_color' => '000000',
 				'dimensions'    => 'width:40px;height:40px;',
 			],
-			'app-icon-white'    => [
+			'app-icon-white'             => [
 				'background'    => 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=',
 				'default_color' => 'FFFFFF',
 				'dimensions'    => 'width:40px;height:40px;',
@@ -104,14 +108,16 @@ class Shortcode {
 
 		// Embeds only (album, song, playlist).
 		if ( array_key_exists( $shortcode_atts['type'], $player_types ) && 'player' === $format ) {
-			$url = sprintf( '%1$s/%2$s/%3$s/%4$s',
+			$url = sprintf(
+				 '%1$s/%2$s/%3$s/%4$s',
 				'https://embed.music.apple.com', // 1
 				$storefront, // 2
-				$player_types[ $shortcode_atts['type'] ]['singular'], // 3
+				$player_types[ $shortcode_atts['type'] ]['music_url_fragment'], // 3
 				$shortcode_atts['id'] // 4
 			);
 
-			$output = sprintf( '<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="%2$s" width="%1$s" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:%1$s;height:%2$s;max-width:100%%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
+			$output = sprintf(
+				 '<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="%2$s" width="%1$s" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:%1$s;height:%2$s;max-width:100%%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
 				$player_types[ $shortcode_atts['type'] ]['default_width'], // 1
 				$player_types[ $shortcode_atts['type'] ]['default_height'], // 2
 				esc_url( $settings->apply_affiliate_token( $url ) ) // 3
@@ -119,17 +125,19 @@ class Shortcode {
 
 		} else {
 
-			$url = sprintf( '%1$s/%2$s/%3$s/%4$s/%5$s',
+			$url = sprintf(
+				 '%1$s/%2$s/%3$s/%4$s/%5$s',
 				'https://geo.itunes.apple.com', // 1
 				$storefront, // 2
-				sanitize_text_field( $types[ $shortcode_atts['type'] ]['singular'] ), // 3
+				sanitize_text_field( $types[ $shortcode_atts['type'] ]['itunes_url_fragment'] ), // 3
 				sanitize_title( $shortcode_atts['name'] ), // 4
 				sanitize_text_field( $shortcode_atts['id'] ) // 5
 			);
 
 			// If we just want a link, we're done here.
 			if ( 'link' === $format ) {
-				$output = sprintf( '<a href="%1$s">%1$s</a>',
+				$output = sprintf(
+					 '<a href="%1$s">%1$s</a>',
 					esc_url( $settings->apply_affiliate_token( $url ) ) // 1
 				);
 
@@ -137,7 +145,8 @@ class Shortcode {
 			}
 
 			// Assemble the badge/text lockup/app icon.
-			$output = sprintf( '<a href="%1$s" style="display:inline-block;box-shadow:none;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
+			$output = sprintf(
+				 '<a href="%1$s" style="display:inline-block;box-shadow:none;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
 				esc_url( $settings->apply_affiliate_token( $url ) ), // 1
 				esc_url( $formats[ $format ]['background'] ), // 2
 				esc_attr( empty( $shortcode_atts['color'] ) ? $formats[ $format ]['default_color'] : $shortcode_atts['color'] ), // 3
