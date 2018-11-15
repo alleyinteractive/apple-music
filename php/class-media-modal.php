@@ -159,15 +159,12 @@ class Media_Modal {
 				$item              = [];
 				$item['id']        = $thing->id;
 				$attributes        = $thing->attributes;
-				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
-
 				$shortcode = sprintf(
 					'[apple-music type="%1$s" id="%2$s" name="%3$s"]',
-					$type, // 1
-					$thing->id, // 2
-					str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) // 3
+					$this->shortcode_cleaner( $type ), // 1
+					$this->shortcode_cleaner( $thing->id ), // 2
+					$this->shortcode_cleaner( $attributes->name ) // 3
 				);
-
 
 				$item['shortcode'] = $shortcode;
 
@@ -202,6 +199,10 @@ class Media_Modal {
 				$this->items[] = $item;
 			}
 		}
+	}
+
+	public function shortcode_cleaner( $string ) {
+		return str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $string );
 	}
 
 	/**
