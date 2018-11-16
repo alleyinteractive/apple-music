@@ -26,17 +26,16 @@ class Block {
 			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
 			APPLE_MUSIC_VERSION
 		);
-		// get the Apple Music settings to pass to the blocks script.
-		$settings = new Settings();
+
 		// Get storefront.
-		$storefront = $settings->get_storefront();
+		$storefront = Settings::get_storefront();
 
 		wp_localize_script(
 			'apple-music-block',
 			'appleMusicBlock',
 			[
 				'storefront'     => ! empty( $storefront ) ? sanitize_text_field( $storefront ) : 'us',
-				'affiliateToken' => $settings->get_affiliate_token(),
+				'affiliateToken' => Settings::get_affiliate_token(),
 			]
 		);
 	}

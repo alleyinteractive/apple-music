@@ -98,10 +98,8 @@ class Shortcode {
 			return false;
 		}
 
-		$settings = new Settings();
-
 		// Get storefront.
-		$storefront = $settings->get_storefront();
+		$storefront = Settings::get_storefront();
 
 		// If necessary, set a default format.
 		$format = array_key_exists( $shortcode_atts['format'], $formats ) ? $shortcode_atts['format'] : $types[ $shortcode_atts['type'] ]['default_format'];
@@ -120,7 +118,7 @@ class Shortcode {
 				 '<iframe allow="autoplay *; encrypted-media *;" frameborder="0" height="%2$s" width="%1$s" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:%1$s;height:%2$s;max-width:100%%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
 				$player_types[ $shortcode_atts['type'] ]['default_width'], // 1
 				$player_types[ $shortcode_atts['type'] ]['default_height'], // 2
-				esc_url( $settings->apply_affiliate_token( $url ) ) // 3
+				esc_url( Settings::apply_affiliate_token( $url ) ) // 3
 			);
 
 		} else {
@@ -138,7 +136,7 @@ class Shortcode {
 			if ( 'link' === $format ) {
 				$output = sprintf(
 					 '<a href="%1$s">%1$s</a>',
-					esc_url( $settings->apply_affiliate_token( $url ) ) // 1
+					esc_url( Settings::apply_affiliate_token( $url ) ) // 1
 				);
 
 				return $output;
@@ -147,7 +145,7 @@ class Shortcode {
 			// Assemble the badge/text lockup/app icon.
 			$output = sprintf(
 				 '<a href="%1$s" style="display:inline-block;box-shadow:none;overflow:hidden;background:url(%2$s%3$s) no-repeat;%4$s"></a>',
-				esc_url( $settings->apply_affiliate_token( $url ) ), // 1
+				esc_url( Settings::apply_affiliate_token( $url ) ), // 1
 				esc_url( $formats[ $format ]['background'] ), // 2
 				esc_attr( empty( $shortcode_atts['color'] ) ? $formats[ $format ]['default_color'] : $shortcode_atts['color'] ), // 3
 				esc_attr( $formats[ $format ]['dimensions'] ) // 4

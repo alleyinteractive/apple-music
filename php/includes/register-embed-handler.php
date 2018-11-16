@@ -59,7 +59,7 @@ wp_embed_register_handler(
 
 		// Source for embed URL
 		$src = sprintf(
-			 'https://embed.music.apple.com/%1$s/%2$s/%3$s',
+			'https://embed.music.apple.com/%1$s/%2$s/%3$s',
 			$matches[1], // Storefront
 			$matches[2], // type
 			$matches[3] // ID
@@ -69,7 +69,7 @@ wp_embed_register_handler(
 			'<iframe frameborder="0" allow="autoplay *; encrypted-media *;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation" style="padding:0;width:%1$s;height:%2$s;max-width:100%%;border:none;overflow:hidden;background:transparent;" src="%3$s"></iframe>',
 			esc_attr( $width ),
 			esc_attr( $height ),
-			esc_url( ( new Settings() )->apply_affiliate_token( $src ) )
+			esc_url( Settings::apply_affiliate_token( $src ) )
 		);
 	},
 	10,
