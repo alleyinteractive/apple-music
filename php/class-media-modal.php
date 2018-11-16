@@ -52,7 +52,7 @@ class Media_Modal {
 	 * Add dedicated media modal button.
 	 */
 	public function add_button() {
-		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music' ) . '</a>';
+		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music', 'apple-music' ) . '</a>';
 	}
 
 	/**
@@ -159,13 +159,19 @@ class Media_Modal {
 				$item              = [];
 				$item['id']        = $thing->id;
 				$attributes        = $thing->attributes;
-				$shortcode         = '[apple-music type="' . $type . '" id="' . $thing->id . '" name="' . str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $attributes->name ) . '" ]';
+				$shortcode = sprintf(
+					'[apple-music type="%1$s" id="%2$s" name="%3$s"]',
+					$this->shortcode_cleaner( $type ), // 1
+					$this->shortcode_cleaner( $thing->id ), // 2
+					$this->shortcode_cleaner( $attributes->name ) // 3
+				);
+
 				$item['shortcode'] = $shortcode;
 
 				switch ( $type ) {
 
 					case 'artists':
-						$item['content']   = $attributes->name;
+						$item['content']   = esc_html( $attributes->name );
 						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'src/images/apple.png' );
 						break;
 
@@ -175,16 +181,16 @@ class Media_Modal {
 					case 'activities':
 					case 'music-videos':
 						// @codingStandardsIgnoreLine snake_case is returned by API.
-						$item['content']   = $attributes->artistName . ' ' . $attributes->name;
+						$item['content']   = esc_html( $attributes->artistName . ' ' . $attributes->name );
 						$thumbnail         = str_replace( [ '{w}', '{h}' ], [ 140, 140 ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						// @codingStandardsIgnoreLine snake_case is returned by API.
-						$item['description'] = $attributes->editorialNotes->short;
+						$item['description'] = esc_html( $attributes->editorialNotes->short );
 						break;
 
 					case 'stations':
 					case 'curators':
-						$item['content']   = $attributes->name;
+						$item['content']   = esc_html( $attributes->name );
 						$thumbnail         = str_replace( [ '{w}', '{h}', '{c}' ], [ 140, 140, 'bb' ], $attributes->artwork->url );
 						$item['thumbnail'] = esc_url_raw( $thumbnail );
 						break;
@@ -193,6 +199,10 @@ class Media_Modal {
 				$this->items[] = $item;
 			}
 		}
+	}
+
+	public function shortcode_cleaner( $string ) {
+		return str_replace( [ '[', ']' ], [ '&#091;', '&#093;' ], $string );
 	}
 
 	/**
