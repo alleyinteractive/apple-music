@@ -121,6 +121,7 @@ class ResultsWrapper extends Component {
     const results = getItems(this.state.data)
       .map((item) => (
         <MusicItem
+          key={item.id}
           item={item}
           onClick={() => this.selectItem(item)}
         />
