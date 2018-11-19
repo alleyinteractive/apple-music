@@ -98,7 +98,7 @@ class EmbedSlider extends Component {
     // Get the styles options for the Select Control.
     const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
       (undefined !== styles && value === embedType) ?
-        acc.concat(styles) : acc.concat()), []);
+        acc.concat(styles) : acc), []);
 
     return (
       <div className={sliderClass}>
