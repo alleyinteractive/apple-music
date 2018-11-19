@@ -131,6 +131,16 @@ export function applyAffiliateToken(link) {
     url.concat(`&at=${affiliateToken}`) : url;
 }
 
+/**
+ * Capitalize the first letter of a string.
+ * @param {string} string
+ * @returns {string} the string with the first character capitalized.
+ */
+export function ucFirst(string) {
+  return `${string
+    .charAt(0).toUpperCase()}${string.slice(1)}`;
+}
+
 export default {
   getIconImagePath,
   getImageAttributes,
@@ -140,4 +150,5 @@ export default {
   getNestedObject,
   setEmbedDimensions,
   applyAffiliateToken,
+  ucFirst,
 };
