@@ -21,7 +21,7 @@ class Settings {
 	/**
 	 * Register our settings.
 	 */
-	function register_settings() {
+	public function register_settings() {
 
 		register_setting( 'apple_music', 'apple_music_options' );
 
@@ -60,7 +60,7 @@ class Settings {
 	 *
 	 * @param $args
 	 */
-	function section( $args ) {
+	public function section( $args ) {
 		?>
 		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Apple Music plugin here.', 'apple-music' ); ?></p>
 		<?php
@@ -71,7 +71,7 @@ class Settings {
 	 *
 	 * @return string The affiliate token.
 	 */
-	function get_affiliate_token() {
+	public static function get_affiliate_token() {
 		$options = get_option( 'apple_music_options' );
 		$token   = ! empty( $options['affiliate_token'] ) ? $options['affiliate_token'] : '';
 
@@ -84,8 +84,8 @@ class Settings {
 	 * @param string  $url the URL to apply the affiliate token to.
 	 * @return string the URL with the affiliate token
 	 */
-	function apply_affiliate_token( $url ) {
-		$affiliate_token = $this->get_affiliate_token();
+	public static function apply_affiliate_token( $url ) {
+		$affiliate_token = self::get_affiliate_token();
 		// Identify as Apple Music origin by appending this query var.
 		// This applies to all URLs regardless of affiliate token presence.
 		$query_vars = [ 'app' => 'music' ];
@@ -102,7 +102,7 @@ class Settings {
 	 *
 	 * @return string
 	 */
-	function get_storefront() {
+	public static function get_storefront() {
 		$options    = get_option( 'apple_music_options' );
 		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
 
@@ -114,7 +114,7 @@ class Settings {
 	 *
 	 * @param $args
 	 */
-	function add_storefront_field( $args ) {
+	public function add_storefront_field( $args ) {
 		$options     = get_option( 'apple_music_options' );
 		$storefront  = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
 		$api         = new API();
@@ -137,7 +137,7 @@ class Settings {
 	 * Affiliate token field.
 	 *
 	 */
-	function add_affiliate_token_field() {
+	public function add_affiliate_token_field() {
 		?>
 		<input type="text" name="apple_music_options[affiliate_token]" value="<?php echo esc_attr( $this->get_affiliate_token() ); ?>" class="large-text"/>
 
@@ -151,7 +151,7 @@ class Settings {
 	/**
 	 * Add settings to admin menu.
 	 */
-	function options_page() {
+	public function options_page() {
 		add_options_page(
 			esc_html__( 'Apple Music', 'apple-music' ),
 			esc_html__( 'Apple Music', 'apple-music' ),
@@ -164,7 +164,7 @@ class Settings {
 	/**
 	 * Body of settings page.
 	 */
-	function options_page_html() {
+	public function options_page_html() {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;

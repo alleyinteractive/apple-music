@@ -29,8 +29,7 @@ class API {
 	 * API constructor.
 	 */
 	public function __construct() {
-		$settings         = new Settings();
-		$this->storefront = $settings->get_storefront();
+		$this->storefront = Settings::get_storefront();
 	}
 
 	/**
@@ -45,7 +44,7 @@ class API {
 	public function search( $term, $types, $page ) {
 
 		$url = sprintf(
-			 '%s/%s/%s/%s',
+			'%s/%s/%s/%s',
 			$this->base_url,
 			'catalog',
 			$this->storefront,
@@ -98,18 +97,22 @@ class API {
 		$url_safe = esc_url_raw( add_query_arg( $params, $url ) );
 
 		if ( 'GET' === $method && function_exists( 'wpcom_vip_file_get_contents' ) ) {
-
-			$response = wpcom_vip_file_get_contents( $url_safe, 8, 900 );
+			$response = wpcom_vip_file_get_contents( $url_safe, 8, 15 * MINUTE_IN_SECONDS );
 		} else {
-			$response = wp_safe_remote_request(
-				$url_safe,
-				[
-					'method'  => $method,
-					'timeout' => 8,
-				]
-			);
-			if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
-				$response = wp_remote_retrieve_body( $response );
+			$transient_key = md5( $url_safe );
+			$response      = get_transient( $transient_key );
+			if ( false === $response ) {
+				$response = wp_safe_remote_request(
+					$url_safe,
+					[
+						'method'  => $method,
+						'timeout' => 8,
+					]
+				);
+				if ( ! empty( $response ) && ! is_wp_error( $response ) ) {
+					$response = wp_remote_retrieve_body( $response );
+					set_transient( $transient_key, $response, 15 * MINUTE_IN_SECONDS );
+				}
 			}
 		}
 
