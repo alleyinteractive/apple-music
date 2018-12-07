@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import badge from 'Images/badge.svg';
 import embedTypes from 'Config/embedTypes';
@@ -21,31 +21,18 @@ const {
 /**
  * Embed Slider used in the display tools.
  */
-const EmbedSlider = ({
-  appIconStyle,
-  embedType,
-  inPanel,
-  musicType,
-  setAttributes,
-  textLockUpStyle,
-}) => {
-  // Class for slider context. In panel or editor.
-  const sliderClass = inPanel ? '' : css.slider;
-  // Additional class to add to slide.
-  const panelSlideClass = inPanel ? css.panelSlide : '';
-
-  // Get the styles options for the Select Control.
-  const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
-    (undefined !== styles && value === embedType) ?
-      acc.concat(styles) : acc.concat()), []);
-
+class EmbedSlider extends Component {
   /**
    * Image Icon. Which image icon to apply.
    * Adds an image element or the preview player dashicon.
    * @param {string} type the embedType to look for.
    * @returns {string} the image icon or an empty string.
    */
-  function icon(type) {
+  renderIcon(type) {
+    const {
+      appIconStyle,
+      textLockUpStyle,
+    } = this.props;
     // define the default image URL.
     let imageURL = '';
     let imgClass = '';
@@ -93,63 +80,84 @@ const EmbedSlider = ({
     ) : '';
   }
 
-  return (
-    <div className={sliderClass}>
-      {
-        inPanel &&
-        <p>{__('Select Embed Type', 'apple-music')}</p>
-      }
-      {embedTypes.map(({ value, label }) => {
-        // If the musicType doesn't support embeds don't show preview player.
-        if ('preview-player' === value && ! showEmbed(musicType)) {
-          return null;
-        }
-        // Active class for the selected embed type.
-        const activeClass = embedType === value ? css.active : '';
+  render() {
+    const {
+      appIconStyle,
+      embedType,
+      inPanel,
+      musicType,
+      setAttributes,
+      textLockUpStyle,
+    } = this.props;
 
-        return (
-          <div className={`${css.slide} ${panelSlideClass} ${activeClass}`}>
-            <Button
-              className={css.iconSelector}
-              key={value}
-              onClick={() => setAttributes({
-                embedType: value,
-                imageAttributes: getImageAttributes(value),
-              })}
-            >
-              {icon(value)}
-              <p>{__(label, 'apple-music')}</p>
-            </Button>
-            { // Select field will only display when text-lockup is active.
-              ('text-lockup' === embedType && 'text-lockup' === value) &&
-                <SelectControl
-                  className={css.selectStyle}
-                  value={textLockUpStyle}
-                  options={embedStyles}
-                  onChange={(x) => setAttributes({
-                    textLockUpStyle: x,
-                    imageAttributes: getImageAttributes(embedType, x),
-                  })}
-                />
-            }
-            { // Select field will only display when app-icon is active.
-              ('app-icon' === embedType && 'app-icon' === value) &&
-                <SelectControl
-                  className={css.selectStyle}
-                  value={appIconStyle}
-                  options={embedStyles}
-                  onChange={(x) => setAttributes({
-                    appIconStyle: x,
-                    imageAttributes: getImageAttributes(embedType, x),
-                  })}
-                />
-            }
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+    // Class for slider context. In panel or editor.
+    const sliderClass = inPanel ? '' : css.slider;
+    // Additional class to add to slide.
+    const panelSlideClass = inPanel ? css.panelSlide : '';
+
+    // Get the styles options for the Select Control.
+    const embedStyles = embedTypes.reduce((acc, { value, styles }) => (
+      (undefined !== styles && value === embedType) ?
+        acc.concat(styles) : acc), []);
+
+    return (
+      <div className={sliderClass}>
+        {
+          inPanel &&
+          <p>{__('Select Embed Type', 'apple-music')}</p>
+        }
+        {embedTypes.map(({ value, label }) => {
+          // If the musicType doesn't support embeds don't show preview player.
+          if ('preview-player' === value && ! showEmbed(musicType)) {
+            return null;
+          }
+          // Active class for the selected embed type.
+          const activeClass = embedType === value ? css.active : '';
+
+          return (
+            <div className={`${css.slide} ${panelSlideClass} ${activeClass}`}>
+              <Button
+                className={css.iconSelector}
+                key={value}
+                onClick={() => setAttributes({
+                  embedType: value,
+                  imageAttributes: getImageAttributes(value),
+                })}
+              >
+                {this.renderIcon(value)}
+                <p>{__(label, 'apple-music')}</p>
+              </Button>
+              { // Select field will only display when text-lockup is active.
+                ('text-lockup' === embedType && 'text-lockup' === value) &&
+                  <SelectControl
+                    className={css.selectStyle}
+                    value={textLockUpStyle}
+                    options={embedStyles}
+                    onChange={(x) => setAttributes({
+                      textLockUpStyle: x,
+                      imageAttributes: getImageAttributes(embedType, x),
+                    })}
+                  />
+              }
+              { // Select field will only display when app-icon is active.
+                ('app-icon' === embedType && 'app-icon' === value) &&
+                  <SelectControl
+                    className={css.selectStyle}
+                    value={appIconStyle}
+                    options={embedStyles}
+                    onChange={(x) => setAttributes({
+                      appIconStyle: x,
+                      imageAttributes: getImageAttributes(embedType, x),
+                    })}
+                  />
+              }
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+}
 
 EmbedSlider.defaultProps = {
   inPanel: true,

@@ -123,7 +123,7 @@ class MusicBlock extends Component {
       appIconStyle: 'standard',
       embedType: attributes.embedType,
       embedURL: '',
-      ID: 0,
+      ID: false,
       textLockUpStyle: 'standard-black',
       name: '',
       link: '',
@@ -135,7 +135,7 @@ class MusicBlock extends Component {
    */
   isMusicSet() {
     const { attributes } = this.props;
-    if (attributes.ID) {
+    if (false !== attributes.ID) {
       return true;
     }
     return false;

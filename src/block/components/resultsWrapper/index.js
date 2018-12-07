@@ -8,7 +8,7 @@ import {
   searchCatalog,
   getItems,
 } from 'API';
-import { getNestedObject } from 'Utils';
+import { getNestedObject, ucFirst } from 'Utils';
 
 import styles from './resultsWrapper.css';
 
@@ -121,20 +121,11 @@ class ResultsWrapper extends Component {
     const results = getItems(this.state.data)
       .map((item) => (
         <MusicItem
+          key={item.id}
           item={item}
           onClick={() => this.selectItem(item)}
         />
       ));
-
-    /**
-     * Capitalize the first letter of a string.
-     * @param {string} string
-     * @returns {string} the string with the first character capitalized.
-     */
-    function ucFirst(string) {
-      return `${string
-        .charAt(0).toUpperCase()}${string.slice(1)}`;
-    }
 
     return (
       <Fragment>

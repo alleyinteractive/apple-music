@@ -66,10 +66,10 @@ export function getItemArtworkURL(item, width = '118', height = '118') {
  */
 export function getIconImagePath(styleValue) {
   return embedTypes.reduce((acc, { styles }) => (
-    (undefined !== styles) ? acc.concat(styles) : acc.concat()), [])
+    (undefined !== styles) ? acc.concat(styles) : acc), [])
     // Reduce all the available styles by selected style and apply fallback.
     .reduce((acc, { value, imagePath }) => (
-      (value === styleValue) ? imagePath : acc.concat()), '');
+      (value === styleValue) ? imagePath : acc), '');
 }
 
 /**
@@ -102,7 +102,7 @@ export function getImageAttributes(embedType, style = '') {
       // return the image attributes in an object
       return acc.concat({ src, width, height });
     }
-    return acc.concat();
+    return acc;
     // since we only need the first item in the array.
   }, []).shift();
 }
@@ -131,6 +131,16 @@ export function applyAffiliateToken(link) {
     url.concat(`&at=${affiliateToken}`) : url;
 }
 
+/**
+ * Capitalize the first letter of a string.
+ * @param {string} string
+ * @returns {string} the string with the first character capitalized.
+ */
+export function ucFirst(string) {
+  return `${string
+    .charAt(0).toUpperCase()}${string.slice(1)}`;
+}
+
 export default {
   getIconImagePath,
   getImageAttributes,
@@ -140,4 +150,5 @@ export default {
   getNestedObject,
   setEmbedDimensions,
   applyAffiliateToken,
+  ucFirst,
 };
