@@ -24,7 +24,8 @@ class Block {
 			'apple-music-block',
 			PLUGIN_DIR_URL . 'dist/js/block.bundle.min.js',
 			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
-			APPLE_MUSIC_VERSION
+			APPLE_MUSIC_VERSION,
+			true
 		);
 
 		// Get storefront.
