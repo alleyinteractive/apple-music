@@ -135,10 +135,11 @@ class MusicBlock extends Component {
    */
   isMusicSet() {
     const { attributes } = this.props;
-    if (false !== attributes.ID) {
-      return true;
+    const { ID } = attributes;
+    if (false === ID || 'undefined' === typeof ID) {
+      return false;
     }
-    return false;
+    return true;
   }
 
   // Component Render method.
