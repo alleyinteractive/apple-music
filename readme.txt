@@ -14,6 +14,8 @@ The Apple Music plugin enables you to add songs, albums and artists through Appl
 
 The Apple Music plugin enables you to add songs, albums and artists through Apple Music badges, links and widgets on your Wordpress site.
 
+This plugin relies on [Apple Music's API](https://developer.apple.com/documentation/applemusicapi) for its operation. Their privacy policy can be found [here](https://www.apple.com/legal/privacy/en-ww/).
+
 == Installation ==
 
 Install like any other plugin, then configure your settings at Settings->Apple Music.
