@@ -13,7 +13,7 @@ class Apple_Music_I18n {
 	 */
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain(
-			'apple-music',
+			'connect-to-apple-music',
 			false,
 			PLUGIN_DIR_URL . '/lang'
 		);

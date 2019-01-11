@@ -32,12 +32,15 @@ const SearchTools = ({
     <div className={className}>
       <TextControl
         value={query}
-        placeHolder={sprintf(__('Search %s', 'apple-music'), typeObject.label)}
+        placeHolder={sprintf(
+          __('Search %s', 'connect-to-apple-music'),
+          typeObject.label
+        )}
         className={styles.search}
         onChange={(term) => setAttributes({ query: term })}
       />
       <SelectControl
-        label={__('Music Type', 'apple-music')}
+        label={__('Music type', 'connect-to-apple-music')}
         value={musicType}
         options={musicTypes.map(({ value, label }) => (
           { value, label }

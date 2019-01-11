@@ -52,7 +52,7 @@ class Media_Modal {
 	 * Add dedicated media modal button.
 	 */
 	public function add_button() {
-		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music', 'apple-music' ) . '</a>';
+		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music', 'connect-to-apple-music' ) . '</a>';
 	}
 
 	/**
@@ -103,10 +103,10 @@ class Media_Modal {
 	 */
 	public function get_labels() {
 		$labels = [
-			'title'     => __( 'Insert Apple Music', 'apple-music' ),
-			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
-			'noresults' => __( 'No match for your search query', 'apple-music' ),
-			'loadmore'  => __( 'Load more music', 'apple-music' ),
+			'title'     => __( 'Insert Apple Music', 'connect-to-apple-music' ),
+			'insert'    => __( 'Insert Apple Music', 'connect-to-apple-music' ),
+			'noresults' => __( 'No match for your search query', 'connect-to-apple-music' ),
+			'loadmore'  => __( 'Load more music', 'connect-to-apple-music' ),
 		];
 
 		return $labels;

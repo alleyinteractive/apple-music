@@ -2,7 +2,7 @@
 Contributors: alleyinteractive
 Tags: apple, music
 Requires at least: 4.0
-Tested up to: 4.9.6
+Tested up to: 5.0.2
 Requires PHP: 5.6
 Stable tag: 1.0.0
 License: GPLv3 or later

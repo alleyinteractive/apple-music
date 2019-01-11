@@ -139,7 +139,7 @@ class ResultsWrapper extends Component {
                   className={styles.viewControl}
                   onClick={() => this.paginate()}
                 >
-                  {__('Next', 'apple-music')}
+                  {__('Next', 'connect-to-apple-music')}
                   <Dashicon icon="arrow-right-alt2" />
                 </Button>
             }

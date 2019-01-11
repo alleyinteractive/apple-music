@@ -22,7 +22,7 @@ const BackToSearch = ({
       isLarge={inPanel}
     >
       <Dashicon icon="arrow-left-alt2" />
-      {__('Back to Search', 'apple-music')}
+      {__('Back to Search', 'connect-to-apple-music')}
     </Button>
   </div>
 );

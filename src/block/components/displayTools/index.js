@@ -103,7 +103,7 @@ class DisplayTools extends Component {
             <div className={formClass}>
               <TextControl
                 className={textInput}
-                label={__('Height', 'apple-music')}
+                label={__('Height', 'connect-to-apple-music')}
                 value={height}
                 onChange={(value) => setAttributes({
                   height: value,
@@ -113,7 +113,7 @@ class DisplayTools extends Component {
               />
               <TextControl
                 className={textInput}
-                label={__('Width', 'apple-music')}
+                label={__('Width', 'connect-to-apple-music')}
                 value={width}
                 onChange={(value) => setAttributes({
                   width: value,
@@ -144,7 +144,7 @@ class DisplayTools extends Component {
         {
           ! inPanel &&
           <div className={styles.directLink}>
-            <b>{__('Direct Link: ', 'apple-music')}</b>
+            <b>{__('Direct Link: ', 'connect-to-apple-music')}</b>
             <ExternalLink href={link}>
               {link}
             </ExternalLink>
