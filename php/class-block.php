@@ -22,7 +22,7 @@ class Block {
 	public function enqueue_block_editor_assets() {
 		wp_enqueue_script(
 			'apple-music-block',
-			PLUGIN_DIR_URL . 'dist/js/block.bundle.min.js',
+			CTAM_PLUGIN_DIR_URL . 'dist/js/block.bundle.min.js',
 			[ 'wp-i18n', 'wp-element', 'wp-blocks', 'wp-components', 'wp-api' ],
 			APPLE_MUSIC_VERSION,
 			true
@@ -47,7 +47,7 @@ class Block {
 	public function enqueue_block_assets() {
 		wp_enqueue_style(
 			'apple-music-styles',
-			PLUGIN_DIR_URL . 'dist/css/block.min.css',
+			CTAM_PLUGIN_DIR_URL . 'dist/css/block.min.css',
 			'',
 			APPLE_MUSIC_VERSION
 		);

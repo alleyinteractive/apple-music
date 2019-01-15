@@ -15,7 +15,7 @@ class Apple_Music_I18n {
 		load_plugin_textdomain(
 			'connect-to-apple-music',
 			false,
-			PLUGIN_DIR_URL . '/lang'
+			CTAM_PLUGIN_DIR_URL . '/lang'
 		);
 	}
 }
