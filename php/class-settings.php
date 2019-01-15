@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music admin settings.
+ * Class to handle Connect to Apple Music admin settings.
  *
  * @package Apple_Music
  */
@@ -62,7 +62,7 @@ class Settings {
 	 */
 	public function section( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Apple Music plugin here.', 'connect-to-apple-music' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Connect to Apple Music plugin here.', 'connect-to-apple-music' ); ?></p>
 		<?php
 	}
 

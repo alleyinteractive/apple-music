@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music media modal.
+ * Class to handle Connect to Apple Music media modal.
  *
  * @package Apple_Music
  */

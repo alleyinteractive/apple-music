@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music shortcodes.
+ * Class to handle Connect to Apple Music shortcodes.
  *
  * @package Apple_Music
  */

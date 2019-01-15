@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to define Apple Music internationalization functionality.
+ * Class to define Connect to Apple Music internationalization functionality.
  *
  * @package Apple_Music
  */

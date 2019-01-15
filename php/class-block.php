@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music Gutenberg blocks.
+ * Class to handle Connect to Apple Music Gutenberg blocks.
  *
  * @package Apple_Music
  */
