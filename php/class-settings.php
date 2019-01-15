@@ -104,7 +104,7 @@ class Settings {
 	 */
 	public static function get_storefront() {
 		$options    = get_option( 'apple_music_options' );
-		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
+		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
 
 		return $storefront;
 	}
