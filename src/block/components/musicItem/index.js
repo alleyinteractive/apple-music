@@ -37,7 +37,7 @@ const MusicItem = ({
           <div className={styles.artwork}>
             <img
               src={imageSrc}
-              alt={sprintf(__('Album Art: %s', 'apple-music'), name)}
+              alt={sprintf(__('Album art: %s', 'connect-to-apple-music'), name)}
               className={styles.artworkImage}
             />
           </div>

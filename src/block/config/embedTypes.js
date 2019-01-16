@@ -19,43 +19,43 @@ import '../i18n';
 const embedTypes = [
   {
     value: 'preview-player',
-    label: __('Preview Player', 'apple-music'),
+    label: __('Preview player', 'connect-to-apple-music'),
   },
   {
     value: 'badge',
-    label: __('Badge', 'apple-music'),
+    label: __('Badge', 'connect-to-apple-music'),
     height: '45px',
     width: '157px',
     imageSource: 'https://tools.applemusic.com/assets/shared/badges/en-us/music-lrg.svg',
   },
   {
     value: 'text-lockup',
-    label: __('Text Lockup', 'apple-music'),
+    label: __('Text lockup', 'connect-to-apple-music'),
     height: '30px',
     width: '140px',
     styles: [
       {
         default: true,
         value: 'standard-black',
-        label: __('Standard Black', 'apple-music'),
+        label: __('Standard black', 'connect-to-apple-music'),
         imagePath: standardBlack,
         imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/music-standard-black.svg',
       },
       {
         value: 'standard-white',
-        label: __('Standard White', 'apple-music'),
+        label: __('Standard white', 'connect-to-apple-music'),
         imagePath: standardWhite,
         imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/music-standard-white.svg',
       },
       {
         value: 'mono-white',
-        label: __('Mono White', 'apple-music'),
+        label: __('Mono white', 'connect-to-apple-music'),
         imagePath: monoWhite,
         imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/music-mono-white.svg',
       },
       {
         value: 'mono-black',
-        label: __('Mono Black', 'apple-music'),
+        label: __('Mono black', 'connect-to-apple-music'),
         imagePath: monoBlack,
         imageSource: 'https://tools.applemusic.com/assets/shared/text-lockups/en-us/music-mono-black.svg',
       },
@@ -63,26 +63,26 @@ const embedTypes = [
   },
   {
     value: 'app-icon',
-    label: __('App Icon', 'apple-music'),
+    label: __('App icon', 'connect-to-apple-music'),
     height: '40px',
     width: '40px',
     styles: [
       {
         default: true,
         value: 'standard',
-        label: __('Standard', 'apple-music'),
+        label: __('Standard', 'connect-to-apple-music'),
         imagePath: standard,
         imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg',
       },
       {
         value: 'white',
-        label: __('White', 'apple-music'),
+        label: __('White', 'connect-to-apple-music'),
         imagePath: white,
         imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=FFFFFF',
       },
       {
         value: 'black',
-        label: __('Black', 'apple-music'),
+        label: __('Black', 'connect-to-apple-music'),
         imagePath: black,
         imageSource: 'https://tools.applemusic.com/embed/v1/app-icon.svg?hex=000000',
       },

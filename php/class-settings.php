@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music admin settings.
+ * Class to handle Connect to Apple Music admin settings.
  *
  * @package Apple_Music
  */
@@ -27,14 +27,14 @@ class Settings {
 
 		add_settings_section(
 			'apple_music_settings',
-			esc_html__( 'Settings', 'apple-music' ),
+			esc_html__( 'Settings', 'connect-to-apple-music' ),
 			[ $this, 'section' ],
 			'apple_music'
 		);
 
 		add_settings_field(
 			'apple_music_storefront',
-			esc_html__( 'Apple Music Storefront', 'apple-music' ),
+			esc_html__( 'Apple Music Storefront', 'connect-to-apple-music' ),
 			[ $this, 'add_storefront_field' ],
 			'apple_music',
 			'apple_music_settings',
@@ -45,7 +45,7 @@ class Settings {
 
 		add_settings_field(
 			'apple_music_affiliate_token',
-			esc_html__( 'Apple Music Affiliate Token', 'apple-music' ),
+			esc_html__( 'Apple Music Affiliate Token', 'connect-to-apple-music' ),
 			[ $this, 'add_affiliate_token_field' ],
 			'apple_music',
 			'apple_music_settings',
@@ -62,7 +62,7 @@ class Settings {
 	 */
 	public function section( $args ) {
 		?>
-		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Apple Music plugin here.', 'apple-music' ); ?></p>
+		<p id="<?php echo esc_attr( $args['id'] ); ?>"><?php esc_html_e( 'Configure your Connect to Apple Music plugin here.', 'connect-to-apple-music' ); ?></p>
 		<?php
 	}
 
@@ -104,7 +104,7 @@ class Settings {
 	 */
 	public static function get_storefront() {
 		$options    = get_option( 'apple_music_options' );
-		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : '';
+		$storefront = ! empty( $options['storefront'] ) ? $options['storefront'] : 'us';
 
 		return $storefront;
 	}
@@ -128,7 +128,7 @@ class Settings {
 			<?php endforeach; ?>
 		</select>
 		<p class="description">
-			<?php esc_html_e( 'Choose your region here.', 'apple-music' ); ?>
+			<?php esc_html_e( 'Choose your region here.', 'connect-to-apple-music' ); ?>
 		</p>
 		<?php
 	}
@@ -142,7 +142,7 @@ class Settings {
 		<input type="text" name="apple_music_options[affiliate_token]" value="<?php echo esc_attr( $this->get_affiliate_token() ); ?>" class="large-text"/>
 
 		<p class="description">
-			<?php esc_html_e( 'If you have one, you can add your Affiliate Token here.', 'apple-music' ); ?>
+			<?php esc_html_e( 'If you have one, you can add your Affiliate Token here.', 'connect-to-apple-music' ); ?>
 		</p>
 
 		<?php
@@ -153,8 +153,8 @@ class Settings {
 	 */
 	public function options_page() {
 		add_options_page(
-			esc_html__( 'Apple Music', 'apple-music' ),
-			esc_html__( 'Apple Music', 'apple-music' ),
+			esc_html__( 'Apple Music', 'connect-to-apple-music' ),
+			esc_html__( 'Apple Music', 'connect-to-apple-music' ),
 			'manage_options',
 			'apple-music',
 			[ $this, 'options_page_html' ]

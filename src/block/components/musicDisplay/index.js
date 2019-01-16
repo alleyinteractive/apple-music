@@ -40,7 +40,7 @@ const MusicDisplay = ({
             height={imageAttributes.height}
             width={imageAttributes.width}
             alt={sprintf(
-              __('Listen to "%s" on Apple Music.', 'apple-music'),
+              __('Listen to "%s" on Apple Music.', 'connect-to-apple-music'),
               name
             )}
           />
@@ -52,7 +52,10 @@ const MusicDisplay = ({
           icon={appleMusicIcon}
           className="apple-music-placeholder"
         >
-          {__('Get badges, links, and widgets for Apple Music.', 'apple-music')}
+          {__(
+            'Get badges, links, and widgets for Apple Music.',
+            'connect-to-apple-music'
+          )}
         </Placeholder>
       }
     </div>

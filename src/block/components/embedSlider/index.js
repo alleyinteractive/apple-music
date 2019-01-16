@@ -36,7 +36,7 @@ class EmbedSlider extends Component {
     // define the default image URL.
     let imageURL = '';
     let imgClass = '';
-    let alt = __('Apple Music Icon', 'apple-music');
+    let alt = __('Apple Music icon', 'connect-to-apple-music');
 
     switch (type) {
       case 'preview-player':
@@ -48,12 +48,12 @@ class EmbedSlider extends Component {
           </div>
         );
       case 'badge':
-        alt = __('badge icon', 'apple-music');
+        alt = __('badge icon', 'connect-to-apple-music');
         imageURL = badge;
         break;
       case 'text-lockup':
         alt = sprintf(
-          __('%s text lockup icon', 'apple-music'),
+          __('%s text lockup icon', 'connect-to-apple-music'),
           textLockUpStyle
         );
         imgClass = textLockUpStyle;
@@ -61,7 +61,7 @@ class EmbedSlider extends Component {
         break;
       case 'app-icon':
         alt = sprintf(
-          __('%s app icon', 'apple-music'),
+          __('%s app icon', 'connect-to-apple-music'),
           appIconStyle
         );
         imgClass = appIconStyle;
@@ -104,7 +104,7 @@ class EmbedSlider extends Component {
       <div className={sliderClass}>
         {
           inPanel &&
-          <p>{__('Select Embed Type', 'apple-music')}</p>
+          <p>{__('Select embed Type', 'connect-to-apple-music')}</p>
         }
         {embedTypes.map(({ value, label }) => {
           // If the musicType doesn't support embeds don't show preview player.
@@ -125,7 +125,7 @@ class EmbedSlider extends Component {
                 })}
               >
                 {this.renderIcon(value)}
-                <p>{__(label, 'apple-music')}</p>
+                <p>{__(label, 'connect-to-apple-music')}</p>
               </Button>
               { // Select field will only display when text-lockup is active.
                 ('text-lockup' === embedType && 'text-lockup' === value) &&

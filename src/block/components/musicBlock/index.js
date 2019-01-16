@@ -154,7 +154,11 @@ class MusicBlock extends Component {
       <div className={className}>
         { isSelected &&
           <InspectorControls key="inspector">
-            <PanelBody title={__('Apple Music Settings', 'apple-music')}>
+            <PanelBody title={__(
+              'Apple Music Settings',
+              'connect-to-apple-music'
+            )}
+            >
               {
                 ! this.state.isMusicSet &&
                 <SearchTools
@@ -185,7 +189,7 @@ class MusicBlock extends Component {
                   <h3 className={styles.introText}>
                     {__(
                       'Get badges, links, and widgets for Apple Music.',
-                      'apple-music'
+                      'connect-to-apple-music'
                     )}
                   </h3>
                   <SearchTools

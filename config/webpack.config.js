@@ -23,7 +23,7 @@ module.exports = (env) => ({
       'js/[name].bundle.min.js' :
       'js/[name].bundle.js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/wp-content/plugins/apple-music/dist/',
+    publicPath: '/wp-content/plugins/connect-to-apple-music/dist/',
   },
 
   resolve: {

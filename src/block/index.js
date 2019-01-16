@@ -1,4 +1,4 @@
-// Entry point for Apple Music Gutenberg block.
+// Entry point for Connect to Apple Music Gutenberg block.
 import MusicBlock from 'Components/musicBlock';
 import MusicDisplay from 'Components/musicDisplay';
 import { __ } from '@wordpress/i18n';
@@ -13,15 +13,15 @@ const { registerBlockType } = wp.blocks;
 export default registerBlockType(
   'apple-music/widget',
   {
-    title: __('Apple Music', 'apple-music'),
+    title: __('Apple Music', 'connect-to-apple-music'),
     description:
-      __('Embed an Apple music widget into a post.', 'apple-music'),
+      __('Embed an Apple Music widget into a post.', 'connect-to-apple-music'),
     category: 'widgets',
     icon: {
       src: appleMusicIcon,
     },
     keywords: [
-      __('Apple Music', 'apple-music'),
+      __('Apple Music', 'connect-to-apple-music'),
     ],
     supports: {
       html: false,

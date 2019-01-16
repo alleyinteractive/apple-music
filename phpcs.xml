@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<ruleset name="Apple Music Coding Standards Configuration">
+<ruleset name="Connect to Apple Music Coding Standards Configuration">
 	<!-- Set a description for this ruleset. -->
 	<description>Code standard rules to check against this plugin.</description>
 

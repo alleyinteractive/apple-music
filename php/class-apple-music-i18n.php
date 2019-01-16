@@ -1,6 +1,6 @@
 <?php
 /**
- * Class to define Apple Music internationalization functionality.
+ * Class to define Connect to Apple Music internationalization functionality.
  *
  * @package Apple_Music
  */
@@ -13,9 +13,9 @@ class Apple_Music_I18n {
 	 */
 	public function load_plugin_textdomain() {
 		load_plugin_textdomain(
-			'apple-music',
+			'connect-to-apple-music',
 			false,
-			PLUGIN_DIR_URL . '/lang'
+			CTAM_PLUGIN_DIR_URL . '/lang'
 		);
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Class to handle Apple Music media modal.
+ * Class to handle Connect to Apple Music media modal.
  *
  * @package Apple_Music
  */
@@ -52,7 +52,7 @@ class Media_Modal {
 	 * Add dedicated media modal button.
 	 */
 	public function add_button() {
-		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music', 'apple-music' ) . '</a>';
+		echo '<a href="#" class="button apple-music-button">' . esc_html__( 'Apple Music', 'connect-to-apple-music' ) . '</a>';
 	}
 
 	/**
@@ -103,10 +103,10 @@ class Media_Modal {
 	 */
 	public function get_labels() {
 		$labels = [
-			'title'     => __( 'Insert Apple Music', 'apple-music' ),
-			'insert'    => __( 'Insert Apple Music', 'apple-music' ),
-			'noresults' => __( 'No match for your search query', 'apple-music' ),
-			'loadmore'  => __( 'Load more music', 'apple-music' ),
+			'title'     => __( 'Insert Apple Music', 'connect-to-apple-music' ),
+			'insert'    => __( 'Insert Apple Music', 'connect-to-apple-music' ),
+			'noresults' => __( 'No match for your search query', 'connect-to-apple-music' ),
+			'loadmore'  => __( 'Load more music', 'connect-to-apple-music' ),
 		];
 
 		return $labels;
@@ -122,7 +122,7 @@ class Media_Modal {
 
 		wp_enqueue_script(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'dist/js/mediaModal.bundle.min.js',
+			CTAM_PLUGIN_DIR_URL . 'dist/js/mediaModal.bundle.min.js',
 			[ 'jquery', 'media-views' ],
 			APPLE_MUSIC_VERSION
 		);
@@ -139,7 +139,7 @@ class Media_Modal {
 
 		wp_enqueue_style(
 			'apple-music-media-modal',
-			PLUGIN_DIR_URL . 'dist/css/mediaModal.min.css',
+			CTAM_PLUGIN_DIR_URL . 'dist/css/mediaModal.min.css',
 			[],
 			APPLE_MUSIC_VERSION
 		);
@@ -172,7 +172,7 @@ class Media_Modal {
 
 					case 'artists':
 						$item['content']   = esc_html( $attributes->name );
-						$item['thumbnail'] = esc_url_raw( PLUGIN_DIR_URL . 'src/images/apple.png' );
+						$item['thumbnail'] = esc_url_raw( CTAM_PLUGIN_DIR_URL . 'src/images/apple.png' );
 						break;
 
 					case 'songs':

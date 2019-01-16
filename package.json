@@ -1,7 +1,7 @@
 {
   "name": "apple-music",
   "version": "0.1.0",
-  "description": "Apple Music plugin for WordPress",
+  "description": "Connect to Apple Music plugin for WordPress",
   "repository": "git+https://github.com/alleyinteractive/apple-music.git",
   "author": "Alley Interactive",
   "license": "GPL-2.0-or-later",
