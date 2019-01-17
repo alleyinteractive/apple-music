@@ -40,6 +40,8 @@
 		<exclude name="Squiz.Commenting.FileComment.WrongStyle" />
 		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineBefore" />
 		<exclude name="WordPress.Classes.ClassInstantiation.MissingParenthesis" />
+		<exclude name="Squiz.Commenting.FileComment.SpacingAfterComment" />
+		<exclude name="WordPressVIPMinimum.Constants.ConstantString.NotCheckingConstantName" />
 	</rule>
 
 </ruleset>
