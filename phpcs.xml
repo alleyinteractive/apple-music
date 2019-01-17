@@ -13,12 +13,7 @@
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>tests/*</exclude-pattern>
 
-	<!-- Include the WordPress ruleset, with exclusions. -->
-	<rule ref="WordPress-VIP">
-		<!-- These may need to be excluded if they throw too many false positives -->
-		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.Incorrect" /> -->
-		<!-- <exclude name="Generic.WhiteSpace.ScopeIndent.IncorrectExact" /> -->
-		<exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
-	</rule>
+	<rule ref="WordPress" />
+	<rule ref="WordPressVIPMinimum" />
 
 </ruleset>
