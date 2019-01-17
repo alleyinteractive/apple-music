@@ -21,7 +21,18 @@
 		<exclude name="Squiz.Commenting.VariableComment.MissingParamTag" />
 		<exclude name="Squiz.Commenting.FunctionComment.InvalidNoReturn" />
 		<exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+		<exclude name="Generic.Commenting.DocComment.SpacingBeforeTags" />
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamName" />
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment" />
+		<exclude name="Squiz.Commenting.FunctionComment.SpacingAfterParamType" />
+		<exclude name="Generic.Commenting.DocComment.SpacingAfter" />
+		<exclude name="Squiz.Commenting.ClassComment.Missing" />
+		<exclude name="Squiz.Commenting.FunctionComment.Missing" />
+		<exclude name="Squiz.Commenting.VariableComment.Missing" />
+		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
+		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+		<exclude name="Squiz.Commenting.FileComment.Missing" />
 	</rule>
 
 </ruleset>
