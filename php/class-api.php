@@ -1,9 +1,8 @@
 <?php
-
 /**
  * Class to handle Apple Music API interactions.
  *
- * @package Apple_Music
+ * @package Connect_to_Apple_Music
  */
 
 namespace Apple_Music;

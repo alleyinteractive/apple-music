@@ -1,13 +1,16 @@
 <?php
-
 /**
  * Class to handle Connect to Apple Music admin settings.
  *
- * @package Apple_Music
+ * @package Connect_to_Apple_Music
  */
 
 namespace Apple_Music;
 
+/**
+ * Class Settings
+ * @package Connect_to_Apple_Music
+ */
 class Settings {
 
 	/**

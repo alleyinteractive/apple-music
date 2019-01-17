@@ -13,7 +13,10 @@
 	<exclude-pattern>*/node_modules/*</exclude-pattern>
 	<exclude-pattern>tests/*</exclude-pattern>
 
-	<rule ref="WordPress" />
-	<rule ref="WordPressVIPMinimum" />
+	<rule ref="WordPress">
+	</rule>
+	<rule ref="WordPressVIPMinimum">
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
+	</rule>
 
 </ruleset>
