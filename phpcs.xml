@@ -33,6 +33,13 @@
 		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
 		<exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
 		<exclude name="Squiz.Commenting.FileComment.Missing" />
+		<exclude name="iz.Commenting.FileComment.SpacingAfterComment" />
+		<exclude name="Squiz.Commenting.FileComment.SpacingAfterOpen" />
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+		<exclude name="WordPressVIPMinimum.VIP.RemoteRequestTimeout.timeout_timeout" />
+		<exclude name="Squiz.Commenting.FileComment.WrongStyle" />
+		<exclude name="Squiz.Commenting.BlockComment.NoEmptyLineBefore" />
+		<exclude name="WordPress.Classes.ClassInstantiation.MissingParenthesis" />
 	</rule>
 
 </ruleset>
