@@ -17,6 +17,11 @@
 	</rule>
 	<rule ref="WordPressVIPMinimum">
 		<exclude name="Squiz.Commenting.FunctionComment.MissingParamTag" />
+		<exclude name="Squiz.Commenting.ClassComment.MissingParamTag" />
+		<exclude name="Squiz.Commenting.VariableComment.MissingParamTag" />
+		<exclude name="Squiz.Commenting.FunctionComment.InvalidNoReturn" />
+		<exclude name="PEAR.Functions.FunctionCallSignature.Indent" />
+		<exclude name="Squiz.Commenting.FunctionComment.MissingParamComment" />
 	</rule>
 
 </ruleset>
