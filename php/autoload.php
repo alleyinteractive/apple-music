@@ -8,7 +8,7 @@
  * class must be within subdirectories of the same names (swapping underscores
  * for dashes and downcasing).
  *
- * @package Apple_Music
+ * @package Connect_to_Apple_Music
  */
 
 namespace Apple_Music;

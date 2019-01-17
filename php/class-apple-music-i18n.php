@@ -2,11 +2,15 @@
 /**
  * Class to define Connect to Apple Music internationalization functionality.
  *
- * @package Apple_Music
+ * @package Connect_to_Apple_Music
  */
 
 namespace Apple_Music;
 
+/**
+ * Class Apple_Music_I18n
+ * @package Connect_to_Apple_Music
+ */
 class Apple_Music_I18n {
 	/**
 	 * Load the plugin text domain for translation.
